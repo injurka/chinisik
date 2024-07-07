@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "chinisik",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "bun@1.1.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "bun": ">=1.1.0"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "preview": "nuxt preview",
+    "generate": "nuxt generate",
+    "prepare": "nuxt prepare",
+    "analyze": "nuxt analyze",
+    "--------------------------------------------------------------------------------": "",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "vue-tsc --noEmit",
+    "----------------------------------------------------------------------------------": "",
+    "postinstall": "simple-git-hooks && nuxt prepare"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "0.5.1",
+    "pinia": "2.1.7"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.21.1",
+    "@nuxt/eslint": "^0.3.13",
+    "@nuxt/image": "^1.7.0",
+    "@nuxt/types": "2.17.4",
+    "@nuxtjs/device": "^3.1.1",
+    "@types/node": "^20.14.8",
+    "eslint": "^9.5.0",
+    "eslint-plugin-format": "^0.1.2",
+    "nuxt": "3.12.2",
+    "nuxt-icon": "^0.6.10",
+    "sass": "1.77.6",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "5.5.2",
+    "vue-tsc": "^2.0.22"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged && npm run typecheck",
+    "post-commit": "git status",
+    "post-merge": "bun i"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
