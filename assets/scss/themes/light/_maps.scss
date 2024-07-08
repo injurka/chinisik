@@ -1,0 +1,43 @@
+@import './_variables.scss';
+@import '../../_functions.scss';
+
+// BG
+$bg-colors: (
+  bg-primary: $bg-primary-color,
+  bg-secondary: $bg-secondary-color,
+  bg-tertiary: $bg-tertiary-color,
+  bg-disabled: $bg-disabled-color,
+  bg-inverted: $bg-inverted-color,
+  bg-accent-overlay: $bg-accent-overlay-color,
+  bg-accent: $bg-accent-color,
+  bg-pressed: $bg-pressed-color,
+  bg-overlay-dark: $bg-overlay-dark-color,
+  bg-overlay-light: $bg-overlay-light-color,
+  bg-accent-brand: $bg-accent-brand-color,
+  bg-action-hover: $bg-action-hover-color,
+);
+
+// Border
+$border-colors: (
+  border-positive: $border-positive-color,
+  border-warning: $border-warning-color,
+  border-negative: $border-negative-color,
+  border-button-secondary: $border-button-secondary-color,
+  border-disabled: $border-disabled-color,
+  border-primary: $border-primary-color,
+  border-secondary: $border-secondary-color,
+  border-accent: $border-accent-color,
+);
+
+// FG
+$fg-colors: (
+  fg-primary: $fg-primary-color,
+  fg-secondary: $fg-secondary-color,
+  fg-tertiary: $fg-tertiary-color,
+  fg-muted: $fg-muted-color,
+  fg-accent: $fg-accent-color,
+  fg-accent-brand: $fg-accent-brand-color,
+  fg-action: $fg-action-color,
+);
+
+$colors: map-collect($bg-colors, $border-colors, $fg-colors);

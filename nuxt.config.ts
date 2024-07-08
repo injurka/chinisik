@@ -21,6 +21,7 @@ export default defineNuxtConfig({
 
   imports: importsCfg,
   vite: viteCfg,
-
   ...baseCfg,
+
+  compatibilityDate: '2024-07-08',
 })

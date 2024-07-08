@@ -1,0 +1,7 @@
+@mixin connectThemes($themes, $wrapped: true) {
+  @each $themeName, $theme in $themes {
+    html[data-theme='#{$themeName}'] {
+      @content ($theme, $themeName);
+    }
+  }
+}

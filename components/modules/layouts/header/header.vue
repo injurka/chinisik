@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import HaoticLines from './ui/haotic-lines.vue'
+
 enum ThemesVariant {
   Light = 'light',
   Dark = 'dark',
@@ -12,7 +14,14 @@ const icons: Record<ThemesVariant, string> = {
 }
 
 const theme = useColorMode()
+
+const headerEl = ref<HTMLElement>()
+
 const iconTheme = computed(() => icons[theme.value as keyof typeof icons])
+const haoticLinesProps = computed(() => ({
+  width: headerEl.value?.offsetWidth || 0,
+  height: headerEl.value?.offsetHeight || 0,
+}))
 
 function toggleTheme() {
   switch (theme.value) {
@@ -32,7 +41,13 @@ function toggleTheme() {
 </script>
 
 <template>
-  <header class="header">
+  <header ref="headerEl" class="header">
+    <ClientOnly>
+      <HaoticLines
+        :width="haoticLinesProps.width"
+        :height="haoticLinesProps.height"
+      />
+    </ClientOnly>
     <nav>
       <div>
         <ul>
@@ -58,17 +73,16 @@ function toggleTheme() {
 </template>
 
 <style lang="scss" scoped>
-.logo {
-  margin-right: 8px;
-}
-
 .header {
+  position: relative;
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid var(--color-border);
+  flex-direction: row;
+  border-bottom: 1px solid var(--border-primary-color);
   height: #{$header-height};
-  background-color: var(--color-background-content);
+  background-color: var(--bg-secondary-color);
   width: 100%;
+  overflow: hidden;
 
   > nav {
     max-width: 1200px;
@@ -78,6 +92,10 @@ function toggleTheme() {
     flex-direction: row;
     justify-content: space-between;
     margin: 0 auto;
+
+    .logo {
+      margin-right: 8px;
+    }
   }
 
   ul {

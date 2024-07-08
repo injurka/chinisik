@@ -11,8 +11,7 @@ export const viteCfg: NuxtConfig['vite'] = {
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @import '~/assets/scss/_media.scss';
-          @import '~/assets/scss/_variables.scss';
+          @import '~/assets/scss/_setup.scss';
         `,
       },
     },

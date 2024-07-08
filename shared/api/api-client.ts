@@ -1,8 +1,7 @@
 import type { UseFetchOptions } from 'nuxt/app'
-import type { IApiError } from '../types'
 import { type IAuthMethods, authMethods } from './services/auth/handler'
 
-export type MethodPayload<P, R> = ReturnType<typeof createApiMethod<P, R & IApiError>>
+export type MethodPayload<P, R> = ReturnType<typeof createApiMethod<P, R>>
 export type FetchOption<R> = UseFetchOptions<R>
 export type ServiceNames = keyof IApi
 export type Services = Partial<Record<ServiceNames, string>>

@@ -1,0 +1,5 @@
+@include connectThemes($themes) using ($theme, $themeName) {
+  @each $colorType, $color in map-get($theme, 'colors') {
+    --#{$colorType}-color: #{$color};
+  }
+}
