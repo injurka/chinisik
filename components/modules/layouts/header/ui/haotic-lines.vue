@@ -14,7 +14,7 @@ function createHaoticLines(el: HTMLElement) {
     const numPoints: number = 8
     const widthEl = props.width
     const heightEl = props.height
-    const speed = 2
+    const speed = 1.5
 
     return {
       setup({ createCanvas, random, height, WEBGL }) {
@@ -47,7 +47,7 @@ function createHaoticLines(el: HTMLElement) {
       }) {
         background(0, 0)
         strokeWeight(10)
-        stroke(getComputedStyle(document.documentElement).getPropertyValue('--fg-secondary-color'))
+        stroke(getComputedStyle(document.documentElement).getPropertyValue('--bg-accent-overlay-color'))
         // fill(getComputedStyle(document.documentElement).getPropertyValue('--fg-secondary-color'))
         noFill()
 

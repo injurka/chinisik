@@ -1,5 +1,9 @@
 @use './light/theme.scss' as light;
+@use './dark/theme.scss' as dark;
+@use './rainy/theme.scss' as rainy;
 
 $themes: (
   light: light.$theme,
+  dark: dark.$theme,
+  rainy: rainy.$theme,
 );

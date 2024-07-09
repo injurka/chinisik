@@ -9,6 +9,8 @@ import {
 export default defineNuxtConfig({
   ssr: true,
 
+  ...baseCfg,
+
   $development: {
     colorMode: colorModeCfg.development,
     runtimeConfig: runtimeCfg.development,
@@ -21,7 +23,6 @@ export default defineNuxtConfig({
 
   imports: importsCfg,
   vite: viteCfg,
-  ...baseCfg,
 
   compatibilityDate: '2024-07-08',
 })

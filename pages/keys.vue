@@ -1,16 +1,22 @@
 <script lang="ts" setup>
 import HieroglyphKeyItem from '~/components/modules/keys/key-hieroglyph.vue'
-
-const isPinyinShowed = ref(false)
-const isTranslateShowed = ref(false)
+import KeyHieroglyphInfo from '~/components/modules/keys/dialog/key-hieroglyph-info.vue'
 
 const keys: HieroglyphKey[] = mockHieroglyphKeys
+
+const isPinyinShowed = ref<boolean>(false)
+const isTranslateShowed = ref<boolean>(false)
+const dialog = ref<boolean>(true)
 
 definePageMeta({ layout: 'base' })
 </script>
 
 <template>
   <section class="content">
+    <button @click="dialog = true">
+      @click="dialog = true"
+    </button>
+
     <div class="description">
       <h2>214 радикалы, чтобы управлять всеми персонажами</h2>
       <p>Знание 214 радикалов облегчит вам процесс изучения китайского языка. Почему? </p>
@@ -64,12 +70,15 @@ definePageMeta({ layout: 'base' })
         :hieroglyph="item"
       />
     </div>
+
+    <KeyHieroglyphInfo id="1" v-model="dialog" />
   </section>
 </template>
 
 <style scoped lang="scss">
 .content {
   padding: 16px;
+  font-family: 'Rubik';
 
   @include mobile() {
     padding: 12px;

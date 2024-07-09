@@ -11,6 +11,7 @@ export const colorModeCfg: Record<InputConfig, NuxtConfig['colorMode']> = {
     classPrefix: '',
     classSuffix: '-mode',
     storageKey: 'nuxt-color-mode',
+    dataValue: 'theme',
   },
   production: {
     preference: 'system',
@@ -21,5 +22,6 @@ export const colorModeCfg: Record<InputConfig, NuxtConfig['colorMode']> = {
     classPrefix: '',
     classSuffix: '-mode',
     storageKey: 'nuxt-color-mode',
+    dataValue: 'theme',
   },
 }

@@ -8,6 +8,8 @@ interface Props {
 const props = defineProps<Props>()
 
 const isFullyShowed: Ref<boolean> = ref(false)
+const shouldShowPinyin = computed<boolean>(() => props.isPinyinShowed || isFullyShowed.value)
+const shouldShowTranslate = computed<boolean>(() => props.isTranslateShowed || isFullyShowed.value)
 
 watch(() => [
   props.isPinyinShowed,
@@ -20,27 +22,19 @@ watch(() => [
 <template>
   <div class="wrapper">
     <div class="item" @click="isFullyShowed = !isFullyShowed">
-      <div :key="hieroglyph.index" class="item-index">
+      <div class="item-index">
         {{ hieroglyph.index }}
       </div>
       <Transition name="slide-up">
-        <div
-          v-if="isPinyinShowed || isFullyShowed"
-          :key="`pinyin${+(isPinyinShowed || isFullyShowed)}`"
-          class="item-pinyin"
-        >
+        <div v-if="shouldShowPinyin" class="item-pinyin">
           {{ hieroglyph.pinyin }}
         </div>
       </Transition>
-      <div :key="hieroglyph.hieroglyph" class="item-hieroglyph">
+      <div class="item-hieroglyph">
         {{ hieroglyph.hieroglyph }}
       </div>
       <Transition name="slide-down">
-        <div
-          v-if="isTranslateShowed || isFullyShowed"
-          :key="`translate${+(isTranslateShowed || isFullyShowed)}`"
-          class="item-translate"
-        >
+        <div v-if="shouldShowTranslate" class="item-translate">
           {{ hieroglyph.translate }}
         </div>
       </Transition>
@@ -50,7 +44,9 @@ watch(() => [
 
 <style lang="scss" scoped>
 .slide-up-enter-active,
-.slide-up-leave-active {
+.slide-up-leave-active,
+.slide-down-enter-active,
+.slide-down-leave-active {
   transition: all 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
@@ -58,11 +54,6 @@ watch(() => [
 .slide-up-leave-to {
   opacity: 0;
   transform: translateY(30px);
-}
-
-.slide-down-enter-active,
-.slide-down-leave-active {
-  transition: all 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
 .slide-down-enter-from,
@@ -85,6 +76,12 @@ watch(() => [
   }
 
   .item {
+    &:hover {
+      box-shadow: 0 0 5px var(--bg-overlay-light-color);
+    }
+
+    transition: box-shadow 0.2s ease-in-out;
+
     overflow: hidden;
 
     background-color: var(--bg-secondary-color);
@@ -160,7 +157,7 @@ watch(() => [
       left: -4px;
       height: 26px;
       width: 26px;
-      background-color: var(--bg-primary-color);
+      background-color: var(--bg-tertiary-color);
       border: 1px solid var(--border-secondary-color);
       border-radius: 50%;
 

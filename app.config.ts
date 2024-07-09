@@ -1,7 +1,7 @@
 export default defineAppConfig({
   titleTemplate: '%s',
   name: 'chinisik',
-  htmlAttrs: { 'lang': 'ru', 'data-theme': 'light' },
+  htmlAttrs: { lang: 'ru' },
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     { rel: 'shortcut_icon', href: '/favicon.ico' },

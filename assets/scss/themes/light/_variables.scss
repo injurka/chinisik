@@ -1,26 +1,16 @@
 // BG
 $bg-primary-color: #eeeeee;
-$bg-secondary-color: #eaecee; // or #dbdbdb
-$bg-tertiary-color: #f4f6fa;
+$bg-secondary-color: #dcdfe1;
+$bg-tertiary-color: #d2d8dd;
 $bg-disabled-color: #e7e9ed;
 $bg-inverted-color: #22263b;
-$bg-accent-overlay-color: #3440791a;
-$bg-accent-color: #344079;
+$bg-accent-overlay-color: #818bb5;
+$bg-accent-color: #404b82;
 $bg-pressed-color: #22263b0d;
-$bg-overlay-dark-color: #22263b0d;
-$bg-overlay-light-color: #ffffff1a;
-$bg-accent-brand-color: #6db6ff;
-$bg-action-hover-color: #5a9fe4;
-
-// Border
-$border-primary-color: #22263b54;
-$border-secondary-color: #22263b1a;
-$border-accent-color: #344079;
-$border-disabled-color: #22263b1a;
-$border-positive-color: #759f45;
-$border-warning-color: #ffd452;
-$border-negative-color: #f15d56;
-$border-button-secondary-color: #34407933;
+$bg-overlay-dark-color: #353a5436;
+$bg-overlay-light-color: #94a1abdc;
+$bg-accent-brand-color: #525e9e;
+$bg-action-hover-color: #40497b;
 
 // FG
 $fg-primary-color: #22263b;
@@ -28,5 +18,12 @@ $fg-secondary-color: #22263bcc;
 $fg-tertiary-color: #22263b99;
 $fg-muted-color: #22263b66;
 $fg-accent-color: #344079;
-$fg-accent-brand-color: #6db6ff;
-$fg-action-color: #5a9fe4;
+$fg-accent-brand-color: #525e9e;
+$fg-action-color: #40497b;
+
+// Border
+$border-primary-color: #22263b54;
+$border-secondary-color: #22263b1a;
+$border-accent-color: #344079;
+$border-disabled-color: #22263b1a;
+$border-button-secondary-color: #34407933;

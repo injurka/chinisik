@@ -1,0 +1,8 @@
+@import './_variables.scss';
+
+// Border
+$border-status-colors: (
+  border-positive: $border-positive-color,
+  border-warning: $border-warning-color,
+  border-negative: $border-negative-color,
+);

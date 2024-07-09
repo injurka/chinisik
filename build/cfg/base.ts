@@ -5,6 +5,10 @@ export const baseCfg: NuxtConfig = {
     port: 5173,
   },
 
+  build: {
+    transpile: ['vuetify'],
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
@@ -12,7 +16,14 @@ export const baseCfg: NuxtConfig = {
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     'nuxt-icon',
+    'vuetify-nuxt-module',
   ],
+
+  vuetify: {
+    moduleOptions: {
+      //
+    },
+  },
 
   eslint: {
     config: {

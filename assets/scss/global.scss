@@ -1,28 +1,6 @@
 @import './normalize.scss';
 @import './fonts.scss';
 
-.dark-mode {
-  --color-text-primary: #e4e4e4;
-  --color-text-secondary: #888888;
-
-  --color-highlight: #{$color-highlight-dark};
-  --color-border: #474747;
-
-  --color-background: #1e1f20;
-  --color-background-content: #{$color-background-content-dark};
-}
-
-.rainy-mode {
-  --color-text-primary: #e4e4e4;
-  --color-text-secondary: #6d6e6f;
-
-  --color-highlight: #{$color-highlight-rainy};
-  --color-border: #474747;
-
-  --color-background: #0d1117;
-  --color-background-content: #{$color-background-content-rainy};
-}
-
 html {
   padding: 0;
   margin: 0;
@@ -36,15 +14,10 @@ body {
   padding: 0;
   border: none;
 
-  background-color: var(--color-background);
+  background-color: var(--bg-primary-color);
 
   color: var(--fg-primary-color);
   font-size: #{$font-size-base};
-
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: none;
 
   font-family: 'Noto Sans SC', 'Rubik', sans-serif;
 }
