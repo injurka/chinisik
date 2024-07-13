@@ -43,5 +43,6 @@ $colors: map-collect(
   $bg-colors,
   $border-colors,
   $fg-colors,
-  shared.$border-status-colors
+  shared.$border-status-colors,
+  shared.$fg-tone-colors
 );

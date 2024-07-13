@@ -3,8 +3,6 @@ import { type P5I, p5i } from 'p5i'
 
 const props = defineProps<{ width: number, height: number }>()
 
-const isEnabled = ref<boolean>(true)
-
 const haoticLineEl = ref<HTMLElement>()
 const haoticLineCanavas = ref<P5I>()
 
@@ -48,7 +46,6 @@ function createHaoticLines(el: HTMLElement) {
         background(0, 0)
         strokeWeight(10)
         stroke(getComputedStyle(document.documentElement).getPropertyValue('--bg-accent-overlay-color'))
-        // fill(getComputedStyle(document.documentElement).getPropertyValue('--fg-secondary-color'))
         noFill()
 
         beginShape()
@@ -84,42 +81,28 @@ function createHaoticLines(el: HTMLElement) {
 }
 
 function createSketchs() {
-  haoticLineCanavas.value = createHaoticLines(haoticLineEl.value!)
+  nextTick(() => {
+    haoticLineCanavas.value?.remove?.()
+    haoticLineCanavas.value = createHaoticLines(haoticLineEl.value!)
+  })
 }
 
 window.addEventListener('resize', () => {
   try {
-    haoticLineCanavas.value?.remove?.()
-
-    if (window.innerWidth < 1200) {
-      isEnabled.value = false
-    }
-    else {
-      isEnabled.value = true
-      nextTick(() => {
-        createSketchs()
-      })
-    }
+    createSketchs()
   }
-  catch (_) {
+  catch (err) {
+    console.error(err)
   }
 })
 
 onMounted(() => {
-  if (window.innerWidth < 1200) {
-    isEnabled.value = false
-  }
-  else {
-    nextTick(() => {
-      createSketchs()
-    })
-  }
+  createSketchs()
 })
 </script>
 
 <template>
   <div
-    v-if="isEnabled"
     ref="haoticLineEl"
     class="haotic-line"
   />

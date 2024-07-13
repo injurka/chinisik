@@ -43,3 +43,11 @@ body {
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+::-moz-selection {
+  background: var(--bg-accent-overlay-color);
+}
+
+::selection {
+  background: var(--bg-accent-overlay-color);
+}

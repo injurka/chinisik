@@ -1,43 +1,150 @@
 <script lang="ts" setup>
+import { vElementVisibility } from '@vueuse/components'
+
 interface Props {
   isPinyinShowed: boolean
   isTranslateShowed: boolean
+  isTranscription: boolean
+  isPinyinColored: boolean
+
   hieroglyph: HieroglyphKey
 }
 
 const props = defineProps<Props>()
+const emits = defineEmits<{ onExpand: [void] }>()
 
-const isFullyShowed: Ref<boolean> = ref(false)
+const isToneCalculated = ref<boolean>(false)
+const isElementVisible = ref<boolean>(false)
+const isFullyShowed = ref<boolean>(false)
 const shouldShowPinyin = computed<boolean>(() => props.isPinyinShowed || isFullyShowed.value)
 const shouldShowTranslate = computed<boolean>(() => props.isTranslateShowed || isFullyShowed.value)
 
-watch(() => [
-  props.isPinyinShowed,
-  props.isTranslateShowed,
-], () => {
-  isFullyShowed.value = false
-})
+const pinyinEl = ref<HTMLElement | null>(null)
+const toneEl = ref<HTMLElement | null>(null)
+
+function updateToneColor() {
+  if (!toneEl.value || !pinyinEl.value) {
+    return
+  }
+
+  const { toneType } = props.hieroglyph
+
+  const pinyinToneEl = pinyinEl.value.querySelectorAll<HTMLElement>('.tone')!
+  const color = props.isPinyinColored ? `var(--fg-tone-${toneType}-color)` : 'var(--fg-primary-color)'
+
+  toneEl.value.style.color = color
+  pinyinToneEl[0].style.color = color
+}
+
+function updateTonePos() {
+  if (!toneEl.value || !pinyinEl.value) {
+    return
+  }
+
+  const { toneIndex } = props.hieroglyph
+
+  const pinyinElements = pinyinEl.value!.querySelectorAll('.pinyin-el')
+
+  let value = 0.0
+  for (let i = 0; i < toneIndex; i++) {
+    const el = pinyinElements[i].getBoundingClientRect()
+    value += el.width
+  }
+
+  const styles = {
+    left: `${value}px`,
+    width: `${pinyinElements[toneIndex].getBoundingClientRect().width}px`,
+  }
+
+  toneEl.value.style.left = styles.left
+  toneEl.value.style.width = styles.width
+}
+
+function applyToneStyles() {
+  if (
+    !shouldShowPinyin.value
+    || isToneCalculated.value
+    || !isElementVisible.value
+  ) {
+    return
+  }
+
+  nextTick(() => {
+    updateTonePos()
+    updateToneColor()
+  })
+
+  isToneCalculated.value = true
+}
+
+function onElementVisibility(isVisible: boolean) {
+  isElementVisible.value = isVisible
+}
+
+watch(
+  () => [props.isPinyinShowed, props.isTranslateShowed],
+  () => isFullyShowed.value = false,
+)
+
+watch(
+  () => [props.isPinyinColored],
+  () => updateToneColor(),
+)
+
+watch(
+  () => [props.isPinyinShowed, isFullyShowed.value],
+  () => applyToneStyles(),
+
+)
+watch(
+  () => [isElementVisible.value],
+  () => applyToneStyles(),
+)
 </script>
 
 <template>
-  <div class="wrapper">
+  <div v-element-visibility="onElementVisibility" class="wrapper">
     <div class="item" @click="isFullyShowed = !isFullyShowed">
       <div class="item-index">
         {{ hieroglyph.index }}
       </div>
       <Transition name="slide-up">
-        <div v-if="shouldShowPinyin" class="item-pinyin">
-          {{ hieroglyph.pinyin }}
+        <div v-show="shouldShowPinyin" class="item-pinyin">
+          <div ref="pinyinEl" class="item-pinyin-text">
+            <span
+              v-for="(part, key) in hieroglyph.pinyin.split('')"
+              :key="part"
+              class="pinyin-el"
+              :class="[{ tone: key === hieroglyph.toneIndex }]"
+            >
+              {{ part }}
+            </span>
+            <div ref="toneEl" class="item-pinyin-tone">
+              {{ pinyinTone[hieroglyph.toneIndex] }}
+            </div>
+          </div>
+          <div v-show="isTranscription && hieroglyph.transcription" class="item-pinyin-tran">
+            {{ hieroglyph.transcription }}
+          </div>
         </div>
       </Transition>
       <div class="item-hieroglyph">
-        {{ hieroglyph.hieroglyph }}
+        {{ hieroglyph.glyph }}
       </div>
       <Transition name="slide-down">
-        <div v-if="shouldShowTranslate" class="item-translate">
+        <div v-show="shouldShowTranslate" class="item-translate">
           {{ hieroglyph.translate }}
         </div>
       </Transition>
+      <div class="item-expand" @click="emits('onExpand', hieroglyph)">
+        <Icon name="material-symbols:eye-tracking-outline-rounded" size="15" />
+        <VTooltip
+          activator="parent"
+          location="top"
+        >
+          Посмотреть подробную информацию
+        </VTooltip>
+      </div>
     </div>
   </div>
 </template>
@@ -67,25 +174,18 @@ watch(() => [
   position: relative;
   margin: 5px;
 
-  width: 130px;
-  height: 130px;
+  width: 160px;
+  height: 160px;
 
   @include mobile {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
   }
 
   .item {
-    &:hover {
-      box-shadow: 0 0 5px var(--bg-overlay-light-color);
-    }
-
-    transition: box-shadow 0.2s ease-in-out;
-
     overflow: hidden;
 
     background-color: var(--bg-secondary-color);
-    box-shadow: 0 0 5px var(--bg-overlay-dark-color);
     border: 1px solid var(--border-secondary-color);
     border-radius: 10px;
     padding: 5px;
@@ -94,7 +194,7 @@ watch(() => [
     width: 100%;
 
     display: grid;
-    grid-template-rows: 1fr 2fr 1.4fr;
+    grid-template-rows: 1.5fr 2fr 1.5fr;
     grid-template-areas:
       'pinyin'
       'hieroglyph'
@@ -103,39 +203,80 @@ watch(() => [
     text-align: center;
     overflow: hidden;
 
+    box-shadow: 0 0 5px var(--bg-overlay-dark-color);
+
+    &:hover {
+      box-shadow: 0 0 5px var(--bg-overlay-light-color);
+      transition: box-shadow 0.2s ease-in-out;
+    }
+
+    &:hover {
+      .itemindex,
+      .item-expand {
+        opacity: 1;
+        color: var(--fg-primary-color);
+        transition: all 0.2s ease-in-out;
+      }
+    }
+
     &-pinyin,
     &-hieroglyph,
     &-translate {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
     &-pinyin {
       grid-area: pinyin;
-
       font-size: 1rem;
+
+      &-text {
+        position: relative;
+      }
+
+      &-tone {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: -4px;
+        left: 0;
+        font-weight: 600;
+        font-family: 'Noto Sans SC';
+        font-size: 0.6rem;
+      }
+
+      &-tran {
+        font-size: 0.7rem;
+        color: var(--fg-secondary-color);
+        border-top: 1px solid var(--border-primary-color);
+      }
     }
 
     &-hieroglyph {
       grid-area: hieroglyph;
-
+      font-family: 'Noto Sans SC';
       font-size: 2rem;
     }
 
     &-translate {
       grid-area: translate;
       text-align: center;
-
+      font-family: 'Rubik';
       font-size: 0.8rem;
     }
 
     @include mobile {
       &-pinyin {
         font-size: 0.9rem;
+        &-tran {
+          font-size: 0.65rem;
+        }
       }
 
       &-hieroglyph {
+        font-family: 'Noto Sans SC';
         font-size: 1.8rem;
       }
 
@@ -160,14 +301,52 @@ watch(() => [
       background-color: var(--bg-tertiary-color);
       border: 1px solid var(--border-secondary-color);
       border-radius: 50%;
+      color: var(--fg-secondary-color);
 
       @include mobile {
-        top: -2px;
-        left: -2px;
+        top: -3px;
+        left: -3px;
         height: 20px;
         width: 20px;
-        font-size: 0.5rem;
+        font-size: 0.6rem;
         letter-spacing: 0px;
+      }
+    }
+
+    &-expand {
+      position: absolute;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 0.7rem;
+
+      bottom: -4px;
+      right: -4px;
+      height: 22px;
+      width: 22px;
+      background-color: var(--bg-tertiary-color);
+      border: 1px solid var(--border-secondary-color);
+      border-radius: 20%;
+      transition: all 0.2s ease-in-out;
+
+      opacity: 0;
+      color: var(--fg-secondary-color);
+
+      &:hover {
+        opacity: 1;
+        color: var(--fg-primary-color);
+      }
+
+      @include mobile {
+        bottom: -3px;
+        right: -3px;
+        height: 18px;
+        width: 18px;
+        font-size: 0.6rem;
+        letter-spacing: 0px;
+        opacity: 1;
       }
     }
   }

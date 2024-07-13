@@ -5,20 +5,27 @@ import KeyHieroglyphInfo from '~/components/modules/keys/dialog/key-hieroglyph-i
 const keys: HieroglyphKey[] = mockHieroglyphKeys
 
 const isPinyinShowed = ref<boolean>(false)
+const isPinyinColored = ref<boolean>(false)
 const isTranslateShowed = ref<boolean>(false)
-const dialog = ref<boolean>(true)
+const isTranscription = ref<boolean>(false)
+
+//* Expanded hieroglyph key
+const dialog = ref<boolean>(false)
+const expandedHieroglyphKey = ref<HieroglyphKey>()
+
+function onHieroglyphExpand(hieroglyph: HieroglyphKey) {
+  expandedHieroglyphKey.value = hieroglyph
+  dialog.value = true
+}
+//*
 
 definePageMeta({ layout: 'base' })
 </script>
 
 <template>
   <section class="content">
-    <button @click="dialog = true">
-      @click="dialog = true"
-    </button>
-
     <div class="description">
-      <h2>214 радикалы, чтобы управлять всеми персонажами</h2>
+      <h2>214 радикалы, чтобы управлять всеми иероглифами</h2>
       <p>Знание 214 радикалов облегчит вам процесс изучения китайского языка. Почему? </p>
       <p>Потому что, когда вы знаете радикалы, вам легче запомнить, как они сочетаются друг с другом, образуя более сложные символы. </p>
       <p>Радикалы могут выполнять одну из следующих функций или обе:</p>
@@ -26,38 +33,54 @@ definePageMeta({ layout: 'base' })
         <li><em>семантический</em>, предоставление части или всего смысла;</li>
         <li><em>фонетика</em>, придание звука персонажу или чему-то очень близкому к нему.</li>
       </ul>
-      <h2>Концепция ключевых</h2>
-      <p>Каждый символ имеет один и только один радикал с функцией 'key', которая позволяет найти символ в словаре. Во многих случаях радикал слева или вверху символа является ключевым. Однако с увеличением использования цифровых словарей на смартфонах, в которых вы можете нарисовать символ  n, знание ключей становится менее критичным.</p>
+      <p>
+        По-китайски ключи именуются 部首 bùshǒu (палл. бушоу) – дословно “голова раздела”. Также китайские ключи часто называют “радикалами” (от английского radicals).
+      </p>
+      <p>
+        На протяжении истории количество иероглифов в таблицах ключей варьировалось. Наиболее широкое распространение получила система из словаря Канси (康熙字典), насчитывающая 214 иероглифических ключей.
+      </p>
     </div>
 
-    <div class="keys">
+    <div class="controls">
       <div
-        class="keys-item"
+        class="controls-item"
         :class="{ actived: isPinyinShowed }"
         @click="isPinyinShowed = !isPinyinShowed"
       >
-        <button class="keys-button">
-          {{
-            isPinyinShowed
-              ? 'скрыть пиньин'
-              : 'показать пиньин'
-          }}
+        <button class="controls-button">
+          Пиньин
         </button>
-        <Icon class="keys-selected" name="Checked" size="20" />
+        <Icon class="controls-selected" name="Checked" size="20" />
       </div>
       <div
-        class="keys-item"
+        class="controls-item"
         :class="{ actived: isTranslateShowed }"
         @click="isTranslateShowed = !isTranslateShowed"
       >
-        <button class="keys-button">
-          {{
-            isTranslateShowed
-              ? 'скрыть перевод'
-              : 'показать перевод'
-          }}
+        <button class="controls-button">
+          Перевод
         </button>
-        <Icon class="keys-selected" name="Checked" size="20" />
+        <Icon class="controls-selected" name="Checked" size="20" />
+      </div>
+      <div
+        class="controls-item"
+        :class="{ actived: isTranscription }"
+        @click="isTranscription = !isTranscription"
+      >
+        <button class="controls-button">
+          Транскрипция
+        </button>
+        <Icon class="controls-selected" name="Checked" size="20" />
+      </div>
+      <div
+        class="controls-item"
+        :class="{ actived: isPinyinColored }"
+        @click="isPinyinColored = !isPinyinColored"
+      >
+        <button class="controls-button">
+          Цветной пиньин
+        </button>
+        <Icon class="controls-selected" name="Checked" size="20" />
       </div>
     </div>
 
@@ -65,13 +88,19 @@ definePageMeta({ layout: 'base' })
       <HieroglyphKeyItem
         v-for="item in keys"
         :key="item.index"
-        :is-translate-showed="isTranslateShowed"
-        :is-pinyin-showed="isPinyinShowed"
+        :is-translate-showed
+        :is-pinyin-showed
+        :is-transcription
+        :is-pinyin-colored
         :hieroglyph="item"
+        @on-expand="onHieroglyphExpand"
       />
     </div>
 
-    <KeyHieroglyphInfo id="1" v-model="dialog" />
+    <KeyHieroglyphInfo
+      v-model="dialog"
+      :hieroglyph="expandedHieroglyphKey"
+    />
   </section>
 </template>
 
@@ -94,10 +123,11 @@ definePageMeta({ layout: 'base' })
     }
   }
 
-  .keys {
+  .controls {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 10px;
 
     margin: 25px 0;
@@ -115,7 +145,7 @@ definePageMeta({ layout: 'base' })
 
       padding: 5px 10px;
       border-radius: 10px;
-      min-width: 160px;
+      min-width: 140px;
       font-size: 0.9rem;
       text-align: center;
       cursor: pointer;
@@ -124,7 +154,7 @@ definePageMeta({ layout: 'base' })
         border: 2px solid var(--border-accent-color);
         box-shadow: 0 0 3px var(--bg-accent-color);
 
-        .keys {
+        .controls {
           &-selected {
             opacity: 1;
             transform: scale(1);

@@ -14,6 +14,7 @@ export const baseCfg: NuxtConfig = {
     '@nuxt/image',
     '@nuxtjs/device',
     '@pinia/nuxt',
+    '@vueuse/nuxt',
     '@nuxtjs/color-mode',
     'nuxt-icon',
     'vuetify-nuxt-module',
