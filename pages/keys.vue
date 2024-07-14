@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import HieroglyphKeyItem from '~/components/modules/keys/key-hieroglyph.vue'
-import KeyHieroglyphInfo from '~/components/modules/keys/dialog/key-hieroglyph-info.vue'
+import { KeyHieroglyph, KeyHieroglyphInfo } from '~/components/modules/keys'
 
 const keys: HieroglyphKey[] = mockHieroglyphKeys
 
@@ -10,12 +9,12 @@ const isTranslateShowed = ref<boolean>(false)
 const isTranscription = ref<boolean>(false)
 
 //* Expanded hieroglyph key
-const dialog = ref<boolean>(false)
+const isExpandedDialog = ref<boolean>(false)
 const expandedHieroglyphKey = ref<HieroglyphKey>()
 
 function onHieroglyphExpand(hieroglyph: HieroglyphKey) {
   expandedHieroglyphKey.value = hieroglyph
-  dialog.value = true
+  isExpandedDialog.value = true
 }
 //*
 
@@ -25,8 +24,8 @@ definePageMeta({ layout: 'base' })
 <template>
   <section class="content">
     <div class="description">
-      <h2>214 радикалы, чтобы управлять всеми иероглифами</h2>
-      <p>Знание 214 радикалов облегчит вам процесс изучения китайского языка. Почему? </p>
+      <h2>214-ть радикалов, чтобы управлять всеми иероглифами</h2>
+      <p>Знание 214-ти радикалов облегчит вам процесс изучения китайского языка. Почему? </p>
       <p>Потому что, когда вы знаете радикалы, вам легче запомнить, как они сочетаются друг с другом, образуя более сложные символы. </p>
       <p>Радикалы могут выполнять одну из следующих функций или обе:</p>
       <ul>
@@ -85,7 +84,7 @@ definePageMeta({ layout: 'base' })
     </div>
 
     <div class="list">
-      <HieroglyphKeyItem
+      <KeyHieroglyph
         v-for="item in keys"
         :key="item.index"
         :is-translate-showed
@@ -98,7 +97,7 @@ definePageMeta({ layout: 'base' })
     </div>
 
     <KeyHieroglyphInfo
-      v-model="dialog"
+      v-model="isExpandedDialog"
       :hieroglyph="expandedHieroglyphKey"
     />
   </section>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import HaoticLines from './ui/haotic-lines.vue'
+import { HaoticLines } from '~/components/domain/haotic-lines'
 
 enum ThemesVariant {
   Light = 'light',
@@ -92,6 +92,8 @@ function toggleTheme() {
     flex-direction: row;
     justify-content: space-between;
     margin: 0 auto;
+    z-index: 6;
+    font-family: 'Rubik';
 
     .logo {
       margin-right: 8px;

@@ -1,28 +1,51 @@
 <script lang="ts" setup>
 import { type P5I, p5i } from 'p5i'
 
-const props = defineProps<{ width: number, height: number }>()
+interface Props {
+  width: number
+  height: number
+  scaleFactor?: number
+  pointsCounts?: number
+  speed?: number
+  weightStroke?: number
+  color?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  scaleFactor: 1.1,
+  pointsCounts: 8,
+  speed: 1.5,
+  weightStroke: 10,
+  color: '--bg-accent-overlay-color',
+})
 
 const haoticLineEl = ref<HTMLElement>()
 const haoticLineCanavas = ref<P5I>()
 
 function createHaoticLines(el: HTMLElement) {
   const sketch = p5i(() => {
+    const {
+      width: widthEl,
+      height: heightEl,
+      speed,
+      pointsCounts,
+      scaleFactor,
+      weightStroke,
+      color,
+    } = props
+
     const points: { x: number, y: number, dx: number, dy: number }[] = []
-    const numPoints: number = 8
-    const widthEl = props.width
-    const heightEl = props.height
-    const speed = 1.5
 
     return {
       setup({ createCanvas, random, height, WEBGL }) {
         const canvas = createCanvas(widthEl, heightEl, WEBGL)
         canvas.parent(el)
 
-        const step = (widthEl * 1.1) / (numPoints - 1)
-        for (let i = 0; i < numPoints; i++) {
+        const step = (widthEl * scaleFactor) / (pointsCounts - 1)
+
+        for (let i = 0; i < pointsCounts; i++) {
           points.push({
-            x: i * step - (widthEl * 1.1) / 2,
+            x: i * step - (widthEl * scaleFactor) / 2,
             y: random(-height, height * 2),
             dx: random(-speed, speed),
             dy: random(-speed, speed),
@@ -44,8 +67,8 @@ function createHaoticLines(el: HTMLElement) {
         strokeWeight,
       }) {
         background(0, 0)
-        strokeWeight(10)
-        stroke(getComputedStyle(document.documentElement).getPropertyValue('--bg-accent-overlay-color'))
+        strokeWeight(weightStroke)
+        stroke(getComputedStyle(document.documentElement).getPropertyValue(color))
         noFill()
 
         beginShape()
@@ -87,17 +110,17 @@ function createSketchs() {
   })
 }
 
-window.addEventListener('resize', () => {
-  try {
-    createSketchs()
-  }
-  catch (err) {
-    console.error(err)
-  }
-})
-
 onMounted(() => {
   createSketchs()
+
+  window.addEventListener('resize', () => {
+    try {
+      createSketchs()
+    }
+    catch (err) {
+      console.error(err)
+    }
+  })
 })
 </script>
 
@@ -116,5 +139,6 @@ onMounted(() => {
   top: 0;
   bottom: 0;
   filter: blur(30px);
+  z-index: 5;
 }
 </style>

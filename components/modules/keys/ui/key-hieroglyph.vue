@@ -96,6 +96,7 @@ watch(
   () => applyToneStyles(),
 
 )
+
 watch(
   () => [isElementVisible.value],
   () => applyToneStyles(),

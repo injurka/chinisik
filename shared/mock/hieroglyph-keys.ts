@@ -1,4 +1,4 @@
-export const mockHieroglyphKeys: HieroglyphKey[] = [
+export const mockHieroglyphKeys = [
   {
     index: 1,
     glyph: '一',
@@ -2139,4 +2139,4 @@ export const mockHieroglyphKeys: HieroglyphKey[] = [
     toneType: 4,
     toneIndex: 1,
   },
-]
+] satisfies HieroglyphKey[]
