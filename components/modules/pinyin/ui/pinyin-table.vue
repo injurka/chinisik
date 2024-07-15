@@ -112,21 +112,14 @@ function handleClickPinyin(value: string) {
     align-items: center;
     padding: 5px;
     cursor: pointer;
+    transition: background-color 0.2s ease-out;
 
     &:hover {
       background-color: var(--bg-action-hover-color);
       transition: background-color 0.2s ease-in;
     }
-    transition: background-color 0.2s ease-out;
 
     &__h {
-      // &:not(:first-child) {
-      //   background-color: var(--bg-overlay-dark-color);
-      // }
-      &.highlight {
-        background-color: var(--bg-overlay-light-color);
-        transition: background-color 0.4s ease-in;
-      }
       transition: background-color 0.4s ease-out;
 
       display: flex;
@@ -134,16 +127,14 @@ function handleClickPinyin(value: string) {
       align-items: center;
 
       padding: 5px;
+
+      &.highlight {
+        background-color: var(--bg-overlay-light-color);
+        transition: background-color 0.4s ease-in;
+      }
     }
 
     &__v {
-      // &:not(:first-child) {
-      //   background-color: var(--bg-overlay-dark-color);
-      // }
-      &.highlight {
-        background-color: var(--bg-overlay-light-color);
-        transition: background-color 0.4s ease-in;
-      }
       transition: background-color 0.4s ease-out;
 
       display: flex;
@@ -151,6 +142,11 @@ function handleClickPinyin(value: string) {
       align-items: center;
 
       padding: 5px;
+
+      &.highlight {
+        background-color: var(--bg-overlay-light-color);
+        transition: background-color 0.4s ease-in;
+      }
     }
 
     &__empty {

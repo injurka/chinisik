@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { vElementVisibility } from '@vueuse/components'
+import { useElementVisibility } from '@vueuse/core'
 
 interface Props {
   isPinyinShowed: boolean
@@ -13,14 +13,15 @@ interface Props {
 const props = defineProps<Props>()
 const emits = defineEmits<{ onExpand: [void] }>()
 
+const pinyinEl = ref<HTMLElement | null>(null)
+const toneEl = ref<HTMLElement | null>(null)
+const contentEl = ref<HTMLElement | null>(null)
+
 const isToneCalculated = ref<boolean>(false)
-const isElementVisible = ref<boolean>(false)
+const isElementVisible = useElementVisibility(contentEl)
 const isFullyShowed = ref<boolean>(false)
 const shouldShowPinyin = computed<boolean>(() => props.isPinyinShowed || isFullyShowed.value)
 const shouldShowTranslate = computed<boolean>(() => props.isTranslateShowed || isFullyShowed.value)
-
-const pinyinEl = ref<HTMLElement | null>(null)
-const toneEl = ref<HTMLElement | null>(null)
 
 function updateToneColor() {
   if (!toneEl.value || !pinyinEl.value) {
@@ -77,10 +78,6 @@ function applyToneStyles() {
   isToneCalculated.value = true
 }
 
-function onElementVisibility(isVisible: boolean) {
-  isElementVisible.value = isVisible
-}
-
 watch(
   () => [props.isPinyinShowed, props.isTranslateShowed],
   () => isFullyShowed.value = false,
@@ -104,7 +101,7 @@ watch(
 </script>
 
 <template>
-  <div v-element-visibility="onElementVisibility" class="wrapper">
+  <div ref="contentEl" class="wrapper">
     <div class="item" @click="isFullyShowed = !isFullyShowed">
       <div class="item-index">
         {{ hieroglyph.index }}
