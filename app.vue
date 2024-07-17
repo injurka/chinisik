@@ -4,13 +4,14 @@ const app = useAppConfig()
 useHead({
   ...app,
   htmlAttrs: {
-    ...app.htmlAttrs,
+    'lang': 'ru',
     'data-cn': `${useCookie(FONT_FAMILY).value}`,
   },
 })
 </script>
 
 <template>
+  <NuxtLoadingIndicator />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

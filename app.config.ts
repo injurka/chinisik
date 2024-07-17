@@ -1,7 +1,6 @@
 export default defineAppConfig({
   titleTemplate: '%s',
   name: 'chinisik',
-  htmlAttrs: { lang: 'ru' },
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     { rel: 'shortcut_icon', href: '/favicon.ico' },
@@ -11,14 +10,14 @@ export default defineAppConfig({
   ],
   meta: [
     { name: 'viewport', content: 'viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no' },
-    { name: 'title', content: '-' },
-    { hid: 'description', name: 'description', content: '-' },
+    { name: 'title', content: 'chinisik' },
+    { hid: 'description', name: 'description', content: 'chinisik' },
     { property: 'og:title', content: '-' },
-    { property: 'og:url', content: 'https://chinisik.ru' },
-    { property: 'og:image', content: 'https://chinisik.ru/open-graph.png' },
+    { property: 'og:url', content: 'https://chinisik.vercel.app' },
+    { property: 'og:image', content: 'https://chinisik.vercel.app/open-graph.png' },
     { property: 'og:image:width', content: '400' },
     { property: 'og:image:height', content: '400' },
-    { property: 'og:description', content: '-' },
+    { property: 'og:description', content: 'chinisik' },
     { name: 'twitter:card', content: 'summary' },
   ],
 })

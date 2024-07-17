@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useElementVisibility } from '@vueuse/core'
 import type { ControlHieroglyphKey } from '../store/keys.store'
+import { PinyinText } from '~/components/domain/pinyin-text'
 
 interface Props {
   control: ControlHieroglyphKey
@@ -10,50 +11,15 @@ interface Props {
 const props = defineProps<Props>()
 const emits = defineEmits<{ onExpand: [void] }>()
 
-const pinyinEl = ref<HTMLElement | null>(null)
 const contentEl = ref<HTMLElement | null>(null)
 
-const isToneCalculated = ref<boolean>(false)
 const isElementVisible = useElementVisibility(contentEl)
+
+const isToneCalculated = ref<boolean>(false)
 const isFullyShowed = ref<boolean>(false)
+
 const shouldShowPinyin = computed<boolean>(() => props.control.isPinyin || isFullyShowed.value)
 const shouldShowTranslate = computed<boolean>(() => props.control.isTranslate || isFullyShowed.value)
-
-function updateToneColor() {
-  if (!pinyinEl.value) {
-    return
-  }
-
-  const { toneType } = props.hieroglyph
-
-  const pinyinToneEl = pinyinEl.value.querySelectorAll<HTMLElement>('.tone')!
-  const color = props.control.isPinyinColored
-    ? `var(--fg-tone-${toneType}-color)`
-    : 'var(--fg-primary-color)'
-
-  pinyinToneEl[0].style.color = color
-}
-
-function applyToneStyles() {
-  if (
-    !shouldShowPinyin.value
-    || isToneCalculated.value
-    || !isElementVisible.value
-  ) {
-    return
-  }
-
-  nextTick(() => {
-    updateToneColor()
-  })
-
-  isToneCalculated.value = true
-}
-
-watch(
-  () => [props.control.isPinyinColored],
-  () => updateToneColor(),
-)
 
 watch(
   () => [props.control.isPinyin, props.control.isTranslate],
@@ -66,7 +32,12 @@ watch(
     isFullyShowed.value,
     isElementVisible.value,
   ],
-  () => applyToneStyles(),
+  () => {
+    if (!shouldShowPinyin.value || !isElementVisible.value) {
+      return
+    }
+    isToneCalculated.value = true
+  },
 )
 </script>
 
@@ -77,20 +48,13 @@ watch(
         {{ hieroglyph.index }}
       </div>
       <Transition name="slide-up">
-        <div v-show="shouldShowPinyin" class="item-pinyin">
-          <div ref="pinyinEl" class="pinyin-text">
-            <span
-              v-for="(part, key) in hieroglyph.pinyin.split('')"
-              :key="part"
-              class="pinyin-text-part"
-              :class="[{ tone: key === hieroglyph.toneIndex }]"
-            >
-              {{ part }}
-              <span v-if="key === hieroglyph.toneIndex" class="pinyin-text-tone">
-                {{ pinyinTone[hieroglyph.toneIndex] }}
-              </span>
-            </span>
-          </div>
+        <div v-if="shouldShowPinyin && isToneCalculated" class="item-pinyin">
+          <PinyinText
+            :pinyin="hieroglyph.pinyin"
+            :colored="control.isPinyinColored"
+            :tone-index="hieroglyph.toneIndex"
+            :tone-type="hieroglyph.toneType"
+          />
           <div
             v-show="control.isTranscription && hieroglyph.transcription"
             class="pinyin-tran"
@@ -103,18 +67,16 @@ watch(
         {{ hieroglyph.glyph }}
       </div>
       <Transition name="slide-down">
-        <div v-show="shouldShowTranslate" class="item-translate">
+        <div v-if="shouldShowTranslate" class="item-translate">
           {{ hieroglyph.translate }}
         </div>
       </Transition>
-      <div class="item-expand" @click="emits('onExpand', hieroglyph)">
+      <div
+        v-if="isElementVisible"
+        class="item-expand"
+        @click="emits('onExpand', hieroglyph)"
+      >
         <Icon name="material-symbols:eye-tracking-outline-rounded" size="15" />
-        <VTooltip
-          activator="parent"
-          location="top"
-        >
-          Посмотреть подробную информацию
-        </VTooltip>
       </div>
     </div>
   </div>
@@ -202,27 +164,6 @@ watch(
     &-pinyin {
       grid-area: pinyin;
       font-size: 1rem;
-
-      .pinyin-text {
-        display: flex;
-        justify-content: center;
-
-        &-part {
-          &.tone {
-            position: relative;
-          }
-        }
-        &-tone {
-          display: flex;
-          justify-content: center;
-          position: absolute;
-          top: -4px;
-          width: 100%;
-          font-weight: 600;
-          font-family: 'Noto Sans SC';
-          font-size: 0.6rem;
-        }
-      }
 
       .pinyin-tran {
         font-size: 0.7rem;

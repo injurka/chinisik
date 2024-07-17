@@ -1,4 +1,5 @@
-// import Word from './ui/index.vue'
 import { Word } from './ui'
+import { type WordVariant, useWordStore } from './store'
 
-export { Word }
+export { Word, useWordStore }
+export type { WordVariant }

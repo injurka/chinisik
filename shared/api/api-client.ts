@@ -101,7 +101,7 @@ function createApi(
   }
 
   // Добавление сервисов и методов
-  handlers.forEach(handler => addHandler(handler, apiMethods[handler](`${baseUrl}`)))
+  handlers.forEach(handler => addHandler(handler, (apiMethods as any)[handler](`${baseUrl}`)))
 
   return api
 }

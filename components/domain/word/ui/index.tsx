@@ -1,5 +1,7 @@
 import './index.scss'
+
 import { VTooltip } from 'vuetify/components'
+import { type WordVariant, useWordStore } from '../store/word.store'
 
 const WordVarious = defineComponent({
   name: 'WordVarious',
@@ -8,7 +10,7 @@ const WordVarious = defineComponent({
     pinyin: { type: String },
     translate: { type: String },
     glyph: { type: String },
-    variant: { type: Number as PropType< 0 | 1 | 2 | 3 | 4 > },
+    variant: { type: Number as PropType<WordVariant> },
   },
   components: { VTooltip },
   setup(props) {
@@ -120,27 +122,30 @@ const WordVarious = defineComponent({
   },
 })
 
-export const Word = defineComponent({
+const Word = defineComponent({
   name: 'Word',
   props: {
     fixed: { type: Number, default: 0 },
+    variant: { type: Number as PropType<WordVariant>, default: 0 },
     glyph: { type: String },
     pinyin: { type: String },
     translate: { type: String },
-    variant: { type: Number as PropType< 0 | 1 | 2 | 3 | 4> },
   },
   components: { WordVarious },
   setup(props) {
-    const variant = computed(() => props.fixed || props.variant)
+    const store = useWordStore()
+    const variant = computed(() => (props.fixed || store.variant) as WordVariant)
 
     useRender(() => (
-      <div class={[
+      <span class={[
         'word',
         `variant-${variant.value}`,
       ]}
       >
-        <WordVarious {...props} />
-      </div>
+        <WordVarious {...props} variant={variant.value} key={variant.value} />
+      </span>
     ))
   },
 })
+
+export { Word }
