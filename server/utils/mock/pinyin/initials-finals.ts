@@ -1,3 +1,5 @@
+import type { InitialsFinals } from '~/shared/types'
+
 export const mockInitialsFinals = [
   { id: 1, initialId: null, finalToneId: 1 },
   { id: 2, initialId: null, finalToneId: 2 },

@@ -1,4 +1,4 @@
 export * from './finals'
 export * from './initials'
 export * from './initials-finals'
-export * from './combined-initial-with-final'
+export * from './initial-with-final'

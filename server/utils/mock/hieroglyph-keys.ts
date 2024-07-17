@@ -1,3 +1,5 @@
+import type { HieroglyphKey } from '~/shared/types'
+
 export const mockHieroglyphKeys = [
   {
     index: 1,

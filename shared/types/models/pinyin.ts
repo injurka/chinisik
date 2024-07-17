@@ -9,6 +9,8 @@ export interface Pinyin {
   finalPos: number
 }
 
+export type ToneType = 0 | 1 | 2 | 3 | 4
+
 export interface Final {
   id: number
   name: string
@@ -27,6 +29,8 @@ export interface InitialsFinals {
 export interface FinalsTone {
   id: number
   name: string
-  toneType: 0 | 1 | 2 | 3 | 4
+  toneType: ToneType
   finalId: number
 }
+
+export type InitialWithFinal = Record<string, number[]>

@@ -1,18 +1,26 @@
 <script lang="ts" setup>
 import { useDebounceFn } from '@vueuse/core'
-import { usePinyinStore } from '../store/pinyin.store'
 import PinyinInfo from './dialog/pinyin-info.vue'
 
-const hoveredPinyin = ref<{ initial: Initial | null, final: Final | null }>({
+interface HoveredPinyin {
+  initial: Initial | null
+  final: Final | null
+}
+
+interface Props {
+  initials: Final[]
+  finals: Initial[]
+  initialWithFinal: InitialWithFinal
+}
+
+defineProps<Props>()
+
+const hoveredPinyin = ref<HoveredPinyin>({
   final: null,
   initial: null,
 })
 const dialog = ref<boolean>(false)
 const lastSelectedPinyin = ref<string>('')
-
-const store = usePinyinStore()
-
-const { finals, initials, initialWithFinal } = storeToRefs(store)
 
 const handleLeavePinyin = useDebounceFn((initial: Initial, final: Final) => {
   if (initial.id === hoveredPinyin.value.initial?.id
@@ -61,7 +69,7 @@ function handleClickPinyin(value: string) {
           @mouseleave="handleLeavePinyin(initial, final)"
         >
           <div
-            v-if="initialWithFinal.get(`${initial.name}+${final.name}`)?.length"
+            v-if="initialWithFinal[`${initial.name}+${final.name}`]?.length"
             @click="handleClickPinyin(`${initial.name}+${final.name}`)"
           >
             {{ `${initial.name}${final.name}` }}

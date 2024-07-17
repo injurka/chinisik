@@ -122,6 +122,7 @@ function onAddToFavorite() {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        padding: 16px 0;
 
         &-glyph {
           display: inline-flex;

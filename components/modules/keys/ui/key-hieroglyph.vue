@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 import { useElementVisibility } from '@vueuse/core'
+import type { ControlHieroglyphKey } from '../store/keys.store'
 
 interface Props {
-  isPinyinShowed: boolean
-  isTranslateShowed: boolean
-  isTranscription: boolean
-  isPinyinColored: boolean
-
+  control: ControlHieroglyphKey
   hieroglyph: HieroglyphKey
 }
 
@@ -14,51 +11,27 @@ const props = defineProps<Props>()
 const emits = defineEmits<{ onExpand: [void] }>()
 
 const pinyinEl = ref<HTMLElement | null>(null)
-const toneEl = ref<HTMLElement | null>(null)
 const contentEl = ref<HTMLElement | null>(null)
 
 const isToneCalculated = ref<boolean>(false)
 const isElementVisible = useElementVisibility(contentEl)
 const isFullyShowed = ref<boolean>(false)
-const shouldShowPinyin = computed<boolean>(() => props.isPinyinShowed || isFullyShowed.value)
-const shouldShowTranslate = computed<boolean>(() => props.isTranslateShowed || isFullyShowed.value)
+const shouldShowPinyin = computed<boolean>(() => props.control.isPinyin || isFullyShowed.value)
+const shouldShowTranslate = computed<boolean>(() => props.control.isTranslate || isFullyShowed.value)
 
 function updateToneColor() {
-  if (!toneEl.value || !pinyinEl.value) {
+  if (!pinyinEl.value) {
     return
   }
 
   const { toneType } = props.hieroglyph
 
   const pinyinToneEl = pinyinEl.value.querySelectorAll<HTMLElement>('.tone')!
-  const color = props.isPinyinColored ? `var(--fg-tone-${toneType}-color)` : 'var(--fg-primary-color)'
+  const color = props.control.isPinyinColored
+    ? `var(--fg-tone-${toneType}-color)`
+    : 'var(--fg-primary-color)'
 
-  toneEl.value.style.color = color
   pinyinToneEl[0].style.color = color
-}
-
-function updateTonePos() {
-  if (!toneEl.value || !pinyinEl.value) {
-    return
-  }
-
-  const { toneIndex } = props.hieroglyph
-
-  const pinyinElements = pinyinEl.value!.querySelectorAll('.pinyin-el')
-
-  let value = 0.0
-  for (let i = 0; i < toneIndex; i++) {
-    const el = pinyinElements[i].getBoundingClientRect()
-    value += el.width
-  }
-
-  const styles = {
-    left: `${value}px`,
-    width: `${pinyinElements[toneIndex].getBoundingClientRect().width}px`,
-  }
-
-  toneEl.value.style.left = styles.left
-  toneEl.value.style.width = styles.width
 }
 
 function applyToneStyles() {
@@ -71,7 +44,6 @@ function applyToneStyles() {
   }
 
   nextTick(() => {
-    updateTonePos()
     updateToneColor()
   })
 
@@ -79,23 +51,21 @@ function applyToneStyles() {
 }
 
 watch(
-  () => [props.isPinyinShowed, props.isTranslateShowed],
-  () => isFullyShowed.value = false,
-)
-
-watch(
-  () => [props.isPinyinColored],
+  () => [props.control.isPinyinColored],
   () => updateToneColor(),
 )
 
 watch(
-  () => [props.isPinyinShowed, isFullyShowed.value],
-  () => applyToneStyles(),
-
+  () => [props.control.isPinyin, props.control.isTranslate],
+  () => isFullyShowed.value = false,
 )
 
 watch(
-  () => [isElementVisible.value],
+  () => [
+    props.control.isPinyin,
+    isFullyShowed.value,
+    isElementVisible.value,
+  ],
   () => applyToneStyles(),
 )
 </script>
@@ -108,20 +78,23 @@ watch(
       </div>
       <Transition name="slide-up">
         <div v-show="shouldShowPinyin" class="item-pinyin">
-          <div ref="pinyinEl" class="item-pinyin-text">
+          <div ref="pinyinEl" class="pinyin-text">
             <span
               v-for="(part, key) in hieroglyph.pinyin.split('')"
               :key="part"
-              class="pinyin-el"
+              class="pinyin-text-part"
               :class="[{ tone: key === hieroglyph.toneIndex }]"
             >
               {{ part }}
+              <span v-if="key === hieroglyph.toneIndex" class="pinyin-text-tone">
+                {{ pinyinTone[hieroglyph.toneIndex] }}
+              </span>
             </span>
-            <div ref="toneEl" class="item-pinyin-tone">
-              {{ pinyinTone[hieroglyph.toneIndex] }}
-            </div>
           </div>
-          <div v-show="isTranscription && hieroglyph.transcription" class="item-pinyin-tran">
+          <div
+            v-show="control.isTranscription && hieroglyph.transcription"
+            class="pinyin-tran"
+          >
             {{ hieroglyph.transcription }}
           </div>
         </div>
@@ -230,22 +203,28 @@ watch(
       grid-area: pinyin;
       font-size: 1rem;
 
-      &-text {
-        position: relative;
-      }
-
-      &-tone {
+      .pinyin-text {
         display: flex;
         justify-content: center;
-        position: absolute;
-        top: -4px;
-        left: 0;
-        font-weight: 600;
-        font-family: 'Noto Sans SC';
-        font-size: 0.6rem;
+
+        &-part {
+          &.tone {
+            position: relative;
+          }
+        }
+        &-tone {
+          display: flex;
+          justify-content: center;
+          position: absolute;
+          top: -4px;
+          width: 100%;
+          font-weight: 600;
+          font-family: 'Noto Sans SC';
+          font-size: 0.6rem;
+        }
       }
 
-      &-tran {
+      .pinyin-tran {
         font-size: 0.7rem;
         color: var(--fg-secondary-color);
         border-top: 1px solid var(--border-primary-color);
@@ -254,7 +233,7 @@ watch(
 
     &-hieroglyph {
       grid-area: hieroglyph;
-      font-family: 'Noto Sans SC';
+      font-family: var(--font-family-cn);
       font-size: 2rem;
     }
 
@@ -274,7 +253,7 @@ watch(
       }
 
       &-hieroglyph {
-        font-family: 'Noto Sans SC';
+        font-family: var(--font-family-cn);
         font-size: 1.8rem;
       }
 

@@ -9,6 +9,7 @@ export enum EApiStatus {
 interface IRequestState {
   _status: Map<string, EApiStatus>
   _error: Map<string, ErrorResult | null>
+  _cached: Map<string, any>
 }
 
 //* --- Store ----------------------------------------------- *//
@@ -16,9 +17,13 @@ export const useRequestStore = defineStore('request', {
   state: (): IRequestState => ({
     _status: new Map(),
     _error: new Map(),
+    _cached: new Map(),
   }),
 
   actions: {
+    _setCached<T>(key: string, value: T) {
+      this._cached.set(key, value)
+    },
     _setLoading(key: string, value: EApiStatus) {
       this._status.set(key, value)
     },
@@ -32,10 +37,15 @@ export const useRequestStore = defineStore('request', {
 
       const {
         key,
+        once,
         callback,
         onSuccess,
         onError,
       } = payload
+
+      if (once && this._status.get(key) === EApiStatus.FULFILLED) {
+        return this._cached.get(key)
+      }
 
       this._setLoading(key, EApiStatus.PENDING)
       this._setError(key, null)
@@ -45,6 +55,7 @@ export const useRequestStore = defineStore('request', {
 
         onSuccess?.({ data, state: this.$state })
         this._setLoading(key, EApiStatus.FULFILLED)
+        this._setCached(key, data)
 
         return { data, status: EApiStatus.FULFILLED }
       }
@@ -52,11 +63,15 @@ export const useRequestStore = defineStore('request', {
         onError?.({ error: error as ErrorResult, state: this.$state })
         this._setError(key, error)
         this._setLoading(key, EApiStatus.REJECTED)
+        this._setCached(key, null)
       }
 
       return { error: null, status: EApiStatus.REJECTED }
     },
 
+    getCached<T>(key: string): T {
+      return this._cached.get(key)!
+    },
     getStatus(key: string): EApiStatus {
       return this._status.get(key)!
     },
@@ -80,6 +95,7 @@ type onError = BaseCallback & { error: ErrorResult }
 
 export interface IRequestWrapperPayload<T> {
   key: string
+  once?: boolean
   callback: (payload: Callback) => T extends unknown ? void : Promise<T>
   onSuccess?: (payload: onSuccess<T>) => Promise<void> | void | unknown
   onError?: (payload: onError) => Promise<void> | void | unknown

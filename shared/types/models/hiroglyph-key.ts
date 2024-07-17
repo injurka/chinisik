@@ -1,7 +1,7 @@
 export interface HieroglyphKey {
-  index: number
-  alternative: string | null
-  toneType: 1 | 2 | 3 | 4
+  index?: number
+  alternative?: string | null
+  toneType: ToneType
   toneIndex: number
   pinyin: string
   glyph: string

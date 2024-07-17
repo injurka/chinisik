@@ -25,9 +25,8 @@ p {
 }
 
 .v-tooltip > .v-overlay__content {
-  background: transparent !important;
-  backdrop-filter: blur(1.5px);
-  background-color: var(--bg-overlay-dark-color);
+  background: var(--bg-overlay-dark-color) !important;
+  backdrop-filter: blur(4px);
   border: 1px solid var(--border-secondary-color);
   color: var(--fg-primary-color) !important;
 }

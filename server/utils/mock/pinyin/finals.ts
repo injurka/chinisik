@@ -1,3 +1,5 @@
+import type { Final, FinalsTone } from '~/shared/types'
+
 export const mockFinals = [
   { id: 1, pos: 1, name: 'a' },
   { id: 2, pos: 2, name: 'o' },
@@ -37,7 +39,7 @@ export const mockFinals = [
   { id: 36, pos: 36, name: 'üe' },
   { id: 37, pos: 37, name: 'üan' },
   { id: 38, pos: 38, name: 'ün' },
-] satisfies Final[]
+] as Final[]
 
 export const mockFinalsTone = [
   { id: 1, name: 'a', toneType: 0, finalId: 1 },

@@ -48,27 +48,40 @@ function toggleTheme() {
         :height="haoticLinesProps.height"
       />
     </ClientOnly>
-    <nav>
-      <div>
-        <ul>
-          <li>
-            <Icon class="logo" name="game-icons:sea-dragon" />
-            Chinisik
-          </li>
-        </ul>
+    <div class="header-content">
+      <div class="header-nav">
+        <div>
+          <Icon class="logo" name="game-icons:sea-dragon" />
+          Chinisik
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <NuxtLink :to="RoutePaths.Keys" class="link">
+                Ключи
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink :to="RoutePaths.Pinyin" class="link">
+                Пиньин
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <div>
-        <ul>
-          <li>
-            <ClientOnly>
-              <button @click="toggleTheme">
-                <Icon :key="iconTheme" :name="iconTheme" size="24" />
-              </button>
-            </ClientOnly>
-          </li>
-        </ul>
+      <div class="header-utils">
+        <button @click="toggleTheme">
+          <ClientOnly>
+            <Icon :key="iconTheme" :name="iconTheme" size="24" />
+          </ClientOnly>
+        </button>
+        <button>
+          <ClientOnly>
+            <Icon name="line-md:cog-loop" size="24" />
+          </ClientOnly>
+        </button>
       </div>
-    </nav>
+    </div>
   </header>
 </template>
 
@@ -84,7 +97,7 @@ function toggleTheme() {
   width: 100%;
   overflow: hidden;
 
-  > nav {
+  &-content {
     max-width: 1200px;
     width: 100%;
     height: 100%;
@@ -94,38 +107,58 @@ function toggleTheme() {
     margin: 0 auto;
     z-index: 6;
     font-family: 'Rubik';
+    padding: 0 8px;
 
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &-nav {
     .logo {
       margin-right: 8px;
     }
-  }
 
-  ul {
-    width: 100%;
-    height: 100%;
+    ul {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
-
-    margin: 0;
-    padding: 0 10px;
-  }
-
-  li {
-    position: relative;
-
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    span {
-      margin-right: 4px;
+      margin: 0;
+      padding: 0 10px;
     }
+
+    li {
+      position: relative;
+
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      .link {
+        text-decoration: none;
+        color: var(--fg-primary-color);
+
+        transition: color 0.2s ease-in-out;
+        &:hover {
+          color: var(--fg-accent-color);
+        }
+      }
+      span {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  &-utils {
+    display: flex;
+    gap: 16px;
   }
 }
 </style>

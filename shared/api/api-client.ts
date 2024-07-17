@@ -1,11 +1,12 @@
 import type { UseFetchOptions } from 'nuxt/app'
-import { type IAuthMethods, authMethods } from './services/auth/handler'
+import { type IKeysMethods, keysMethods } from './handlers/keys/handler'
+import { type IPinyinMethods, pinyinMethods } from './handlers/pinyin/handler'
 
 export type MethodPayload<P, R> = ReturnType<typeof createApiMethod<P, R>>
 export type FetchOption<R> = UseFetchOptions<R>
-export type ServiceNames = keyof IApi
-export type Services = Partial<Record<ServiceNames, string>>
-export type ServiceMethods = IAuthMethods
+export type HandlersNames = keyof IApi
+export type Services = Partial<Record<HandlersNames, string>>
+export type HandlersMethods = IKeysMethods
 export type Interceptops = Pick<
   UseFetchOptions<unknown>,
   'onRequest' | 'onRequestError' | 'onResponse' | 'onResponseError'
@@ -25,15 +26,18 @@ export type ICreateApiMethod<P, R> = (payload?: P, additonalOptions?: FetchOptio
 
 // Определение типа для API
 export interface IApi {
-  auth: IAuthMethods
+  keys: IKeysMethods
+  pinyin: IPinyinMethods
 }
 
-const services: ServiceNames[] = [
-  'auth',
+const handlers: HandlersNames[] = [
+  'keys',
+  'pinyin',
 ]
 
 const apiMethods = {
-  auth: authMethods,
+  keys: keysMethods,
+  pinyin: pinyinMethods,
 }
 
 const interceptops = ref<Interceptops>({} as Interceptops)
@@ -43,6 +47,7 @@ function createApiMethod<P, R>(
   methodOptions: ICreateApiMethodOptions,
   adapterPayload?: AdapterPayload<P, R>,
 ): ICreateApiMethod<P, R> {
+  const { apiVerbose } = useRuntimeConfig().public
   const { baseUrl, url, method, version } = methodOptions
 
   const apiMethod = async (
@@ -70,6 +75,11 @@ function createApiMethod<P, R>(
       },
     } as FetchOption<R>
 
+    if (apiVerbose) {
+      // eslint-disable-next-line no-console
+      console.log(`💫 Request: [${_options.method}] ${_url}`)
+    }
+
     return $fetch(_url, _options as any)
   }
 
@@ -85,13 +95,13 @@ function createApi(
 
   const api = {} as IApi
 
-  // Функция для добавления сервиса
-  function addService(name: ServiceNames, service: ServiceMethods): void {
-    (api as any)[name] = service
+  // Функция для добавления обработчика
+  function addHandler(name: HandlersNames, handler: HandlersMethods): void {
+    (api as any)[name] = handler
   }
 
   // Добавление сервисов и методов
-  services.forEach(service => addService(service, apiMethods[service](`${baseUrl}`)))
+  handlers.forEach(handler => addHandler(handler, apiMethods[handler](`${baseUrl}`)))
 
   return api
 }

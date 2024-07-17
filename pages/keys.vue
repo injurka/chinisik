@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { KeyHieroglyph, KeyHieroglyphInfo } from '~/components/modules/keys'
+import type { ControlHieroglyphKey } from '~/components/modules/keys/store/keys.store'
 
-const keys: HieroglyphKey[] = mockHieroglyphKeys
+const store = useStore(['keys'])
+const { hieroglyphKeys, isLoadingContent, control } = storeToRefs(store.keys)
+const { toggleControl } = store.keys
 
-const isPinyinShowed = ref<boolean>(false)
-const isPinyinColored = ref<boolean>(false)
-const isTranslateShowed = ref<boolean>(false)
-const isTranscription = ref<boolean>(false)
+await store.keys.getAllKeys()
 
 //* Expanded hieroglyph key
 const isExpandedDialog = ref<boolean>(false)
@@ -17,6 +17,20 @@ function onHieroglyphExpand(hieroglyph: HieroglyphKey) {
   isExpandedDialog.value = true
 }
 //*
+
+const controls: { key: keyof ControlHieroglyphKey, label: string }[] = [{
+  key: 'isPinyin',
+  label: 'Пиньин',
+}, {
+  key: 'isTranslate',
+  label: 'Перевод',
+}, {
+  key: 'isTranscription',
+  label: 'Транскрипция',
+}, {
+  key: 'isPinyinColored',
+  label: 'Цветной пиньин',
+}]
 
 definePageMeta({ layout: 'base' })
 </script>
@@ -42,60 +56,29 @@ definePageMeta({ layout: 'base' })
 
     <div class="controls">
       <div
+        v-for="item in controls" :key="item.key"
         class="controls-item"
-        :class="{ actived: isPinyinShowed }"
-        @click="isPinyinShowed = !isPinyinShowed"
+        :class="{ actived: control[item.key] }"
+        @click="toggleControl(item.key)"
       >
         <button class="controls-button">
-          Пиньин
-        </button>
-        <Icon class="controls-selected" name="Checked" size="20" />
-      </div>
-      <div
-        class="controls-item"
-        :class="{ actived: isTranslateShowed }"
-        @click="isTranslateShowed = !isTranslateShowed"
-      >
-        <button class="controls-button">
-          Перевод
-        </button>
-        <Icon class="controls-selected" name="Checked" size="20" />
-      </div>
-      <div
-        class="controls-item"
-        :class="{ actived: isTranscription }"
-        @click="isTranscription = !isTranscription"
-      >
-        <button class="controls-button">
-          Транскрипция
-        </button>
-        <Icon class="controls-selected" name="Checked" size="20" />
-      </div>
-      <div
-        class="controls-item"
-        :class="{ actived: isPinyinColored }"
-        @click="isPinyinColored = !isPinyinColored"
-      >
-        <button class="controls-button">
-          Цветной пиньин
+          {{ item.label }}
         </button>
         <Icon class="controls-selected" name="Checked" size="20" />
       </div>
     </div>
 
     <div class="list">
+      <Icon v-if="isLoadingContent" name="line-md:loading-loop" class="loader" />
       <KeyHieroglyph
-        v-for="item in keys"
-        :key="item.index"
-        :is-translate-showed
-        :is-pinyin-showed
-        :is-transcription
-        :is-pinyin-colored
+        v-for="(item, key) in hieroglyphKeys"
+        v-else
+        :key="key + 1"
         :hieroglyph="item"
+        :control
         @on-expand="onHieroglyphExpand"
       />
     </div>
-
     <KeyHieroglyphInfo
       v-model="isExpandedDialog"
       :hieroglyph="expandedHieroglyphKey"
@@ -191,5 +174,11 @@ definePageMeta({ layout: 'base' })
 
     padding-bottom: 64px;
   }
+}
+
+.loader {
+  margin: 32px 0;
+  font-size: 3rem;
+  color: var(--bg-accent-color);
 }
 </style>

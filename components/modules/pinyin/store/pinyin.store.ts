@@ -1,32 +1,39 @@
-import {
-  getCombinedInitialWithFinal,
-  mockFinals,
-  mockFinalsTone,
-  mockInitials,
-  mockInitialsFinals,
-} from '~/shared/mock/pinyin'
+enum RequestKeys {
+  ALL = 'pinyin_all',
+}
 
 //* --- State ----------------------------------------------- *//
 interface PinyinState {
   initials: Final[]
   finals: Initial[]
-  initialAndFinals: InitialsFinals[]
-  finalsTone: FinalsTone[]
-  initialWithFinal: Map<string, number[]>
+  initialWithFinal: InitialWithFinal
 }
 
 //* --- Store ----------------------------------------------- *//
 export const usePinyinStore = defineStore('pinyin', {
   state: (): PinyinState => ({
-    initials: mockInitials,
-    finals: mockFinals,
-    initialAndFinals: mockInitialsFinals,
-    finalsTone: mockFinalsTone,
-    initialWithFinal: getCombinedInitialWithFinal(),
+    initials: [],
+    finals: [],
+    initialWithFinal: {} as InitialWithFinal,
   }),
 
-  actions: {
+  getters: {
+    isLoadingContent: () => useRequestStatus([RequestKeys.ALL]),
+  },
 
+  actions: {
+    async getPinyin() {
+      await useRequest({
+        key: RequestKeys.ALL,
+        once: true,
+        callback: ({ api }) => api.pinyin.v1.all(),
+        onSuccess: ({ data }) => {
+          this.initials = data.initials
+          this.finals = data.finals
+          this.initialWithFinal = data.initialWithFinal
+        },
+      })
+    },
   },
 })
 

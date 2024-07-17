@@ -1,5 +1,9 @@
-@include connectThemes($themes) using ($theme, $themeName) {
+@include connectThemes($themes, 'theme') using ($theme, $themeName) {
   @each $colorType, $color in map-get($theme, 'colors') {
     --#{$colorType}-color: #{$color};
   }
+}
+
+@include connectThemes($fontCn, 'cn') using ($theme, $themeName) {
+  --font-family-cn: #{$theme};
 }

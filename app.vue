@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 const app = useAppConfig()
 
-useHead(app)
+useHead({
+  ...app,
+  htmlAttrs: {
+    ...app.htmlAttrs,
+    'data-cn': `${useCookie(FONT_FAMILY).value}`,
+  },
+})
 </script>
 
 <template>

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-
+definePageMeta({ layout: 'base' })
 </script>
 
 <template>
-  <div>
-    404
-  </div>
+  <div />
 </template>

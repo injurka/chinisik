@@ -4,14 +4,16 @@ import type { InputConfig } from './cfg.types'
 export const runtimeCfg: Record<InputConfig, NuxtConfig['runtimeConfig']> = {
   development: {
     public: {
-      stand: 'NUXT_PUBLIC_STAND',
+      stand: 'local',
       apiUrl: '/api',
+      apiVerbose: true,
     },
   },
   production: {
     public: {
-      stand: 'NUXT_PUBLIC_STAND',
+      stand: 'production',
       apiUrl: '/api',
+      apiVerbose: false,
     },
   },
 }

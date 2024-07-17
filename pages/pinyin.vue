@@ -1,6 +1,11 @@
 <script setup>
 import { PinyinTable } from '~/components/modules/pinyin/index'
 
+const store = useStore(['pinyin'])
+const { finals, initials, initialWithFinal } = storeToRefs(store.pinyin)
+
+await store.pinyin.getPinyin()
+
 definePageMeta({ layout: 'base' })
 </script>
 
@@ -29,7 +34,11 @@ definePageMeta({ layout: 'base' })
         </ol>
       </p>
     </div>
-    <PinyinTable />
+    <PinyinTable
+      :finals
+      :initials
+      :initial-with-final
+    />
   </div>
 </template>
 

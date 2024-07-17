@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 interface Props {
   pinyin: string
-  initialWithFinal: Map<string, number[]>
+  initialWithFinal: InitialWithFinal
 }
 defineProps<Props>()
 
@@ -17,7 +17,7 @@ const dialog = defineModel<boolean>()
       <div class="dialog-wrapper">
         <div class="content">
           <span
-            v-for="item in initialWithFinal.get(pinyin)"
+            v-for="item in initialWithFinal[pinyin]"
             :key="item"
           >
             {{ pinyin.split('+').join('') }} - {{ item }}

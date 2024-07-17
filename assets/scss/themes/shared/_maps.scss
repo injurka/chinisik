@@ -14,3 +14,9 @@ $fg-tone-colors: (
   fg-tone-3: $fg-tone-3-color,
   fg-tone-4: $fg-tone-4-color,
 );
+
+// Font family for chinese
+$font-family-cn: (
+  base: $font-family-cn-base,
+  brushed: $font-family-cn-brushed,
+);

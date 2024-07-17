@@ -1,3 +1,5 @@
+import type { Initial } from '~/shared/types'
+
 export const mockInitials = [
   { id: 1, name: 'b', pos: 1 },
   { id: 2, name: 'p', pos: 2 },
