@@ -1,16 +1,17 @@
 import './index.scss'
 
 import { VTooltip } from 'vuetify/components'
-import { type WordVariant, useWordStore } from '../store/word.store'
+import { type HieroglyphWordVariant, useHieroglyphWordStore } from '../store'
+import { PinyinText, type PinyinTextProps } from '~/components/domain/pinyin-text'
 
-const WordVarious = defineComponent({
+const HieroglyphWordVarious = defineComponent({
   name: 'WordVarious',
   props: {
     fixed: { type: Number, default: 0 },
-    pinyin: { type: String },
+    pinyin: { type: [String, Object] as PropType<string | PinyinTextProps> },
     translate: { type: String },
     glyph: { type: String },
-    variant: { type: Number as PropType<WordVariant> },
+    variant: { type: Number as PropType<HieroglyphWordVariant> },
   },
   components: { VTooltip },
   setup(props) {
@@ -69,7 +70,10 @@ const WordVarious = defineComponent({
               {props.pinyin
               && (
                 <span class="pinyin">
-                  {props.pinyin}
+
+                  {typeof props.pinyin === 'string'
+                    ? props.pinyin
+                    : <PinyinText {...props.pinyin} /> }
                 </span>
               )}
             </>
@@ -99,8 +103,7 @@ const WordVarious = defineComponent({
         case 4:
           return (
             <>
-              {props.pinyin
-              && (
+              {props.pinyin && (
                 <span class="pinyin">
                   {props.pinyin}
                 </span>
@@ -122,19 +125,18 @@ const WordVarious = defineComponent({
   },
 })
 
-const Word = defineComponent({
+const HieroglyphWord = defineComponent({
   name: 'Word',
   props: {
-    fixed: { type: Number, default: 0 },
-    variant: { type: Number as PropType<WordVariant>, default: 0 },
+    variant: { type: Number as PropType<HieroglyphWordVariant>, default: 0 },
     glyph: { type: String },
-    pinyin: { type: String },
+    pinyin: { type: [String, Object] as PropType<string | PinyinTextProps> },
     translate: { type: String },
   },
-  components: { WordVarious },
+  components: { WordVarious: HieroglyphWordVarious },
   setup(props) {
-    const store = useWordStore()
-    const variant = computed(() => (props.fixed || store.variant) as WordVariant)
+    const store = useHieroglyphWordStore()
+    const variant = computed(() => (props.variant || store.variant) as HieroglyphWordVariant)
 
     useRender(() => (
       <span class={[
@@ -142,10 +144,14 @@ const Word = defineComponent({
         `variant-${variant.value}`,
       ]}
       >
-        <WordVarious {...props} variant={variant.value} key={variant.value} />
+        <HieroglyphWordVarious
+          {...props}
+          variant={variant.value}
+          key={variant.value}
+        />
       </span>
     ))
   },
 })
 
-export { Word }
+export { HieroglyphWord }

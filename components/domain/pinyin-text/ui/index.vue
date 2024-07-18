@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-interface Props {
+export interface Props {
   pinyin: string
   toneIndex: number
   toneType: ToneType
@@ -13,19 +13,29 @@ const props = withDefaults(defineProps<Props>(), {
 const color = computed(() => props.colored
   ? `var(--fg-tone-${props.toneType}-color)`
   : 'var(--fg-primary-color)')
+
+const splitPinyin = computed(() => {
+  const { pinyin, toneIndex } = props
+
+  const beforeTone = pinyin.slice(0, toneIndex)
+  const toneChar = pinyin[toneIndex]
+  const afterTone = pinyin.slice(toneIndex + 1)
+
+  return [beforeTone, toneChar, afterTone]
+})
 </script>
 
 <template>
   <div class="pinyin">
     <span
-      v-for="(part, key) in pinyin.split('')"
-      :key="part"
+      v-for="(part, index) in splitPinyin"
+      :key="index"
       class="pinyin-part"
-      :class="[{ tone: key === toneIndex }]"
-      :style="key === toneIndex && { color }"
+      :class="[{ tone: index === 1 }]"
+      :style="index === 1 && { color }"
     >
       {{ part }}
-      <span v-if="key === toneIndex" class="pinyin-tone">
+      <span v-if="index === 1" class="pinyin-tone">
         {{ pinyinTone[toneIndex] }}
       </span>
     </span>
@@ -34,7 +44,7 @@ const color = computed(() => props.colored
 
 <style lang="scss" scoped>
 .pinyin {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
 
   &-part {

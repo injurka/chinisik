@@ -3,9 +3,10 @@
   gap: 4px;
 }
 .variant-2 {
-  display: inline-flex;
-  gap: 10px;
-  gap: 4px;
+  display: inline;
+  .pinyin {
+    margin-left: 4px;
+  }
 }
 .variant-3 {
   display: flex;
@@ -56,7 +57,7 @@
   letter-spacing: 2px;
   padding: 1px 4px;
   border-radius: 5px;
-  background: var(--bg-tertiary-color);
+  background: var(--bg-accent-color);
   border: 1px solid var(--border-accent-color);
   color: var(--fg-primary-color);
   font-family: var(--font-family-cn);

@@ -1,3 +1,3 @@
-import HaoticLines from './ui/haotic-lines.vue'
+import HaoticLines from './ui/index.vue'
 
 export { HaoticLines }

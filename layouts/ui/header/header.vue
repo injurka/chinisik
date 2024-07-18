@@ -80,6 +80,14 @@ function toggleTheme() {
             <Icon name="line-md:cog-loop" size="24" />
           </ClientOnly>
         </button>
+        <div class="profile">
+          <NuxtImg
+            class="profile-img"
+            width="38"
+            height="38"
+            placeholder="/images/profile-placeholder.png"
+          />
+        </div>
       </div>
     </div>
   </header>
@@ -159,6 +167,24 @@ function toggleTheme() {
   &-utils {
     display: flex;
     gap: 16px;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-img {
+      border-radius: 50%;
+      border: 2px solid var(--border-primary-color);
+      overflow: hidden;
+      cursor: pointer;
+
+      transition: border 0.2s ease-in-out;
+      &:hover {
+        border: 2px solid var(--border-accent-color);
+      }
+    }
   }
 }
 </style>
