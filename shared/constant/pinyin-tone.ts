@@ -1,1 +1,1 @@
-export const pinyinTone = ['ˉ', 'ˊ', 'ˇ', 'ˋ'] as const
+export const pinyinTone = ['', 'ˉ', 'ˊ', 'ˇ', 'ˋ'] as const

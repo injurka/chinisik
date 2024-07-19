@@ -1,8 +1,12 @@
 <script lang="ts" setup>
+interface Tone {
+  index: number
+  type: ToneType
+}
+
 export interface Props {
   pinyin: string
-  toneIndex: number
-  toneType: ToneType
+  tone: Tone[] | Tone
   colored?: boolean
 }
 
@@ -10,36 +14,60 @@ const props = withDefaults(defineProps<Props>(), {
   colored: false,
 })
 
-const color = computed(() => props.colored
-  ? `var(--fg-tone-${props.toneType}-color)`
-  : 'var(--fg-primary-color)')
+const tones = computed(() => Array.isArray(props.tone)
+  ? props.tone
+  : [props.tone],
+)
 
 const splitPinyin = computed(() => {
-  const { pinyin, toneIndex } = props
+  const { pinyin } = props
+  const parts: string[] = []
+  let lastIndex = 0
 
-  const beforeTone = pinyin.slice(0, toneIndex)
-  const toneChar = pinyin[toneIndex]
-  const afterTone = pinyin.slice(toneIndex + 1)
+  tones.value.forEach((tone) => {
+    parts.push(
+      pinyin.slice(lastIndex, tone.index),
+      pinyin[tone.index],
+    )
+    lastIndex = tone.index + 1
+  })
 
-  return [beforeTone, toneChar, afterTone]
+  parts.push(pinyin.slice(lastIndex))
+
+  return parts
 })
+
+function color(toneType: ToneType) {
+  return props.colored
+    ? `var(--fg-tone-${toneType}-color)`
+    : ''
+}
+function isTone(index: number) {
+  return index % 2
+}
+function getTone(index: number) {
+  return tones.value[Math.floor(index / 2)]
+}
 </script>
 
 <template>
-  <div class="pinyin">
+  <span class="pinyin">
     <span
       v-for="(part, index) in splitPinyin"
       :key="index"
       class="pinyin-part"
-      :class="[{ tone: index === 1 }]"
-      :style="index === 1 && { color }"
+      :class="{ tone: isTone(index) }"
+      :style="{ color: isTone(index) ? color(getTone(index).type) : '' }"
     >
       {{ part }}
-      <span v-if="index === 1" class="pinyin-tone">
-        {{ pinyinTone[toneIndex] }}
+      <span
+        v-if="isTone(index)"
+        class="pinyin-tone"
+      >
+        {{ pinyinTone[getTone(index).type] }}
       </span>
     </span>
-  </div>
+  </span>
 </template>
 
 <style lang="scss" scoped>

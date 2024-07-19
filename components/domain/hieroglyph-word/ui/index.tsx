@@ -25,6 +25,26 @@ const HieroglyphWordVarious = defineComponent({
 
     const tooltipProps = { activator: 'parent', openDelay: 100, location: 'top' as any }
 
+    const pinyinEl = () => {
+      return props.pinyin
+        && (
+          typeof props.pinyin === 'string'
+            ? <span class="pinyin">{props.pinyin}</span>
+            : <PinyinText {...props.pinyin} />
+        )
+    }
+
+    const translateEl = () => {
+      return props.translate
+        && (
+          <span class="translate">
+            -
+            {' '}
+            {props.translate}
+          </span>
+        )
+    }
+
     useRender(() => {
       switch (props.variant) {
         case 0:
@@ -46,14 +66,7 @@ const HieroglyphWordVarious = defineComponent({
                 </VTooltip>
                 {props.glyph}
               </span>
-              {props.translate
-              && (
-                <span class="translate">
-                  -
-                  {' '}
-                  {props.translate}
-                </span>
-              )}
+              {translateEl()}
             </>
           )
 
@@ -66,55 +79,25 @@ const HieroglyphWordVarious = defineComponent({
                 </VTooltip>
                 {props.glyph}
               </span>
-
-              {props.pinyin
-              && (
-                <span class="pinyin">
-
-                  {typeof props.pinyin === 'string'
-                    ? props.pinyin
-                    : <PinyinText {...props.pinyin} /> }
-                </span>
-              )}
+              {pinyinEl()}
             </>
           )
 
         case 3:
           return (
             <>
-              {props.pinyin
-              && (
-                <span class="pinyin">
-                  {props.pinyin}
-                </span>
-              )}
+              {pinyinEl()}
               <span class="glyph">{props.glyph}</span>
-              {props.translate
-              && (
-                <span class="translate">
-                  -
-                  {' '}
-                  {props.translate}
-                </span>
-              )}
+              {translateEl()}
             </>
           )
 
         case 4:
           return (
             <>
-              {props.pinyin && (
-                <span class="pinyin">
-                  {props.pinyin}
-                </span>
-              )}
+              {pinyinEl()}
               <span class="glyph">{props.glyph}</span>
-              {props.translate
-              && (
-                <span class="translate">
-                  {props.translate}
-                </span>
-              )}
+              {translateEl()}
             </>
           )
 

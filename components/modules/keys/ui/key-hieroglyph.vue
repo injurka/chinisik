@@ -52,8 +52,7 @@ watch(
           <PinyinText
             :pinyin="hieroglyph.pinyin"
             :colored="control.isPinyinColored"
-            :tone-index="hieroglyph.toneIndex"
-            :tone-type="hieroglyph.toneType"
+            :tone="hieroglyph.tone"
           />
           <div
             v-show="control.isTranscription && hieroglyph.transcription"
