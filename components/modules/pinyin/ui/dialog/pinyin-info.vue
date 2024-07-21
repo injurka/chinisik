@@ -167,6 +167,7 @@ function playPinyin(value: string, tone: ToneType) {
     background-color: var(--bg-tertiary-color);
     border: 1px solid var(--border-secondary-color);
     border-radius: 50%;
+    z-index: 10;
 
     display: flex;
     align-items: center;
