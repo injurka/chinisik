@@ -106,7 +106,7 @@ function playPinyin(value: string, tone: ToneType) {
 
     position: relative;
     background-color: var(--bg-secondary-color);
-    box-shadow: 0 0 5px var(--bg-overlay-dark-color);
+    box-shadow: 0 0 5px var(--bg-overlay-primary-color);
     border: 1px solid var(--border-primary-color);
 
     border-radius: 24px;
@@ -145,7 +145,7 @@ function playPinyin(value: string, tone: ToneType) {
         text-transform: none;
         width: 100px;
         border: 1px solid var(--border-button-secondary-color);
-        box-shadow: 0 0 14px var(--bg-overlay-light-color);
+        box-shadow: 0 0 14px var(--bg-overlay-secondary-color);
 
         :deep(.pinyin-tone) {
           top: -4px;

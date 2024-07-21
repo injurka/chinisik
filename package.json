@@ -30,7 +30,7 @@
     "@vueuse/nuxt": "^10.11.0",
     "p5i": "^0.5.0",
     "pinia": "2.1.7",
-    "vuetify-nuxt-module": "^0.15.2"
+    "vuetify-nuxt-module": "^0.16.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.23.1",

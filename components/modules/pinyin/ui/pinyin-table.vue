@@ -138,7 +138,7 @@ function handleClickPinyin(value: string) {
       padding: 5px;
 
       &.highlight {
-        background-color: var(--bg-overlay-light-color);
+        background-color: var(--bg-overlay-secondary-color);
         transition: background-color 0.4s ease-in;
       }
     }
@@ -153,7 +153,7 @@ function handleClickPinyin(value: string) {
       padding: 5px;
 
       &.highlight {
-        background-color: var(--bg-overlay-light-color);
+        background-color: var(--bg-overlay-secondary-color);
         transition: background-color 0.4s ease-in;
       }
     }

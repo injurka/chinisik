@@ -135,10 +135,10 @@ watch(
     text-align: center;
     overflow: hidden;
 
-    box-shadow: 0 0 5px var(--bg-overlay-dark-color);
+    box-shadow: 0 0 5px var(--bg-overlay-primary-color);
 
     &:hover {
-      box-shadow: 0 0 5px var(--bg-overlay-light-color);
+      box-shadow: 0 0 5px var(--bg-overlay-secondary-color);
       transition: box-shadow 0.2s ease-in-out;
     }
 

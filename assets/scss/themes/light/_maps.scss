@@ -13,9 +13,8 @@ $bg-colors: (
   bg-accent-overlay: $bg-accent-overlay-color,
   bg-accent: $bg-accent-color,
   bg-pressed: $bg-pressed-color,
-  bg-overlay-dark: $bg-overlay-dark-color,
-  bg-overlay-light: $bg-overlay-light-color,
-  bg-accent-brand: $bg-accent-brand-color,
+  bg-overlay-primary: $bg-overlay-primary-color,
+  bg-overlay-secondary: $bg-overlay-secondary-color,
   bg-action-hover: $bg-action-hover-color,
 );
 
@@ -35,7 +34,6 @@ $fg-colors: (
   fg-tertiary: $fg-tertiary-color,
   fg-muted: $fg-muted-color,
   fg-accent: $fg-accent-color,
-  fg-accent-brand: $fg-accent-brand-color,
   fg-action: $fg-action-color,
 );
 

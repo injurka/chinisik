@@ -104,7 +104,7 @@ function onAddToFavorite() {
 
     position: relative;
     background-color: var(--bg-secondary-color);
-    box-shadow: 0 0 5px var(--bg-overlay-dark-color);
+    box-shadow: 0 0 5px var(--bg-overlay-primary-color);
     border: 1px solid var(--border-primary-color);
 
     border-radius: 24px;
@@ -133,7 +133,7 @@ function onAddToFavorite() {
           padding: 16px;
           line-height: 132px;
           z-index: 6;
-          box-shadow: 0 0 10px var(--bg-overlay-dark-color);
+          box-shadow: 0 0 10px var(--bg-overlay-primary-color);
         }
       }
 
