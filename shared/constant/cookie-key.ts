@@ -1,1 +1,3 @@
 export const FONT_FAMILY = '__FONT_FAMILY__'
+export const PINYIN_COLORED = '__PINYIN_COLORED__'
+export const HIEROGLYPH_WORD_VARIANT = '__HIEROGLYPH_WORD_VARIANT__'

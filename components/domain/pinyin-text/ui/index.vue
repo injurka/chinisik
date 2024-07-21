@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { usePinyinTextStore } from '../store'
+
 interface Tone {
   index: number
   type: ToneType
@@ -7,20 +9,21 @@ interface Tone {
 export interface Props {
   pinyin: string
   tone: Tone[] | Tone
-  colored?: boolean
+  colored?: boolean | null
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  colored: false,
+  colored: null,
 })
+
+const store = usePinyinTextStore()
 
 const tones = computed(() => Array.isArray(props.tone)
   ? props.tone
   : [props.tone],
 )
-
 const splitPinyin = computed(() => {
-  const { pinyin } = props
+  const pinyin = props.pinyin.replaceAll(' ', '⠀')
   const parts: string[] = []
   let lastIndex = 0
 
@@ -36,9 +39,10 @@ const splitPinyin = computed(() => {
 
   return parts
 })
+const isColored = computed(() => props.colored ?? store.isColored)
 
 function color(toneType: ToneType) {
-  return props.colored
+  return isColored.value
     ? `var(--fg-tone-${toneType}-color)`
     : ''
 }
@@ -51,7 +55,7 @@ function getTone(index: number) {
 </script>
 
 <template>
-  <span class="pinyin">
+  <span :key="`${isColored}`" class="pinyin">
     <span
       v-for="(part, index) in splitPinyin"
       :key="index"
@@ -88,7 +92,7 @@ function getTone(index: number) {
     width: 100%;
     font-weight: 600;
     font-family: 'Noto Sans SC';
-    font-size: 0.6rem;
+    font-size: 0.6em;
   }
 }
 </style>

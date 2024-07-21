@@ -62,6 +62,13 @@ export const baseCfg: NuxtConfig = {
         purpose: 'maskable',
       }],
     },
+    workbox: {
+      navigateFallback: '/',
+    },
+    devOptions: {
+      enabled: false,
+      type: 'module',
+    },
   },
 
   css: [

@@ -1,15 +1,15 @@
+export type ToneType = 0 | 1 | 2 | 3 | 4
+
 export interface Pinyin {
   id: number
   pinyin: string
   initialId: number
   finalId: number
   finalToneId: number
-  tone: number
+  tone: ToneType
   initialPos: number
   finalPos: number
 }
-
-export type ToneType = 0 | 1 | 2 | 3 | 4
 
 export interface Final {
   id: number

@@ -1,36 +1,35 @@
 import './index.scss'
 
-import { VTooltip } from 'vuetify/components'
+// import { VTooltip } from 'vuetify/components'
 import { type HieroglyphWordVariant, useHieroglyphWordStore } from '../store'
 import { PinyinText, type PinyinTextProps } from '~/components/domain/pinyin-text'
 
 const HieroglyphWordVarious = defineComponent({
   name: 'WordVarious',
   props: {
-    fixed: { type: Number, default: 0 },
     pinyin: { type: [String, Object] as PropType<string | PinyinTextProps> },
     translate: { type: String },
     glyph: { type: String },
     variant: { type: Number as PropType<HieroglyphWordVariant> },
   },
-  components: { VTooltip },
+  // components: { VTooltip },
   setup(props) {
-    const tooltipText = () => (
-      <>
-        {props.pinyin && <div>{props.pinyin}</div>}
-        {props.pinyin && props.translate && <hr />}
-        {props.translate && <div>{props.translate}</div>}
-      </>
-    )
+    // const tooltipText = () => (
+    //   <>
+    //     {props.pinyin && <div>{props.pinyin}</div>}
+    //     {props.pinyin && props.translate && <hr />}
+    //     {props.translate && <div>{props.translate}</div>}
+    //   </>
+    // )
 
-    const tooltipProps = { activator: 'parent', openDelay: 100, location: 'top' as any }
+    // const tooltipProps = { activator: 'parent', openDelay: 100, location: 'top' as any }
 
     const pinyinEl = () => {
       return props.pinyin
         && (
           typeof props.pinyin === 'string'
             ? <span class="pinyin">{props.pinyin}</span>
-            : <PinyinText {...props.pinyin} />
+            : <PinyinText {...props.pinyin} colored={props.pinyin.colored} />
         )
     }
 
@@ -50,9 +49,9 @@ const HieroglyphWordVarious = defineComponent({
         case 0:
           return (
             <span class="glyph">
-              <VTooltip {...tooltipProps}>
+              {/* <VTooltip {...tooltipProps}>
                 {tooltipText()}
-              </VTooltip>
+              </VTooltip> */}
               {props.glyph}
             </span>
           )
@@ -61,9 +60,9 @@ const HieroglyphWordVarious = defineComponent({
           return (
             <>
               <span class="glyph">
-                <VTooltip {...tooltipProps}>
+                {/* <VTooltip {...tooltipProps}>
                   {tooltipText()}
-                </VTooltip>
+                </VTooltip> */}
                 {props.glyph}
               </span>
               {translateEl()}
@@ -74,9 +73,9 @@ const HieroglyphWordVarious = defineComponent({
           return (
             <>
               <span class="glyph">
-                <VTooltip {...tooltipProps}>
+                {/* <VTooltip {...tooltipProps}>
                   {tooltipText()}
-                </VTooltip>
+                </VTooltip> */}
                 {props.glyph}
               </span>
               {pinyinEl()}
@@ -111,7 +110,7 @@ const HieroglyphWordVarious = defineComponent({
 const HieroglyphWord = defineComponent({
   name: 'Word',
   props: {
-    variant: { type: Number as PropType<HieroglyphWordVariant>, default: 0 },
+    variant: { type: Number as PropType<HieroglyphWordVariant> },
     glyph: { type: String },
     pinyin: { type: [String, Object] as PropType<string | PinyinTextProps> },
     translate: { type: String },
@@ -119,7 +118,7 @@ const HieroglyphWord = defineComponent({
   components: { WordVarious: HieroglyphWordVarious },
   setup(props) {
     const store = useHieroglyphWordStore()
-    const variant = computed(() => (props.variant || store.variant) as HieroglyphWordVariant)
+    const variant = computed(() => (props.variant ?? store.variant) as HieroglyphWordVariant)
 
     useRender(() => (
       <span class={[

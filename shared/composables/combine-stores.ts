@@ -1,12 +1,19 @@
 import { useKeysStore } from '~/components/modules/keys/store/keys.store'
 import { usePinyinStore } from '~/components/modules/pinyin/store/pinyin.store'
 
+import { useHieroglyphWordStore } from '~/components/domain/hieroglyph-word'
+import { usePinyinTextStore } from '~/components/domain/pinyin-text'
+
 type ExtractStoreId<T> = T extends { $id: infer U } ? U : never
 
 interface IStoreTypes {
   request: ReturnType<typeof useRequestStore>
   keys: ReturnType<typeof useKeysStore>
   pinyin: ReturnType<typeof usePinyinStore>
+
+  // * domain components
+  hieroglyphWord: ReturnType<typeof useHieroglyphWordStore>
+  pinyinText: ReturnType<typeof usePinyinTextStore>
 }
 
 type StoreKeys = ExtractStoreId<IStoreTypes[keyof IStoreTypes]>
@@ -15,6 +22,10 @@ export const stores: Readonly<{ [K in StoreKeys]: () => IStoreTypes[K] }> = Obje
   request: useRequestStore,
   keys: useKeysStore,
   pinyin: usePinyinStore,
+
+  // * domain components
+  hieroglyphWord: useHieroglyphWordStore,
+  pinyinText: usePinyinTextStore,
 })
 
 function useStore<T extends StoreKeys>(key: T): Readonly<IStoreTypes[T]>

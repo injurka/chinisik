@@ -7,8 +7,15 @@ interface IHieroglyphWordState {
 
 export const useHieroglyphWordStore = defineStore('hieroglyphWord', {
   state: (): IHieroglyphWordState => ({
-    variant: 0,
+    variant: Number(useCookie(HIEROGLYPH_WORD_VARIANT).value || '0') as HieroglyphWordVariant,
   }),
+
+  actions: {
+    setVariant(value: HieroglyphWordVariant) {
+      useCookie(HIEROGLYPH_WORD_VARIANT, { sameSite: true }).value = `${value}`
+      this.variant = value
+    },
+  },
 })
 
 //* --- Utils ----------------------------------------------- *//

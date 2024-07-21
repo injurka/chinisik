@@ -1,3 +1,4 @@
 import PinyinTable from './ui/pinyin-table.vue'
+import { usePinyinStore } from './store/pinyin.store'
 
-export { PinyinTable }
+export { PinyinTable, usePinyinStore }

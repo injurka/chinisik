@@ -78,6 +78,7 @@ function handleClickPinyin(value: string) {
         </div>
       </template>
     </div>
+
     <PinyinInfo
       v-model="dialog"
       :pinyin="lastSelectedPinyin"

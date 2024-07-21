@@ -81,9 +81,7 @@ const descriptionNodes = {
           tag: 'HieroglyphWord',
           props: {
             glyph: '部首',
-            // pinyin: 'bùshǒu',
             pinyin: {
-              colored: true,
               pinyin: 'bushou',
               tone: [{
                 index: 1,
@@ -115,9 +113,24 @@ const descriptionNodes = {
         tag: 'HieroglyphWord',
         props: {
           glyph: '康熙字典',
-          pinyin: 'kāngxī zìdiǎn',
+          pinyin: {
+            pinyin: 'kangxi zidian',
+            tone: [{
+              index: 1,
+              type: 1,
+            }, {
+              index: 5,
+              type: 1,
+            }, {
+              index: 8,
+              type: 4,
+            }, {
+              index: 11,
+              type: 3,
+            }],
+          },
+          variant: 2,
           translate: 'Словарь канси',
-          variant: 0,
         },
       }, {
         tag: 'span',
@@ -193,6 +206,7 @@ definePageMeta({ layout: 'base' })
     font-size: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 16px 6px;
 
     @include mobile {
       font-size: 0.9rem;

@@ -23,7 +23,7 @@ export const useKeysStore = defineStore('keys', {
 
     control: {
       isPinyin: false,
-      isPinyinColored: false,
+      isPinyinColored: Boolean(useCookie(PINYIN_COLORED).value || 'false'),
       isTranslate: false,
       isTranscription: false,
     },

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { HaoticLines } from '~/components/domain/haotic-lines'
+import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word'
 
 enum ThemesVariant {
   Light = 'light',
@@ -14,10 +15,11 @@ const icons: Record<ThemesVariant, string> = {
 }
 
 const theme = useColorMode()
+const store = useStore(['hieroglyphWord', 'pinyinText'])
 
 const headerEl = ref<HTMLElement>()
 
-const iconTheme = computed(() => icons[theme.value as keyof typeof icons])
+const themeIcon = computed(() => icons[theme.value as keyof typeof icons])
 const haoticLinesProps = computed(() => ({
   width: headerEl.value?.offsetWidth || 0,
   height: headerEl.value?.offsetHeight || 0,
@@ -38,6 +40,21 @@ function toggleTheme() {
       break
   }
 }
+
+const colorPinyinIcon = computed(() => `line-md:paint-drop${store.pinyinText.isColored ? '-twotone' : ''}`)
+function toggleColorPinyin() {
+  store.pinyinText.setIsColored(!store.pinyinText.isColored)
+}
+
+function toggleHieroglyphVariant() {
+  let newVariant = ++store.hieroglyphWord.variant
+
+  if (newVariant > 4) {
+    newVariant = 0
+  }
+
+  store.hieroglyphWord.variant = newVariant as HieroglyphWordVariant
+}
 </script>
 
 <template>
@@ -50,10 +67,11 @@ function toggleTheme() {
     </ClientOnly>
     <div class="header-content">
       <div class="header-nav">
-        <div>
-          <Icon class="logo" name="game-icons:sea-dragon" />
-          Chinisik
+        <div class="logo">
+          <Icon class="logo-icon" name="game-icons:sea-dragon" size="24" />
+          <span> Chinisik </span>
         </div>
+        <div class="vr" />
         <nav>
           <ul>
             <li>
@@ -72,14 +90,52 @@ function toggleTheme() {
       <div class="header-utils">
         <button @click="toggleTheme">
           <ClientOnly>
-            <Icon :key="iconTheme" :name="iconTheme" size="24" />
+            <Icon :key="themeIcon" :name="themeIcon" size="24" />
+            <VTooltip
+              activator="parent"
+              location="bottom"
+            >
+              Цветовое оформление приложения
+            </VTooltip>
+          </ClientOnly>
+        </button>
+        <button @click="toggleHieroglyphVariant">
+          <ClientOnly>
+            <Icon name="line-md:clipboard" size="24" />
+            <div class="hieroglyph-variant">
+              {{ store.hieroglyphWord.variant }}
+            </div>
+            <VTooltip
+              activator="parent"
+              location="bottom"
+            >
+              Стиль отображения иероглифа, всего имеется 5 стилей (0-5)
+            </VTooltip>
+          </ClientOnly>
+        </button>
+        <button @click="toggleColorPinyin">
+          <ClientOnly>
+            <Icon :key="colorPinyinIcon" :name="colorPinyinIcon" size="24" />
+            <VTooltip
+              activator="parent"
+              location="bottom"
+            >
+              Цветное отображения тона
+            </VTooltip>
           </ClientOnly>
         </button>
         <button>
           <ClientOnly>
             <Icon name="line-md:cog-loop" size="24" />
+            <VTooltip
+              activator="parent"
+              location="bottom"
+            >
+              Настройки
+            </VTooltip>
           </ClientOnly>
         </button>
+        <div class="vr" />
         <div class="profile">
           <NuxtImg
             class="profile-img"
@@ -126,7 +182,11 @@ function toggleTheme() {
 
   &-nav {
     .logo {
-      margin-right: 8px;
+      display: inline-flex;
+      margin: 0 8px;
+      &-icon {
+        margin-right: 8px;
+      }
     }
 
     ul {
@@ -158,6 +218,7 @@ function toggleTheme() {
           color: var(--fg-accent-color);
         }
       }
+
       span {
         margin-right: 4px;
       }
@@ -167,6 +228,29 @@ function toggleTheme() {
   &-utils {
     display: flex;
     gap: 16px;
+
+    button {
+      position: relative;
+
+      .hieroglyph-variant {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: var(--bg-secondary-color);
+        border: 1px solid var(--fg-primary-color);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.095em;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+      }
+    }
   }
 
   .profile {
@@ -186,5 +270,13 @@ function toggleTheme() {
       }
     }
   }
+}
+
+.vr {
+  border: none;
+  border-left: 2px solid var(--border-secondary-color);
+  height: 50%;
+  width: 1px;
+  margin: 0 auto;
 }
 </style>

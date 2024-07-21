@@ -33,7 +33,7 @@
     "vuetify-nuxt-module": "^0.15.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.23.0",
+    "@antfu/eslint-config": "^2.23.1",
     "@nuxt/eslint": "^0.3.13",
     "@nuxt/image": "^1.7.0",
     "@nuxt/types": "2.18.1",
@@ -44,7 +44,8 @@
     "@vite-pwa/nuxt": "^0.9.1",
     "eslint": "^9.7.0",
     "eslint-plugin-format": "^0.1.2",
-    "jsdom": "^24.1.0",
+    "howler": "^2.2.4",
+    "jsdom": "^24.1.1",
     "nuxt": "3.12.4",
     "nuxt-icon": "^0.6.10",
     "sass": "1.77.8",
