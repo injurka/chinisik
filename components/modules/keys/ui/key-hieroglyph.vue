@@ -109,9 +109,14 @@ watch(
   width: 160px;
   height: 160px;
 
+  @include tablet {
+    width: 30%;
+    height: 30%;
+  }
+
   @include mobile {
-    width: 140px;
-    height: 140px;
+    width: 45%;
+    height: 45%;
   }
 
   .item {
@@ -182,24 +187,6 @@ watch(
       text-align: center;
       font-family: 'Rubik';
       font-size: 0.8rem;
-    }
-
-    @include mobile {
-      &-pinyin {
-        font-size: 0.9rem;
-        &-tran {
-          font-size: 0.65rem;
-        }
-      }
-
-      &-hieroglyph {
-        font-family: var(--font-family-cn);
-        font-size: 1.8rem;
-      }
-
-      &-translate {
-        font-size: 0.7rem;
-      }
     }
 
     &-index {

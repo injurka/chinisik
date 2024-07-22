@@ -264,12 +264,11 @@ function toggleHieroglyphVariant() {
       gap: 8px;
       font-size: 0.85rem;
       height: 48px;
+      border-bottom: 1px solid var(--border-secondary-color);
 
       svg {
         min-width: 24px;
       }
-
-      border-bottom: 1px solid var(--border-secondary-color);
 
       &:last-child {
         border: none;
