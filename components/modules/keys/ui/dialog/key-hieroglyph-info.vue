@@ -177,6 +177,11 @@ function onAddToFavorite() {
           z-index: 3;
         }
       }
+
+      .description {
+        max-height: 350px;
+        overflow: scroll;
+      }
     }
   }
 

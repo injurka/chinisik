@@ -154,7 +154,13 @@ const controls: { key: keyof ControlHieroglyphKey, label: string }[] = [{
   label: 'Цветной пиньин',
 }]
 
-definePageMeta({ layout: 'base' })
+definePageMeta({
+  layout: 'base',
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in',
+  },
+})
 </script>
 
 <template>

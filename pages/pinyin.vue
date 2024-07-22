@@ -159,7 +159,13 @@ const descriptionNodes = {
   ],
 } as JsonToDomChildren
 
-definePageMeta({ layout: 'base' })
+definePageMeta({
+  layout: 'base',
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in',
+  },
+})
 </script>
 
 <template>

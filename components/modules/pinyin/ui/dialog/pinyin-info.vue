@@ -102,7 +102,6 @@ function playPinyin(value: string, tone: ToneType) {
     flex-direction: column;
     justify-content: center;
     min-height: 200px;
-    padding: 16px;
 
     position: relative;
     background-color: var(--bg-secondary-color);
@@ -111,6 +110,8 @@ function playPinyin(value: string, tone: ToneType) {
 
     border-radius: 24px;
     width: 100%;
+
+    padding: 48px 32px;
 
     .hint {
       display: inline-flex;
@@ -143,16 +144,17 @@ function playPinyin(value: string, tone: ToneType) {
       .pinyin-btn {
         background-color: var(--bg-accent-color);
         text-transform: none;
-        width: 100px;
+        min-width: 100px;
+        width: 20%;
         border: 1px solid var(--border-button-secondary-color);
-        box-shadow: 0 0 14px var(--bg-overlay-secondary-color);
+        box-shadow: 0 0 4px var(--bg-overlay-secondary-color);
 
         :deep(.pinyin-tone) {
           top: -4px;
         }
 
         @include mobile {
-          width: 150px;
+          min-width: 150px;
         }
       }
     }

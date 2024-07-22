@@ -33,6 +33,7 @@ export const useRequestStore = defineStore('request', {
     },
 
     async requestWrapper<T = unknown>(payload: IRequestWrapperPayload<T>): Promise<RequestReturn<T>> {
+      const { apiVerbose } = useRuntimeConfig().public
       const { api } = useApi()
 
       const {
@@ -44,6 +45,11 @@ export const useRequestStore = defineStore('request', {
       } = payload
 
       if (once && this._status.get(key) === EApiStatus.FULFILLED) {
+        if (apiVerbose) {
+          // eslint-disable-next-line no-console
+          console.log(`💫 Request: [CACHED] ${key}`)
+        }
+
         return this._cached.get(key)
       }
 

@@ -16,6 +16,7 @@ const icons: Record<ThemesVariant, string> = {
 
 const theme = useColorMode()
 const store = useStore(['hieroglyphWord', 'pinyinText'])
+const { isMobile } = useDevice()
 
 const headerEl = ref<HTMLElement>()
 
@@ -69,79 +70,66 @@ function toggleHieroglyphVariant() {
       <div class="header-nav">
         <div class="logo">
           <Icon class="logo-icon" name="game-icons:sea-dragon" size="24" />
-          <span> Chinisik </span>
+          <span v-if="!isMobile" class="logo-title"> Chinisik </span>
         </div>
         <div class="vr" />
         <nav>
           <ul>
-            <li>
-              <NuxtLink :to="RoutePaths.Keys" class="link">
-                Ключи
-              </NuxtLink>
+            <li
+              class="link"
+              :class="{ actived: $route.name === RouteNames.Keys }"
+              @click="navigateTo(RoutePaths.Keys)"
+            >
+              Ключи
             </li>
-            <li>
-              <NuxtLink :to="RoutePaths.Pinyin" class="link">
-                Пиньин
-              </NuxtLink>
+            <li
+              class="link"
+              :class="{ actived: $route.name === RouteNames.Pinyin }"
+              @click="navigateTo(RoutePaths.Pinyin)"
+            >
+              Пиньин
             </li>
           </ul>
         </nav>
       </div>
       <div class="header-utils">
-        <button @click="toggleTheme">
-          <ClientOnly>
-            <Icon :key="themeIcon" :name="themeIcon" size="24" />
-            <VTooltip
-              activator="parent"
-              location="bottom"
-            >
-              Цветовое оформление приложения
-            </VTooltip>
-          </ClientOnly>
-        </button>
-        <button @click="toggleHieroglyphVariant">
-          <ClientOnly>
-            <Icon name="line-md:clipboard" size="24" />
-            <div class="hieroglyph-variant">
-              {{ store.hieroglyphWord.variant }}
-            </div>
-            <VTooltip
-              activator="parent"
-              location="bottom"
-            >
-              Стиль отображения иероглифа, всего имеется 5 стилей (0-5)
-            </VTooltip>
-          </ClientOnly>
-        </button>
-        <button @click="toggleColorPinyin">
-          <ClientOnly>
-            <Icon :key="colorPinyinIcon" :name="colorPinyinIcon" size="24" />
-            <VTooltip
-              activator="parent"
-              location="bottom"
-            >
-              Цветное отображения тона
-            </VTooltip>
-          </ClientOnly>
-        </button>
-        <button>
-          <ClientOnly>
-            <Icon name="line-md:cog-loop" size="24" />
-            <VTooltip
-              activator="parent"
-              location="bottom"
-            >
-              Настройки
-            </VTooltip>
-          </ClientOnly>
-        </button>
+        <VMenu offset="18" :close-on-content-click="false">
+          <template #activator="{ props }">
+            <button class="utils-settings-btn">
+              <Icon name="line-md:cog-loop" size="24" v-bind="props" />
+            </button>
+          </template>
+
+          <div class="utils-settings-content">
+            <ClientOnly>
+              <button @click="toggleTheme">
+                <Icon :key="themeIcon" :name="themeIcon" size="24" />
+                <span>Цветовое оформление</span>
+              </button>
+              <button @click="toggleHieroglyphVariant">
+                <Icon name="line-md:clipboard" size="24" />
+                <!-- <div class="hieroglyph-variant">
+                  {{ store.hieroglyphWord.variant }}
+                </div> -->
+                <span>Стиль отображения иероглифа</span>
+              </button>
+              <button @click="toggleColorPinyin">
+                <Icon :key="colorPinyinIcon" :name="colorPinyinIcon" size="24" />
+                <span>Цветное отображения тона</span>
+              </button>
+            </ClientOnly>
+          </div>
+        </VMenu>
+
         <div class="vr" />
+
         <div class="profile">
           <NuxtImg
             class="profile-img"
             width="38"
             height="38"
             placeholder="/images/profile-placeholder.png"
+            src="/images/profile-placeholder.png"
           />
         </div>
       </div>
@@ -184,8 +172,9 @@ function toggleHieroglyphVariant() {
     .logo {
       display: inline-flex;
       margin: 0 8px;
-      &-icon {
-        margin-right: 8px;
+
+      &-title {
+        margin-left: 8px;
       }
     }
 
@@ -201,54 +190,24 @@ function toggleHieroglyphVariant() {
     }
 
     li {
-      position: relative;
-
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-
-      .link {
-        text-decoration: none;
-        color: var(--fg-primary-color);
-
-        transition: color 0.2s ease-in-out;
-        &:hover {
-          color: var(--fg-accent-color);
-        }
-      }
-
+      list-style: none;
+      text-decoration: none;
       span {
         margin-right: 4px;
       }
     }
-  }
 
-  &-utils {
-    display: flex;
-    gap: 16px;
+    .link {
+      color: var(--fg-primary-color);
+      cursor: pointer;
 
-    button {
-      position: relative;
+      transition: color 0.2s ease-in-out;
+      &:hover {
+        color: var(--fg-action-color);
+      }
 
-      .hieroglyph-variant {
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        background-color: var(--bg-secondary-color);
-        border: 1px solid var(--fg-primary-color);
-        font-size: 0.6rem;
-        font-weight: 600;
-        letter-spacing: 0.095em;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
+      &.actived {
+        color: var(--fg-accent-color);
       }
     }
   }
@@ -257,6 +216,7 @@ function toggleHieroglyphVariant() {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 8px;
 
     &-img {
       border-radius: 50%;
@@ -278,5 +238,62 @@ function toggleHieroglyphVariant() {
   height: 50%;
   width: 1px;
   margin: 0 auto;
+}
+
+.utils-settings {
+  &-btn {
+    margin-right: 8px;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 280px;
+    height: 100%;
+    padding: 8px;
+
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-primary-color);
+    border-radius: 8px;
+
+    button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      height: 48px;
+
+      svg {
+        min-width: 24px;
+      }
+
+      border-bottom: 1px solid var(--border-secondary-color);
+
+      &:last-child {
+        border: none;
+      }
+
+      .hieroglyph-variant {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: var(--bg-secondary-color);
+        border: 1px solid var(--fg-primary-color);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.095em;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+      }
+    }
+  }
 }
 </style>

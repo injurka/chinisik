@@ -2,6 +2,7 @@ export default defineNuxtPlugin({
   name: 'initialize',
   enforce: 'pre',
   async setup() {
-    // TODO
+    // eslint-disable-next-line no-console
+    console.log('initialized')
   },
 })

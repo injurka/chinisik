@@ -7,6 +7,9 @@ export const viteCfg: NuxtConfig['vite'] = {
   server: {
     //
   },
+  optimizeDeps: {
+    //
+  },
   css: {
     preprocessorOptions: {
       scss: {
