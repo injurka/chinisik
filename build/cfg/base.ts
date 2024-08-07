@@ -2,7 +2,7 @@ import type { NuxtConfig } from 'nuxt/schema'
 
 export const baseCfg: NuxtConfig = {
   devServer: {
-    port: 5173,
+    port: 5174,
   },
 
   build: {

@@ -1,13 +1,10 @@
-import process from 'node:process'
 import type { NuxtConfig } from 'nuxt/schema'
 import type { InputConfig } from './cfg.types'
 
-const sw = process.env.SW === 'true'
-
 const sharedConf: NuxtConfig['pwa'] = {
-  strategies: sw ? 'injectManifest' : 'generateSW',
-  srcDir: sw ? 'service-worker' : undefined,
-  filename: sw ? 'sw.ts' : undefined,
+  strategies: 'injectManifest',
+  srcDir: 'service-worker',
+  filename: 'sw.ts',
 
   base: '/',
   registerType: 'autoUpdate',

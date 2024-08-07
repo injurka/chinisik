@@ -122,8 +122,8 @@ function playPinyin(value: string, tone: ToneType) {
 
       position: absolute;
 
-      left: 10px;
-      top: 8px;
+      right: 18px;
+      bottom: 8px;
       font-family: 'Rubik';
       line-height: 19px;
 

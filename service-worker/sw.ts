@@ -1,10 +1,10 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
+
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { clientsClaim } from 'workbox-core'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
-// TODO
-// import { onNotificationClick, onPush } from './web-push-notifications'
+import { onNotificationClick, onPush } from './web-push-notifications'
 
 declare let self: ServiceWorkerGlobalScope
 
@@ -49,7 +49,8 @@ registerRoute(new NavigationRoute(
 self.skipWaiting()
 clientsClaim()
 
+self.addEventListener('push', onPush)
+self.addEventListener('notificationclick', onNotificationClick)
+
 // TODO
-// self.addEventListener('push', onPush)
-// self.addEventListener('notificationclick', onNotificationClick)
 // self.addEventListener('fetch', onShareTarget)

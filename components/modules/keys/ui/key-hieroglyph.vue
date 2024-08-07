@@ -105,6 +105,7 @@ watch(
   cursor: pointer;
   position: relative;
   margin: 5px;
+  aspect-ratio: 1 / 1;
 
   width: 160px;
   height: 160px;
@@ -180,6 +181,10 @@ watch(
       grid-area: hieroglyph;
       font-family: var(--font-family-cn);
       font-size: 2rem;
+
+      @include tablet() {
+        font-size: 3rem;
+      }
     }
 
     &-translate {

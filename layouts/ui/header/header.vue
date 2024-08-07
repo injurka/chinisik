@@ -17,6 +17,7 @@ const icons: Record<ThemesVariant, string> = {
 const theme = useColorMode()
 const store = useStore(['hieroglyphWord', 'pinyinText'])
 const { isMobile } = useDevice()
+const { fontCn, toggleFontCnFamily } = useChangeFontCn()
 
 const headerEl = ref<HTMLElement>()
 
@@ -116,6 +117,11 @@ function toggleHieroglyphVariant() {
               <button @click="toggleColorPinyin">
                 <Icon :key="colorPinyinIcon" :name="colorPinyinIcon" size="24" />
                 <span>Цветное отображения тона</span>
+              </button>
+              <button @click="toggleFontCnFamily">
+                <Icon name="material-symbols:draw" size="24" />
+                <span v-if="fontCn === 'base'">Прописные иероглифы</span>
+                <span v-else>Печатные иероглифы</span>
               </button>
             </ClientOnly>
           </div>

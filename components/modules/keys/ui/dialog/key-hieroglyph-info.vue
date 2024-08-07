@@ -127,6 +127,7 @@ function onAddToFavorite() {
         &-glyph {
           display: inline-flex;
           font-size: 8rem;
+          font-family: var(--font-family-cn);
           background-color: var(--bg-tertiary-color);
           border: 1px solid var(--border-secondary-color);
           border-radius: 8px;

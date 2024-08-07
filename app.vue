@@ -6,7 +6,7 @@ useHead({
   ...app,
   htmlAttrs: {
     'lang': 'ru',
-    'data-cn': `${useCookie(FONT_FAMILY).value}`,
+    'data-cn': `${useCookie(FONT_FAMILY_CN, { default: () => 'base' }).value}`,
   },
 })
 
