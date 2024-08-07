@@ -3,8 +3,7 @@
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { clientsClaim } from 'workbox-core'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
-// TODO
-// import { onNotificationClick, onPush } from './web-push-notifications'
+import { onNotificationClick, onPush } from './web-push-notifications'
 
 declare let self: ServiceWorkerGlobalScope
 
@@ -50,6 +49,6 @@ self.skipWaiting()
 clientsClaim()
 
 // TODO
-// self.addEventListener('push', onPush)
-// self.addEventListener('notificationclick', onNotificationClick)
+self.addEventListener('push', onPush)
+self.addEventListener('notificationclick', onNotificationClick)
 // self.addEventListener('fetch', onShareTarget)

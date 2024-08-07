@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import Nice from './components/domain/nice.client.vue'
+
 const app = useAppConfig()
 const { $pwa } = useNuxtApp()
 
@@ -21,6 +23,7 @@ onMounted(() => {
   <NuxtLoadingIndicator />
   <NuxtPwaAssets />
   <NuxtLayout>
+    <Nice />
     <NuxtPage />
   </NuxtLayout>
 </template>
