@@ -205,7 +205,7 @@ definePageMeta({
   font-family: 'Rubik';
 
   @include mobile() {
-    padding: 12px;
+    padding: 8px;
   }
 
   .description {

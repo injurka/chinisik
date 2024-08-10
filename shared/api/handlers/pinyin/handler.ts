@@ -1,30 +1,14 @@
-import type { IPinyinAllR } from './types'
-import type { MethodPayload } from '~/shared/api/api-client'
+import v1 from './v1'
 
-export interface IPinyinMethods {
-  v1: {
-    all: MethodPayload<void, IPinyinAllR>
+interface IMethods {
+  v1: ReturnType<typeof v1>
+}
+
+function methods(baseUrl: string, create: CreateApiMethodType): IMethods {
+  return {
+    v1: v1(baseUrl, create),
   }
 }
 
-const options = {
-  all: {
-    url: () => '/pinyin/',
-    method: 'get',
-  },
-} as const
-
-function pinyinMethods(baseUrl = ''): IPinyinMethods {
-  const sharedOptV1 = { baseUrl, version: 'v1' as const }
-
-  const v1: IPinyinMethods['v1'] = {
-    all: createApiMethod({
-      ...sharedOptV1,
-      ...options.all,
-    }),
-  }
-
-  return { v1 }
-}
-
-export { pinyinMethods }
+export default methods
+export type { IMethods as IPinyinMethods }

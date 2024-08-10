@@ -37,10 +37,4 @@ $fg-colors: (
   fg-action: $fg-action-color,
 );
 
-$colors: map-collect(
-  $bg-colors,
-  $border-colors,
-  $fg-colors,
-  shared.$border-status-colors,
-  shared.$fg-tone-colors
-);
+$colors: map-collect($bg-colors, $border-colors, $fg-colors, shared.$border-status-colors, shared.$fg-tone-colors);

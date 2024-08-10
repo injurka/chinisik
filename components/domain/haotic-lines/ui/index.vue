@@ -2,31 +2,39 @@
 import { type P5I, p5i } from 'p5i'
 
 interface Props {
-  width: number
-  height: number
+  width?: number
+  height?: number
   scaleFactor?: number
   pointsCounts?: number
   speed?: number
   weightStroke?: number
   color?: string
+  cap?: boolean
+  viewportEl?: HTMLElement | null
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  width: 0,
+  height: 0,
   scaleFactor: 1.1,
   pointsCounts: 8,
   speed: 1.5,
   weightStroke: 10,
   color: '--bg-accent-overlay-color',
+  cap: true,
+  viewportEl: null,
 })
 
 const haoticLineEl = ref<HTMLElement>()
 const haoticLineCanavas = ref<P5I>()
+const viewport = computed(() => ({
+  width: props.viewportEl?.offsetWidth || props.width,
+  height: props.viewportEl?.offsetHeight || props.height,
+}))
 
 function createHaoticLines(el: HTMLElement) {
   const sketch = p5i(() => {
     const {
-      width: widthEl,
-      height: heightEl,
       speed,
       pointsCounts,
       scaleFactor,
@@ -34,19 +42,27 @@ function createHaoticLines(el: HTMLElement) {
       color,
     } = props
 
+    const {
+      width: widthEl,
+      height: heightEl,
+    } = viewport.value
+
     const points: { x: number, y: number, dx: number, dy: number }[] = []
 
     return {
-      setup({ createCanvas, random, height, WEBGL }) {
+      setup({ createCanvas, random, WEBGL }) {
         const canvas = createCanvas(widthEl, heightEl, WEBGL)
         canvas.parent(el)
 
-        const step = (widthEl * scaleFactor) / (pointsCounts - 1)
+        const step = (widthEl * 1) / (pointsCounts - 1)
+
+        const scalefactorX = scaleFactor * Math.max((heightEl / widthEl), 1)
+        const scalefactorY = scaleFactor * Math.max((widthEl / heightEl), 1)
 
         for (let i = 0; i < pointsCounts; i++) {
           points.push({
-            x: i * step - (widthEl * scaleFactor) / 2,
-            y: random(-height, height * 2),
+            x: i * step - (widthEl * scalefactorX) / 2,
+            y: random(-(heightEl / 2) * scalefactorY, (heightEl / 2) * scalefactorY),
             dx: random(-speed, speed),
             dy: random(-speed, speed),
           })
@@ -79,10 +95,10 @@ function createHaoticLines(el: HTMLElement) {
 
           if (point.x < -width / 2 || point.x > width / 2)
             point.dx = -point.dx
-          if (point.y < -height || point.y > height * 2)
+          if (point.y < -height / 2 || point.y > height / 2)
             point.dy = -point.dy
         }
-        endShape(CLOSE)
+        endShape(props.cap ? CLOSE : undefined)
 
         checkIntersection()
 
@@ -110,17 +126,22 @@ function createSketchs() {
   })
 }
 
+function resizeListener() {
+  try {
+    createSketchs()
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
 onMounted(() => {
   createSketchs()
+  window.addEventListener('resize', resizeListener)
+})
 
-  window.addEventListener('resize', () => {
-    try {
-      createSketchs()
-    }
-    catch (err) {
-      console.error(err)
-    }
-  })
+onUnmounted(() => {
+  window.removeEventListener('resize', resizeListener)
 })
 </script>
 

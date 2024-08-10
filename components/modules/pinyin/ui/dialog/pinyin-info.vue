@@ -22,11 +22,6 @@ const pinyinData = computed(() => {
   }
 })
 
-const haoticLinesProps = computed(() => ({
-  width: dialogEl.value?.offsetWidth || 0,
-  height: dialogEl.value?.offsetHeight || 0,
-}))
-
 function playPinyin(value: string, tone: ToneType) {
   const track = `/chinese-pinyin-sound/${value}${tone}.mp3`
 
@@ -46,10 +41,7 @@ function playPinyin(value: string, tone: ToneType) {
       class="dialog"
     >
       <div ref="dialogEl" class="dialog-wrapper">
-        <HaoticLines
-          :width="haoticLinesProps.width"
-          :height="haoticLinesProps.height"
-        />
+        <HaoticLines :viewport-el="dialogEl" />
 
         <div class="hint">
           <Icon name="line-md:alert-circle-loop" size="18" />

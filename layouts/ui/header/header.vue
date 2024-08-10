@@ -22,10 +22,6 @@ const { fontCn, toggleFontCnFamily } = useChangeFontCn()
 const headerEl = ref<HTMLElement>()
 
 const themeIcon = computed(() => icons[theme.value as keyof typeof icons])
-const haoticLinesProps = computed(() => ({
-  width: headerEl.value?.offsetWidth || 0,
-  height: headerEl.value?.offsetHeight || 0,
-}))
 
 function toggleTheme() {
   switch (theme.value) {
@@ -62,10 +58,7 @@ function toggleHieroglyphVariant() {
 <template>
   <header ref="headerEl" class="header">
     <ClientOnly>
-      <HaoticLines
-        :width="haoticLinesProps.width"
-        :height="haoticLinesProps.height"
-      />
+      <HaoticLines :viewport-el="headerEl" />
     </ClientOnly>
     <div class="header-content">
       <div class="header-nav">

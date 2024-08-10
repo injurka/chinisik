@@ -4,7 +4,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "bun@1.1.21",
+  "packageManager": "bun@1.1.22",
   "engines": {
     "node": ">=20.0.0",
     "bun": ">=1.1.0"
@@ -26,14 +26,14 @@
   },
   "dependencies": {
     "@pinia/nuxt": "0.5.3",
-    "@vueuse/core": "10.11.0",
-    "@vueuse/nuxt": "^10.11.0",
+    "@vueuse/core": "10.11.1",
+    "@vueuse/nuxt": "^10.11.1",
     "p5i": "^0.5.0",
     "pinia": "2.2.1",
     "vuetify-nuxt-module": "^0.16.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.24.1",
+    "@antfu/eslint-config": "^2.25.0",
     "@nuxt/eslint": "^0.5.0",
     "@nuxt/image": "^1.7.0",
     "@nuxt/types": "2.18.1",
@@ -41,9 +41,9 @@
     "@nuxtjs/device": "^3.1.1",
     "@types/howler": "^2.2.11",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.1.0",
+    "@types/node": "^22.2.0",
     "@vite-pwa/nuxt": "^0.9.1",
-    "eslint": "^9.8.0",
+    "eslint": "^9.9.0",
     "eslint-plugin-format": "^0.1.2",
     "howler": "^2.2.4",
     "jsdom": "^24.1.1",

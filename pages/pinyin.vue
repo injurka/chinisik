@@ -185,24 +185,19 @@ definePageMeta({
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  font-family: 'Rubik';
 
   width: 100%;
-  padding: 5px;
+  padding: 16px;
 
-  &-description {
-    font-size: 1rem;
-    max-width: 1200px;
-    padding: 16px 6px;
-
-    @include mobile {
-      font-size: 0.9rem;
-    }
+  @include mobile() {
+    padding: 2px;
   }
 
   .description {
     font-size: 1rem;
     max-width: 1200px;
-    padding: 16px 6px;
+    padding: 18px 14px;
     margin: 0 auto;
 
     @include mobile {
