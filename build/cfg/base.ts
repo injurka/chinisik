@@ -23,7 +23,7 @@ export const baseCfg: NuxtConfig = {
 
   vuetify: {
     moduleOptions: {
-      //
+
     },
   },
 

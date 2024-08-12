@@ -9,9 +9,15 @@ interface Props {
 }
 const props = defineProps<Props>()
 const dialog = defineModel<boolean>()
-const dialogEl = ref<HTMLElement>()
 
+const dialogEl = ref<HTMLElement>()
 const audio = ref<Howl | null>(null)
+const volumeMenu = ref<boolean>(false)
+const speedMenu = ref<boolean>(false)
+
+const speedVariants = [0.5, 0.75, 1.0, 1.25, 1.5]
+const speedVariant = ref<number>(speedVariants[0])
+const volumeScale = ref<number>(0)
 
 const pinyinData = computed(() => {
   const pinyinSection = props.pinyin.split('+')
@@ -44,6 +50,47 @@ function playPinyin(value: string, tone: ToneType) {
         <HaoticLines :viewport-el="dialogEl" />
 
         <div class="hint">
+          <v-menu
+            v-model="volumeMenu"
+            :close-on-content-click="false"
+            location="top"
+          >
+            <template #activator="{ props }">
+              <v-btn variant="flat" color="transparent" v-bind="props" icon="mdi-heart" />
+            </template>
+
+            <div class="volume-menu">
+              <v-slider
+                v-model="volumeScale"
+                hide-details
+                direction="vertical"
+                thumb-label
+              />
+            </div>
+          </v-menu>
+          <v-menu
+            v-model="speedMenu"
+            :close-on-content-click="false"
+            location="top"
+          >
+            <template #activator="{ props }">
+              <v-btn variant="flat" color="transparent" v-bind="props" icon="mdi-scale" />
+            </template>
+
+            <div class="speed-menu">
+              <v-btn
+                v-for="btn in speedVariants"
+                :key="btn"
+                rounded
+                variant="flat"
+                size="s"
+                :class="{ active: speedVariant === btn }"
+                @click="speedVariant = btn"
+              >
+                {{ btn }}
+              </v-btn>
+            </div>
+          </v-menu>
           <Icon name="line-md:alert-circle-loop" size="18" />
           <span> нажмите чтобы прослушать </span>
         </div>
@@ -85,6 +132,39 @@ function playPinyin(value: string, tone: ToneType) {
   font-size: 1.2rem;
 }
 
+.volume-menu {
+  border-radius: 16px;
+  background-color: var(--bg-secondary-color);
+  border: 1px solid var(--border-secondary-color);
+  padding: 4px;
+
+  :deep(.v-input) {
+    height: 100px !important;
+  }
+  :deep(.v-input__control) {
+    min-height: 100px !important;
+  }
+}
+
+.speed-menu {
+  border-radius: 16px;
+  background-color: var(--bg-secondary-color);
+  border: 1px solid var(--border-secondary-color);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+
+  .active {
+    color: var(--fg-accent-color) !important;
+  }
+
+  .v-btn {
+    background-color: transparent !important;
+  }
+}
+
 .dialog {
   max-width: 700px;
 
@@ -109,6 +189,7 @@ function playPinyin(value: string, tone: ToneType) {
       display: inline-flex;
       align-items: flex-end;
       gap: 4px;
+      z-index: 10;
 
       margin: 0 auto;
 

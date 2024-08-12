@@ -69,20 +69,20 @@ function toggleHieroglyphVariant() {
         <div class="vr" />
         <nav>
           <ul>
-            <li
+            <button
               class="link"
               :class="{ actived: $route.name === RouteNames.Keys }"
               @click="navigateTo(RoutePaths.Keys)"
             >
               Ключи
-            </li>
-            <li
+            </button>
+            <button
               class="link"
               :class="{ actived: $route.name === RouteNames.Pinyin }"
               @click="navigateTo(RoutePaths.Pinyin)"
             >
               Пиньин
-            </li>
+            </button>
           </ul>
         </nav>
       </div>
