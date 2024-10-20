@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { PinyinTable } from '~/components/modules/pinyin/index'
 import { JsonToDom, type JsonToDomChildren } from '~/components/domain/json-to-dom'
+import { PinyinTable } from '~/components/modules/pinyin/index'
 
 const store = useStore(['pinyin'])
 const { finals, initials, initialWithFinal } = storeToRefs(store.pinyin)

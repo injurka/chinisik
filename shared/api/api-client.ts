@@ -1,7 +1,7 @@
 import type { FetchOptions } from 'ofetch'
+import type { CreateApiMethod } from './api-client.types'
 import keys from './handlers/keys/handler'
 import pinyin from './handlers/pinyin/handler'
-import type { CreateApiMethod } from './api-client.types'
 
 const interceptops = ref<Interceptops>({} as Interceptops)
 
@@ -75,4 +75,4 @@ function createApi(
   return api
 }
 
-export { createApiMethod, createApi }
+export { createApi, createApiMethod }

@@ -16,6 +16,7 @@ export const viteCfg: NuxtConfig['vite'] = {
         additionalData: `
           @import '~/assets/scss/_setup.scss';
         `,
+        api: 'modern-compiler',
       },
     },
   },

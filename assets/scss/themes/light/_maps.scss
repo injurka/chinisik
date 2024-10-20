@@ -1,40 +1,46 @@
 @use '../shared/_maps.scss' as shared;
 
-@import './_variables.scss';
-@import '../../_functions.scss';
+@use '_variables.scss';
+@use '../../_functions.scss';
 
 // BG
 $bg-colors: (
-  bg-primary: $bg-primary-color,
-  bg-secondary: $bg-secondary-color,
-  bg-tertiary: $bg-tertiary-color,
-  bg-disabled: $bg-disabled-color,
-  bg-inverted: $bg-inverted-color,
-  bg-accent-overlay: $bg-accent-overlay-color,
-  bg-accent: $bg-accent-color,
-  bg-pressed: $bg-pressed-color,
-  bg-overlay-primary: $bg-overlay-primary-color,
-  bg-overlay-secondary: $bg-overlay-secondary-color,
-  bg-action-hover: $bg-action-hover-color,
+  bg-primary: variables.$bg-primary-color,
+  bg-secondary: variables.$bg-secondary-color,
+  bg-tertiary: variables.$bg-tertiary-color,
+  bg-disabled: variables.$bg-disabled-color,
+  bg-inverted: variables.$bg-inverted-color,
+  bg-accent-overlay: variables.$bg-accent-overlay-color,
+  bg-accent: variables.$bg-accent-color,
+  bg-pressed: variables.$bg-pressed-color,
+  bg-overlay-primary: variables.$bg-overlay-primary-color,
+  bg-overlay-secondary: variables.$bg-overlay-secondary-color,
+  bg-action-hover: variables.$bg-action-hover-color,
 );
 
 // Border
 $border-colors: (
-  border-button-secondary: $border-button-secondary-color,
-  border-disabled: $border-disabled-color,
-  border-primary: $border-primary-color,
-  border-secondary: $border-secondary-color,
-  border-accent: $border-accent-color,
+  border-button-secondary: variables.$border-button-secondary-color,
+  border-disabled: variables.$border-disabled-color,
+  border-primary: variables.$border-primary-color,
+  border-secondary: variables.$border-secondary-color,
+  border-accent: variables.$border-accent-color,
 );
 
 // FG
 $fg-colors: (
-  fg-primary: $fg-primary-color,
-  fg-secondary: $fg-secondary-color,
-  fg-tertiary: $fg-tertiary-color,
-  fg-muted: $fg-muted-color,
-  fg-accent: $fg-accent-color,
-  fg-action: $fg-action-color,
+  fg-primary: variables.$fg-primary-color,
+  fg-secondary: variables.$fg-secondary-color,
+  fg-tertiary: variables.$fg-tertiary-color,
+  fg-muted: variables.$fg-muted-color,
+  fg-accent: variables.$fg-accent-color,
+  fg-action: variables.$fg-action-color,
 );
 
-$colors: map-collect($bg-colors, $border-colors, $fg-colors, shared.$border-status-colors, shared.$fg-tone-colors);
+$colors: functions.map-collect(
+  $bg-colors,
+  $border-colors,
+  $fg-colors,
+  shared.$border-status-colors,
+  shared.$fg-tone-colors
+);

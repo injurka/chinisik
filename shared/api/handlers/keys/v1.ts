@@ -1,6 +1,6 @@
 import type { CreateApiMethodType, MethodOption } from '../../api-client.types'
-import { createMethodWrapper } from '../../utils'
 import type * as DTO from './types'
+import { createMethodWrapper } from '../../utils'
 
 interface IOptions {
   all: MethodOption<void, DTO.IKeysAllR>

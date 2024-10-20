@@ -1,5 +1,5 @@
-import { useApi } from '~/shared/composables/api'
 import type { Interceptops } from '~/shared/api/api-client.types'
+import { useApi } from '~/shared/composables/api'
 
 export default defineNuxtPlugin({
   name: 'api',

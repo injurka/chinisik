@@ -1,8 +1,8 @@
-import { useKeysStore } from '~/components/modules/keys/store/keys.store'
-import { usePinyinStore } from '~/components/modules/pinyin/store/pinyin.store'
-
 import { useHieroglyphWordStore } from '~/components/domain/hieroglyph-word'
 import { usePinyinTextStore } from '~/components/domain/pinyin-text'
+
+import { useKeysStore } from '~/components/modules/keys/store/keys.store'
+import { usePinyinStore } from '~/components/modules/pinyin/store/pinyin.store'
 
 type ExtractStoreId<T> = T extends { $id: infer U } ? U : never
 

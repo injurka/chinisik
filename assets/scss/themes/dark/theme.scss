@@ -1,5 +1,5 @@
-@import './maps.scss';
+@use 'maps.scss';
 
 $theme: (
-  colors: $colors,
+  colors: maps.$colors,
 );

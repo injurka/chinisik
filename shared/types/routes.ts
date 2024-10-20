@@ -1,9 +1,11 @@
 export enum RouteNames {
   Keys = 'keys',
   Pinyin = 'pinyin',
+  Glossary = 'glossary',
 }
 
-export enum RoutePaths {
-  Keys = '/keys',
-  Pinyin = '/pinyin',
+export const RoutePaths = {
+  Keys: '/keys',
+  Pinyin: '/pinyin',
+  Glossary: '/glossary',
 }

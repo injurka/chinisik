@@ -1,5 +1,5 @@
-import type { IApi, Interceptops } from '~/shared/api/api-client.types'
 import { createApi } from '~/shared/api/api-client'
+import type { IApi, Interceptops } from '~/shared/api/api-client.types'
 
 let api: IApi
 

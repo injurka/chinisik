@@ -1,8 +1,8 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
 
-import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { clientsClaim } from 'workbox-core'
+import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
 import { onNotificationClick, onPush } from './web-push-notifications'
 

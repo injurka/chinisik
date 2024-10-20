@@ -1,10 +1,10 @@
+import type { Final, FinalsTone, Initial, InitialWithFinal } from '~/shared/types'
 import {
   mockFinals,
   mockFinalsTone,
   mockInitials,
   mockInitialsFinals,
 } from '.'
-import type { Final, FinalsTone, Initial, InitialWithFinal } from '~/shared/types'
 
 const initialMap = new Map<number, Initial>()
 const finalMap = new Map<number, Final>()

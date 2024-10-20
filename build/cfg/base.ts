@@ -1,6 +1,15 @@
 import type { NuxtConfig } from 'nuxt/schema'
 
 export const baseCfg: NuxtConfig = {
+  components: {
+    global: true,
+    dirs: [{
+      path: '~/components/shared/header/ui/',
+      prefix: '',
+      extensions: ['.vue'],
+    }],
+  },
+
   devServer: {
     port: 5174,
   },
@@ -16,10 +25,20 @@ export const baseCfg: NuxtConfig = {
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
-    'nuxt-icon',
+    '@nuxt/icon',
     '@vite-pwa/nuxt',
     'vuetify-nuxt-module',
   ],
+
+  icon: {
+    serverBundle: {
+      collections: ['mdi'],
+    },
+    customCollections: [{
+      prefix: 're',
+      dir: './assets/svg',
+    }],
+  },
 
   vuetify: {
     moduleOptions: {

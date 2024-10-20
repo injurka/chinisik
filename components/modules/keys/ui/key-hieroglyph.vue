@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useElementVisibility } from '@vueuse/core'
 import type { ControlHieroglyphKey } from '../store/keys.store'
+import { useElementVisibility } from '@vueuse/core'
 import { PinyinText } from '~/components/domain/pinyin-text'
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const emits = defineEmits<{ onExpand: [void] }>()
+const emits = defineEmits<{ onExpand: [HieroglyphKey] }>()
 
 const contentEl = ref<HTMLElement | null>(null)
 

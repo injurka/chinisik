@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { HaoticLines } from '~/components/domain/haotic-lines'
-import { PinyinText } from '~/components/domain/pinyin-text'
 import { IframeViewer } from '~/components/domain/iframe-viewer'
+import { PinyinText } from '~/components/domain/pinyin-text'
 
 interface Props {
   hieroglyph?: HieroglyphKey

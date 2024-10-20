@@ -1,13 +1,19 @@
 {
-  "eslint.useFlatConfig": true,
+  "prettier.enable": false,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
-  "eslint.format.enable": true,
-  "prettier.enable": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
+  "eslint.useFlatConfig": true,
+  "eslint.format.enable": true,
+  "eslint.options": {
+    "flags": [
+      "unstable_ts_config"
+    ]
+  },
+  "eslint.runtime": "node",
   "eslint.rules.customizations": [
     {
       "rule": "@stylistic/*",

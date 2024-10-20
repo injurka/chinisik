@@ -28,7 +28,6 @@ export const useRequestStore = defineStore('request', {
       this._status.set(key, value)
     },
     _setError(key: string, value: ErrorResult | null) {
-      // eslint-disable-next-line ts/no-unused-expressions
       value ? this._error.set(key, value) : this._error.delete(key)
     },
 

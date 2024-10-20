@@ -1,3 +1,5 @@
+@use '../variables';
+
 @use './light/theme.scss' as light;
 @use './dark/theme.scss' as dark;
 @use './rainy/theme.scss' as rainy;
@@ -10,8 +12,8 @@ $themes: (
 );
 
 $fontCn: (
-  base: #{$font-family-cn-base},
-  brushed: #{$font-family-cn-brushed},
+  base: #{variables.$font-family-cn-base},
+  brushed: #{variables.$font-family-cn-brushed},
 );
 
 $font-family: (

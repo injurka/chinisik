@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
-import { PinyinText } from '~/components/domain/pinyin-text'
 import type { JsonToDomChildren, JsonToDomTags } from '~/components/domain/json-to-dom'
 import { JsonToDom } from '~/components/domain/json-to-dom'
+import { PinyinText } from '~/components/domain/pinyin-text'
 
 defineProps<{ node: JsonToDomChildren }>()
 

@@ -1,5 +1,5 @@
-@import './maps.scss';
+@use 'maps.scss';
 
 $font-family: (
-  cn: $font-family-cn,
+  cn: maps.$font-family-cn,
 );

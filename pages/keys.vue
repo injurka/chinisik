@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import { JsonToDom, type JsonToDomChildren } from '~/components/domain/json-to-dom'
 import { KeyHieroglyph, KeyHieroglyphInfo } from '~/components/modules/keys'
 import type { ControlHieroglyphKey } from '~/components/modules/keys/store/keys.store'
-import { JsonToDom, type JsonToDomChildren } from '~/components/domain/json-to-dom'
 
 const store = useStore(['keys'])
 const { hieroglyphKeys, isLoadingContent, control } = storeToRefs(store.keys)
@@ -177,7 +177,7 @@ definePageMeta({
         <button class="controls-button">
           {{ item.label }}
         </button>
-        <Icon class="controls-selected" name="Checked" size="20" />
+        <Icon class="controls-selected" name="re:checked" size="20" />
       </div>
     </div>
 

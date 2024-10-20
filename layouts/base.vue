@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Header } from './ui'
+
 </script>
 
 <template>

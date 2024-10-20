@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Howl } from 'howler'
-import { PinyinText } from '~/components/domain/pinyin-text'
 import { HaoticLines } from '~/components/domain/haotic-lines'
+import { PinyinText } from '~/components/domain/pinyin-text'
 
 interface Props {
   pinyin: string
