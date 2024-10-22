@@ -7,7 +7,7 @@ import { usePinyinStore } from '~/components/modules/pinyin/store/pinyin.store'
 type ExtractStoreId<T> = T extends { $id: infer U } ? U : never
 
 interface IStoreTypes {
-  request: ReturnType<typeof useRequestStore>
+  request: ReturnType<typeof useRequestWrapperStore>
   keys: ReturnType<typeof useKeysStore>
   pinyin: ReturnType<typeof usePinyinStore>
 
@@ -19,7 +19,7 @@ interface IStoreTypes {
 type StoreKeys = ExtractStoreId<IStoreTypes[keyof IStoreTypes]>
 
 export const stores: Readonly<{ [K in StoreKeys]: () => IStoreTypes[K] }> = Object.freeze({
-  request: useRequestStore,
+  request: useRequestWrapperStore,
   keys: useKeysStore,
   pinyin: usePinyinStore,
 

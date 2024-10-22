@@ -24,6 +24,16 @@ p {
   padding: 2px 0;
 }
 
+#__nuxt {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nuxt-loading-indicator {
+  background: linear-gradient(62deg, var(--fg-muted-color) 0%, var(fg-accent-color) 100%) !important;
+}
+
 .v-tooltip > .v-overlay__content {
   background: var(--bg-tertiary-color) !important;
   border: 1px solid var(--border-primary-color);

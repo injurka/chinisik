@@ -4,7 +4,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "bun@1.1.31",
+  "packageManager": "bun@1.1.32",
   "engines": {
     "node": ">=20.0.0",
     "bun": ">=1.1.0"
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.8.0",
+    "@iconify-json/line-md": "^1.2.2",
     "@nuxt/eslint": "^0.6.0",
     "@nuxt/icon": "^1.5.6",
     "@nuxt/image": "^1.8.1",
@@ -42,7 +43,7 @@
     "@nuxtjs/device": "^3.2.4",
     "@types/howler": "^2.2.12",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.7.7",
+    "@types/node": "^22.7.8",
     "@vite-pwa/nuxt": "^0.10.5",
     "eslint": "^9.13.0",
     "eslint-plugin-format": "^0.1.2",

@@ -1,5 +1,8 @@
+import type { JsonToDomChildren } from '~/components/domain/json-to-dom'
+
 enum RequestKeys {
   ALL = 'keys_all',
+  DESCRIPTION = 'keys_description',
 }
 
 export interface ControlHieroglyphKey {
@@ -13,6 +16,8 @@ export interface ControlHieroglyphKey {
 
 interface KeysState {
   hieroglyphKeys: HieroglyphKey[]
+  description: JsonToDomChildren
+
   control: ControlHieroglyphKey
 }
 
@@ -20,6 +25,7 @@ interface KeysState {
 export const useKeysStore = defineStore('keys', {
   state: (): KeysState => ({
     hieroglyphKeys: [],
+    description: {} as JsonToDomChildren,
 
     control: {
       isPinyin: false,
@@ -30,16 +36,22 @@ export const useKeysStore = defineStore('keys', {
   }),
 
   getters: {
-    isLoadingContent: () => useRequestStatus([RequestKeys.ALL]),
+    isLoadingContent: () => useRequestStatus([RequestKeys.ALL, RequestKeys.DESCRIPTION]),
   },
 
   actions: {
     async getAllKeys() {
       await useRequest({
         key: RequestKeys.ALL,
-        once: true,
-        callback: ({ api }) => api.keys.v1.all(),
+        fn: ({ api }) => api.keys.v1.all(),
         onSuccess: ({ data }) => this.hieroglyphKeys = data,
+      })
+    },
+    async getDescriptionKeys() {
+      await useRequest({
+        key: RequestKeys.DESCRIPTION,
+        fn: ({ api }) => api.keys.v1.description(),
+        onSuccess: ({ data }) => this.description = data,
       })
     },
     toggleControl(field: keyof ControlHieroglyphKey) {

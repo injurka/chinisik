@@ -1,33 +1,22 @@
-import type { Interceptops } from '~/shared/api/api-client.types'
-import { useApi } from '~/shared/composables/api'
+export default defineNuxtPlugin(async () => {
+  const apiInterceptops = [{
+    onRequest: () => {
+      // const headers = options.headers ||= {}
 
-export default defineNuxtPlugin({
-  name: 'api',
-  enforce: 'pre',
-  async setup(nuxtApp) {
-    const { api, init } = useApi()
+      // if (Array.isArray(headers)) {
+      //   headers.push(['Authorization', `Bearer ${useGlobalStore().accessToken}`])
+      // }
+      // else if (headers instanceof Headers) {
+      //   headers.set('Authorization', `Bearer ${useGlobalStore().accessToken}`)
+      // }
+      // else {
+      //   headers.Authorization = `Bearer ${useGlobalStore().accessToken}`
+      // }
+    },
+    onRequestError: () => { },
+    onResponse: () => { },
+    onResponseError: () => { },
+  } satisfies FetchOption<unknown>]
 
-    const interceptops: Interceptops = {
-      onRequest: () => {
-        // const headers = options.headers ||= {}
-
-        // if (Array.isArray(headers)) {
-        //   headers.push(['Authorization', `Bearer ${useGlobalStore().accessToken}`])
-        // }
-        // else if (headers instanceof Headers) {
-        //   headers.set('Authorization', `Bearer ${useGlobalStore().accessToken}`)
-        // }
-        // else {
-        //   headers.Authorization = `Bearer ${useGlobalStore().accessToken}`
-        // }
-      },
-      onRequestError: () => { },
-      onResponse: () => { },
-      onResponseError: () => { },
-    }
-
-    init({ interceptops })
-
-    nuxtApp.provide('api', api)
-  },
+  return { provide: { apiInterceptops } }
 })
