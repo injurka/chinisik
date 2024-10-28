@@ -66,7 +66,9 @@ function toggleHieroglyphVariant() {
           <Icon class="logo-icon" name="game-icons:sea-dragon" size="24" />
           <span v-if="!isMobile" class="logo-title"> Chinisik </span>
         </div>
-        <div class="vr" />
+        <div class="vr">
+          //
+        </div>
         <nav>
           <ul>
             <li
@@ -189,7 +191,7 @@ function toggleHieroglyphVariant() {
       flex-direction: row;
       align-items: center;
       justify-content: flex-end;
-      gap: 16px;
+      gap: 4px;
 
       margin: 0;
       padding: 0 10px;
@@ -206,10 +208,14 @@ function toggleHieroglyphVariant() {
     .link {
       color: var(--fg-primary-color);
       cursor: pointer;
+      border-radius: 6px;
 
-      transition: color 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      padding: 2px 8px;
       &:hover {
         color: var(--fg-action-color);
+        background-color: var(--bg-tertiary-color);
+        box-shadow: 0px 0px 0px 1px var(--border-accent-color);
       }
 
       &.actived {
@@ -239,11 +245,11 @@ function toggleHieroglyphVariant() {
 }
 
 .vr {
-  border: none;
-  border-left: 2px solid var(--border-secondary-color);
-  height: 50%;
-  width: 1px;
-  margin: 0 auto;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--fg-muted-color);
 }
 
 .utils-settings {

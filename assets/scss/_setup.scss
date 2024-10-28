@@ -1,6 +1,6 @@
-@import '_variables.scss';
-@import '_functions.scss';
-@import 'themes/_theme.scss';
-@import 'mixins/_media.scss';
-@import 'mixins/_theme.scss';
-@import '_css-variables.scss';
+@forward '_variables.scss';
+@forward '_functions.scss';
+@forward 'themes/_theme.scss';
+@forward 'mixins/_media.scss';
+@forward 'mixins/_theme.scss';
+@forward '_css-variables.scss';

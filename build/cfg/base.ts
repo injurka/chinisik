@@ -10,8 +10,13 @@ export const baseCfg: NuxtConfig = {
     }],
   },
 
+  routeRules: {
+    '/keys': { isr: 3600 },
+    '/pinyin': { isr: 3600 },
+  },
+
   devServer: {
-    port: 5174,
+    port: 5173,
   },
 
   build: {
@@ -31,7 +36,7 @@ export const baseCfg: NuxtConfig = {
   ],
 
   api: {
-    baseUrl: 'http://localhost:5174/api',
+    baseUrl: 'http://localhost:5173/api',
     verbose: true,
   },
 
@@ -58,15 +63,10 @@ export const baseCfg: NuxtConfig = {
   },
 
   css: [
+    '/assets/scss/fonts.scss',
     '/assets/scss/global.scss',
+    '/assets/scss/normalize.scss',
   ],
-
-  // app: {
-  //   pageTransition: {
-  //     name: 'page',
-  //     mode: 'out-in',
-  //   },
-  // },
 
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },

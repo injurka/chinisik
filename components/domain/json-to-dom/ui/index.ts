@@ -1,0 +1,40 @@
+import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
+import type { JsonToDomChildren, JsonToDomTags } from '~/components/domain/json-to-dom'
+import { PinyinText } from '~/components/domain/pinyin-text'
+
+const components: Record<string, any> = {
+  HieroglyphWord,
+  PinyinText,
+}
+
+function getIsComponent(tag: JsonToDomTags): any {
+  return components[tag] || tag
+}
+
+const JsonToDom = defineComponent({
+  name: 'JsonToDom',
+  props: {
+    node: {
+      type: Object as PropType<JsonToDomChildren>,
+      required: true,
+    },
+  },
+  setup(props) {
+    useRender(() => {
+      const { node } = props
+
+      return h(
+        getIsComponent(node.tag),
+        {
+          class: node.class,
+          ...node.props,
+        },
+        Array.isArray(node.children)
+          ? node.children.map((child, index) => h(JsonToDom, { key: index, node: child }))
+          : node.children,
+      )
+    })
+  },
+})
+
+export { JsonToDom }

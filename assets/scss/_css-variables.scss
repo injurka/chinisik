@@ -1,6 +1,5 @@
 @use 'mixins/theme' as mixins-theme;
 @use 'themes/theme' as themes-theme;
-
 @use 'sass:map';
 
 @include mixins-theme.connectThemes(themes-theme.$themes, 'theme') using ($theme, $themeName) {

@@ -1,4 +1,5 @@
 @use 'sass:map';
+
 @function map-collect($maps...) {
   $collection: ();
 
