@@ -2,12 +2,12 @@ import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import type { JsonToDomChildren, JsonToDomTags } from '~/components/domain/json-to-dom'
 import { PinyinText } from '~/components/domain/pinyin-text'
 
-const components: Record<string, any> = {
+const components: Record<string, ReturnType<typeof defineComponent>> = {
   HieroglyphWord,
   PinyinText,
 }
 
-function getIsComponent(tag: JsonToDomTags): any {
+function getIsComponent(tag: JsonToDomTags) {
   return components[tag] || tag
 }
 
