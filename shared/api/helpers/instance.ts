@@ -1,6 +1,5 @@
-import type { FetchOption, Instance } from '../types'
 /* eslint-disable no-console */
-import { ofetch } from 'ofetch'
+import type { FetchOption, Instance } from '../types'
 
 interface CreateInstanceParams {
   baseUrl: string
@@ -44,7 +43,7 @@ function createInstance(params: CreateInstanceParams) {
     if (verbose)
       console.log(`⚡ %c[${options.method!.toUpperCase()}]`, 'color: #9400D3; font-weight: bold;', '-', _url)
 
-    return ofetch<R>(_url, _options as any)
+    return $fetch(_url, _options as any)
   }
 
   return apiMethod as Instance

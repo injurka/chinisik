@@ -11,8 +11,8 @@ export const baseCfg: NuxtConfig = {
   },
 
   routeRules: {
-    // '/keys': { swr: true },
-    // '/pinyin': { swr: true },
+    '/keys': { swr: true },
+    '/pinyin': { swr: true },
   },
 
   devServer: {
@@ -36,7 +36,7 @@ export const baseCfg: NuxtConfig = {
   ],
 
   api: {
-    baseUrl: 'http://localhost:5173/api',
+    baseUrl: '/api',
     verbose: true,
   },
 
