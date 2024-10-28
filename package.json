@@ -60,7 +60,7 @@
     "vue-tsc": "^2.1.8"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged && bun run typecheck",
+    "pre-commit": "bunx lint-staged && bun run typecheck",
     "post-commit": "git status",
     "post-merge": "bun i"
   },
