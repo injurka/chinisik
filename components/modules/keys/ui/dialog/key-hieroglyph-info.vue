@@ -8,7 +8,6 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const isFavorite = ref<boolean>(false)
 const isWikiViewing = ref<boolean>(false)
 
 const data = computed(() => ({
@@ -23,9 +22,6 @@ const hieroglyphEl = ref<HTMLElement>()
 
 function onOpenWiki() {
   isWikiViewing.value = !isWikiViewing.value
-}
-function onAddToFavorite() {
-  isFavorite.value = !isFavorite.value
 }
 </script>
 
@@ -63,16 +59,6 @@ function onAddToFavorite() {
         <div class="control">
           <div class="control-hr" />
           <div class="control-items">
-            <div class="control-item" @click="onAddToFavorite">
-              <VTooltip
-                activator="parent"
-                location="top"
-              >
-                Добавить в избранное
-              </VTooltip>
-              <Icon v-if="!isFavorite" size="24" name="line-md:star-alt-twotone" />
-              <Icon v-else size="24" name="line-md:star-alt-filled" :class="{ isFavorite }" />
-            </div>
             <div class="control-item" @click="onOpenWiki">
               <VTooltip
                 activator="parent"

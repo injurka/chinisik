@@ -4,7 +4,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "bun@1.1.33",
+  "packageManager": "bun@1.1.34",
   "engines": {
     "node": ">=20.0.0",
     "bun": ">=1.1.0"
@@ -25,11 +25,11 @@
     "postinstall": "simple-git-hooks && nuxt prepare"
   },
   "dependencies": {
-    "@pinia/nuxt": "0.5.5",
-    "@vueuse/core": "11.1.0",
-    "@vueuse/nuxt": "^11.1.0",
+    "@pinia/nuxt": "0.6.1",
+    "@vueuse/core": "11.2.0",
+    "@vueuse/nuxt": "^11.2.0",
     "p5i": "^0.5.0",
-    "pinia": "2.2.4",
+    "pinia": "2.2.5",
     "vuetify-nuxt-module": "^0.18.3"
   },
   "devDependencies": {
@@ -37,27 +37,27 @@
     "@iconify-json/line-md": "^1.2.2",
     "@iconify-json/material-symbols": "^1.2.5",
     "@iconify-json/mdi": "^1.2.1",
-    "@nuxt/eslint": "^0.6.0",
-    "@nuxt/icon": "^1.5.8",
+    "@nuxt/eslint": "^0.6.1",
+    "@nuxt/icon": "^1.6.1",
     "@nuxt/image": "^1.8.1",
     "@nuxt/types": "2.18.1",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/device": "^3.2.4",
     "@types/howler": "^2.2.12",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.8.1",
-    "@vite-pwa/nuxt": "^0.10.5",
-    "eslint": "^9.13.0",
+    "@types/node": "^22.8.6",
+    "@vite-pwa/nuxt": "^0.10.6",
+    "eslint": "^9.14.0",
     "eslint-plugin-format": "^0.1.2",
     "howler": "^2.2.4",
-    "jiti": "^2.3.3",
+    "jiti": "^2.4.0",
     "jsdom": "^25.0.1",
     "nuxt": "3.13.2",
-    "sass": "1.80.4",
+    "sass": "1.80.6",
     "simple-git-hooks": "^2.11.1",
     "typescript": "5.6.3",
-    "vitest": "^2.1.3",
-    "vue-tsc": "^2.1.8"
+    "vitest": "^2.1.4",
+    "vue-tsc": "^2.1.10"
   },
   "simple-git-hooks": {
     "pre-commit": "bunx lint-staged && bun run typecheck",
