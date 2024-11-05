@@ -2,10 +2,15 @@
 
 import type { FetchOption, IApi, IService } from '../types'
 import { createInstance } from '.'
-import { keysService, pinyinService } from '../collections'
+import {
+  keysService,
+  llvmService,
+  pinyinService,
+} from '../collections'
 
 const services: IService[] = [
   keysService,
+  llvmService,
   pinyinService,
 ]
 
