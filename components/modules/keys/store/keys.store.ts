@@ -50,7 +50,7 @@ export const useKeysStore = defineStore('keys', {
     async getDescriptionKeys() {
       await useRequest({
         key: RequestKeys.DESCRIPTION,
-        fn: ({ api }) => api.keys.v1.description(),
+        fn: ({ api }) => api.cms.v1.description({ sysname: 'keys' }),
         onSuccess: ({ data }) => this.description = data,
       })
     },

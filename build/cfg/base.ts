@@ -35,11 +35,6 @@ export const baseCfg: NuxtConfig = {
     'vuetify-nuxt-module',
   ],
 
-  api: {
-    baseUrl: '/api',
-    verbose: true,
-  },
-
   icon: {
     serverBundle: {
       collections: ['mdi'],

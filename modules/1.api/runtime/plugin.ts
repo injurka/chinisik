@@ -7,10 +7,14 @@ export default defineNuxtPlugin({
   async setup(nuxtApp) {
     const { api, init } = useApi()
 
-    const { baseUrl, verbose } = useRuntimeConfig().public.api
+    const config = useRuntimeConfig().public
     const interceptops = (useNuxtApp()?.$apiInterceptops ?? []) as FetchOption<unknown>[]
 
-    init({ baseUrl, verbose, interceptops })
+    init({
+      baseUrl: config.apiBaseUrl,
+      verbose: config.apiVerbose,
+      interceptops,
+    })
 
     nuxtApp.vueApp.config.globalProperties.$api = api
     nuxtApp.provide('api', api)

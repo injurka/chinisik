@@ -8,7 +8,6 @@ import type {
   IRetryResult,
 } from '../../types'
 import { computed, useApi } from '#imports'
-import { defineStore } from 'pinia'
 
 const useRequestWrapperStore = defineStore('request', {
   state: (): IRequestWrapperState => ({

@@ -3,8 +3,10 @@ import type { Instance } from '~/shared/api'
 
 function method(instance: Instance) {
   return {
-    all() {
-      return instance<DTO.IKeysAllR>(`/v1/keys`, { method: 'GET' })
+    description(payload: DTO.IDescirptionP) {
+      return instance<DTO.IDescriptionR>(`/v1/cms/description/${payload.sysname}`, {
+        method: 'GET',
+      })
     },
   }
 }

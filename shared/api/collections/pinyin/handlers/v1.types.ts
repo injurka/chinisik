@@ -1,5 +1,3 @@
-import type { JsonToDomChildren } from '~/components/domain/json-to-dom'
-
 // Response //
 
 export interface IPinyinAllR {
@@ -7,7 +5,5 @@ export interface IPinyinAllR {
   finals: Initial[]
   initialWithFinal: InitialWithFinal
 }
-
-export type IPinyinDescriptionR = JsonToDomChildren
 
 // Request //
