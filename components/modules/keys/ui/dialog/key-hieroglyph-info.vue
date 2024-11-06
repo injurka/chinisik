@@ -42,7 +42,10 @@ function onOpenWiki() {
             <div class="item-pinyin">
               <PinyinText
                 :pinyin="data.hieroglyph.pinyin"
-                :tone="data.hieroglyph.tone"
+                :tone="{
+                  index: data.hieroglyph.toneIndex,
+                  type: data.hieroglyph.toneType,
+                }"
               />
               <div class="pinyin-tran">
                 {{ data.hieroglyph.transcription }}
