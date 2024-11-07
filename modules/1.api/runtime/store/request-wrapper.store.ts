@@ -78,7 +78,7 @@ const useRequestWrapperStore = defineStore('request', {
         catch (e: any) {
           error = {
             status: e.status,
-            ...e?.response?.data?.error ?? e,
+            ...e.response._data ?? e,
           }
 
           console.error('[REQUEST ERROR] - ', e)

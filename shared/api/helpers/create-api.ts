@@ -3,6 +3,7 @@
 import type { FetchOption, IApi, IService } from '../types'
 import { createInstance } from '.'
 import {
+  authService,
   cmsService,
   keysService,
   llvmService,
@@ -14,6 +15,7 @@ const services: IService[] = [
   llvmService,
   pinyinService,
   cmsService,
+  authService,
 ]
 
 interface CreateApiParams {

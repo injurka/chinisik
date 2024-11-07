@@ -7,13 +7,15 @@ export type ServiceMethods =
   IKeysMethods |
   IPinyinMethods |
   ILlvmMethods |
-  ICmsMethods
+  ICmsMethods |
+  IAuthMethods
 
 export interface IApi {
   keys: IKeysMethods
   pinyin: IPinyinMethods
   llvm: ILlvmMethods
   cms: ICmsMethods
+  auth: IAuthMethods
 }
 export interface IService {
   createMethods: (instance: Instance) => ServiceMethods

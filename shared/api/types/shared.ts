@@ -3,4 +3,5 @@ export enum ApiNames {
   Pinyin = 'pinyin',
   Llvm = 'llvm',
   Cms = 'cms',
+  Auth = 'auth',
 }

@@ -20,9 +20,7 @@ interface IRequestWrapperPayload<T> {
 
 interface IError {
   status: number
-  arguments: unknown
-  code: string
-  description: string
+  message: string
 }
 interface ICallback {
   state: IRequestWrapperState
