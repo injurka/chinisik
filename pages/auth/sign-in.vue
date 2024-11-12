@@ -83,7 +83,6 @@ function customizeSvgColors(content: string) {
       />
 
       <div class="logo">
-        <Icon class="logo-icon" name="game-icons:sea-dragon" size="54" />
         <span v-html="customizeSvgColors(LogoSVG)" />
       </div>
 
@@ -146,7 +145,7 @@ function customizeSvgColors(content: string) {
         <div class="divider-text">
           ИЛИ
         </div>
-        <div class="divider-left" />
+        <div class="divider-right" />
       </div>
 
       <div class="additional">
@@ -252,7 +251,8 @@ function customizeSvgColors(content: string) {
 
 .logo {
   margin: 16px;
-  margin-bottom: 24px;
+  margin-top: 8px;
+  margin-bottom: 32px;
   gap: 18px;
   display: flex;
   align-items: center;

@@ -2,6 +2,7 @@ export enum RouteNames {
   Keys = 'keys',
   Pinyin = 'pinyin',
   Glossary = 'glossary',
+  SplitGlyphs = 'split-glyphs',
 
   AuthSignIn = 'auth-sign-in',
   AuthSignUp = 'auth-sign-up',
@@ -12,6 +13,7 @@ export const RoutePaths = {
   Keys: '/keys',
   Pinyin: '/pinyin',
   Glossary: '/glossary',
+  SplitGlyphs: '/split-glyphs',
 
   Auth: {
     SignIn: '/auth/sign-in',

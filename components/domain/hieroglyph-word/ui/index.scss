@@ -1,17 +1,23 @@
+.variant-0 {
+  display: inline-flex;
+}
 .variant-1 {
   display: inline-flex;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
 }
 .variant-2 {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
   .pinyin {
     margin-left: 4px;
   }
 }
 .variant-3 {
   display: flex;
+  align-items: center;
   margin: 0 5px;
-  gap: 4px;
+  gap: 8px;
 }
 .variant-4 {
   display: inline-flex;

@@ -53,6 +53,10 @@ function toggleHieroglyphVariant() {
 
   store.hieroglyphWord.variant = newVariant as HieroglyphWordVariant
 }
+
+function handleProfile() {
+  navigateTo(RoutePaths.Auth.SignIn)
+}
 </script>
 
 <template>
@@ -84,6 +88,13 @@ function toggleHieroglyphVariant() {
               @click="navigateTo(RoutePaths.Pinyin)"
             >
               Пиньин
+            </li>
+            <li
+              class="link"
+              :class="{ actived: $route.name === RouteNames.SplitGlyphs }"
+              @click="navigateTo(RoutePaths.SplitGlyphs)"
+            >
+              Разбор иероглифов
             </li>
           </ul>
         </nav>
@@ -124,7 +135,7 @@ function toggleHieroglyphVariant() {
 
         <div class="vr" />
 
-        <div class="profile">
+        <div class="profile" @click="handleProfile">
           <NuxtImg
             class="profile-img"
             width="38"

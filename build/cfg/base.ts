@@ -2,7 +2,6 @@ import type { NuxtConfig } from 'nuxt/schema'
 
 export const baseCfg: NuxtConfig = {
   components: {
-    global: true,
     dirs: [{
       path: '~/components/shared/header/ui/',
       prefix: '',

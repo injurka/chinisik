@@ -52,4 +52,5 @@ export type {
   SplitGlyphsSentence,
   SplitGlyphsType,
   SplitGlyphsWord,
+  Translate,
 }

@@ -6,7 +6,13 @@ export const viteCfg: NuxtConfig['vite'] = {
     //
   ],
   server: {
-    //
+    proxy: {
+      '^/api/': {
+        target: 'https://api.kvakushnik.ru/',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   optimizeDeps: {
     //
