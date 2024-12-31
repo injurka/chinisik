@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { ControlHieroglyphKey } from '~/components/modules/keys/store/keys.store'
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { KeyHieroglyph, KeyHieroglyphInfo } from '~/components/modules/keys'
-import type { ControlHieroglyphKey } from '~/components/modules/keys/store/keys.store'
 
 const store = useStore(['keys'])
 const {

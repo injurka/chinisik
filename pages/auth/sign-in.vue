@@ -3,6 +3,8 @@ import LogoSVG from '~/assets/svg/logo.svg?raw'
 
 const SignInKey = 'sign-in'
 
+const store = useStore(['auth'])
+
 const email = ref<string>('')
 const password = ref<string>('')
 const terms = ref<boolean>(false)
@@ -47,7 +49,11 @@ async function submit() {
         password: password.value,
       })
     },
-    onSuccess: () => navigateTo(RoutePaths.Keys),
+    onSuccess: async ({ data: { user, token } }) => {
+      store.auth.$patch({ user, token })
+      useCookie(TOKEN_KEY, { sameSite: 'lax' }).value = token
+      await navigateTo(RoutePaths.Keys)
+    },
     onError: ({ error }) => {
       snackbarError.value = {
         showed: true,

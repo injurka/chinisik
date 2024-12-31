@@ -7,7 +7,7 @@ interface IHieroglyphWordState {
 }
 interface IHieroglyphWordVariousProps {
   variant?: HieroglyphWordVariant
-  pinyin?: PinyinTextProps | string
+  pinyin?: PinyinTextProps
   translate?: string
   glyph: string
 }

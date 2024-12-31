@@ -6,5 +6,5 @@ export interface HieroglyphKey {
   pinyin: string
   glyph: string
   translate: string
-  transcription?: string
+  transcription: string
 }

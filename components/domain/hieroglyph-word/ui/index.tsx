@@ -6,10 +6,10 @@ import { useHieroglyphWordStore } from '../store'
 import './index.scss'
 
 const props = {
-  pinyin: { type: [Object] as PropType<PinyinTextProps> },
   variant: { type: Number as PropType<HieroglyphWordVariant> },
+  pinyin: { type: Object as PropType<PinyinTextProps > },
   translate: { type: String },
-  glyph: { type: String },
+  glyph: { type: String, required: true },
 }
 
 const HieroglyphWordVarious = defineComponent({

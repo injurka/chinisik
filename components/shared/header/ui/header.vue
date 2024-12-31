@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { HaoticLines } from '~/components/domain/haotic-lines'
 import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word'
+import { HaoticLines } from '~/components/domain/haotic-lines'
 
 enum ThemesVariant {
   Light = 'light',
@@ -16,12 +16,13 @@ const icons: Record<ThemesVariant, string> = {
 
 const theme = useColorMode()
 const store = useStore(['hieroglyphWord', 'pinyinText'])
-const { isMobile } = useDevice()
 const { fontCn, toggleFontCnFamily } = useChangeFontCn()
 
 const headerEl = ref<HTMLElement>()
+const isDrawer = defineModel<boolean>('drawer', { required: true })
 
 const themeIcon = computed(() => icons[theme.value as keyof typeof icons])
+const colorPinyinIcon = computed(() => `line-md:paint-drop${store.pinyinText.isColored ? '-twotone' : ''}`)
 
 function toggleTheme() {
   switch (theme.value) {
@@ -39,7 +40,6 @@ function toggleTheme() {
   }
 }
 
-const colorPinyinIcon = computed(() => `line-md:paint-drop${store.pinyinText.isColored ? '-twotone' : ''}`)
 function toggleColorPinyin() {
   store.pinyinText.setIsColored(!store.pinyinText.isColored)
 }
@@ -64,41 +64,52 @@ function handleProfile() {
     <ClientOnly>
       <HaoticLines :viewport-el="headerEl" />
     </ClientOnly>
+
     <div class="header-content">
       <div class="header-nav">
         <div class="logo">
           <Icon class="logo-icon" name="game-icons:sea-dragon" size="24" />
-          <span v-if="!isMobile" class="logo-title"> Chinisik </span>
+          <span v-if="!$vuetify.display.mobile" class="logo-title"> Chinisik </span>
         </div>
-        <div class="vr">
-          //
-        </div>
-        <nav>
-          <ul>
-            <li
-              class="link"
-              :class="{ actived: $route.name === RouteNames.Keys }"
-              @click="navigateTo(RoutePaths.Keys)"
-            >
-              Ключи
-            </li>
-            <li
-              class="link"
-              :class="{ actived: $route.name === RouteNames.Pinyin }"
-              @click="navigateTo(RoutePaths.Pinyin)"
-            >
-              Пиньин
-            </li>
-            <li
-              class="link"
-              :class="{ actived: $route.name === RouteNames.SplitGlyphs }"
-              @click="navigateTo(RoutePaths.SplitGlyphs)"
-            >
-              Разбор иероглифов
-            </li>
-          </ul>
-        </nav>
+        <template v-if="!$vuetify.display.mobile">
+          <div class="vr">
+            //
+          </div>
+          <nav>
+            <ul>
+              <li
+                class="link"
+                :class="{ actived: $route.name === RouteNames.Keys }"
+                @click="navigateTo(RoutePaths.Keys)"
+              >
+                Ключи
+              </li>
+              <li
+                class="link"
+                :class="{ actived: $route.name === RouteNames.Pinyin }"
+                @click="navigateTo(RoutePaths.Pinyin)"
+              >
+                Пиньин
+              </li>
+              <li
+                class="link"
+                :class="{ actived: $route.name === RouteNames.SplitGlyphs }"
+                @click="navigateTo(RoutePaths.SplitGlyphs)"
+              >
+                Разбор иероглифов
+              </li>
+            </ul>
+          </nav>
+        </template>
+        <template v-else>
+          <VBtn
+            icon="mdi-menu"
+            variant="text"
+            @click="isDrawer = !isDrawer"
+          />
+        </template>
       </div>
+
       <div class="header-utils">
         <VMenu offset="18" :close-on-content-click="false">
           <template #activator="{ props }">
@@ -196,16 +207,15 @@ function handleProfile() {
       align-items: center;
       justify-content: flex-end;
       gap: 4px;
-
-      margin: 0;
       padding: 0 10px;
-    }
 
-    li {
-      list-style: none;
-      text-decoration: none;
-      span {
-        margin-right: 4px;
+      li {
+        list-style: none;
+        text-decoration: none;
+
+        span {
+          margin-right: 4px;
+        }
       }
     }
 

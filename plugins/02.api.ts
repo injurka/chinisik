@@ -1,18 +1,20 @@
 export default defineNuxtPlugin(async () => {
   const apiInterceptops = [{
     onRequest: ({ options }) => {
-      const accessToken = `Bearer ${''}`
-
-      const headers = options.headers ||= {}
+      const token = useCookie(TOKEN_KEY)
+      const accessToken = `Bearer ${token.value}`
+      const headers = options.headers ||= {} as Headers
 
       if (Array.isArray(headers)) {
         headers.push(['Authorization', accessToken])
+        headers.push(['x-authorizaition', accessToken])
       }
       else if (headers instanceof Headers) {
         headers.set('Authorization', accessToken)
+        headers.set('x-authorizaition', accessToken)
       }
       else {
-        headers.Authorization = accessToken
+        (headers as { Authorization: string }).Authorization = accessToken
       }
     },
     onRequestError: () => { },

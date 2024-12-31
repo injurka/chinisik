@@ -2,11 +2,7 @@ import type { NuxtConfig } from 'nuxt/schema'
 
 export const baseCfg: NuxtConfig = {
   components: {
-    dirs: [{
-      path: '~/components/shared/header/ui/',
-      prefix: '',
-      extensions: ['.vue'],
-    }],
+    //
   },
 
   routeRules: {
@@ -33,6 +29,10 @@ export const baseCfg: NuxtConfig = {
     '@vite-pwa/nuxt',
     'vuetify-nuxt-module',
   ],
+
+  features: {
+    inlineStyles: false,
+  },
 
   icon: {
     serverBundle: {

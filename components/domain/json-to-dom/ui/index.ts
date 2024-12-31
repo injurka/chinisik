@@ -1,5 +1,5 @@
-import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import type { JsonToDomChildren, JsonToDomTags } from '~/components/domain/json-to-dom'
+import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import { PinyinText } from '~/components/domain/pinyin-text'
 
 const components: Record<string, ReturnType<typeof defineComponent>> = {

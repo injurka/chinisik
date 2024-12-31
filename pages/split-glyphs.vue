@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { JsonToDom } from '~/components/domain/json-to-dom'
 import type { JsonToDomChildren } from '~/components/domain/json-to-dom'
+import { JsonToDom } from '~/components/domain/json-to-dom'
 import { SplitGlyphs } from '~/components/modules/split-glyphs'
+
+const store = useStore(['keys'])
+const { isLoadingContent } = storeToRefs(store.keys)
 
 const description: JsonToDomChildren = {
   tag: 'div',
@@ -18,11 +21,29 @@ const description: JsonToDomChildren = {
   ],
 }
 
-definePageMeta({ layout: 'base' })
+await useAsyncData(
+  'hieroglyph-keys',
+  () => Promise.all([
+    store.keys.getAllKeys(),
+    store.keys.getDescriptionKeys(),
+  ]),
+  { dedupe: 'defer' },
+)
+
+definePageMeta({
+  layout: 'base',
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in',
+  },
+})
 </script>
 
 <template>
-  <section class="content">
+  <section v-if="isLoadingContent" class="loader">
+    <Icon name="line-md:loading-loop" />
+  </section>
+  <section v-else class="content">
     <JsonToDom :node="description" />
 
     <SplitGlyphs />
@@ -47,5 +68,15 @@ definePageMeta({ layout: 'base' })
       font-size: 0.9rem;
     }
   }
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-grow: 1;
+  font-size: 4rem;
+  color: var(--fg-accent-color);
 }
 </style>
