@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import type { JsonToDomChildren, JsonToDomTags } from '~/components/domain/json-to-dom'
+import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { PinyinText } from '~/components/domain/pinyin-text'
 

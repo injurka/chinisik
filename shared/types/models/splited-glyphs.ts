@@ -1,6 +1,7 @@
-type SplitGlyphsType = 'sentence' | 'word' | 'hieroglyph'
+type SplitGlyphsType = 'sentence' | 'word' | 'hieroglyph' | 'key'
 
 interface BaseSplitGlyphs {
+  type: SplitGlyphsType
   glyph: string
   pinyin: string | Pinyin | Pinyin[]
   translate: string | Translate[]
@@ -9,22 +10,26 @@ interface BaseSplitGlyphs {
 }
 
 interface SplitGlyphsSentence extends BaseSplitGlyphs {
-  type: 'sentence'
+  pinyin: Pinyin[]
+  translate: string
+}
+
+interface SplitGlyphsWord extends BaseSplitGlyphs {
   pinyin: Pinyin[]
   translate: string
 }
 
 interface SplitGlyphsHieroglyph extends BaseSplitGlyphs {
-  type: 'hieroglyph'
   pinyin: string
   toneType: number
   toneIndex: number
   translate: Translate[]
 }
 
-interface SplitGlyphsWord extends BaseSplitGlyphs {
-  type: 'word'
-  pinyin: Pinyin[]
+interface SplitGlyphsHieroglyphKey extends BaseSplitGlyphs {
+  pinyin: string
+  toneType: number
+  toneIndex: number
   translate: string
 }
 
@@ -47,9 +52,12 @@ type SplitedGlyphs = (
 )[]
 
 export type {
+  BaseSplitGlyphs,
   SplitedGlyphs,
   SplitGlyphsHieroglyph,
+  SplitGlyphsHieroglyphKey,
   SplitGlyphsSentence,
   SplitGlyphsType,
   SplitGlyphsWord,
+  Translate,
 }

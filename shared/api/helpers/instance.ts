@@ -26,6 +26,7 @@ function createInstance(params: CreateInstanceParams) {
     options: FetchOption<R>,
   ): Promise<R> => {
     const _options = {
+      retry: 0,
       ...options,
       onRequest: (...params) => {
         const objects = [...interceptops, options]

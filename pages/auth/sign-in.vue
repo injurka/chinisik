@@ -3,6 +3,8 @@ import LogoSVG from '~/assets/svg/logo.svg?raw'
 
 const SignInKey = 'sign-in'
 
+const store = useStore(['auth'])
+
 const email = ref<string>('')
 const password = ref<string>('')
 const terms = ref<boolean>(false)
@@ -47,7 +49,11 @@ async function submit() {
         password: password.value,
       })
     },
-    onSuccess: () => navigateTo(RoutePaths.Keys),
+    onSuccess: async ({ data: { user, token } }) => {
+      store.auth.$patch({ user, token })
+      useCookie(TOKEN_KEY, { sameSite: 'lax' }).value = token
+      await navigateTo(RoutePaths.Keys)
+    },
     onError: ({ error }) => {
       snackbarError.value = {
         showed: true,
@@ -83,7 +89,6 @@ function customizeSvgColors(content: string) {
       />
 
       <div class="logo">
-        <Icon class="logo-icon" name="game-icons:sea-dragon" size="54" />
         <span v-html="customizeSvgColors(LogoSVG)" />
       </div>
 
@@ -146,7 +151,7 @@ function customizeSvgColors(content: string) {
         <div class="divider-text">
           ИЛИ
         </div>
-        <div class="divider-left" />
+        <div class="divider-right" />
       </div>
 
       <div class="additional">
@@ -252,7 +257,8 @@ function customizeSvgColors(content: string) {
 
 .logo {
   margin: 16px;
-  margin-bottom: 24px;
+  margin-top: 8px;
+  margin-bottom: 32px;
   gap: 18px;
   display: flex;
   align-items: center;

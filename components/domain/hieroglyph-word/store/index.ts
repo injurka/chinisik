@@ -1,9 +1,4 @@
-export type HieroglyphWordVariant = 0 | 1 | 2 | 3 | 4
-
-//* --- Store ----------------------------------------------- *//
-interface IHieroglyphWordState {
-  variant: HieroglyphWordVariant
-}
+import type { HieroglyphWordVariant, IHieroglyphWordState } from '../types'
 
 export const useHieroglyphWordStore = defineStore('hieroglyphWord', {
   state: (): IHieroglyphWordState => ({

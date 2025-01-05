@@ -4,7 +4,7 @@ import type { SplitedGlyphs, SplitGlyphsType } from '~/shared/types/models'
 
 export interface SplitGlyphsP {
   type: SplitGlyphsType
-  word: string
+  glyphs: string
 }
 
 // Request //

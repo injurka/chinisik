@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { ControlHieroglyphKey } from '~/components/modules/keys/store/keys.store'
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { KeyHieroglyph, KeyHieroglyphInfo } from '~/components/modules/keys'
-import type { ControlHieroglyphKey } from '~/components/modules/keys/store/keys.store'
 
 const store = useStore(['keys'])
 const {
@@ -57,7 +57,9 @@ definePageMeta({
     <Icon name="line-md:loading-loop" />
   </section>
   <section v-else class="content">
-    <JsonToDom :node="description!" />
+    <JsonToDom
+      :node="description!"
+    />
 
     <div class="controls">
       <div
@@ -100,7 +102,6 @@ definePageMeta({
 
   .description {
     font-size: 1rem;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 16px 6px;
 

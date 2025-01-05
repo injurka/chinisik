@@ -1,10 +1,6 @@
 <script lang="ts" setup>
+import type { Tone } from '../types'
 import { usePinyinTextStore } from '../store'
-
-interface Tone {
-  index: number
-  type: ToneType
-}
 
 export interface Props {
   pinyin: string
