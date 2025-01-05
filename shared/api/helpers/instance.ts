@@ -26,7 +26,7 @@ function createInstance(params: CreateInstanceParams) {
     options: FetchOption<R>,
   ): Promise<R> => {
     const _options = {
-      retry: 0,
+      retry: false,
       ...options,
       onRequest: (...params) => {
         const objects = [...interceptops, options]
@@ -44,7 +44,7 @@ function createInstance(params: CreateInstanceParams) {
     if (verbose)
       console.log(`⚡ %c[${options.method!.toUpperCase()}]`, 'color: #9400D3; font-weight: bold;', '-', _url)
 
-    return $fetch(_url, _options as any)
+    return $fetch(_url as any, _options as any)
   }
 
   return apiMethod as Instance
