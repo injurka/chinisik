@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { typeCopmonentMapping, typeSplitMapping } from '../constant'
+import { typeCopmonentMappingForControl, typeSplitMapping } from '../constant'
 
 const store = useStore(['splitGlyphs'])
 
@@ -71,7 +71,7 @@ function handleClickSubmit() {
       :model-value="btnToggleValue"
       @update:model-value="updateBtnToggleValue"
     >
-      <v-btn v-for="type in typeCopmonentMapping" :key="type">
+      <v-btn v-for="type in typeCopmonentMappingForControl" :key="type">
         {{ type }}
       </v-btn>
     </v-btn-toggle>

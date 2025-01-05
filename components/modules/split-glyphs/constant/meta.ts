@@ -1,4 +1,4 @@
-const ammountSpacing: Record<SplitGlyphsType | 'key', number> = {
+const ammountSpacing: Record<SplitGlyphsType, number> = {
   sentence: 0,
   word: 1,
   hieroglyph: 2,
@@ -7,20 +7,27 @@ const ammountSpacing: Record<SplitGlyphsType | 'key', number> = {
 
 const typeCopmonentMapping = {
   sentence: 'Предложение',
-  hieroglyph: 'Иероглиф',
   word: 'Слово',
+  hieroglyph: 'Иероглиф',
   key: 'Ключ',
+}
+
+const typeCopmonentMappingForControl = {
+  sentence: 'Предложение',
+  word: 'Слово',
+  hieroglyph: 'Иероглиф',
 }
 
 const typeSplitMapping = {
   0: 'sentence',
-  1: 'hieroglyph',
-  2: 'word',
+  1: 'word',
+  2: 'hieroglyph',
   3: 'key',
 }
 
 export {
   ammountSpacing,
   typeCopmonentMapping,
+  typeCopmonentMappingForControl,
   typeSplitMapping,
 }
