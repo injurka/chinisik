@@ -84,7 +84,7 @@ function getTone(index: number) {
     display: flex;
     justify-content: center;
     position: absolute;
-    top: -2px;
+    top: -6px;
     width: 100%;
     font-weight: 600;
     font-family: 'Noto Sans SC';

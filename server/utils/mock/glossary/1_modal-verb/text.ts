@@ -26,6 +26,7 @@ export const text = `
     <span type="h" p="bù xiǎng" t="Не хочу">不想</span> <br />
   </div>
   <br />
+
   <span type="warn">
     <em>Не путайте с глаголом «думать, хотеть, скучать»:</em> <br />
     <span type="h" p="wǒ xiǎng huíjiā" t="Я хочу вернуться домой.">我想回家</span> <span type="h" p="xiǎng" t="модальный глагол, после него стоит глагол.">想</span> <br />
@@ -42,6 +43,7 @@ export const text = `
     <span fixed="0" type="h" p="zhēn" t="истинный">真</span> 
     (Я очень хочу)
   </span>
+  
   <div type="example">
     <span type="h" p="wǒ hěn xiǎng mǎi yī jiàn piāoliàng de yīfú" t="Я очень хочу купить красивой одежды">我很想买一件漂亮的衣服</span>
   </div>

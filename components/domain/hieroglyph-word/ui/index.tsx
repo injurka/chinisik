@@ -17,22 +17,76 @@ const HieroglyphWordVarious = defineComponent({
   props,
   components: { VTooltip, PinyinText },
   setup(props) {
-    const tooltipText = () => (
-      <>
-        {props.pinyin?.pinyin && <PinyinText {...props.pinyin} colored={props.pinyin.colored} />}
-        {props.pinyin?.pinyin && props.translate && <hr />}
-        {props.translate && <div style="font-size: 1rem">{props.translate}</div>}
-      </>
-    )
-    const tooltipProps = { activator: 'parent', openDelay: 100, location: 'top' as any }
+    const isActive = ref<boolean>(false)
+
+    const tooltipText = () => {
+      const isPinyinText = !!props.pinyin?.pinyin
+      const isPinyinPlain = !isPinyinText && !!props.pinyin
+
+      return (
+        <div class="tip">
+          {isPinyinText && (
+            <div class="tip-pinyin">
+              <PinyinText {...props.pinyin} colored={props.pinyin.colored} />
+            </div>
+          )}
+          {isPinyinPlain && (
+            <div class="tip-pinyin">
+              {props.pinyin}
+            </div>
+          )}
+          {(isPinyinText || isPinyinPlain) && props.translate && <hr class="tip-hr" />}
+          {props.translate && (
+            <div class="tip-translate">
+              {props.translate}
+            </div>
+          )}
+        </div>
+      )
+    }
+    const tooltipProps = {
+      'activator': 'parent',
+      'openDelay': 50,
+      'location': 'top' as any,
+      'noClickAnimation': true,
+      'zIndex': 9999,
+      'transition': 'none',
+      'modelValue': isActive.value,
+      'onUpdate:modelValue': (value: boolean) => {
+        isActive.value = value
+      },
+      'openOnClick': true,
+      'openOnFocus': true,
+      'openOnHover': true,
+    }
+
+    const graphEl = () => {
+      return props.glyph
+    }
 
     const pinyinEl = () => {
-      return props.pinyin
+      const el = props.pinyin
         && (
           typeof props.pinyin === 'string'
-            ? <span class="pinyin">{props.pinyin}</span>
+            ? props.pinyin
             : <PinyinText {...props.pinyin} colored={props.pinyin.colored} />
         )
+
+      if (props.variant === 2) {
+        return (
+          <span class="pinyin">
+            (
+            {el}
+            )
+          </span>
+        )
+      }
+
+      return (
+        <span class="pinyin">
+          {el}
+        </span>
+      )
     }
 
     const translateEl = () => {
@@ -49,10 +103,10 @@ const HieroglyphWordVarious = defineComponent({
         case 0:
           return (
             <span class="glyph">
-              <VTooltip {...tooltipProps}>
+              <VTooltip {...tooltipProps} modelValue={isActive.value}>
                 {tooltipText}
               </VTooltip>
-              {props.glyph}
+              {graphEl()}
             </span>
           )
 
@@ -63,8 +117,9 @@ const HieroglyphWordVarious = defineComponent({
                 <VTooltip {...tooltipProps}>
                   {pinyinEl}
                 </VTooltip>
-                {props.glyph}
+                {graphEl()}
               </span>
+              -
               {translateEl()}
             </>
           )
@@ -76,7 +131,7 @@ const HieroglyphWordVarious = defineComponent({
                 <VTooltip {...tooltipProps}>
                   {translateEl()}
                 </VTooltip>
-                {props.glyph}
+                {graphEl()}
               </span>
               {pinyinEl()}
             </>
@@ -86,7 +141,7 @@ const HieroglyphWordVarious = defineComponent({
           return (
             <>
               {pinyinEl()}
-              <span class="glyph">{props.glyph}</span>
+              <span class="glyph">{graphEl()}</span>
               {translateEl()}
             </>
           )
@@ -95,11 +150,21 @@ const HieroglyphWordVarious = defineComponent({
           return (
             <>
               {pinyinEl()}
-              <span class="glyph">{props.glyph}</span>
+              <span class="glyph">{graphEl()}</span>
               {translateEl()}
             </>
           )
 
+        case 5:
+          return (
+            <>
+              <span class="glyph">{graphEl()}</span>
+              <div class="pinyin-translate">
+                {pinyinEl()}
+                {translateEl()}
+              </div>
+            </>
+          )
         default:
           return <template />
       }

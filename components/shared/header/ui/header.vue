@@ -98,6 +98,13 @@ function handleProfile() {
               >
                 Разбор иероглифов
               </li>
+              <li
+                class="link"
+                :class="{ actived: $route.name === RouteNames.Glossary }"
+                @click="navigateTo(RoutePaths.Glossary)"
+              >
+                Глоссарий
+              </li>
             </ul>
           </nav>
         </template>
