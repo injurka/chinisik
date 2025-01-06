@@ -155,6 +155,16 @@ const HieroglyphWordVarious = defineComponent({
             </>
           )
 
+        case 5:
+          return (
+            <>
+              <span class="glyph">{graphEl()}</span>
+              <div class="pinyin-translate">
+                {pinyinEl()}
+                {translateEl()}
+              </div>
+            </>
+          )
         default:
           return <template />
       }

@@ -58,6 +58,10 @@ definePageMeta({
   margin: 0 auto;
   width: 100%;
 
+  @include mobile {
+    padding: 4px;
+  }
+
   .description {
     font-size: 1rem;
     margin: 0 auto;
