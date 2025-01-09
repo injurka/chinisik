@@ -62,7 +62,9 @@
     "vue-tsc": "^2.2.0",
     "vuetify": "^3.7.6",
     "vuetify-nuxt-module": "^0.18.3",
-    "workbox-core": "^7.3.0"
+    "workbox-core": "^7.3.0",
+    "workbox-precaching": "^7.3.0",
+    "workbox-routing": "^7.3.0"
   },
   "simple-git-hooks": {
     "pre-commit": "bunx lint-staged && bun run typecheck",
