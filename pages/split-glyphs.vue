@@ -1,25 +1,10 @@
 <script setup lang="ts">
-import type { JsonToDomChildren } from '~/components/domain/json-to-dom'
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { SplitGlyphs } from '~/components/modules/split-glyphs'
+import { mockCms } from '~/server/utils/mock/cms/description'
 
 const store = useStore(['keys'])
 const { isLoadingContent } = storeToRefs(store.keys)
-
-const description: JsonToDomChildren = {
-  tag: 'div',
-  class: 'description',
-  children: [
-    {
-      tag: 'h2',
-      children: 'Разбор иероглифа на его состовляющие',
-    },
-    {
-      tag: 'p',
-      children: 'В данном разделе вы можете раздробить какой либо иероглиф на его составлющие.',
-    },
-  ],
-}
 
 await useAsyncData(
   'hieroglyph-keys',
@@ -40,11 +25,10 @@ definePageMeta({
 </script>
 
 <template>
-  <section v-if="isLoadingContent" class="loader">
-    <Icon name="line-md:loading-loop" />
-  </section>
+  <PageLoader v-if="isLoadingContent" />
+
   <section v-else class="content">
-    <JsonToDom :node="description" />
+    <JsonToDom :node="mockCms.splitGlyphs!" />
 
     <SplitGlyphs />
   </section>
@@ -72,15 +56,5 @@ definePageMeta({
       font-size: 0.9rem;
     }
   }
-}
-
-.loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  flex-grow: 1;
-  font-size: 4rem;
-  color: var(--fg-accent-color);
 }
 </style>

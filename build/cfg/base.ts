@@ -1,4 +1,6 @@
 import type { NuxtConfig } from 'nuxt/schema'
+import type { FontIconSet } from 'vuetify-nuxt-module'
+import { mdi } from 'vuetify/iconsets/mdi'
 
 export const baseCfg: NuxtConfig = {
   components: {
@@ -20,6 +22,7 @@ export const baseCfg: NuxtConfig = {
 
   modules: [
     '@nuxt/eslint',
+    '@nuxt/fonts',
     '@nuxt/image',
     '@nuxtjs/device',
     '@pinia/nuxt',
@@ -34,6 +37,44 @@ export const baseCfg: NuxtConfig = {
     inlineStyles: false,
   },
 
+  fonts: {
+    priority: ['google', 'local'],
+    providers: {
+      fontshare: false,
+      adobe: false,
+      bunny: false,
+      fontsource: false,
+      googleicons: false,
+    },
+    devtools: true,
+    families: [
+      {
+        name: 'MapleMono-CN',
+        provider: 'local',
+        src: '/fonts/MapleMono-CN/MapleMono-CN-Regular.ttf',
+        weight: 400,
+        style: 'normal',
+        global: true,
+      },
+      {
+        name: 'MapleMono-CN',
+        provider: 'local',
+        src: '/fonts/MapleMono-CN/MapleMono-CN-Medium.ttf',
+        weight: 500,
+        style: 'normal',
+        global: true,
+      },
+      {
+        name: 'MapleMono-CN',
+        provider: 'local',
+        src: '/fonts/MapleMono-CN/MapleMono-CN-SemiBold.ttf',
+        weight: 600,
+        style: 'normal',
+        global: true,
+      },
+    ],
+  },
+
   icon: {
     serverBundle: {
       collections: ['mdi'],
@@ -46,8 +87,17 @@ export const baseCfg: NuxtConfig = {
 
   vuetify: {
     moduleOptions: {
-      //
+      /* other module options */
+      // styles: { configFile: '/settings.scss' }
     },
+    vuetifyOptions: {
+      /* vuetify options */
+      icons: {
+        defaultSet: 'mdi',
+        sets: [mdi as unknown as FontIconSet],
+      },
+    },
+
   },
 
   eslint: {
