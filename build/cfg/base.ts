@@ -49,14 +49,6 @@ export const baseCfg: NuxtConfig = {
       {
         name: 'MapleMono-CN',
         provider: 'local',
-        src: '/fonts/MapleMono-CN/MapleMono-CN-Light.ttf',
-        weight: 300,
-        style: 'normal',
-        global: true,
-      },
-      {
-        name: 'MapleMono-CN',
-        provider: 'local',
         src: '/fonts/MapleMono-CN/MapleMono-CN-Regular.ttf',
         weight: 400,
         style: 'normal',
