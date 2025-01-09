@@ -4,7 +4,6 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "bun@1.1.43",
   "engines": {
     "node": ">=22.0.0",
     "bun": ">=1.1.0"
