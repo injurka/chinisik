@@ -12,7 +12,7 @@ export default defineAppConfig({
     { name: 'viewport', content: 'viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no' },
     { name: 'title', content: 'chinisik' },
     { hid: 'description', name: 'description', content: 'chinisik' },
-    { property: 'og:title', content: '-' },
+    { property: 'og:title', content: 'Место для возносения до уровня ТанСана! Познай мир иероглифов чтобы уверено сказать - нихао ни женгуо рен ма!' },
     { property: 'og:url', content: 'https://chinisik.vercel.app' },
     { property: 'og:image', content: 'https://chinisik.vercel.app/open-graph.png' },
     { property: 'og:image:width', content: '400' },
