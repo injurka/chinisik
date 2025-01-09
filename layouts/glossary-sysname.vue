@@ -8,7 +8,7 @@ interface TabsOption {
   hint: string
 }
 
-const tabsOptions = [
+const tabsLeftOptions = [
   {
     key: 'topic',
     icon: 'material-symbols:slab-serif-outline',
@@ -30,13 +30,17 @@ const route = useRoute()
 const currentTab = ref<TabVariant>('topic')
 const isLoading = ref<boolean>(false)
 
-function changeTab(value: TabVariant) {
+function handleChangeTab(value: TabVariant) {
   currentTab.value = value
   navigateTo(`/glossary/1/${value}`)
 }
 
+function handleFullscreenTab() {
+
+}
+
 const hash = route.fullPath.split('/').at(-1)
-if (hash && tabsOptions.some(tab => tab.key === hash)) {
+if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
   currentTab.value = hash as TabVariant
 }
 </script>
@@ -50,7 +54,7 @@ if (hash && tabsOptions.some(tab => tab.key === hash)) {
       <div class="header-section">
         <div class="option left">
           <VTooltip
-            v-for="tab in tabsOptions"
+            v-for="tab in tabsLeftOptions"
             :key="tab.key"
             :text="tab.hint"
           >
@@ -61,7 +65,7 @@ if (hash && tabsOptions.some(tab => tab.key === hash)) {
                 :class="[{ isActive: currentTab === tab.key }]"
                 :name="tab.icon"
                 size="32"
-                @click="changeTab(tab.key)"
+                @click="handleChangeTab(tab.key)"
               />
             </template>
           </VTooltip>
@@ -70,7 +74,21 @@ if (hash && tabsOptions.some(tab => tab.key === hash)) {
         <h1 class="title">
           Модальные глаголы
         </h1>
-        <div class="option right" />
+        <div class="option right">
+          <VTooltip
+            text="На весь экран"
+          >
+            <template #activator="{ props }">
+              <Icon
+                v-bind="props"
+                class="option-item"
+                name="mdi-fullscreen"
+                size="32"
+                @click="handleFullscreenTab"
+              />
+            </template>
+          </VTooltip>
+        </div>
       </div>
 
       <slot />
@@ -90,7 +108,7 @@ if (hash && tabsOptions.some(tab => tab.key === hash)) {
   margin: 0 auto;
 
   @include mobile() {
-    padding: 8px;
+    padding: 0px;
   }
 }
 
@@ -146,9 +164,19 @@ if (hash && tabsOptions.some(tab => tab.key === hash)) {
 
     &.left {
       grid-area: LEFT_OPTION;
+
+      @include mobile() {
+        padding-left: 8px;
+      }
     }
     &.right {
       grid-area: RIGHT_OPTION;
+      display: flex;
+      flex-direction: row-reverse;
+
+      @include mobile() {
+        padding-right: 8px;
+      }
     }
   }
 

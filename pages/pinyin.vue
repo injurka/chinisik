@@ -30,13 +30,13 @@ definePageMeta({
 </script>
 
 <template>
-  <section v-if="isLoadingContent" class="loader">
-    <Icon name="line-md:loading-loop" />
-  </section>
+  <PageLoader v-if="isLoadingContent" />
+
   <section v-else class="content">
     <JsonToDom
       :node="description!"
     />
+
     <PinyinTable
       :finals="finals!"
       :initials="initials!"

@@ -37,9 +37,8 @@ definePageMeta({
 </script>
 
 <template>
-  <section v-if="isLoadingContent" class="loader">
-    <Icon name="line-md:loading-loop" />
-  </section>
+  <PageLoader v-if="isLoadingContent" />
+
   <section v-else class="content">
     <JsonToDom
       :node="description!"
@@ -66,11 +65,6 @@ definePageMeta({
 <style scoped lang="scss">
 .content {
   padding: 16px;
-  font-family: 'Rubik';
-
-  @include mobile() {
-    padding: 8px;
-  }
 
   .description {
     font-size: 1rem;
@@ -86,25 +80,17 @@ definePageMeta({
   .list {
     max-width: 1200px;
     margin: 0 auto;
-
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-
     padding-bottom: 64px;
   }
-}
 
-.loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  flex-grow: 1;
-
-  font-size: 4rem;
-  color: var(--fg-accent-color);
+  @include default-font();
+  @include mobile() {
+    padding: 8px;
+  }
 }
 </style>

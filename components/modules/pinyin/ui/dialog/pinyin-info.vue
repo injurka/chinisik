@@ -141,10 +141,6 @@ function playPinyin(value: string, tone: ToneType) {
         border: 1px solid var(--border-button-secondary-color);
         box-shadow: 0 0 4px var(--bg-overlay-secondary-color);
 
-        :deep(.pinyin-tone) {
-          top: -4px;
-        }
-
         @include mobile {
           min-width: 150px;
         }

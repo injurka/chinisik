@@ -13,6 +13,7 @@ export const RoutePaths = {
   Keys: '/keys',
   Pinyin: '/pinyin',
   Glossary: '/glossary',
+  GlossaryTopic: (value: string) => `/glossary/${value}/topic`,
   SplitGlyphs: '/split-glyphs',
 
   Auth: {

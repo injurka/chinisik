@@ -236,19 +236,6 @@ function customizeSvgColors(content: string) {
   }
 }
 
-.loader {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  top: 0;
-  left: 0;
-  z-index: 11;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .form {
   display: flex;
   flex-direction: column;

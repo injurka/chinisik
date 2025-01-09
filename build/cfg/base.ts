@@ -20,6 +20,7 @@ export const baseCfg: NuxtConfig = {
 
   modules: [
     '@nuxt/eslint',
+    '@nuxt/fonts',
     '@nuxt/image',
     '@nuxtjs/device',
     '@pinia/nuxt',
@@ -32,6 +33,52 @@ export const baseCfg: NuxtConfig = {
 
   features: {
     inlineStyles: false,
+  },
+
+  fonts: {
+    priority: ['google', 'local'],
+    providers: {
+      fontshare: false,
+      adobe: false,
+      bunny: false,
+      fontsource: false,
+      googleicons: false,
+    },
+    devtools: true,
+    families: [
+      {
+        name: 'MapleMono-CN',
+        provider: 'local',
+        src: '/fonts/MapleMono-CN/MapleMono-CN-Light.ttf',
+        weight: 300,
+        style: 'normal',
+        global: true,
+      },
+      {
+        name: 'MapleMono-CN',
+        provider: 'local',
+        src: '/fonts/MapleMono-CN/MapleMono-CN-Regular.ttf',
+        weight: 400,
+        style: 'normal',
+        global: true,
+      },
+      {
+        name: 'MapleMono-CN',
+        provider: 'local',
+        src: '/fonts/MapleMono-CN/MapleMono-CN-Medium.ttf',
+        weight: 500,
+        style: 'normal',
+        global: true,
+      },
+      {
+        name: 'MapleMono-CN',
+        provider: 'local',
+        src: '/fonts/MapleMono-CN/MapleMono-CN-SemiBold.ttf',
+        weight: 600,
+        style: 'normal',
+        global: true,
+      },
+    ],
   },
 
   icon: {

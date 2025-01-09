@@ -84,11 +84,12 @@ function getTone(index: number) {
     display: flex;
     justify-content: center;
     position: absolute;
-    top: -6px;
+    top: 3px;
+    line-height: 0;
     width: 100%;
     font-weight: 600;
     font-family: 'Noto Sans SC';
-    font-size: 0.6em;
+    font-size: 0.65em;
   }
 }
 </style>
