@@ -1,4 +1,6 @@
 import type { NuxtConfig } from 'nuxt/schema'
+import type { FontIconSet } from 'vuetify-nuxt-module'
+import { mdi } from 'vuetify/iconsets/mdi'
 
 export const baseCfg: NuxtConfig = {
   components: {
@@ -85,8 +87,17 @@ export const baseCfg: NuxtConfig = {
 
   vuetify: {
     moduleOptions: {
-      //
+      /* other module options */
+      // styles: { configFile: '/settings.scss' }
     },
+    vuetifyOptions: {
+      /* vuetify options */
+      icons: {
+        defaultSet: 'mdi',
+        sets: [mdi as unknown as FontIconSet],
+      },
+    },
+
   },
 
   eslint: {

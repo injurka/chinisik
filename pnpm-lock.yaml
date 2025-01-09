@@ -23,9 +23,6 @@ importers:
       pinia:
         specifier: 2.3.0
         version: 2.3.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
-      vuetify-nuxt-module:
-        specifier: ^0.18.3
-        version: 0.18.3(magicast@0.3.5)(rollup@4.30.1)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue@3.5.13(typescript@5.7.3))
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^3.12.1
@@ -114,6 +111,9 @@ importers:
       vue-tsc:
         specifier: ^2.2.0
         version: 2.2.0(typescript@5.7.3)
+      vuetify-nuxt-module:
+        specifier: ^0.18.3
+        version: 0.18.3(magicast@0.3.5)(rollup@4.30.1)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue@3.5.13(typescript@5.7.3))
 
 packages:
 
