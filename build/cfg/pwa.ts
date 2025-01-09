@@ -5,7 +5,6 @@ const sharedConf: NuxtConfig['pwa'] = {
   strategies: 'injectManifest',
   srcDir: 'service-worker',
   filename: 'sw.ts',
-
   base: '/',
   registerType: 'autoUpdate',
   includeAssets: ['favicon.ico'],
@@ -54,6 +53,7 @@ const sharedConf: NuxtConfig['pwa'] = {
   injectManifest: {
     globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
     globIgnores: ['emojis/**', 'manifest**.webmanifest'],
+    maximumFileSizeToCacheInBytes: 20 * 1024 * 1024, // Set to 20 MiB
   },
   client: {
     installPrompt: true,
