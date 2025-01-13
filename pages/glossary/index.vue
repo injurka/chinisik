@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { JsonToDom } from '~/components/domain/json-to-dom'
+import { PageLoader } from '~/components/shared/page-loader'
 import { mockCms } from '~/server/utils/mock/cms/description'
 
 const isLoadingContent = ref<boolean>(false)
@@ -47,6 +48,7 @@ definePageMeta({
 <style scoped lang="scss">
 .content {
   padding: 16px;
+  @include default-font();
 
   .description {
     font-size: 1rem;
@@ -77,7 +79,6 @@ definePageMeta({
       height: 44px;
       padding: 4px;
       cursor: pointer;
-
       display: flex;
       flex-grow: 1;
       flex-basis: 300px;
@@ -85,6 +86,7 @@ definePageMeta({
       font-size: 1rem;
       align-items: center;
       overflow: hidden;
+      transition: box-shadow 0.2s ease-in-out;
 
       .iconify {
         min-width: 1em;
@@ -100,11 +102,9 @@ definePageMeta({
       &:hover {
         box-shadow: 0 0 8px var(--bg-overlay-secondary-color);
       }
-      transition: box-shadow 0.2s ease-in-out;
     }
   }
 
-  @include default-font();
   @include mobile() {
     padding: 8px;
   }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { SplitGlyphs } from '~/components/modules/split-glyphs'
+import { PageLoader } from '~/components/shared/page-loader'
 import { mockCms } from '~/server/utils/mock/cms/description'
 
 const store = useStore(['keys'])

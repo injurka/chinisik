@@ -133,9 +133,9 @@ function handleProfile() {
               </button>
               <button @click="toggleHieroglyphVariant">
                 <Icon name="line-md:clipboard" size="24" />
-                <!-- <div class="hieroglyph-variant">
+                <div class="hieroglyph-variant">
                   {{ store.hieroglyphWord.variant }}
-                </div> -->
+                </div>
                 <span>Стиль отображения иероглифа</span>
               </button>
               <button @click="toggleColorPinyin">
@@ -143,7 +143,7 @@ function handleProfile() {
                 <span>Цветное отображения тона</span>
               </button>
               <button @click="toggleFontCnFamily">
-                <Icon name="material-symbols:draw" size="24" />
+                <Icon name="mdi:draw" size="24" />
                 <span v-if="fontCn === 'base'">Прописные иероглифы</span>
                 <span v-else>Печатные иероглифы</span>
               </button>

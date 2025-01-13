@@ -27,7 +27,7 @@ const contentEl = ref<HTMLElement>()
         class="close"
         @click="dialog = false"
       >
-        <Icon size="24" name="line-md:close-small" />
+        <Icon size="24" name="mdi:close" />
       </VBtn>
     </div>
 

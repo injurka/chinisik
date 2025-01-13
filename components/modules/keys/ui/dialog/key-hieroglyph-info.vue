@@ -27,7 +27,7 @@ function onOpenWiki() {
 
 <template>
   <ClientOnly>
-    <VDialog
+    <v-dialog
       v-model="dialog"
       class="dialog"
       persistent
@@ -81,15 +81,15 @@ function onOpenWiki() {
         </p>
       </v-card>
 
-      <VBtn
+      <v-btn
         icon
         variant="text"
         class="close"
         @click="dialog = false"
       >
-        <Icon size="24" name="line-md:close-small" />
-      </VBtn>
-    </VDialog>
+        <Icon size="24" name="mdi:close" />
+      </v-btn>
+    </v-dialog>
 
     <IframeViewer v-model="isWikiViewing" :src="data.wiki" />
   </ClientOnly>
@@ -103,17 +103,13 @@ function onOpenWiki() {
     position: relative;
     display: flex;
     flex-direction: column;
-
     padding: 16px;
-
     background-color: var(--bg-secondary-color);
     box-shadow: 0 0 5px var(--bg-overlay-primary-color);
     border: 1px solid var(--border-primary-color);
     color: var(--fg-primary-color);
-
     border-radius: 24px !important;
     width: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,17 +126,13 @@ function onOpenWiki() {
 
         .item {
           overflow: hidden;
-
           background-color: var(--bg-tertiary-color);
           border: 1px solid var(--border-secondary-color);
-
           border-radius: 10px;
           padding: 5px;
-
           aspect-ratio: 1 / 1;
           height: 220px;
           z-index: 10;
-
           display: grid;
           grid-template-rows: 1.5fr 2fr 1.5fr;
           grid-template-areas:
@@ -150,7 +142,6 @@ function onOpenWiki() {
 
           text-align: center;
           overflow: hidden;
-
           box-shadow: 0 0 5px var(--bg-overlay-primary-color);
 
           &-pinyin,

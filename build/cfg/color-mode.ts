@@ -3,7 +3,7 @@ import type { InputConfig } from './cfg.types'
 
 export const colorModeCfg: Record<InputConfig, NuxtConfig['colorMode']> = {
   development: {
-    preference: 'system',
+    preference: 'light',
     fallback: 'light',
     hid: 'nuxt-color-mode-script',
     globalName: '__NUXT_COLOR_MODE__',
@@ -14,7 +14,7 @@ export const colorModeCfg: Record<InputConfig, NuxtConfig['colorMode']> = {
     dataValue: 'theme',
   },
   production: {
-    preference: 'system',
+    preference: 'light',
     fallback: 'light',
     hid: 'nuxt-color-mode-script',
     globalName: '__NUXT_COLOR_MODE__',

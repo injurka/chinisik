@@ -1,6 +1,4 @@
 import type { NuxtConfig } from 'nuxt/schema'
-import type { FontIconSet } from 'vuetify-nuxt-module'
-import { mdi } from 'vuetify/iconsets/mdi'
 
 export const baseCfg: NuxtConfig = {
   components: {
@@ -76,8 +74,30 @@ export const baseCfg: NuxtConfig = {
   },
 
   icon: {
+    clientBundle: {
+      icons: [
+        'material-symbols:slab-serif-outline',
+        'mdi:fullscreen',
+        'mdi:settings-box',
+        'material-symbols:stacks-outline',
+        'mdi:close',
+        'mdi:wikipedia',
+        'line-md:loading-loop',
+        'mdi:alert-circle-outline',
+        'game-icons:sea-dragon',
+        'line-md:cog-loop',
+        'line-md:clipboard',
+        'mdi:draw',
+        'line-md:paint-drop',
+        'line-md:paint-drop-twotone',
+        'material-symbols:slab-serif-outline',
+        'material-symbols:stack-hexagon-outline',
+        'material-symbols:lab-research-outline',
+      ],
+    },
     serverBundle: {
-      collections: ['mdi'],
+      collections: ['mdi', 'material-symbols', 'line-md', 'game-icons'],
+      externalizeIconsJson: true,
     },
     customCollections: [{
       prefix: 're',
@@ -88,13 +108,12 @@ export const baseCfg: NuxtConfig = {
   vuetify: {
     moduleOptions: {
       /* other module options */
-      // styles: { configFile: '/settings.scss' }
+      // styles: { configFile: '/settings.scss' },
     },
     vuetifyOptions: {
       /* vuetify options */
       icons: {
         defaultSet: 'mdi',
-        sets: [mdi as unknown as FontIconSet],
       },
     },
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { PinyinTable } from '~/components/modules/pinyin/index'
+import { PageLoader } from '~/components/shared/page-loader'
 
 const store = useStore(['pinyin'])
 const {
