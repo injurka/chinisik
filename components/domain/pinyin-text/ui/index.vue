@@ -88,7 +88,7 @@ function getTone(index: number) {
     line-height: 0;
     width: 100%;
     font-weight: 600;
-    font-family: 'Noto Sans SC';
+    font-family: var(--font-family-cn);
     font-size: 0.65em;
   }
 }

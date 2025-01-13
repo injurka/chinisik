@@ -78,7 +78,7 @@ watch(
         class="item-expand"
         @click="emits('onExpand', hieroglyph)"
       >
-        <Icon name="material-symbols:eye-tracking-outline-rounded" size="15" />
+        <Icon name="mdi:menu" size="15" />
       </div>
     </div>
   </div>

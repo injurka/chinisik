@@ -7,7 +7,7 @@ import './index.scss'
 
 const props = {
   variant: { type: Number as PropType<HieroglyphWordVariant> },
-  pinyin: { type: Object as PropType<PinyinTextProps > },
+  pinyin: { type: [Object, String] as PropType<PinyinTextProps | string> },
   translate: { type: String },
   glyph: { type: String, required: true },
 }
@@ -20,22 +20,22 @@ const HieroglyphWordVarious = defineComponent({
     const isActive = ref<boolean>(false)
 
     const tooltipText = () => {
-      const isPinyinText = !!props.pinyin?.pinyin
-      const isPinyinPlain = !isPinyinText && !!props.pinyin
+      const isPinyinText = typeof props.pinyin === 'string'
+      const isPinyinComplex = !isPinyinText && !!props.pinyin?.pinyin
 
       return (
         <div class="tip">
-          {isPinyinText && (
+          {isPinyinComplex && (
             <div class="tip-pinyin">
               <PinyinText {...props.pinyin} colored={props.pinyin.colored} />
             </div>
           )}
-          {isPinyinPlain && (
+          {isPinyinText && (
             <div class="tip-pinyin">
               {props.pinyin}
             </div>
           )}
-          {(isPinyinText || isPinyinPlain) && props.translate && <hr class="tip-hr" />}
+          {(isPinyinText || isPinyinComplex) && props.translate && <hr class="tip-hr" />}
           {props.translate && (
             <div class="tip-translate">
               {props.translate}

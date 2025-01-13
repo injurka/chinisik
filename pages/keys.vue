@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { KeyHieroglyph, KeyHieroglyphControl, KeyHieroglyphInfo } from '~/components/modules/keys'
+import { PageLoader } from '~/components/shared/page-loader'
 
 const store = useStore(['keys'])
 const {
@@ -65,6 +66,7 @@ definePageMeta({
 <style scoped lang="scss">
 .content {
   padding: 16px;
+  @include default-font();
 
   .description {
     font-size: 1rem;
@@ -88,7 +90,6 @@ definePageMeta({
     padding-bottom: 64px;
   }
 
-  @include default-font();
   @include mobile() {
     padding: 8px;
   }

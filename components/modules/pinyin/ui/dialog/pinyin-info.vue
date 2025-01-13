@@ -44,7 +44,7 @@ function playPinyin(value: string, tone: ToneType) {
         <HaoticLines :viewport-el="dialogEl" />
 
         <div class="hint">
-          <Icon name="line-md:alert-circle-loop" size="18" />
+          <Icon name="mdi:alert-circle-outline" size="18" />
           <span> нажмите чтобы прослушать </span>
         </div>
         <div class="content">
@@ -74,7 +74,7 @@ function playPinyin(value: string, tone: ToneType) {
         class="close"
         @click="dialog = false"
       >
-        <Icon size="24" name="line-md:close-small" />
+        <Icon size="24" name="mdi:close" />
       </VBtn>
     </VDialog>
   </ClientOnly>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { PageLoader } from '~/components/shared/page-loader'
 import BaseLayout from './base.vue'
 
 type TabVariant = 'topic' | 'brief' | 'lab'
@@ -28,15 +29,11 @@ const tabsLeftOptions = [
 
 const route = useRoute()
 const currentTab = ref<TabVariant>('topic')
-const isLoading = ref<boolean>(false)
+const isLoadingContent = ref<boolean>(false)
 
 function handleChangeTab(value: TabVariant) {
   currentTab.value = value
   navigateTo(`/glossary/1/${value}`)
-}
-
-function handleFullscreenTab() {
-
 }
 
 const hash = route.fullPath.split('/').at(-1)
@@ -47,9 +44,8 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
 
 <template>
   <BaseLayout>
-    <section v-if="isLoading" class="loader">
-      <Icon name="line-md:loading-loop" />
-    </section>
+    <PageLoader v-if="isLoadingContent" />
+
     <section v-else class="content">
       <div class="header-section">
         <div class="option left">
@@ -74,20 +70,9 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
         <h1 class="title">
           Модальные глаголы
         </h1>
+
         <div class="option right">
-          <VTooltip
-            text="На весь экран"
-          >
-            <template #activator="{ props }">
-              <Icon
-                v-bind="props"
-                class="option-item"
-                name="mdi-fullscreen"
-                size="32"
-                @click="handleFullscreenTab"
-              />
-            </template>
-          </VTooltip>
+          <!--  -->
         </div>
       </div>
 
@@ -110,17 +95,6 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
   @include mobile() {
     padding: 0px;
   }
-}
-
-.loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  flex-grow: 1;
-
-  font-size: 4rem;
-  color: var(--fg-accent-color);
 }
 
 .header-section {
@@ -215,8 +189,5 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
     margin-bottom: 48px;
     border: 1px solid var(--border-secondary-color);
   }
-  // .mt-2 {
-  //   margin-top: 2px;
-  // }
 }
 </style>

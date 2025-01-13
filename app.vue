@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { Analytics } from '@vercel/analytics/nuxt'
-import { SpeedInsights } from '@vercel/speed-insights/nuxt'
-
 const app = useAppConfig()
 const { $pwa } = useNuxtApp()
 
@@ -14,15 +11,17 @@ useHead({
 })
 
 onMounted(() => {
-  if ($pwa?.offlineReady)
+  if ($pwa?.offlineReady) {
     // eslint-disable-next-line no-console
     console.info('App ready to work offline')
+  }
 })
 </script>
 
 <template>
-  <Analytics />
-  <SpeedInsights />
+  <!-- MB Later -->
+  <!-- <Analytics /> -->
+  <!-- <SpeedInsights /> -->
   <NuxtLoadingIndicator color="var(--border-accent-color)" />
   <NuxtPwaAssets />
   <NuxtLayout>
