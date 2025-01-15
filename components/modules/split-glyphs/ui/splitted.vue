@@ -153,16 +153,12 @@ watch(
                 />
               </div>
 
-              <div v-if="!isHieroglyphKeyExist(key)">
-                Не найдено описание для - <HieroglyphWord :glyph="key" />
+              <div v-if="!isHieroglyphKeyExist(key)" class="glyph-item-not-found">
+                Не найдено описание для - <HieroglyphWord :variant="0" :glyph="key" />
               </div>
               <template v-else>
                 <HieroglyphWord :="adapterGlyphs(formatHieroglyphKey(key))" />
               </template>
-
-              <!-- <div class="glyph-item-content">
-                <div> {{ key }}</div>
-              </div> -->
             </div>
           </template>
         </template>
@@ -198,6 +194,13 @@ watch(
   flex-direction: row;
   margin-bottom: 16px;
   width: 100%;
+
+  &-not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
 
   &-spacing {
     display: flex;

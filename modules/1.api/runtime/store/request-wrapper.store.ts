@@ -1,7 +1,7 @@
 import type {
   ApiStatus,
+  IApiError,
   ICallback,
-  IError,
   IRequestReturn,
   IRequestWrapperPayload,
   IRequestWrapperState,
@@ -19,7 +19,7 @@ const useRequestWrapperStore = defineStore('request', {
     _setLoading(key: string, value: ApiStatus) {
       this._status.set(key, value)
     },
-    _setError(key: string, value: IError | null) {
+    _setError(key: string, value: IApiError | null) {
       if (value)
         this._error.set(key, value)
       else
@@ -47,7 +47,7 @@ const useRequestWrapperStore = defineStore('request', {
             state: this.$state,
           })
           : onError?.({
-            error: error as IError,
+            error: error as IApiError,
             state: this.$state,
           }))
       }
@@ -67,7 +67,7 @@ const useRequestWrapperStore = defineStore('request', {
       attemptCounts: number,
     ): Promise<IRetryResult<T>> {
       const { api } = useApi()
-      let error: IError = {} as IError
+      let error: IApiError = {} as IApiError
 
       for (let i = 0; i < attemptCounts; i++) {
         try {
@@ -93,6 +93,13 @@ const useRequestWrapperStore = defineStore('request', {
     },
     checkStatus(keys: string[], status = 'PENDING'): boolean {
       return keys.some(s => this.getStatus(s) === status)
+    },
+    getError(key: string): IApiError | null {
+      return this._error.get(key)!
+    },
+    getAnyError(keys: string[]): IApiError | null {
+      const key = keys.find(key => !!this._error.get(key))
+      return key ? this._error.get(key)! : null
     },
     isAnyLoading(keys: string[]) {
       return computed(() => this.checkStatus(keys, 'PENDING'))

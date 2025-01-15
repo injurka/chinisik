@@ -30,7 +30,6 @@ definePageMeta({
 
   <section v-else class="content">
     <JsonToDom :node="mockCms.splitGlyphs!" />
-
     <SplitGlyphs />
   </section>
 </template>

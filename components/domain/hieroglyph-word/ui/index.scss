@@ -26,9 +26,14 @@
   border: 1px solid var(--border-accent-color);
   gap: 0px;
 
+  &.none-pinyin,
+  &.none-translate {
+    border: none;
+  }
+
   .pinyin {
     text-align: center;
-    padding: 5px 10px;
+    padding: 4px 12px;
     font-size: 1rem;
   }
 
@@ -44,7 +49,7 @@
 
   .translate {
     text-align: center;
-    padding: 5px 10px;
+    padding: 4px 12px;
     line-height: 30px;
     font-size: 0.9rem;
   }
@@ -60,6 +65,7 @@
     min-height: 64px;
     text-align: center;
     padding: 0 8px;
+    overflow: hidden;
   }
   .pinyin-translate {
     padding-left: 12px;
@@ -91,7 +97,6 @@
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0.2px;
-  line-height: normal;
   font-family: var(--font-family-cn);
   font-weight: 500;
 }
@@ -105,7 +110,6 @@
   box-shadow: inset 0 0 2px var(--border-accent-color);
   color: var(--fg-primary-color);
   font-family: var(--font-family-cn);
-  line-height: normal;
 }
 
 .translate {
@@ -113,7 +117,6 @@
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0.2px;
-  line-height: normal;
 }
 .tip {
   display: flex;

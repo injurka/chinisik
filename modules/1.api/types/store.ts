@@ -6,10 +6,10 @@ export type ApiStatus =
 
 interface IRequestWrapperState {
   _status: Map<string, ApiStatus>
-  _error: Map<string, IError | null>
+  _error: Map<string, IApiError | null>
 }
 
-interface IRequestReturn<T> { data?: T, error?: IError | null, status: ApiStatus }
+interface IRequestReturn<T> { data?: T, error?: IApiError | null, status: ApiStatus }
 interface IRequestWrapperPayload<T> {
   key: string
   attemptCounts?: number
@@ -18,7 +18,7 @@ interface IRequestWrapperPayload<T> {
   onError?: (payload: ErrorCallback) => Promise<void> | void | unknown
 }
 
-interface IError {
+interface IApiError {
   status: number
   message: string
 }
@@ -27,16 +27,16 @@ interface ICallback {
   api: IApi
 }
 type SuccessCallback<T> = Omit<ICallback, 'api'> & { data: Awaited<T> }
-type ErrorCallback = Omit<ICallback, 'api'> & { error: IError }
+type ErrorCallback = Omit<ICallback, 'api'> & { error: IApiError }
 
 interface IRetryResult<T> {
   result?: Awaited<T> | null
-  error: IError | null
+  error: IApiError | null
 }
 
 export type {
+  IApiError,
   ICallback,
-  IError,
   IRequestReturn,
   IRequestWrapperPayload,
   IRequestWrapperState,

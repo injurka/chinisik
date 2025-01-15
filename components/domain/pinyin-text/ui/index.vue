@@ -14,10 +14,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const store = usePinyinTextStore()
 
-const tones = computed(() => Array.isArray(props.tone)
-  ? props.tone
-  : [props.tone],
-)
+const isColored = computed(() => props.colored ?? store.isColored)
+const tones = computed(() => Array.isArray(props.tone) ? props.tone : [props.tone])
 const splitPinyin = computed(() => {
   const pinyin = props.pinyin.replaceAll(' ', '⠀')
   const parts: string[] = []
@@ -35,7 +33,6 @@ const splitPinyin = computed(() => {
 
   return parts
 })
-const isColored = computed(() => props.colored ?? store.isColored)
 
 function color(toneType: ToneType) {
   return isColored.value

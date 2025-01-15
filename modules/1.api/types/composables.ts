@@ -1,5 +1,5 @@
 import type { ApiStatus } from '../types'
-import type { IRequestReturn, IRequestWrapperPayload } from './store'
+import type { IApiError, IRequestReturn, IRequestWrapperPayload } from './store'
 import type { CreateApiParams } from '~/shared/api'
 
 // Типизация для useRequest
@@ -7,6 +7,9 @@ export type UseRequest = <T>(payload: IRequestWrapperPayload<T>) => Promise<IReq
 
 // Типизация для useRequestStatus
 export type UseRequestStatus = (keys: string[], status?: ApiStatus) => boolean
+
+// Типизация для useRequestError - проверка упал ли запрос с ошибкой
+export type UseRequestError = (key: string) => IApiError | null
 
 // Типизация для useApi
 export type UseApiInitParams = Partial<CreateApiParams>
