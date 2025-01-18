@@ -1,5 +1,4 @@
 import type { IHieroglyphWordVariousProps } from '~/components/domain/hieroglyph-word'
-import type { Tone } from '~/components/domain/pinyin-text/types'
 
 function calculatePrefixSum(pinyin: { value: string, toneIndex: number }[]): number[] {
   return pinyin.reduce((acc, curr, index) => {
@@ -25,7 +24,7 @@ function adapterSentence(value: SplitGlyphsSentence): IHieroglyphWordVariousProp
       pinyin: value.pinyin.map(m => m.value).join(' '),
       tone: value.pinyin.map((m, index) => ({
         index: prefixSum[index],
-        type: m.toneType as unknown as Tone,
+        type: m.toneType,
       })),
     } as unknown as IHieroglyphWordVariousProps['pinyin'],
     translate: value.translate,
@@ -41,7 +40,7 @@ function adapterWord(value: SplitGlyphsWord): IHieroglyphWordVariousProps {
       pinyin: value.pinyin.map(m => m.value).join(' '),
       tone: value.pinyin.map((m, index) => ({
         index: prefixSum[index],
-        type: m.toneType as unknown as Tone,
+        type: m.toneType,
       })),
     } as unknown as IHieroglyphWordVariousProps['pinyin'],
     translate: value.translate,

@@ -6,6 +6,12 @@ const store = useStore(['splitGlyphs'])
 const errors = ref<string[]>([])
 const isError = ref<boolean>(false)
 
+const btnToggleValue = computed(() => {
+  return Object
+    .entries(typeSplitMapping)
+    .find(([_, value]) => value === store.splitGlyphs.control.type)?.[0]
+})
+
 watch(
   () => store.splitGlyphs.control.type,
   value => useCookie('SPLIT_GPLYPHS_TYPE').value = `${value}`,
@@ -26,12 +32,6 @@ function updateBtnToggleValue(index?: unknown) {
     .find(([key, _]) => +key === +index)![1]! as SplitGlyphsType
 }
 
-const btnToggleValue = computed(() => {
-  return Object
-    .entries(typeSplitMapping)
-    .find(([_, value]) => value === store.splitGlyphs.control.type)?.[0]
-})
-
 function handleClickSubmit() {
   errors.value = []
 
@@ -43,16 +43,24 @@ function handleClickSubmit() {
     store.splitGlyphs.postSplitKeys()
   }
 }
+
+function handleKeyDown(event: KeyboardEvent) {
+  if (event.key === 'Enter') {
+    handleClickSubmit()
+  }
+}
 </script>
 
 <template>
   <div class="control">
     <v-text-field
       v-model="store.splitGlyphs.control.value"
-      label="Иероглифы для разброра"
+      :disabled="store.splitGlyphs.isLoadingSubmit"
+      label="Иероглифы для разбора"
       variant="outlined"
       hide-details="auto"
       prepend-inner-icon="mdi-rhombus-split"
+      @keydown="handleKeyDown"
     >
       <template #append-inner>
         <v-btn
@@ -64,17 +72,21 @@ function handleClickSubmit() {
       </template>
     </v-text-field>
 
-    <v-btn-toggle
-      divided
-      variant="outlined"
-      class="control-types"
-      :model-value="btnToggleValue"
-      @update:model-value="updateBtnToggleValue"
-    >
-      <v-btn v-for="type in typeCopmonentMappingForControl" :key="type">
-        {{ type }}
-      </v-btn>
-    </v-btn-toggle>
+    <div class="control-additional">
+      <span>Выберите то чем являются текущий набор иероглифов, это поможет более точно подобрать описание.</span>
+      <v-btn-toggle
+        :disabled="store.splitGlyphs.isLoadingSubmit"
+        divided
+        variant="outlined"
+        class="control-types"
+        :model-value="btnToggleValue"
+        @update:model-value="updateBtnToggleValue"
+      >
+        <v-btn v-for="type in typeCopmonentMappingForControl" :key="type">
+          {{ type }}
+        </v-btn>
+      </v-btn-toggle>
+    </div>
   </div>
   <v-snackbar
     v-model="isError"
@@ -101,6 +113,22 @@ function handleClickSubmit() {
 
   > input {
     font-weight: 500;
+  }
+
+  &-additional {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    > span {
+      color: var(--fg-tertiary-color);
+      font-size: 0.9rem;
+    }
+    > div {
+      margin-top: 4px;
+    }
   }
 
   &-types {

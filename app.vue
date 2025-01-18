@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+import { Analytics } from '@vercel/analytics/nuxt'
+import { SpeedInsights } from '@vercel/speed-insights/nuxt'
+
 const app = useAppConfig()
 const { $pwa } = useNuxtApp()
+const { getHeadThemeColor } = useChangeTheme()
 
 useHead({
   ...app,
@@ -8,6 +12,9 @@ useHead({
     'lang': 'ru',
     'data-cn': `${useCookie(FONT_FAMILY_CN, { default: () => 'base', sameSite: 'lax' }).value}`,
   },
+  meta: [
+    { name: 'theme-color', content: getHeadThemeColor() },
+  ],
 })
 
 onMounted(() => {
@@ -19,9 +26,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- MB Later -->
-  <!-- <Analytics /> -->
-  <!-- <SpeedInsights /> -->
+  <Analytics />
+  <SpeedInsights />
   <NuxtLoadingIndicator color="var(--border-accent-color)" />
   <NuxtPwaAssets />
   <NuxtLayout>

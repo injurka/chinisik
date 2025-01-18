@@ -1,4 +1,4 @@
-import type { JsonToDomChildren, JsonToDomTags } from '~/components/domain/json-to-dom'
+import type { JsonToDomChildren, JsonToDomTags } from '~/components/domain/json-to-dom/types'
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import { PinyinText } from '~/components/domain/pinyin-text'
 

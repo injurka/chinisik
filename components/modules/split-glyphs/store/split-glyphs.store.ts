@@ -26,6 +26,7 @@ export const useSplitGlyphsStore = defineStore('splitGlyphs', {
 
   getters: {
     isLoadingSubmit: () => useRequestStatus([RequestKeys.SPLIT_GLYPHS]),
+    apiError: () => useRequestError(RequestKeys.SPLIT_GLYPHS),
   },
 
   actions: {
@@ -37,7 +38,6 @@ export const useSplitGlyphsStore = defineStore('splitGlyphs', {
           type: this.control.type,
         }),
         onSuccess: ({ data }) => this.glyphs = data,
-        // onError: ({ error }) => { },
       })
     },
   },

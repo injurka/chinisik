@@ -1,58 +1,11 @@
 <script lang="ts" setup>
-import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word'
 import { HaoticLines } from '~/components/domain/haotic-lines'
-
-enum ThemesVariant {
-  Light = 'light',
-  Dark = 'dark',
-  Rainy = 'rainy',
-}
-
-const icons: Record<ThemesVariant, string> = {
-  [ThemesVariant.Light]: 'line-md:sunny-outline-twotone',
-  [ThemesVariant.Dark]: 'line-md:moon-alt-loop',
-  [ThemesVariant.Rainy]: 'line-md:cloud-twotone',
-}
-
-const theme = useColorMode()
-const store = useStore(['hieroglyphWord', 'pinyinText'])
-const { fontCn, toggleFontCnFamily } = useChangeFontCn()
+import SettingsControl from './dialog/settings-control.vue'
 
 const headerEl = ref<HTMLElement>()
+const isDialogSettings = ref<boolean>(false)
 const isDrawer = defineModel<boolean>('drawer', { required: true })
-
-const themeIcon = computed(() => icons[theme.value as keyof typeof icons])
-const colorPinyinIcon = computed(() => `line-md:paint-drop${store.pinyinText.isColored ? '-twotone' : ''}`)
-
-function toggleTheme() {
-  switch (theme.value) {
-    case ThemesVariant.Light:
-      theme.preference = ThemesVariant.Dark
-      break
-
-    case ThemesVariant.Dark:
-      theme.preference = ThemesVariant.Rainy
-      break
-
-    case ThemesVariant.Rainy:
-      theme.preference = ThemesVariant.Light
-      break
-  }
-}
-
-function toggleColorPinyin() {
-  store.pinyinText.setIsColored(!store.pinyinText.isColored)
-}
-
-function toggleHieroglyphVariant() {
-  let newVariant = ++store.hieroglyphWord.variant
-
-  if (newVariant > 4) {
-    newVariant = 0
-  }
-
-  store.hieroglyphWord.variant = newVariant as HieroglyphWordVariant
-}
+const store = useStore(['auth'])
 
 function handleProfile() {
   navigateTo(RoutePaths.Auth.SignIn)
@@ -118,56 +71,38 @@ function handleProfile() {
       </div>
 
       <div class="header-utils">
-        <VMenu offset="18" :close-on-content-click="false">
-          <template #activator="{ props }">
-            <button class="utils-settings-btn">
-              <Icon name="line-md:cog-loop" size="24" v-bind="props" />
-            </button>
-          </template>
-
-          <div class="utils-settings-content">
-            <ClientOnly>
-              <button @click="toggleTheme">
-                <Icon :key="themeIcon" :name="themeIcon" size="24" />
-                <span>Цветовое оформление</span>
-              </button>
-              <button @click="toggleHieroglyphVariant">
-                <Icon name="line-md:clipboard" size="24" />
-                <div class="hieroglyph-variant">
-                  {{ store.hieroglyphWord.variant }}
-                </div>
-                <span>Стиль отображения иероглифа</span>
-              </button>
-              <button @click="toggleColorPinyin">
-                <Icon :key="colorPinyinIcon" :name="colorPinyinIcon" size="24" />
-                <span>Цветное отображения тона</span>
-              </button>
-              <button @click="toggleFontCnFamily">
-                <Icon name="mdi:draw" size="24" />
-                <span v-if="fontCn === 'base'">Прописные иероглифы</span>
-                <span v-else>Печатные иероглифы</span>
-              </button>
-            </ClientOnly>
-          </div>
-        </VMenu>
+        <button
+          class="utils-settings-btn"
+          @click="isDialogSettings = !isDialogSettings"
+        >
+          <Icon name="line-md:cog-loop" size="24" />
+        </button>
+        <SettingsControl v-model="isDialogSettings" />
 
         <div class="vr" />
 
         <div class="profile" @click="handleProfile">
           <NuxtImg
+            v-if="!!store.auth.user"
             class="profile-img"
             width="38"
             height="38"
             placeholder="/images/profile-placeholder.png"
             src="/images/profile-placeholder.png"
           />
+          <div v-else class="profile-img">
+            <Icon
+              size="28"
+              name="mdi:face-man-profile"
+            />
+          </div>
         </div>
       </div>
     </div>
   </header>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .header {
   position: relative;
   display: flex;
@@ -256,6 +191,11 @@ function handleProfile() {
       border: 2px solid var(--border-primary-color);
       overflow: hidden;
       cursor: pointer;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       transition: border 0.2s ease-in-out;
       &:hover {

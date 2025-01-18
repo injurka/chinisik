@@ -2,6 +2,7 @@
 import { HaoticLines } from '~/components/domain/haotic-lines'
 import { IframeViewer } from '~/components/domain/iframe-viewer'
 import { PinyinText } from '~/components/domain/pinyin-text'
+import { DialogWithClose } from '~/components/shared/dialog-with-close'
 
 interface Props {
   hieroglyph?: HieroglyphKey
@@ -17,7 +18,7 @@ const data = computed(() => ({
   wiki: `https://ru.wikipedia.org/wiki/%D0%9A%D0%BB%D1%8E%D1%87_${props.hieroglyph?.index}`,
 }))
 
-const dialog = defineModel<boolean>()
+const dialog = defineModel<boolean>({ required: true })
 const hieroglyphEl = ref<HTMLElement>()
 
 function onOpenWiki() {
@@ -27,12 +28,11 @@ function onOpenWiki() {
 
 <template>
   <ClientOnly>
-    <v-dialog
+    <DialogWithClose
       v-model="dialog"
       class="dialog"
-      persistent
     >
-      <v-card class="dialog-content">
+      <VCard class="dialog-content">
         <div ref="hieroglyphEl" class="hieroglyph-container">
           <HaoticLines
             v-if="dialog"
@@ -79,17 +79,8 @@ function onOpenWiki() {
         <p class="description">
           {{ data.description }}
         </p>
-      </v-card>
-
-      <v-btn
-        icon
-        variant="text"
-        class="close"
-        @click="dialog = false"
-      >
-        <Icon size="24" name="mdi:close" />
-      </v-btn>
-    </v-dialog>
+      </VCard>
+    </DialogWithClose>
 
     <IframeViewer v-model="isWikiViewing" :src="data.wiki" />
   </ClientOnly>
@@ -97,8 +88,6 @@ function onOpenWiki() {
 
 <style lang="scss" scoped>
 .dialog {
-  max-width: 800px;
-
   &-content {
     position: relative;
     display: flex;
@@ -227,21 +216,6 @@ function onOpenWiki() {
         z-index: 3;
       }
     }
-  }
-
-  .close {
-    position: absolute;
-    right: -8px;
-    top: -8px;
-    width: 32px;
-    height: 32px;
-    background-color: var(--bg-tertiary-color);
-    border: 2px solid var(--border-accent-color);
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 </style>

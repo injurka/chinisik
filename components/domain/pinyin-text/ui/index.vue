@@ -1,23 +1,15 @@
 <script lang="ts" setup>
-import type { Tone } from '../types'
-import { usePinyinTextStore } from '../store'
+import type { PinyinTextProps } from '~/components/domain/pinyin-text/types'
+import { usePinyinTextStore } from '~/components/domain/pinyin-text/store'
 
-export interface Props {
-  pinyin: string
-  tone: Tone[] | Tone
-  colored?: boolean | null
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PinyinTextProps>(), {
   colored: null,
 })
 
 const store = usePinyinTextStore()
 
-const tones = computed(() => Array.isArray(props.tone)
-  ? props.tone
-  : [props.tone],
-)
+const isColored = computed(() => props.colored ?? store.isColored)
+const tones = computed(() => Array.isArray(props.tone) ? props.tone : [props.tone])
 const splitPinyin = computed(() => {
   const pinyin = props.pinyin.replaceAll(' ', '⠀')
   const parts: string[] = []
@@ -35,7 +27,6 @@ const splitPinyin = computed(() => {
 
   return parts
 })
-const isColored = computed(() => props.colored ?? store.isColored)
 
 function color(toneType: ToneType) {
   return isColored.value

@@ -1,12 +1,12 @@
-enum Variant {
+enum FontCnVariant {
   Base = 'base',
   Brushed = 'brushed',
 }
 
-export function useChangeFontCn() {
-  const font = useCookie(FONT_FAMILY_CN)
+function useChangeFontCn() {
+  const font = useCookie<FontCnVariant>(FONT_FAMILY_CN)
 
-  const setFontCnFamily = (value: string) => {
+  const applyFontCnFamily = (value: FontCnVariant) => {
     const rootElement = document.querySelector('html')
 
     if (rootElement)
@@ -14,11 +14,17 @@ export function useChangeFontCn() {
   }
 
   const toggleFontCnFamily = () => {
-    const newFontVariant = font.value === Variant.Base
-      ? Variant.Brushed
-      : Variant.Base
-    font.value = newFontVariant
-    setFontCnFamily(newFontVariant)
+    font.value = font.value === FontCnVariant.Base
+      ? FontCnVariant.Brushed
+      : FontCnVariant.Base
+
+    applyFontCnFamily(font.value)
+  }
+
+  const setFontCnFamily = (value: FontCnVariant) => {
+    font.value = value
+
+    applyFontCnFamily(font.value)
   }
 
   return {
@@ -27,3 +33,6 @@ export function useChangeFontCn() {
     toggleFontCnFamily,
   }
 }
+
+export { FontCnVariant }
+export { useChangeFontCn }

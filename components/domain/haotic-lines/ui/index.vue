@@ -155,6 +155,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .haotic-line {
   position: absolute;
+  overflow: hidden;
   left: 0;
   right: 0;
   top: 0;

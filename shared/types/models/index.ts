@@ -1,5 +1,5 @@
 export * from './hiroglyph-key'
+export * from './llvm'
 export * from './pinyin'
 export * from './quiz'
-export * from './splited-glyphs'
 export * from './user'
