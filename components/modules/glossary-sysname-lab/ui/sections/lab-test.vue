@@ -89,7 +89,7 @@ function handleNextAnswer() {
 
       <div class="check">
         <div class="check-option left">
-          <VTooltip
+          <!-- <VTooltip
             text="Настройки теста"
           >
             <template #activator="{ props }">
@@ -101,7 +101,7 @@ function handleNextAnswer() {
                 @click="isFullscreen = !isFullscreen"
               />
             </template>
-          </VTooltip>
+          </VTooltip> -->
         </div>
 
         <VBtn
@@ -127,9 +127,9 @@ function handleNextAnswer() {
           <VTooltip
             text="На весь экран"
           >
-            <template #activator="{ props }">
+            <template #activator="{ props: templateProps }">
               <Icon
-                v-bind="props"
+                v-bind="templateProps"
                 class="check-option-item check-fullscreen"
                 name="mdi:fullscreen"
                 size="32"

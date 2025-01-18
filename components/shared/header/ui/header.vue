@@ -5,6 +5,7 @@ import SettingsControl from './dialog/settings-control.vue'
 const headerEl = ref<HTMLElement>()
 const isDialogSettings = ref<boolean>(false)
 const isDrawer = defineModel<boolean>('drawer', { required: true })
+const store = useStore(['auth'])
 
 function handleProfile() {
   navigateTo(RoutePaths.Auth.SignIn)
@@ -82,12 +83,19 @@ function handleProfile() {
 
         <div class="profile" @click="handleProfile">
           <NuxtImg
+            v-if="!!store.auth.user"
             class="profile-img"
             width="38"
             height="38"
             placeholder="/images/profile-placeholder.png"
             src="/images/profile-placeholder.png"
           />
+          <div v-else class="profile-img">
+            <Icon
+              size="28"
+              name="mdi:face-man-profile"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -183,6 +191,11 @@ function handleProfile() {
       border: 2px solid var(--border-primary-color);
       overflow: hidden;
       cursor: pointer;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       transition: border 0.2s ease-in-out;
       &:hover {

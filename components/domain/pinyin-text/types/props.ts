@@ -1,12 +1,15 @@
-interface Tone {
+interface PinyinTextTone {
   index: number
   type: ToneType
 }
 
-interface Props {
+interface PinyinTextProps {
   pinyin: string
-  tone: Tone[] | Tone
+  tone: PinyinTextTone[] | PinyinTextTone
   colored?: boolean | null
 }
 
-export type { Props, Tone }
+export type {
+  PinyinTextProps,
+  PinyinTextTone,
+}

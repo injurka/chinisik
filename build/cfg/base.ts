@@ -8,6 +8,7 @@ export const baseCfg: NuxtConfig = {
   routeRules: {
     '/keys': { swr: true },
     '/pinyin': { swr: true },
+    '/split-glyphs': { swr: true },
   },
 
   devServer: {
@@ -94,6 +95,7 @@ export const baseCfg: NuxtConfig = {
         'material-symbols:slab-serif-outline',
         'material-symbols:stack-hexagon-outline',
         'material-symbols:lab-research-outline',
+        'mdi:face-man-profile',
       ],
     },
     serverBundle: {

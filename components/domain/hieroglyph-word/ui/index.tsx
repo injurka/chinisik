@@ -1,8 +1,8 @@
-import type { HieroglyphWordVariant } from '../types'
+import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word/types'
 import { VTooltip } from 'vuetify/components'
-
+import { useHieroglyphWordStore } from '~/components/domain/hieroglyph-word/store'
 import { PinyinText, type PinyinTextProps } from '~/components/domain/pinyin-text'
-import { useHieroglyphWordStore } from '../store'
+
 import './index.scss'
 
 const props = {
@@ -212,4 +212,6 @@ const HieroglyphWord = defineComponent({
   },
 })
 
-export { HieroglyphWord }
+export {
+  HieroglyphWord,
+}

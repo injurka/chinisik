@@ -1,4 +1,7 @@
-import type { HieroglyphWordVariant, IHieroglyphWordState } from '../types'
+import type {
+  HieroglyphWordVariant,
+  IHieroglyphWordState,
+} from '~/components/domain/hieroglyph-word/types'
 
 export const useHieroglyphWordStore = defineStore('hieroglyphWord', {
   state: (): IHieroglyphWordState => ({

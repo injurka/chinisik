@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Props } from '../types'
-import { usePinyinTextStore } from '../store'
+import type { PinyinTextProps } from '~/components/domain/pinyin-text/types'
+import { usePinyinTextStore } from '~/components/domain/pinyin-text/store'
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PinyinTextProps>(), {
   colored: null,
 })
 

@@ -1,19 +1,10 @@
-import type { PinyinTextProps } from '~/components/domain/pinyin-text'
-
-type HieroglyphWordVariant = 0 | 1 | 2 | 3 | 4 | 5
+import type { HieroglyphWordVariant } from './props'
 
 interface IHieroglyphWordState {
   variant: HieroglyphWordVariant
 }
-interface IHieroglyphWordProps {
-  variant?: HieroglyphWordVariant
-  pinyin?: PinyinTextProps
-  translate?: string
-  glyph: string
-}
 
+export * from './props'
 export type {
-  HieroglyphWordVariant,
-  IHieroglyphWordProps,
   IHieroglyphWordState,
 }

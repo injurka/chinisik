@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { HieroglyphWordVariant, IHieroglyphWordProps } from '~/components/domain/hieroglyph-word'
+import type { HieroglyphWordVariant, IHieroglyphWordVariousProps } from '~/components/domain/hieroglyph-word'
 import type { FontCnVariant } from '~/shared/composables/change-font-cn'
 import type { ThemesVariant } from '~/shared/composables/change-theme'
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
@@ -60,7 +60,7 @@ const previewProps = computed(() => ({
     }],
   },
   translate: 'Привет',
-} as IHieroglyphWordProps))
+} as IHieroglyphWordVariousProps))
 </script>
 
 <template>
