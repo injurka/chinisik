@@ -69,7 +69,12 @@ const HieroglyphWordVarious = defineComponent({
         && (
           typeof props.pinyin === 'string'
             ? props.pinyin
-            : <PinyinText {...props.pinyin} colored={props.pinyin.colored} />
+            : (
+                <PinyinText
+                  {...props.pinyin}
+                  colored={props.pinyin.colored}
+                />
+              )
         )
 
       if (props.variant === 2) {

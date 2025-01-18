@@ -1,12 +1,6 @@
 <script lang="ts" setup>
-import type { Tone } from '../types'
+import type { Props } from '../types'
 import { usePinyinTextStore } from '../store'
-
-export interface Props {
-  pinyin: string
-  tone: Tone[] | Tone
-  colored?: boolean | null
-}
 
 const props = withDefaults(defineProps<Props>(), {
   colored: null,

@@ -1,24 +1,19 @@
 <script lang="ts" setup>
 import type { HieroglyphWordVariant, IHieroglyphWordProps } from '~/components/domain/hieroglyph-word'
 import type { FontCnVariant } from '~/shared/composables/change-font-cn'
+import type { ThemesVariant } from '~/shared/composables/change-theme'
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import { DialogWithClose } from '~/components/shared/dialog-with-close'
 
-enum ThemesVariant {
-  Light = 'light',
-  Dark = 'dark',
-  Rainy = 'rainy',
-}
-
 const isDialog = defineModel<boolean>({ required: false, default: true })
-const theme = useColorMode()
 const store = useStore(['hieroglyphWord', 'pinyinText'])
 const { setFontCnFamily, fontCn } = useChangeFontCn()
+const { setTheme, theme } = useChangeTheme()
 
 // Controllers
 const controlledTheme = computed({
-  get: () => theme.value,
-  set: (value: ThemesVariant) => theme.preference = value,
+  get: () => theme,
+  set: (value: ThemesVariant) => setTheme(value),
 })
 
 const controlledHieroglyphVariant = computed({

@@ -1,4 +1,4 @@
-import type { Props as PinyinTextProps } from './ui/index.vue'
+import type { Props as PinyinTextProps } from './types'
 import { usePinyinTextStore } from './store'
 import PinyinText from './ui/index.vue'
 
