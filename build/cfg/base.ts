@@ -79,6 +79,7 @@ export const baseCfg: NuxtConfig = {
         'material-symbols:slab-serif-outline',
         'mdi:fullscreen',
         'mdi:settings-box',
+        'mdi:refresh',
         'material-symbols:stacks-outline',
         'mdi:close',
         'mdi:wikipedia',
@@ -97,7 +98,6 @@ export const baseCfg: NuxtConfig = {
     },
     serverBundle: {
       collections: ['mdi', 'material-symbols', 'line-md', 'game-icons'],
-      externalizeIconsJson: true,
     },
     customCollections: [{
       prefix: 're',

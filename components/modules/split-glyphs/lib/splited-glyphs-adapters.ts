@@ -1,4 +1,4 @@
-import type { IHieroglyphWordVariousProps } from '~/components/domain/hieroglyph-word'
+import type { IHieroglyphWordProps } from '~/components/domain/hieroglyph-word'
 import type { Tone } from '~/components/domain/pinyin-text/types'
 
 function calculatePrefixSum(pinyin: { value: string, toneIndex: number }[]): number[] {
@@ -16,7 +16,7 @@ function calculatePrefixSum(pinyin: { value: string, toneIndex: number }[]): num
   }, [] as number[])
 }
 
-function adapterSentence(value: SplitGlyphsSentence): IHieroglyphWordVariousProps {
+function adapterSentence(value: SplitGlyphsSentence): IHieroglyphWordProps {
   const prefixSum = calculatePrefixSum(value.pinyin)
 
   return {
@@ -27,12 +27,12 @@ function adapterSentence(value: SplitGlyphsSentence): IHieroglyphWordVariousProp
         index: prefixSum[index],
         type: m.toneType as unknown as Tone,
       })),
-    } as unknown as IHieroglyphWordVariousProps['pinyin'],
+    } as unknown as IHieroglyphWordProps['pinyin'],
     translate: value.translate,
   }
 }
 
-function adapterWord(value: SplitGlyphsWord): IHieroglyphWordVariousProps {
+function adapterWord(value: SplitGlyphsWord): IHieroglyphWordProps {
   const prefixSum = calculatePrefixSum(value.pinyin)
 
   return {
@@ -43,12 +43,12 @@ function adapterWord(value: SplitGlyphsWord): IHieroglyphWordVariousProps {
         index: prefixSum[index],
         type: m.toneType as unknown as Tone,
       })),
-    } as unknown as IHieroglyphWordVariousProps['pinyin'],
+    } as unknown as IHieroglyphWordProps['pinyin'],
     translate: value.translate,
   }
 }
 
-function adapterHieroglyph(value: SplitGlyphsHieroglyph): IHieroglyphWordVariousProps {
+function adapterHieroglyph(value: SplitGlyphsHieroglyph): IHieroglyphWordProps {
   return {
     glyph: value.glyph,
     pinyin: {
@@ -57,12 +57,12 @@ function adapterHieroglyph(value: SplitGlyphsHieroglyph): IHieroglyphWordVarious
         index: value.toneIndex,
         type: value.toneType,
       },
-    } as unknown as IHieroglyphWordVariousProps['pinyin'],
+    } as unknown as IHieroglyphWordProps['pinyin'],
     translate: value.translate[0].value,
   }
 }
 
-function adapterHieroglyphKey(value: SplitGlyphsHieroglyphKey): IHieroglyphWordVariousProps {
+function adapterHieroglyphKey(value: SplitGlyphsHieroglyphKey): IHieroglyphWordProps {
   return {
     glyph: value.glyph,
     pinyin: {
@@ -71,12 +71,12 @@ function adapterHieroglyphKey(value: SplitGlyphsHieroglyphKey): IHieroglyphWordV
         index: value.toneIndex,
         type: value.toneType,
       },
-    } as unknown as IHieroglyphWordVariousProps['pinyin'],
+    } as unknown as IHieroglyphWordProps['pinyin'],
     translate: value.translate,
   }
 }
 
-function adapter(value: BaseSplitGlyphs): IHieroglyphWordVariousProps {
+function adapter(value: BaseSplitGlyphs): IHieroglyphWordProps {
   switch (value.type) {
     case 'sentence':
       return adapterSentence(value as SplitGlyphsSentence)

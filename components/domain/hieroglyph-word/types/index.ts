@@ -5,7 +5,7 @@ type HieroglyphWordVariant = 0 | 1 | 2 | 3 | 4 | 5
 interface IHieroglyphWordState {
   variant: HieroglyphWordVariant
 }
-interface IHieroglyphWordVariousProps {
+interface IHieroglyphWordProps {
   variant?: HieroglyphWordVariant
   pinyin?: PinyinTextProps
   translate?: string
@@ -14,6 +14,6 @@ interface IHieroglyphWordVariousProps {
 
 export type {
   HieroglyphWordVariant,
+  IHieroglyphWordProps,
   IHieroglyphWordState,
-  IHieroglyphWordVariousProps,
 }

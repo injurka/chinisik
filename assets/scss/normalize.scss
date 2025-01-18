@@ -62,3 +62,18 @@ p {
 ::selection {
   background: var(--bg-accent-overlay-color);
 }
+
+.smooth-appear {
+  &-enter-active {
+    transition: opacity 0.3s ease;
+  }
+  &-leave-active {
+    transition: opacity 0s ease;
+  }
+  &-enter-from {
+    opacity: 0;
+  }
+  &-leave-to {
+    opacity: 0;
+  }
+}

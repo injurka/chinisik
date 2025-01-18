@@ -45,12 +45,12 @@ const HieroglyphWordVarious = defineComponent({
       )
     }
     const tooltipProps = {
-      'activator': 'parent',
       'openDelay': 50,
-      'location': 'top' as any,
+      'activator': 'parent',
+      'location': 'top',
+      'transition': 'none',
       'noClickAnimation': true,
       'zIndex': 9999,
-      'transition': 'none',
       'modelValue': isActive.value,
       'onUpdate:modelValue': (value: boolean) => {
         isActive.value = value
@@ -58,7 +58,7 @@ const HieroglyphWordVarious = defineComponent({
       'openOnClick': true,
       'openOnFocus': true,
       'openOnHover': true,
-    }
+    } satisfies VTooltip['$props']
 
     const graphContent = computed(() => {
       return props.glyph
@@ -119,7 +119,7 @@ const HieroglyphWordVarious = defineComponent({
                 </VTooltip>
                 {graphContent.value}
               </span>
-              -
+              —
               {translateContent.value}
             </>
           )

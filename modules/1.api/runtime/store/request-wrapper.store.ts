@@ -38,7 +38,7 @@ const useRequestWrapperStore = defineStore('request', {
       this._setLoading(key, 'PENDING')
       this._setError(key, null)
 
-      const { result, error } = await this.retryAsync(fn, attemptCounts ?? 2)
+      const { result, error } = await this.retryAsync(fn, attemptCounts ?? 1)
 
       try {
         await (result && !error
@@ -67,7 +67,7 @@ const useRequestWrapperStore = defineStore('request', {
       attemptCounts: number,
     ): Promise<IRetryResult<T>> {
       const { api } = useApi()
-      let error: IApiError = {} as IApiError
+      let error: IApiError | null = {} as IApiError
 
       for (let i = 0; i < attemptCounts; i++) {
         try {
@@ -76,9 +76,14 @@ const useRequestWrapperStore = defineStore('request', {
           return { result, error: null }
         }
         catch (e: any) {
-          error = {
-            status: e.status,
-            ...e.response._data ?? e,
+          if (e?.response) {
+            error = null
+          }
+          else {
+            error = {
+              status: e.status,
+              ...e?.response?._data ?? e,
+            }
           }
 
           console.error('[REQUEST ERROR] - ', e)
