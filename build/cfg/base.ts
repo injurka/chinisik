@@ -96,6 +96,8 @@ export const baseCfg: NuxtConfig = {
         'material-symbols:stack-hexagon-outline',
         'material-symbols:lab-research-outline',
         'mdi:face-man-profile',
+        'mdi:arrow-right',
+        'mdi:arrow-left',
       ],
     },
     serverBundle: {

@@ -31,7 +31,7 @@ function useChangeTheme() {
   }
 
   return {
-    theme: theme.value,
+    theme,
     getHeadThemeColor,
     setTheme,
   }
