@@ -12,7 +12,7 @@ const { setTheme, theme } = useChangeTheme()
 
 // Controllers
 const controlledTheme = computed({
-  get: () => theme,
+  get: () => theme.value,
   set: (value: ThemesVariant) => setTheme(value),
 })
 
@@ -206,6 +206,9 @@ const previewProps = computed(() => ({
       opacity 0.3s ease,
       transform 0.3s ease;
 
+    @include mobile() {
+      display: none;
+    }
     &.show-preview {
       opacity: 1;
       transform: translateY(0);
@@ -236,6 +239,7 @@ const previewProps = computed(() => ({
     }
     &-item {
       flex-grow: 1;
+      flex-wrap: wrap;
       font-size: 0.9rem;
       letter-spacing: 0;
       font-weight: 400;
@@ -243,6 +247,9 @@ const previewProps = computed(() => ({
       color: var(--fg-primary-color);
       text-transform: none;
 
+      .v-btn {
+        min-width: 40px;
+      }
       &.colorfull {
         background: linear-gradient(
           to right,
@@ -265,6 +272,10 @@ const previewProps = computed(() => ({
       color: var(--fg-secondary-color);
       font-size: 1rem;
       margin: 2px;
+
+      @include mobile() {
+        font-size: 0.9rem;
+      }
     }
     &-list {
       display: flex;

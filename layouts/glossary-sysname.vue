@@ -2,7 +2,7 @@
 import { PageLoader } from '~/components/shared/page-loader'
 import BaseLayout from './base.vue'
 
-type TabVariant = 'topic' | 'brief' | 'lab'
+export type TabVariant = 'topic' | 'brief' | 'lab'
 interface TabsOption {
   key: TabVariant
   icon: string
@@ -91,6 +91,7 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
   font-family: 'Rubik';
   max-width: 1200px;
   margin: 0 auto;
+  height: calc(100% - #{$header-height});
 
   @include mobile() {
     padding: 0px;

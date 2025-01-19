@@ -75,12 +75,13 @@ function getTone(index: number) {
     display: flex;
     justify-content: center;
     position: absolute;
-    top: 3px;
-    line-height: 0;
+    top: 0;
+    left: 1px;
+    line-height: 100%;
     width: 100%;
     font-weight: 600;
     font-family: var(--font-family-cn);
-    font-size: 0.65em;
+    font-size: 1rem;
   }
 }
 </style>

@@ -77,7 +77,7 @@ function resetExamples() {
       @after-leave="resetExamples"
     >
       <div ref="dialogEl" class="dialog-wrapper">
-        <p class="header">
+        <p class="title">
           Вариации и звучание слога
           <PinyinText
             :pinyin="pinyinData.value"
@@ -190,7 +190,7 @@ function resetExamples() {
     width: 100%;
     padding: 32px;
 
-    .header {
+    .title {
       z-index: 10;
       display: inline-flex;
       align-items: center;
@@ -203,6 +203,8 @@ function resetExamples() {
       color: var(--fg-secondary-color);
       font-weight: 500;
       background: transparent;
+      border-bottom: 2px solid var(--border-button-secondary-color);
+      padding-bottom: 12px;
 
       @include mobile {
         font-size: 0.9rem;
