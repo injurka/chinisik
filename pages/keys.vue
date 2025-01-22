@@ -45,7 +45,11 @@ definePageMeta({
       :node="description!"
     />
 
+    <hr>
+
     <KeyHieroglyphControl />
+
+    <hr>
 
     <div class="list">
       <KeyHieroglyph

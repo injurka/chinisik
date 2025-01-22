@@ -30,10 +30,10 @@ const pinyinData = computed(() => {
   }
 })
 
-const pinyinHieroglyphsExample = ref<PinyinHieroglyphs | null>(null)
-const isLoadingPinyinHieroglyph = computed(() => useRequestStatus([RequestKeys.PINIYIN_HIEROGLYPH]))
-const isExampleHidden = computed<boolean>(() => !!pinyinHieroglyphsExample.value || isLoadingPinyinHieroglyph.value)
-const apiErrorPinyinHieroglyph = computed(() => useRequestError(RequestKeys.PINIYIN_HIEROGLYPH))
+const example = ref<PinyinHieroglyphs | null>(null)
+const isLoadingExample = computed(() => useRequestStatus([RequestKeys.PINIYIN_HIEROGLYPH]))
+const isExampleHidden = computed<boolean>(() => !!example.value || isLoadingExample.value)
+const apiErrorExample = computed(() => useRequestError(RequestKeys.PINIYIN_HIEROGLYPH))
 
 function playPinyin(value: string, tone: ToneType) {
   const track = `/chinese-pinyin-sound/${value}${tone}.mp3`
@@ -46,7 +46,7 @@ function playPinyin(value: string, tone: ToneType) {
   audio.value.play()
 }
 
-function generatePinyinHieroglyph() {
+function generateExample() {
   useRequest({
     key: RequestKeys.PINIYIN_HIEROGLYPH,
     fn: ({ api }) => api.llvm.v1.pinyinHieroglyphs({
@@ -54,16 +54,16 @@ function generatePinyinHieroglyph() {
       tones: props.initialWithFinal[props.pinyin] as ToneType[],
       count: 2,
     }, abortController.value),
-    onSuccess: ({ data }) => pinyinHieroglyphsExample.value = data,
+    onSuccess: ({ data }) => example.value = data,
   })
 }
 
 function handleRefreshExample() {
-  generatePinyinHieroglyph()
+  generateExample()
 }
 
 function resetExamples() {
-  pinyinHieroglyphsExample.value = null
+  example.value = null
   abortController.value.abort()
   abortController.value = new AbortController()
 }
@@ -115,14 +115,14 @@ function resetExamples() {
               class="example-btn"
               rounded
               variant="tonal"
-              @click="generatePinyinHieroglyph"
+              @click="generateExample"
             >
               Сгенерировать примеры иероглифов
             </VBtn>
 
-            <PageLoader v-else-if="isLoadingPinyinHieroglyph" />
+            <PageLoader v-else-if="isLoadingExample" />
 
-            <div v-else-if="!!pinyinHieroglyphsExample" class="example-content">
+            <div v-else-if="!!example" class="example-content">
               <div class="example-content-control">
                 <hr class="divider">
                 <VBtn
@@ -137,7 +137,7 @@ function resetExamples() {
               </div>
               <div class="example-content-list">
                 <div
-                  v-for="item in pinyinHieroglyphsExample?.examples"
+                  v-for="item in example?.examples"
                   :key="item.tone"
                   class="example-content-item"
                 >
@@ -160,12 +160,12 @@ function resetExamples() {
             </div>
           </Transition>
           <VSnackbar
-            :model-value="!!apiErrorPinyinHieroglyph"
+            :model-value="!!apiErrorExample"
             :timeout="2000"
             color="red"
           >
             <div>
-              {{ apiErrorPinyinHieroglyph?.message }}
+              {{ apiErrorExample?.message }}
             </div>
           </VSnackbar>
         </div>
