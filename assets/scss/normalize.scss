@@ -63,6 +63,19 @@ p {
   background: var(--bg-accent-overlay-color);
 }
 
+.v-navigation-drawer__scrim {
+  position: fixed !important;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .smooth-appear {
   &-enter-active {
     transition: opacity 0.3s ease;
@@ -76,4 +89,10 @@ p {
   &-leave-to {
     opacity: 0;
   }
+}
+
+hr {
+  margin: 16px 0;
+  width: 100%;
+  border: 1px solid var(--border-secondary-color);
 }

@@ -2,18 +2,59 @@
 import { HaoticLines } from '~/components/domain/haotic-lines'
 import SettingsControl from './dialog/settings-control.vue'
 
+interface NavItem {
+  name: string
+  routeName: string
+  routePath: string
+}
+
+const navItems: NavItem[] = [
+  { name: 'Ключи', routeName: RouteNames.Keys, routePath: RoutePaths.Keys },
+  { name: 'Пиньин', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
+  { name: 'Разбор иероглифов', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
+  { name: 'Глоссарий', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
+]
+
+const sentinelEl = ref<HTMLElement>()
 const headerEl = ref<HTMLElement>()
 const isDialogSettings = ref<boolean>(false)
 const isDrawer = defineModel<boolean>('drawer', { required: true })
+const isSticky = ref<boolean>(false)
 const store = useStore(['auth'])
 
 function handleProfile() {
   navigateTo(RoutePaths.Auth.SignIn)
 }
+
+onMounted(() => {
+  if (sentinelEl.value) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isSticky.value = entry.isIntersecting
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0,
+      },
+    )
+
+    observer.observe(sentinelEl.value)
+
+    onBeforeUnmount(() => {
+      observer.disconnect()
+    })
+  }
+})
 </script>
 
 <template>
-  <header ref="headerEl" class="header">
+  <div ref="sentinelEl" class="sentinel" />
+  <header
+    ref="headerEl"
+    class="header"
+    :class="{ blurred: !isSticky }"
+  >
     <ClientOnly>
       <HaoticLines :viewport-el="headerEl" />
     </ClientOnly>
@@ -31,32 +72,13 @@ function handleProfile() {
           <nav>
             <ul>
               <li
+                v-for="item in navItems"
+                :key="item.routeName"
                 class="link"
-                :class="{ actived: $route.name === RouteNames.Keys }"
-                @click="navigateTo(RoutePaths.Keys)"
+                :class="{ actived: $route.name === item.routeName }"
+                @click="navigateTo(item.routePath)"
               >
-                Ключи
-              </li>
-              <li
-                class="link"
-                :class="{ actived: $route.name === RouteNames.Pinyin }"
-                @click="navigateTo(RoutePaths.Pinyin)"
-              >
-                Пиньин
-              </li>
-              <li
-                class="link"
-                :class="{ actived: $route.name === RouteNames.SplitGlyphs }"
-                @click="navigateTo(RoutePaths.SplitGlyphs)"
-              >
-                Разбор иероглифов
-              </li>
-              <li
-                class="link"
-                :class="{ actived: $route.name === RouteNames.Glossary }"
-                @click="navigateTo(RoutePaths.Glossary)"
-              >
-                Глоссарий
+                {{ item.name }}
               </li>
             </ul>
           </nav>
@@ -103,16 +125,34 @@ function handleProfile() {
 </template>
 
 <style lang="scss">
+.sentinel {
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 100%;
+}
+
 .header {
-  position: relative;
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   flex-direction: row;
   border-bottom: 1px solid var(--border-primary-color);
   height: #{$header-height};
-  background-color: var(--bg-secondary-color);
+  background-color: rgb(var(--bg-header-color));
   width: 100%;
   overflow: hidden;
+  z-index: 100;
+  transition:
+    background-color 0.3s ease,
+    backdrop-filter 0.3s ease;
+
+  &.blurred {
+    background-color: rgba(var(--bg-header-color), 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 
   &-content {
     max-width: 1200px;

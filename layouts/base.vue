@@ -6,10 +6,11 @@ const isDrawer = ref<boolean>(false)
 </script>
 
 <template>
+  <!-- eslint-disable vue/no-multiple-template-root -->
+  <Header v-model:drawer="isDrawer" />
   <VLayout>
     <HeaderDrawer v-model="isDrawer" />
     <VMain>
-      <Header v-model:drawer="isDrawer" />
       <slot />
     </VMain>
   </VLayout>

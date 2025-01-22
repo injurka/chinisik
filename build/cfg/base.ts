@@ -98,6 +98,7 @@ export const baseCfg: NuxtConfig = {
         'mdi:face-man-profile',
         'mdi:arrow-right',
         'mdi:arrow-left',
+        'mdi:menu',
       ],
     },
     serverBundle: {

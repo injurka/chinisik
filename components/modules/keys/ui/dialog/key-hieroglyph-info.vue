@@ -3,11 +3,16 @@ import { HaoticLines } from '~/components/domain/haotic-lines'
 import { IframeViewer } from '~/components/domain/iframe-viewer'
 import { PinyinText } from '~/components/domain/pinyin-text'
 import { DialogWithClose } from '~/components/shared/dialog-with-close'
+import { PageLoader } from '~/components/shared/page-loader'
 
 interface Props {
   hieroglyph?: HieroglyphKey
 }
 const props = defineProps<Props>()
+
+enum RequestKeys {
+  KEY_HIEROGLYPH = 'key_key-hieroglyphs',
+}
 
 const isWikiViewing = ref<boolean>(false)
 
@@ -21,6 +26,28 @@ const data = computed(() => ({
 const dialog = defineModel<boolean>({ required: true })
 const hieroglyphEl = ref<HTMLElement>()
 
+// Example
+const example = ref<PinyinHieroglyphs | null>(null)
+const isLoadingExample = computed(() => useRequestStatus([RequestKeys.KEY_HIEROGLYPH]))
+const isExampleHidden = computed<boolean>(() => !!example.value || isLoadingExample.value)
+const apiErrorExample = computed(() => useRequestError(RequestKeys.KEY_HIEROGLYPH))
+const abortController = ref<AbortController>(new AbortController())
+
+function generateExample() {
+//  TODO
+}
+
+// eslint-disable-next-line unused-imports/no-unused-vars
+function handleRefreshExample() {
+  generateExample()
+}
+
+function resetExamples() {
+  example.value = null
+  abortController.value.abort()
+  abortController.value = new AbortController()
+}
+
 function onOpenWiki() {
   isWikiViewing.value = !isWikiViewing.value
 }
@@ -31,6 +58,7 @@ function onOpenWiki() {
     <DialogWithClose
       v-model="dialog"
       class="dialog"
+      @after-leave="resetExamples"
     >
       <VCard class="dialog-content">
         <div ref="hieroglyphEl" class="hieroglyph-container">
@@ -74,7 +102,27 @@ function onOpenWiki() {
           </div>
         </div>
         <p class="info">
-          {{ data.info }}
+          <VBtn
+            v-if="!isExampleHidden"
+            class="example-btn"
+            rounded
+            variant="tonal"
+            @click="generateExample"
+          >
+            Сгенерировать примеры иероглифов
+          </VBtn>
+
+          <PageLoader v-else-if="isLoadingExample" />
+
+          <VSnackbar
+            :model-value="!!apiErrorExample"
+            :timeout="2000"
+            color="red"
+          >
+            <div>
+              {{ apiErrorExample?.message }}
+            </div>
+          </VSnackbar>
         </p>
         <p class="description">
           {{ data.description }}
@@ -215,6 +263,34 @@ function onOpenWiki() {
         top: 50%;
         z-index: 3;
       }
+    }
+  }
+}
+
+.example {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+
+  .loader {
+    font-size: 36px;
+  }
+
+  &-btn {
+    z-index: 10;
+    text-transform: none;
+    text-decoration: none;
+    letter-spacing: 1px;
+    color: var(--fg-action-color);
+    width: auto;
+    margin: 0 auto;
+    padding: 0 32px;
+    font-size: 0.8rem;
+
+    @include mobile {
+      font-size: 0.75rem;
     }
   }
 }

@@ -1,5 +1,18 @@
 <script lang="ts" setup>
 const isDrawer = defineModel<boolean>({ required: true })
+
+interface NavItem {
+  name: string
+  routeName: string
+  routePath: string
+}
+
+const navItems: NavItem[] = [
+  { name: 'Ключи', routeName: RouteNames.Keys, routePath: RoutePaths.Keys },
+  { name: 'Пиньин', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
+  { name: 'Разбор иероглифов', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
+  { name: 'Глоссарий', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
+]
 </script>
 
 <template>
@@ -12,32 +25,13 @@ const isDrawer = defineModel<boolean>({ required: true })
   >
     <ul>
       <li
+        v-for="item in navItems"
+        :key="item.routeName"
         class="link"
-        :class="{ actived: $route.name === RouteNames.Keys }"
-        @click="navigateTo(RoutePaths.Keys)"
+        :class="{ actived: $route.name === item.routeName }"
+        @click="navigateTo(item.routePath)"
       >
-        Ключи
-      </li>
-      <li
-        class="link"
-        :class="{ actived: $route.name === RouteNames.Pinyin }"
-        @click="navigateTo(RoutePaths.Pinyin)"
-      >
-        Пиньин
-      </li>
-      <li
-        class="link"
-        :class="{ actived: $route.name === RouteNames.SplitGlyphs }"
-        @click="navigateTo(RoutePaths.SplitGlyphs)"
-      >
-        Разбор иероглифов
-      </li>
-      <li
-        class="link"
-        :class="{ actived: $route.name === RouteNames.Glossary }"
-        @click="navigateTo(RoutePaths.Glossary)"
-      >
-        Глоссарий
+        {{ item.name }}
       </li>
     </ul>
   </VNavigationDrawer>
