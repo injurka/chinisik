@@ -1,3 +1,4 @@
+export * from './auth'
 export * from './hiroglyph-key'
 export * from './llvm'
 export * from './pinyin'

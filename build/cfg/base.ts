@@ -6,9 +6,9 @@ export const baseCfg: NuxtConfig = {
   },
 
   routeRules: {
-    '/keys': { swr: true },
-    '/pinyin': { swr: true },
-    '/split-glyphs': { swr: true },
+    '/keys': { isr: true },
+    '/pinyin': { isr: true },
+    '/split-glyphs': { isr: true },
   },
 
   devServer: {

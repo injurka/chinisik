@@ -17,6 +17,8 @@ useHead({
   ],
 })
 
+await useAsyncData('initialize', initializeApp, { server: true, dedupe: 'cancel' })
+
 onMounted(() => {
   if ($pwa?.offlineReady) {
     // eslint-disable-next-line no-console

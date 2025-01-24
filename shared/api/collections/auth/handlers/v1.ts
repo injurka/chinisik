@@ -9,6 +9,12 @@ function method(instance: Instance) {
         body: payload,
       })
     },
+
+    me() {
+      return instance<DTO.IAuthUserR>(`/v1/auth/me`, {
+        method: 'GET',
+      })
+    },
   }
 }
 
