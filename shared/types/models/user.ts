@@ -2,6 +2,9 @@ interface User {
   id: number
   email: string
   name?: string
+  avatarUrl?: string
+  githubId: string
+  googleId: string
   createdAt: Date
   updatedAt: Date
 }

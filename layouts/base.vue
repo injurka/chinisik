@@ -1,15 +1,27 @@
 <script lang="ts" setup>
 import { Header } from '~/components/shared/header'
-import { HeaderDrawer } from '~/components/shared/header-drawer'
+import { HeaderMenuDrawer } from '~/components/shared/header-menu-drawer'
+import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
 
-const isDrawer = ref<boolean>(false)
+const isMenuDrawer = ref<boolean>(false)
+const isProfileDrawer = ref<boolean>(false)
 </script>
 
 <template>
   <!-- eslint-disable vue/no-multiple-template-root -->
-  <Header v-model:drawer="isDrawer" />
+  <Header
+    v-model:menu-drawer="isMenuDrawer"
+    v-model:profile-drawer="isProfileDrawer"
+  />
   <VLayout>
-    <HeaderDrawer v-model="isDrawer" />
+    <HeaderMenuDrawer
+      v-if="$vuetify.display.mobile"
+      v-model="isMenuDrawer"
+    />
+    <HeaderProfileDrawer
+      v-model="isProfileDrawer"
+    />
+
     <VMain>
       <slot />
     </VMain>

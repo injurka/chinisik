@@ -50,14 +50,16 @@ const useAuthStore = defineStore('auth', {
       })
     },
 
-    // TODO
-    // async signOut() {
-    //   await useRequest({
-    //     key: RequestKeys.SIGN_OUT,
-    //     fn: ({ api }) => api.auth.v1.signOut(),
-    //     onSuccess: () => this.clearAuth(),
-    //   })
-    // },
+    async signOut() {
+      await useRequest({
+        key: RequestKeys.SIGN_OUT,
+        fn: () => {
+          // TODO
+          // api.auth.v1.signOut()
+        },
+        onSuccess: () => this.clearAuth(),
+      })
+    },
 
     saveToken(token: string) {
       useCookie(TOKEN_KEY, {

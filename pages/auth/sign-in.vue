@@ -80,15 +80,11 @@ async function handleOAuth(provider: OAuthProviders) {
 
   switch (provider) {
     case OAuthProviders.GitHub:
-      await navigateTo({
-        path: cleanDoubleSlashes(`${apiBaseUrl}/v1/auth/github`),
-      }, {
-        external: true,
-      })
+      await navigateTo({ path: cleanDoubleSlashes(`${apiBaseUrl}/v1/auth/github`) }, { external: true })
       break
 
     case OAuthProviders.Google:
-      console.error('Not Implemented')
+      await navigateTo({ path: cleanDoubleSlashes(`${apiBaseUrl}/v1/auth/google`) }, { external: true })
       break
   }
 }
