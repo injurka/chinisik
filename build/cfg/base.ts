@@ -5,11 +5,11 @@ export const baseCfg: NuxtConfig = {
     //
   },
 
-  routeRules: {
-    '/keys': { isr: true },
-    '/pinyin': { isr: true },
-    '/split-glyphs': { isr: true },
-  },
+  // routeRules: {
+  //   '/keys': { isr: true },
+  //   '/pinyin': { isr: true },
+  //   '/split-glyphs': { isr: true },
+  // },
 
   devServer: {
     port: 5173,
