@@ -86,7 +86,8 @@ const useRequestWrapperStore = defineStore('request', {
             }
           }
 
-          console.error('[REQUEST ERROR] - ', e)
+          if (!(import.meta.server && import.meta.env.NODE_ENV === 'production'))
+            console.error('[REQUEST ERROR] - ', e)
         }
       }
 

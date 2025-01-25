@@ -1,4 +1,5 @@
 export * from './change-font-cn'
 export * from './change-theme'
 export * from './combine-stores'
+export * from './initialize-app'
 export * from './render'

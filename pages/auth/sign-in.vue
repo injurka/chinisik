@@ -1,9 +1,15 @@
 <script setup lang="ts">
+// @ts-expect-error svg dts
 import LogoSVG from '~/assets/svg/logo.svg?raw'
 
-const SignInKey = 'sign-in'
+import { OAuthErrors, OAuthProviders } from '~/shared/types/models'
+
+enum RequestKeys {
+  SIGN_IN = 'auth_sign-in',
+}
 
 const store = useStore(['auth'])
+const route = useRoute()
 
 const email = ref<string>('')
 const password = ref<string>('')
@@ -26,7 +32,7 @@ const passwordRules = [
   (v: string) => v.length >= 8 || 'Пароль должен быть не менее 8 символов',
 ]
 
-const isLoading = computed(() => useRequestStatus([SignInKey]))
+const isLoading = computed(() => useRequestStatus([RequestKeys.SIGN_IN]))
 
 async function submit() {
   formHasErrors.value = false
@@ -40,7 +46,7 @@ async function submit() {
   }
 
   await useRequest({
-    key: SignInKey,
+    key: RequestKeys.SIGN_IN,
     fn: async ({ api }) => {
       await new Promise(r => setTimeout(r, 1_000))
 
@@ -68,6 +74,46 @@ function customizeSvgColors(content: string) {
     .replaceAll('#bbcef8', 'var(--fg-accent-color)')
     .replaceAll('#424c86', 'var(--border-accent-color)')
 }
+
+async function handleOAuth(provider: OAuthProviders) {
+  const { apiBaseUrl } = useRuntimeConfig().public
+
+  switch (provider) {
+    case OAuthProviders.GitHub:
+      await navigateTo({ path: cleanDoubleSlashes(`${apiBaseUrl}/v1/auth/github`) }, { external: true })
+      break
+
+    case OAuthProviders.Google:
+      await navigateTo({ path: cleanDoubleSlashes(`${apiBaseUrl}/v1/auth/google`) }, { external: true })
+      break
+  }
+}
+
+onMounted(() => {
+  const oauthError = route.query.oa_error as OAuthErrors
+
+  if (oauthError) {
+    let msg = ''
+
+    switch (oauthError) {
+      case OAuthErrors.MissingToken:
+        msg = 'Ошибка при OAuth авторизации'
+        break
+
+      case OAuthErrors.MeError:
+        msg = 'Не удалось получить данные пользователя'
+        break
+    }
+
+    snackbarError.value = {
+      showed: true,
+      msg,
+    }
+
+    // Очиска query параметров
+    navigateTo({ query: {} })
+  }
+})
 </script>
 
 <template>
@@ -160,6 +206,7 @@ function customizeSvgColors(content: string) {
             variant="outlined"
             color="primary"
             height="52"
+            @click="handleOAuth(OAuthProviders.Google)"
           >
             <v-icon size="25">
               mdi-google
@@ -169,6 +216,7 @@ function customizeSvgColors(content: string) {
             variant="outlined"
             color="primary"
             height="52"
+            @click="handleOAuth(OAuthProviders.GitHub)"
           >
             <v-icon size="25">
               mdi-github

@@ -1,8 +1,8 @@
 export default defineNuxtPlugin(async () => {
   const apiInterceptops = [{
     onRequest: ({ options }) => {
-      const token = useCookie(TOKEN_KEY)
-      const accessToken = `Bearer ${token.value}`
+      const store = useStore('auth')
+      const accessToken = `Bearer ${store.token}`
       const headers = options.headers ||= {} as Headers
 
       if (Array.isArray(headers)) {

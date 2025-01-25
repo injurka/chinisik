@@ -15,15 +15,21 @@ const navItems: NavItem[] = [
   { name: 'Глоссарий', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
 ]
 
+const store = useStore(['auth'])
+
 const sentinelEl = ref<HTMLElement>()
 const headerEl = ref<HTMLElement>()
 const isDialogSettings = ref<boolean>(false)
-const isDrawer = defineModel<boolean>('drawer', { required: true })
 const isSticky = ref<boolean>(false)
-const store = useStore(['auth'])
+
+const isMenuDrawer = defineModel<boolean>('menuDrawer', { required: true })
+const isProfileDrawer = defineModel<boolean>('profileDrawer', { required: true })
 
 function handleProfile() {
-  navigateTo(RoutePaths.Auth.SignIn)
+  if (!store.auth.user)
+    navigateTo(RoutePaths.Auth.SignIn)
+  else
+    isProfileDrawer.value = !isProfileDrawer.value
 }
 
 onMounted(() => {
@@ -87,7 +93,7 @@ onMounted(() => {
           <VBtn
             icon="mdi-menu"
             variant="text"
-            @click="isDrawer = !isDrawer"
+            @click="isMenuDrawer = !isMenuDrawer"
           />
         </template>
       </div>
@@ -97,7 +103,7 @@ onMounted(() => {
           class="utils-settings-btn"
           @click="isDialogSettings = !isDialogSettings"
         >
-          <Icon name="line-md:cog-loop" size="24" />
+          <Icon name="material-symbols:settings-suggest-outline" size="24" />
         </button>
         <SettingsControl v-model="isDialogSettings" />
 

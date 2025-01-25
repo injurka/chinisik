@@ -10,6 +10,7 @@ export type UseRequestStatus = (keys: string[], status?: ApiStatus) => boolean
 
 // Типизация для useRequestError - проверка упал ли запрос с ошибкой
 export type UseRequestError = (key: string) => IApiError | null
+export type UseRequestErrors = (key: string[]) => IApiError | null
 
 // Типизация для useApi
 export type UseApiInitParams = Partial<CreateApiParams>

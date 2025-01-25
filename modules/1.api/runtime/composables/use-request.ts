@@ -1,4 +1,9 @@
-import type { UseRequest, UseRequestError, UseRequestStatus } from '../../types'
+import type {
+  UseRequest,
+  UseRequestError,
+  UseRequestErrors,
+  UseRequestStatus,
+} from '../../types'
 import { useRequestWrapperStore } from '../store/request-wrapper.store'
 
 const useRequest: UseRequest = (payload) => {
@@ -13,8 +18,13 @@ const useRequestError: UseRequestError = (key) => {
   return useRequestWrapperStore().getError(key)
 }
 
+const useRequestErrors: UseRequestErrors = (key) => {
+  return useRequestWrapperStore().getAnyError(key)
+}
+
 export {
   useRequest,
   useRequestError,
+  useRequestErrors,
   useRequestStatus,
 }
