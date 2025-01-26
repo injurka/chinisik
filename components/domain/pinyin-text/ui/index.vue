@@ -76,7 +76,7 @@ function getTone(index: number) {
     justify-content: center;
     position: absolute;
     top: 0;
-    left: 1px;
+    left: 0;
     line-height: 100%;
     width: 100%;
     font-weight: 600;

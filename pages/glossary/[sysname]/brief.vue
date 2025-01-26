@@ -17,7 +17,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="content">
+  <div class="content-section">
     <JsonToDom
       :node="textMock.brief!"
     />
@@ -29,8 +29,10 @@ definePageMeta({
         variant="tonal"
         @click="handleNavigateTab('topic')"
       >
+        <template #prepend>
+          <Icon name="mdi:arrow-left" />
+        </template>
         Перейти к полной статье
-        <Icon name="mdi:arrow-left" />
       </VBtn>
       <VBtn
         class="navigate-panel-btn"
@@ -39,14 +41,16 @@ definePageMeta({
         @click="handleNavigateTab('lab')"
       >
         Перейти к проверке знаний
-        <Icon name="mdi:arrow-right" />
+        <template #append>
+          <Icon name="mdi:arrow-right" />
+        </template>
       </VBtn>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.content {
+.content-section {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -73,6 +77,15 @@ definePageMeta({
     border-top: 2px dashed var(--border-button-secondary-color);
     gap: 8px;
 
+    @include mobile() {
+      font-size: 0.9rem;
+      padding-left: 8px;
+      padding-right: 8px;
+
+      &:deep(.v-btn) {
+        width: 100%;
+      }
+    }
     &-btn {
       background-color: var(--bg-accent-color);
       text-transform: none;
