@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// @ts-expect-error svg dts
 import LogoSVG from '~/assets/svg/logo.svg?raw'
 
+import { HaoticLines } from '~/components/domain/haotic-lines'
 import { OAuthErrors, OAuthProviders } from '~/shared/types/models'
 
 enum RequestKeys {
@@ -14,6 +14,7 @@ const route = useRoute()
 const email = ref<string>('')
 const password = ref<string>('')
 const terms = ref<boolean>(false)
+const contentEl = ref<HTMLElement>()
 
 const formHasErrors = ref<boolean>(false)
 const isPasswordShowed = ref<boolean>(false)
@@ -56,7 +57,7 @@ async function submit() {
       })
     },
     onSuccess: async ({ data: { user, token } }) => {
-      store.auth.$patch({ user, token })
+      store.auth.$patch({ user })
       useCookie(TOKEN_KEY, { sameSite: 'lax' }).value = token
       await navigateTo(RoutePaths.Keys)
     },
@@ -117,7 +118,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="content">
+  <section ref="contentEl" class="content">
     <div class="card">
       <v-progress-linear
         v-if="isLoading"
@@ -225,6 +226,34 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    <ClientOnly>
+      <HaoticLines
+        class="haotic-lines"
+        :speed="3"
+        :weight-stroke="180"
+        :points-counts="15"
+        :cap="true"
+        :viewport-el="contentEl"
+        color="--bg-overlay-primary-color"
+      />
+      <HaoticLines
+        class="haotic-lines"
+        :speed="3"
+        :weight-stroke="240"
+        :points-counts="15"
+        :cap="true"
+        :viewport-el="contentEl"
+      />
+      <HaoticLines
+        class="haotic-lines"
+        :speed="3"
+        :weight-stroke="220"
+        :points-counts="15"
+        :cap="true"
+        :viewport-el="contentEl"
+        color="--bg-overlay-primary-color"
+      />
+    </ClientOnly>
 
     <v-snackbar
       v-model="snackbarError.showed"
@@ -240,6 +269,9 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.haotic-lines {
+  opacity: 0.1;
+}
 .linear-right {
   right: calc(260px - (660px - 520px) / 2);
 }
@@ -269,7 +301,8 @@ onMounted(() => {
   z-index: 10;
   width: 520px;
   margin: 16px;
-
+  background-color: rgba(var(--bg-header-color), 0.2);
+  backdrop-filter: blur(8px);
   font-family: 'Rubik';
   text-decoration: none;
   text-transform: none;

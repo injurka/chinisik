@@ -278,7 +278,7 @@ function resetExamples() {
 
           .divider {
             width: 100%;
-            border: 1px solid var(--border-secondary-color);
+            border: 1px dashed var(--border-secondary-color);
           }
           .icon {
             display: flex;

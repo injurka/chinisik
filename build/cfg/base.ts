@@ -106,6 +106,9 @@ export const baseCfg: NuxtConfig = {
         'mdi:arrow-right',
         'mdi:arrow-left',
         'mdi:menu',
+        'line-md:sunny-outline-twotone',
+        'line-md:moon-alt-loop',
+        'line-md:cloud-twotone',
       ],
     },
     serverBundle: {

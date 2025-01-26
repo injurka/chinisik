@@ -24,6 +24,10 @@ const navItems: NavItem[] = [
     class="drawer"
     temporary
   >
+    <div class="title">
+      Разделы
+    </div>
+    <hr>
     <ul class="nav-list">
       <li
         v-for="item in navItems"
@@ -45,6 +49,13 @@ const navItems: NavItem[] = [
   &:deep(.v-navigation-drawer__content) {
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--border-primary-color);
+  }
+
+  .title {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-top: 16px;
+    color: var(--fg-secondary-color);
   }
 
   .nav-list {

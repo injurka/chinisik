@@ -167,6 +167,7 @@ watch(
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      line-height: normal;
     }
 
     &-pinyin {
@@ -199,13 +200,10 @@ watch(
 
     &-index {
       position: absolute;
-
       display: inline-flex;
       align-items: center;
       justify-content: center;
-
       font-size: 0.7rem;
-
       top: -4px;
       left: -4px;
       height: 26px;
@@ -227,13 +225,10 @@ watch(
 
     &-expand {
       position: absolute;
-
       display: inline-flex;
       align-items: center;
       justify-content: center;
-
       font-size: 0.7rem;
-
       bottom: -4px;
       right: -4px;
       height: 22px;
@@ -242,7 +237,6 @@ watch(
       border: 1px solid var(--border-secondary-color);
       border-radius: 20%;
       transition: all 0.2s ease-in-out;
-
       opacity: 0;
       color: var(--fg-secondary-color);
 

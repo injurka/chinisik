@@ -71,9 +71,7 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
           Модальные глаголы
         </h1>
 
-        <div class="option right">
-          <!--  -->
-        </div>
+        <div class="option right" />
       </div>
 
       <slot />
@@ -83,15 +81,12 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
 
 <style scoped lang="scss">
 .content {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  padding: 16px;
   font-family: 'Rubik';
   max-width: 1200px;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
-  height: calc(100% - #{$header-height});
+  height: 100%;
 
   @include mobile() {
     padding: 0px;
@@ -107,8 +102,7 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: 'LEFT_OPTION TITLE RIGHT_OPTION';
   border-bottom: 2px solid var(--border-primary-color);
-  margin: 24px auto 20px auto;
-  padding: 5px 0;
+  padding: 24px 5px 10px 5px;
 
   .title {
     grid-area: TITLE;
