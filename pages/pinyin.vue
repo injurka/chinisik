@@ -53,7 +53,6 @@ definePageMeta({
   justify-content: center;
   flex-direction: column;
   font-family: 'Rubik';
-
   width: 100%;
   padding: 16px;
 
@@ -66,6 +65,7 @@ definePageMeta({
     max-width: 1200px;
     padding: 0 14px;
     margin: 0 auto;
+    margin-bottom: 16px;
 
     @include mobile {
       font-size: 0.9rem;

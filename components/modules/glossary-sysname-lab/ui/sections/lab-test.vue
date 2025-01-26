@@ -287,6 +287,10 @@ function handleNextAnswer() {
       grid-template-columns: 1fr 2fr 1fr;
       grid-template-areas: 'LEFT_OPTION BTN RIGHT_OPTION';
 
+      @include mobile() {
+        grid-template-columns: 1fr 4fr 1fr;
+      }
+
       &-btn {
         grid-area: BTN;
         text-transform: none;
@@ -317,16 +321,6 @@ function handleNextAnswer() {
           display: flex;
           flex-direction: row-reverse;
         }
-      }
-
-      @include mobile() {
-        margin: 8px auto 20px auto;
-        padding: 0;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-          'LEFT_OPTION RIGHT_OPTION'
-          'BTN BTN';
       }
     }
 
