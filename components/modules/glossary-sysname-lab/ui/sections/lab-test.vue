@@ -161,12 +161,10 @@ function handleNextAnswer() {
 .lab-test {
   width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 
   &-content {
-    max-width: 800px;
     width: 100%;
     background-color: var(--bg-secondary-color);
     border: 1px solid var(--border-secondary-color);
@@ -176,6 +174,8 @@ function handleNextAnswer() {
       &-title {
         display: flex;
         font-size: 1.5rem;
+        align-items: center;
+        justify-content: center;
 
         @include mobile() {
           font-size: 1.1rem;

@@ -85,7 +85,7 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
 .content {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   padding: 16px;
   font-family: 'Rubik';

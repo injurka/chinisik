@@ -86,13 +86,21 @@ onMounted(() => {
   max-height: 1000px;
 
   :deep() {
+    .v-overlay__content {
+      max-height: 100%;
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
     .v-overlay__scrim {
       background-color: var(--bg-inverted-color);
       opacity: 0.5 !important;
     }
     .v-overlay__content {
-      max-height: 800px;
+      max-height: 1000px;
       height: 100%;
+      border-radius: 0 !important;
     }
   }
 
@@ -109,12 +117,8 @@ onMounted(() => {
     box-shadow: 0 0 5px var(--bg-overlay-primary-color);
     border: 1px solid var(--border-primary-color);
     color: var(--fg-primary-color);
-    border-radius: 24px !important;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     gap: 12px;
   }
 }

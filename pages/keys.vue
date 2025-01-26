@@ -75,7 +75,7 @@ definePageMeta({
   .description {
     font-size: 1rem;
     max-width: 1200px;
-    padding: 16px 6px;
+    padding: 0 6px;
     margin: 0 auto;
 
     @include mobile {
