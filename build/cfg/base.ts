@@ -80,6 +80,7 @@ export const baseCfg: NuxtConfig = {
         'material-symbols:slab-serif-outline',
         'mdi:fullscreen',
         'material-symbols:settings-suggest-outline',
+        'mdi-tune',
         'mdi:key',
         'mdi:translate',
         'mdi:text-box-search',

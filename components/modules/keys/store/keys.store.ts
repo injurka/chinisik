@@ -7,7 +7,6 @@ enum RequestKeys {
 
 export interface ControlHieroglyphKey {
   isPinyin: boolean
-  isPinyinColored: boolean
   isTranslate: boolean
   isTranscription: boolean
 }
@@ -29,7 +28,6 @@ export const useKeysStore = defineStore('keys', {
 
     control: {
       isPinyin: false,
-      isPinyinColored: Boolean(useCookie(PINYIN_COLORED).value || 'false'),
       isTranslate: false,
       isTranscription: false,
     },

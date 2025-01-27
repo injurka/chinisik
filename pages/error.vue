@@ -87,6 +87,7 @@ function onDrag(e: MouseEvent) {
   width: 8px;
   background: #e2e8f0;
   border-radius: 4px;
+  all: unset;
 }
 
 .scroll-thumb {

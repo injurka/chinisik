@@ -73,7 +73,6 @@ const contentEl = ref<HTMLElement>()
       border: 3px solid var(--border-accent-color);
       width: 100%;
       height: 100%;
-      border-radius: 16px;
       overflow: hidden;
       background-color: var(--bg-tertiary-color);
     }
