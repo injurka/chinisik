@@ -14,9 +14,6 @@ const controls: { key: keyof ControlHieroglyphKey, label: string }[] = [{
 }, {
   key: 'isTranscription',
   label: 'Транскрипция',
-}, {
-  key: 'isPinyinColored',
-  label: 'Цветной пиньин',
 }]
 </script>
 
@@ -39,12 +36,15 @@ const controls: { key: keyof ControlHieroglyphKey, label: string }[] = [{
 <style lang="scss" scoped>
 .controls {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
 
-  margin: 25px 0;
+  gap: 10px;
+  background-color: var(--bg-primary-color);
+  margin: 8px;
+  padding: 16px;
+  box-shadow: 0 0 5px var(--bg-overlay-primary-color);
+  border: 1px solid var(--border-primary-color);
+  border-radius: 16px;
 
   &-item {
     position: relative;
