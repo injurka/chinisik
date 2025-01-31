@@ -122,7 +122,7 @@ watch(
         </div>
 
         <!-- KEYS -->
-        <!-- <template v-if="item.type === 'hieroglyph'">
+        <template v-if="item.type === 'hieroglyph'">
           <template v-for="key in item.components" :key="key">
             <div
               class="divider"
@@ -161,7 +161,7 @@ watch(
               </template>
             </div>
           </template>
-        </template> -->
+        </template>
       </TransitionGroup>
     </div>
   </div>

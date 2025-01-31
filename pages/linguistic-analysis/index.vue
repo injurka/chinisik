@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { JsonToDom } from '~/components/domain/json-to-dom'
 import { LinguisticAnalysis } from '~/components/modules/linguistic-analysis'
 
 definePageMeta({
