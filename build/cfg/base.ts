@@ -84,6 +84,7 @@ export const baseCfg: NuxtConfig = {
         'mdi:key',
         'mdi:translate',
         'mdi:text-box-search',
+        'mdi:layers-search-outline',
         'mdi:book-alphabet',
         'material-symbols:settings-outline',
         'material-symbols:frame-person-rounded',
@@ -110,6 +111,7 @@ export const baseCfg: NuxtConfig = {
         'line-md:sunny-outline-twotone',
         'line-md:moon-alt-loop',
         'line-md:cloud-twotone',
+        'mdi:github',
       ],
     },
     serverBundle: {

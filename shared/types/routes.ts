@@ -3,6 +3,9 @@ export enum RouteNames {
   Pinyin = 'pinyin',
   Glossary = 'glossary',
   SplitGlyphs = 'split-glyphs',
+  LinguisticAnalysis = 'linguistic-analysis',
+
+  About = 'about',
 
   AuthSignIn = 'auth-sign-in',
   AuthSignUp = 'auth-sign-up',
@@ -15,6 +18,9 @@ export const RoutePaths = {
   Glossary: '/glossary',
   GlossaryTopic: (value: string) => `/glossary/${value}/topic`,
   SplitGlyphs: '/split-glyphs',
+  LinguisticAnalysis: '/linguistic-analysis',
+
+  About: '/about',
 
   Auth: {
     SignIn: '/auth/sign-in',

@@ -11,8 +11,9 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: 'Ключи', icon: 'mdi:key', routeName: RouteNames.Keys, routePath: RoutePaths.Keys },
   { name: 'Пиньин', icon: 'mdi:translate', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
-  { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
+  { name: 'Разбор иероглифов (устарело)', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
+  { name: 'Лексический анализ', icon: 'mdi:layers-search-outline', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
 ]
 </script>
 
@@ -24,14 +25,15 @@ const navItems: NavItem[] = [
     class="drawer"
     temporary
   >
-    <div class="title">
+    <header class="title">
       Разделы
-    </div>
+    </header>
     <hr>
     <ul class="nav-list">
       <li
         v-for="item in navItems"
         :key="item.routeName"
+        v-ripple
         :class="{ actived: $route.name === item.routeName }"
         @click="navigateTo(item.routePath)"
       >
@@ -39,14 +41,26 @@ const navItems: NavItem[] = [
         <span>{{ item.name }} </span>
       </li>
     </ul>
+    <footer class="footer">
+      <button
+        v-ripple
+        class="about"
+        @click="navigateTo(RoutePaths.About)"
+      >
+        О сайте
+      </button>
+    </footer>
   </VNavigationDrawer>
 </template>
 
 <style lang="scss" scoped>
 .drawer {
   border-right: 1px solid var(--border-primary-color);
+  user-select: none;
 
   &:deep(.v-navigation-drawer__content) {
+    display: flex;
+    flex-direction: column;
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--border-primary-color);
   }
@@ -62,8 +76,9 @@ const navItems: NavItem[] = [
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
+    justify-content: flex-start;
+    flex-grow: 1;
+    gap: 2px;
     padding: 10px;
     margin: 0;
 
@@ -74,8 +89,8 @@ const navItems: NavItem[] = [
       list-style: none;
       text-decoration: none;
       width: 100%;
-      height: 32px;
-      line-height: 32px;
+      height: 38px;
+      line-height: 38px;
       padding: 0 8px;
       color: var(--fg-primary-color);
       cursor: pointer;
@@ -90,6 +105,27 @@ const navItems: NavItem[] = [
 
       &.actived {
         color: var(--fg-accent-color);
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+
+    .about {
+      color: var(--fg-secondary-color);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      padding: 16px 0;
+      width: 100%;
+
+      &:hover {
+        color: var(--fg-action-color);
+        background-color: var(--bg-tertiary-color);
+        box-shadow: 0px 0px 0px 1px var(--border-accent-color);
       }
     }
   }

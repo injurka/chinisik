@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { typeCopmonentMappingForControl, typeSplitMapping } from '../constant'
+import { typeCopmonentMappingForControl, typeSplitMapping } from '../../constant'
 
 const store = useStore(['splitGlyphs'])
 

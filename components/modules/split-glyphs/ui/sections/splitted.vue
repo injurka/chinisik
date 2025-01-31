@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
-import { ammountSpacing, typeCopmonentMapping } from '../constant'
-import { adapter } from '../lib'
+import { ammountSpacing, typeCopmonentMapping } from '../../constant'
+import { adapter } from '../../lib'
 
 const props = defineProps<{ glyphs: SplitedGlyphs }>()
 
