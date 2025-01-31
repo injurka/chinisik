@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
-import { ammountSpacing, typeCopmonentMapping } from '../constant'
-import { adapter } from '../lib'
+import { ammountSpacing, typeCopmonentMapping } from '../../constant'
+import { adapter } from '../../lib'
 
 const props = defineProps<{ glyphs: SplitedGlyphs }>()
 
@@ -122,7 +122,7 @@ watch(
         </div>
 
         <!-- KEYS -->
-        <template v-if="item.type === 'hieroglyph'">
+        <!-- <template v-if="item.type === 'hieroglyph'">
           <template v-for="key in item.components" :key="key">
             <div
               class="divider"
@@ -161,7 +161,7 @@ watch(
               </template>
             </div>
           </template>
-        </template>
+        </template> -->
       </TransitionGroup>
     </div>
   </div>

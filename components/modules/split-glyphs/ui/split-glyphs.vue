@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import { mockGlyphs } from '../constant'
-import Control from './control.vue'
-import Splitted from './splitted.vue'
+import Control from './sections/control.vue'
+import Splitted from './sections/splitted.vue'
 
 const store = useStore(['splitGlyphs'])
 
