@@ -12,8 +12,10 @@ const {
   analyze,
   control,
   isLoadingSubmit,
+  isAnalyzedText,
   errorSubmit,
-} = useLinguisticAnalysisContent({ isExampleEnable: isExample.value })
+
+} = useLinguisticAnalysisContent({ isExampleEnable: isExample })
 </script>
 
 <template>
@@ -25,7 +27,7 @@ const {
     />
     <ExampleBtn
       v-model="isExample"
-      :is-hidden="!!content || isLoadingSubmit"
+      :is-hidden="isAnalyzedText || isLoadingSubmit"
     />
 
     <PageLoader v-if="isLoadingSubmit" />
