@@ -2,6 +2,7 @@
 import { PageLoader } from '~/components/shared/page-loader'
 import { useLinguisticAnalysisContent } from '../composable'
 
+import AnalysisViewer from './sections/analysis-viewer.vue'
 import Control from './sections/control.vue'
 import ExampleBtn from './sections/example-btn.vue'
 
@@ -31,9 +32,7 @@ const {
     />
 
     <PageLoader v-if="isLoadingSubmit" />
-    <template v-else-if="!!content">
-      {{ JSON.stringify(content, null, ' '.repeat(2)) }}
-    </template>
+    <AnalysisViewer v-else-if="!!content" :content="content" />
 
     <VSnackbar
       :model-value="!!errorSubmit"

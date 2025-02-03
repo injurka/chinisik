@@ -4,7 +4,7 @@ import { LinguisticAnalysis } from '~/components/modules/linguistic-analysis'
 import { mockCms } from '~/server/utils/mock/cms/description'
 
 definePageMeta({
-  layout: 'base',
+  layout: 'base-with-effects',
   pageTransition: {
     name: 'fade',
     mode: 'out-in',
@@ -24,8 +24,10 @@ definePageMeta({
   padding: 16px;
   font-family: 'Rubik';
   max-width: 1200px;
+  min-height: 100%;
   margin: 0 auto;
   width: 100%;
+  background-color: var(--bg-primary-color);
 
   @include mobile {
     padding: 4px;

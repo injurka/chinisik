@@ -12,13 +12,13 @@ function getRandomChar() {
   )
 }
 
-const symbols = Array.from({ length: 40 }, () => ({ // Уменьшили количество символов для мобильных
+const symbols = Array.from({ length: 40 }, () => ({ 
   char: getRandomChar(),
   top: Math.random() * 100,
   left: Math.random() * 100,
   delay: Math.random() * 5,
   duration: 5 + Math.random() * 15,
-  size: 0.8 + Math.random() * 0.4, // Уменьшили размер символов
+  size: 0.8 + Math.random() * 0.4,
 }))
 </script>
 
