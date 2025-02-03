@@ -12,7 +12,13 @@ export interface PinyinHieroglyphsP {
   count: number
 }
 
+export interface AnalyzeTextP {
+  value: string
+  model: string
+}
+
 // Response //
 
 export type SplitGlyphsR = SplitedGlyphs
 export type PinyinHieroglyphsR = PinyinHieroglyphs
+export type AnalyzeTextR = unknown

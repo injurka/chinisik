@@ -18,6 +18,14 @@ function method(instance: Instance) {
       })
     },
 
+    analyzeText(payload: DTO.AnalyzeTextP, abortController?: AbortController) {
+      return instance<DTO.AnalyzeTextR>(`/v1/llvm/linguistic-analysis`, {
+        method: 'POST',
+        body: payload,
+        signal: abortController?.signal,
+      })
+    },
+
   }
 }
 
