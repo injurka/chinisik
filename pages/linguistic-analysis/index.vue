@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { JsonToDom } from '~/components/domain/json-to-dom'
 import { LinguisticAnalysis } from '~/components/modules/linguistic-analysis'
+import { mockCms } from '~/server/utils/mock/cms/description'
 
 definePageMeta({
   layout: 'base',
@@ -12,7 +14,7 @@ definePageMeta({
 
 <template>
   <section class="content">
-    <!-- <JsonToDom :node="mockCms.splitGlyphs!" /> -->
+    <JsonToDom :node="mockCms.linguisticAnalysis!" />
     <LinguisticAnalysis />
   </section>
 </template>
