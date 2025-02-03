@@ -5,7 +5,7 @@ enum RequestKeys {
 }
 
 interface Params {
-  isExampleEnable: boolean
+  isExampleEnable: Ref<boolean>
 }
 
 function useLinguisticAnalysisContent(params: Params) {
@@ -20,7 +20,7 @@ function useLinguisticAnalysisContent(params: Params) {
     if (analyzedText.value)
       return analyzedText.value
 
-    if (params.isExampleEnable && !analyzedText.value)
+    if (params.isExampleEnable.value && !analyzedText.value)
       return linguisticAnalysisMock
 
     return null
@@ -47,7 +47,14 @@ function useLinguisticAnalysisContent(params: Params) {
 
   onUnmounted(() => resetAbortController())
 
-  return { analyze, content, control, isLoadingSubmit, errorSubmit }
+  return {
+    analyze,
+    content,
+    control,
+    isLoadingSubmit,
+    isAnalyzedText: !!analyzedText.value,
+    errorSubmit,
+  }
 }
 
 export { useLinguisticAnalysisContent }
