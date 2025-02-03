@@ -11,14 +11,20 @@ defineProps<Props>()
     <div v-for="(sentence, sIndex) in content.sentences" :key="sIndex" class="sentence-card">
       <!-- Sentence Header -->
       <div class="sentence-header">
-        <h2 class="glyph">{{ sentence.glyph }}</h2>
+        <h2 class="glyph">
+          {{ sentence.glyph }}
+        </h2>
         <div class="pinyin">
           <span v-for="(p, pIndex) in sentence.pinyin" :key="pIndex" class="syllable">
             {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
           </span>
         </div>
-        <div class="translation">{{ sentence.translate }}</div>
-        <div class="transcription">Произношение: {{ sentence.transcription }}</div>
+        <div class="translation">
+          {{ sentence.translate }}
+        </div>
+        <div class="transcription">
+          Произношение: {{ sentence.transcription }}
+        </div>
       </div>
 
       <!-- Sentence Structure -->
@@ -26,7 +32,9 @@ defineProps<Props>()
         <h3>Структура предложения</h3>
         <div class="structure">
           <span class="structure-type">{{ sentence.structure.type }}</span>
-          <p class="structure-desc">{{ sentence.structure.description }}</p>
+          <p class="structure-desc">
+            {{ sentence.structure.description }}
+          </p>
         </div>
       </div>
 
@@ -38,7 +46,9 @@ defineProps<Props>()
             <span class="rule-type">{{ rule.type }}</span>
             <span v-if="rule.example" class="rule-example">Пример: {{ rule.example }}</span>
           </div>
-          <p class="rule-desc">{{ rule.description }}</p>
+          <p class="rule-desc">
+            {{ rule.description }}
+          </p>
         </div>
       </details>
 
@@ -57,12 +67,14 @@ defineProps<Props>()
                       {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
                     </span>
                   </div>
-                  <div class="translation">{{ component.translate }}</div>
+                  <div class="translation">
+                    {{ component.translate }}
+                  </div>
                 </div>
               </div>
               <span class="part-of-speech">{{ component.partOfSpeech }}</span>
             </div>
-            
+
             <div class="details-grid">
               <div class="detail-item">
                 <span class="detail-label">Черт:</span>
@@ -87,21 +99,27 @@ defineProps<Props>()
                     <span class="rule-type">{{ rule.type }}</span>
                     <span v-if="rule.example" class="rule-example">Пример: {{ rule.example }}</span>
                   </div>
-                  <p class="rule-desc">{{ rule.description }}</p>
+                  <p class="rule-desc">
+                    {{ rule.description }}
+                  </p>
                 </div>
               </details>
 
               <details v-if="component.hints?.length" class="collapsible">
                 <summary>Подсказки ({{ component.hints.length }})</summary>
                 <ul class="hints-list">
-                  <li v-for="(hint, hIndex) in component.hints" :key="hIndex">{{ hint }}</li>
+                  <li v-for="(hint, hIndex) in component.hints" :key="hIndex">
+                    {{ hint }}
+                  </li>
                 </ul>
               </details>
             </div>
 
             <!-- Keys -->
             <div class="keys-section">
-              <h4 class="keys-section-header">Составные ключи</h4>
+              <h4 class="keys-section-header">
+                Составные ключи
+              </h4>
               <div v-for="(key, kIndex) in component.keys" :key="kIndex" class="key">
                 <div class="key-header">
                   <div class="key-meta">
@@ -132,7 +150,9 @@ defineProps<Props>()
                       {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
                     </span>
                   </div>
-                  <div class="translation">{{ component.translate }}</div>
+                  <div class="translation">
+                    {{ component.translate }}
+                  </div>
                 </div>
               </div>
               <span class="part-of-speech">{{ component.partOfSpeech }}</span>
@@ -151,7 +171,9 @@ defineProps<Props>()
                           {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
                         </span>
                       </div>
-                      <div class="translation">{{ hieroglyph.translate }}</div>
+                      <div class="translation">
+                        {{ hieroglyph.translate }}
+                      </div>
                     </div>
                   </div>
                   <span class="part-of-speech">{{ hieroglyph.partOfSpeech }}</span>
@@ -170,7 +192,9 @@ defineProps<Props>()
 
                 <!-- Keys for nested hieroglyph -->
                 <div class="keys-section">
-                  <h5 class="keys-section-header">Составные ключи</h5>
+                  <h5 class="keys-section-header">
+                    Составные ключи
+                  </h5>
                   <div v-for="(key, kIndex) in hieroglyph.keys" :key="kIndex" class="key">
                     <div class="key-header">
                       <div class="key-meta">
@@ -256,8 +280,14 @@ defineProps<Props>()
     }
   }
 
-  .key-position { background: #e0f2fe; color: #0369a1; }
-  .key-role { background: #f3e8ff; color: #6b21a8; }
+  .key-position {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+  .key-role {
+    background: #f3e8ff;
+    color: #6b21a8;
+  }
 }
 
 .collapsible {
@@ -384,7 +414,7 @@ defineProps<Props>()
   border-radius: 8px;
 }
 
-.keys-section{
+.keys-section {
   &-header {
     margin-top: 16px;
     color: var(--fg-tertiary-color);

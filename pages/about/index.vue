@@ -12,7 +12,7 @@ function getRandomChar() {
   )
 }
 
-const symbols = Array.from({ length: 40 }, () => ({ 
+const symbols = Array.from({ length: 40 }, () => ({
   char: getRandomChar(),
   top: Math.random() * 100,
   left: Math.random() * 100,
