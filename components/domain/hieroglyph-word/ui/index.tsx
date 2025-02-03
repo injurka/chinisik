@@ -79,7 +79,7 @@ const HieroglyphWordVarious = defineComponent({
 
       if (props.variant === 2) {
         return el && (
-          <span class="pinyin">
+          <span class="hw-pinyin">
             (
             {el}
             )
@@ -88,7 +88,7 @@ const HieroglyphWordVarious = defineComponent({
       }
 
       return el && (
-        <span class="pinyin">
+        <span class="hw-pinyin">
           {el}
         </span>
       )
@@ -97,7 +97,7 @@ const HieroglyphWordVarious = defineComponent({
     const translateContent = computed(() => {
       return props.translate
         && (
-          <span class="translate">
+          <span class="hw-translate">
             {props.translate}
           </span>
         )
@@ -107,7 +107,7 @@ const HieroglyphWordVarious = defineComponent({
       switch (props.variant) {
         case 0:
           return (
-            <span class="glyph">
+            <span class="hw-glyph">
               <VTooltip {...tooltipProps} modelValue={isActive.value}>
                 {tooltipText}
               </VTooltip>
@@ -118,7 +118,7 @@ const HieroglyphWordVarious = defineComponent({
         case 1:
           return (
             <>
-              <span class="glyph">
+              <span class="hw-glyph">
                 <VTooltip {...tooltipProps}>
                   {pinyinContent.value}
                 </VTooltip>
@@ -132,7 +132,7 @@ const HieroglyphWordVarious = defineComponent({
         case 2:
           return (
             <>
-              <span class="glyph">
+              <span class="hw-glyph">
                 <VTooltip {...tooltipProps}>
                   {translateContent.value}
                 </VTooltip>
@@ -146,7 +146,7 @@ const HieroglyphWordVarious = defineComponent({
           return (
             <>
               {pinyinContent.value}
-              <span class="glyph">{graphContent.value}</span>
+              <span class="hw-glyph">{graphContent.value}</span>
               {translateContent.value}
             </>
           )
@@ -155,7 +155,7 @@ const HieroglyphWordVarious = defineComponent({
           return (
             <>
               {pinyinContent.value}
-              <span class="glyph">{graphContent.value}</span>
+              <span class="hw-glyph">{graphContent.value}</span>
               {translateContent.value}
             </>
           )
@@ -163,8 +163,8 @@ const HieroglyphWordVarious = defineComponent({
         case 5:
           return (
             <>
-              <span class="glyph">{graphContent.value}</span>
-              <div class="pinyin-translate">
+              <span class="hw-glyph">{graphContent.value}</span>
+              <div class="hw-pinyin-translate">
                 {pinyinContent.value}
                 {translateContent.value}
               </div>
@@ -188,16 +188,16 @@ const HieroglyphWord = defineComponent({
       const classes: string[] = []
 
       if (!props.pinyin)
-        classes.push('none-pinyin')
+        classes.push('hw-none-pinyin')
       if (!props.translate)
-        classes.push('none-translate')
+        classes.push('hw-none-translate')
 
       return classes
     })
 
     useRender(() => (
       <span class={[
-        'word',
+        'hw-word',
         `variant-${variant.value}`,
         ...extraClasses.value,
       ]}
