@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { HaoticLines } from '~/components/domain/haotic-lines'
 
 const contentEl = ref<HTMLElement>()
@@ -11,13 +12,13 @@ function getRandomChar() {
   )
 }
 
-const symbols = Array.from({ length: 80 }, () => ({
+const symbols = Array.from({ length: 40 }, () => ({ // Уменьшили количество символов для мобильных
   char: getRandomChar(),
   top: Math.random() * 100,
   left: Math.random() * 100,
   delay: Math.random() * 5,
   duration: 5 + Math.random() * 15,
-  size: 1 + Math.random() * 0.8,
+  size: 0.8 + Math.random() * 0.4, // Уменьшили размер символов
 }))
 </script>
 
@@ -105,8 +106,8 @@ const symbols = Array.from({ length: 80 }, () => ({
 }
 
 .wrapper {
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,39 +159,40 @@ const symbols = Array.from({ length: 80 }, () => ({
   z-index: 10;
   position: relative;
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
+  margin: 4rem auto;
+  padding: 1rem;
   color: var(--fg-primary-color);
   line-height: 1.6;
-  background: var(--bg-secondary-color);
+  background-color: rgba(var(--bg-header-color), 0.4);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   border-radius: 8px;
   box-shadow: 0 0 5px var(--bg-overlay-primary-color);
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--fg-accent-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     border-bottom: 2px solid var(--border-accent-color);
     padding-bottom: 0.5rem;
   }
 
   h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: var(--fg-action-color);
     margin: 1rem 0;
     margin-bottom: 0;
   }
 
   p {
-    margin: 0.8rem 0;
+    margin: 0.5rem 0;
     color: var(--fg-secondary-color);
-    text-align: justify;
   }
 
   ul {
-    padding-left: 1.5rem;
+    padding-left: 1rem;
     li {
-      margin: 0.5rem 0;
+      margin: 0.3rem 0;
       font-size: 0.9rem;
       color: var(--fg-tertiary-color);
       &::marker {
@@ -202,7 +204,7 @@ const symbols = Array.from({ length: 80 }, () => ({
   .source {
     white-space: nowrap;
     display: inline-flex;
-    padding: 0 8px;
+    padding: 0 6px;
     align-items: center;
     gap: 4px;
     color: var(--fg-secondary-color);
@@ -226,8 +228,8 @@ const symbols = Array.from({ length: 80 }, () => ({
 }
 
 .section {
-  margin: 2rem 0;
-  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
   background: var(--bg-tertiary-color);
   border-left: 3px solid var(--border-accent-color);
   border-radius: 4px;
