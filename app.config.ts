@@ -22,5 +22,7 @@ export default defineAppConfig({
     { property: 'og:image:width', content: '400' },
     { property: 'og:image:height', content: '400' },
     { name: 'twitter:card', content: 'summary' },
+    { name: 'og:locale', content: 'ru_RU' },
+    { name: 'twitter:locale', content: 'ru' },
   ],
 })
