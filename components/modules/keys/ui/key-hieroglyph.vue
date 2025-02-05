@@ -51,7 +51,6 @@ watch(
         <div v-if="shouldShowPinyin && isToneCalculated" class="item-pinyin">
           <PinyinText
             :pinyin="hieroglyph.pinyin"
-            :colored="control.isPinyinColored"
             :tone="{
               index: hieroglyph.toneIndex,
               type: hieroglyph.toneType,

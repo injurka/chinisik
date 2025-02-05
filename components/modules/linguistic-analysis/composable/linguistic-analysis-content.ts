@@ -34,6 +34,7 @@ function useLinguisticAnalysisContent(params: Params) {
   }
 
   const analyze = async () => {
+    analyzedText.value = null
     resetAbortController()
 
     await useRequest({

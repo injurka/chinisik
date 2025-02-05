@@ -36,7 +36,7 @@ const isExampleHidden = computed<boolean>(() => !!store.splitGlyphs.glyphs || st
       variant="tonal"
       @click="isExample = !isExample"
     >
-      {{ isExample ? 'Скрыть' : 'Показать' }} пример разобранного слова
+      {{ isExample ? 'Скрыть' : 'Показать' }} пример для
       <HieroglyphWord
         :variant="0"
         glyph="打电话"

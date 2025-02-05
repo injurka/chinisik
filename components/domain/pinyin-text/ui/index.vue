@@ -81,7 +81,7 @@ function getTone(index: number) {
     width: 100%;
     font-weight: 600;
     font-family: var(--font-family-cn);
-    font-size: 1rem;
+    font-size: inherit;
   }
 }
 </style>

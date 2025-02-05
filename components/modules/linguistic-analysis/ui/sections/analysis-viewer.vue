@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { PinyinText } from '~/components/domain/pinyin-text'
+import { positionTranslations, roleTranslations } from '../../constant'
+
 interface Props {
   content: any
 }
@@ -8,206 +11,364 @@ defineProps<Props>()
 
 <template>
   <div class="linguistic-analysis">
-    <div v-for="(sentence, sIndex) in content.sentences" :key="sIndex" class="sentence-card">
+    <div v-for="(sentence, sIndex) in content.sentences" :key="sIndex" class="sentence">
       <!-- Sentence Header -->
       <div class="sentence-header">
-        <h2 class="glyph">{{ sentence.glyph }}</h2>
-        <div class="pinyin">
-          <span v-for="(p, pIndex) in sentence.pinyin" :key="pIndex" class="syllable">
-            {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
-          </span>
+        <div class="glyph-block">
+          {{ sentence.glyph }}
         </div>
-        <div class="translation">{{ sentence.translate }}</div>
-        <div class="transcription">Произношение: {{ sentence.transcription }}</div>
-      </div>
-
-      <!-- Sentence Structure -->
-      <div class="section">
-        <h3>Структура предложения</h3>
-        <div class="structure">
-          <span class="structure-type">{{ sentence.structure.type }}</span>
-          <p class="structure-desc">{{ sentence.structure.description }}</p>
-        </div>
-      </div>
-
-      <!-- Grammar Rules -->
-      <details class="collapsible">
-        <summary>Грамматические правила ({{ sentence.grammarRules.length }})</summary>
-        <div v-for="(rule, rIndex) in sentence.grammarRules" :key="rIndex" class="rule">
-          <div class="rule-header">
-            <span class="rule-type">{{ rule.type }}</span>
-            <span v-if="rule.example" class="rule-example">Пример: {{ rule.example }}</span>
+        <div class="pinyin-block">
+          <div v-for="(p, pIndex) in sentence.pinyin" :key="pIndex">
+            <PinyinText
+              :pinyin="p.value"
+              :tone="{
+                index: p.toneIndex,
+                type: p.toneType as ToneType,
+              }"
+            />
           </div>
-          <p class="rule-desc">{{ rule.description }}</p>
         </div>
-      </details>
+        <div class="translation-block">
+          {{ sentence.translate }}
+        </div>
+        <div class="transcription-block">
+          ({{ sentence.transcription }})
+        </div>
+      </div>
+
+      <!-- Sentence Additional -->
+      <div>
+        <!-- Sentence Structure -->
+        <details class="collapsible">
+          <summary>
+            <div>Структура предложения</div>
+          </summary>
+          <div class="collapsible-content">
+            <div class="collapsible-card">
+              <div class="collapsible-card-header">
+                {{ sentence.structure.description }}
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- Grammar Rules -->
+        <details class="collapsible">
+          <summary>
+            <div>Грамматические правила</div>
+            <div>({{ sentence.grammarRules.length }})</div>
+          </summary>
+          <div class="collapsible-content">
+            <div v-for="(rule, rIndex) in sentence.grammarRules" :key="rIndex" class="collapsible-card">
+              <div class="collapsible-card-header">
+                {{ rule.description }}
+              </div>
+              <p v-if="rule.example" class="collapsible-card-desc">
+                Пример: {{ rule.example }}
+              </p>
+            </div>
+          </div>
+        </details>
+      </div>
 
       <!-- Components -->
       <div class="components">
-        <h3>Составные элементы</h3>
-        <div v-for="(component, cIndex) in sentence.components" :key="cIndex" class="component">
-          <!-- Hieroglyph Component -->
-          <div v-if="component.type === 'hieroglyph'" class="hieroglyph">
-            <div class="component-header">
-              <div class="main-info">
-                <span class="glyph">{{ component.glyph }}</span>
-                <div class="pinyin-translation">
-                  <div class="pinyin">
-                    <span v-for="(p, pIndex) in component.pinyin" :key="pIndex" class="syllable">
-                      {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
+        <h3 class="components-header">
+          Составные элементы
+        </h3>
+        <template v-for="(component, cIndex) in sentence.components" :key="cIndex">
+          <div class="component">
+            <!-- Hieroglyph Component -->
+            <div v-if="component.type === 'hieroglyph'" class="hieroglyph">
+              <div class="component-header">
+                <div class="main-info">
+                  <span class="glyph">{{ component.glyph }}</span>
+                  <div class="pinyin-translation">
+                    <div class="pinyin-translation-pinyin">
+                      <div v-for="(p, pIndex) in component.pinyin" :key="pIndex">
+                        <PinyinText
+                          :pinyin="p.value"
+                          :tone="{
+                            index: p.toneIndex,
+                            type: p.toneType as ToneType,
+                          }"
+                        />
+                      </div>
+                    </div>
+                    <div class="pinyin-translation-translation">
+                      {{ component.translate }}
+                    </div>
+                  </div>
+                </div>
+                <span class="part-of-speech">{{ component.partOfSpeech }}</span>
+              </div>
+
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="detail-label">Черт:</span>
+                  <span class="detail-desc">{{ component.strokeCount }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Этимология:</span>
+                  <span class="detail-desc">{{ component.etymology }}</span>
+                </div>
+                <div class="detail-item full-width">
+                  <span class="detail-label">Мнемоника:</span>
+                  <span class="detail-desc">{{ component.mnemonic }}</span>
+                </div>
+              </div>
+
+              <!-- Grammar & Hints -->
+              <div class="sub-sections">
+                <details v-if="component.grammarRules?.length" class="collapsible">
+                  <summary>
+                    <div>Грамматика</div>
+                    <div>({{ component.grammarRules.length }})</div>
+                  </summary>
+                  <div class="collapsible-content">
+                    <div v-for="(rule, rIndex) in component.grammarRules" :key="rIndex" class="collapsible-card">
+                      <div class="collapsible-card-header">
+                        {{ rule.description }}
+                      </div>
+                      <p v-if="rule.example" class="collapsible-card-desc">
+                        Пример: {{ rule.example }}
+                      </p>
+                    </div>
+                  </div>
+                </details>
+
+                <details v-if="component.hints?.length" class="collapsible">
+                  <summary>
+                    <div>Особенности</div>
+                    <div>({{ component.hints.length }})</div>
+                  </summary>
+                  <div class="collapsible-content">
+                    <ul>
+                      <li v-for="(hint, hIndex) in component.hints" :key="hIndex">
+                        {{ hint }}
+                      </li>
+                    </ul>
+                  </div>
+                </details>
+              </div>
+
+              <!-- Keys -->
+              <div class="keys-section">
+                <h4 class="keys-section-header">
+                  Составные ключи
+                </h4>
+                <div v-for="(key, kIndex) in component.keys" :key="kIndex" class="key-block">
+                  <div class="key-header">
+                    <div class="key-meta">
+                      <div class="key-glyph">
+                        {{ key.glyph }}
+                      </div>
+                      <span class="key-pinyin">
+                        <div v-for="(p, pIndex) in key.pinyin" :key="pIndex">
+                          <PinyinText
+                            :pinyin="p.value"
+                            :tone="{
+                              index: p.toneIndex,
+                              type: p.toneType as ToneType,
+                            }"
+                          />
+                        </div>
+                      </span>
+                      <span v-if="key.translate" class="key-translation">- {{ key.translate }}</span>
+                    </div>
+                    <div class="key-tags">
+                      <span class="key-position">{{ positionTranslations[key.position] ?? key.position }}</span>
+                      <span class="key-role">{{ roleTranslations[key.role] ?? key.role }}</span>
+                    </div>
+                  </div>
+                  <div v-if="key.keyInfo" class="kangxi-info">
+                    Канси #{{ key.keyInfo.number }} ({{ key.keyInfo.name }}),
+                    Частота: {{ key.keyInfo.frequencyRank }}
+                  </div>
+                  <span v-if="key.keyInfo?.variants?.length" class="key-variants">
+                    Варианты написания:
+                    <span v-for="glyph in key.keyInfo.variants" :key="glyph" class="key-variants-glyph">
+                      {{ glyph }}
                     </span>
-                  </div>
-                  <div class="translation">{{ component.translate }}</div>
-                </div>
-              </div>
-              <span class="part-of-speech">{{ component.partOfSpeech }}</span>
-            </div>
-            
-            <div class="details-grid">
-              <div class="detail-item">
-                <span class="detail-label">Черт:</span>
-                {{ component.strokeCount }}
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Этимология:</span>
-                {{ component.etymology }}
-              </div>
-              <div class="detail-item full-width">
-                <span class="detail-label">Мнемоника:</span>
-                {{ component.mnemonic }}
-              </div>
-            </div>
-
-            <!-- Grammar & Hints -->
-            <div class="sub-sections">
-              <details v-if="component.grammarRules?.length" class="collapsible">
-                <summary>Грамматика ({{ component.grammarRules.length }})</summary>
-                <div v-for="(rule, rIndex) in component.grammarRules" :key="rIndex" class="rule">
-                  <div class="rule-header">
-                    <span class="rule-type">{{ rule.type }}</span>
-                    <span v-if="rule.example" class="rule-example">Пример: {{ rule.example }}</span>
-                  </div>
-                  <p class="rule-desc">{{ rule.description }}</p>
-                </div>
-              </details>
-
-              <details v-if="component.hints?.length" class="collapsible">
-                <summary>Подсказки ({{ component.hints.length }})</summary>
-                <ul class="hints-list">
-                  <li v-for="(hint, hIndex) in component.hints" :key="hIndex">{{ hint }}</li>
-                </ul>
-              </details>
-            </div>
-
-            <!-- Keys -->
-            <div class="keys-section">
-              <h4 class="keys-section-header">Составные ключи</h4>
-              <div v-for="(key, kIndex) in component.keys" :key="kIndex" class="key">
-                <div class="key-header">
-                  <div class="key-meta">
-                    <span class="key-glyph">{{ key.glyph }}</span>
-                    <span class="key-translation">{{ key.translate }}</span>
-                  </div>
-                  <div class="key-tags">
-                    <span class="key-position">{{ key.position }}</span>
-                    <span class="key-role">{{ key.role }}</span>
-                  </div>
-                </div>
-                <div v-if="key.keyInfo" class="kangxi-info">
-                  Канси #{{ key.keyInfo.number }} ({{ key.keyInfo.name }}),
-                  частота: {{ key.keyInfo.frequencyRank }}
+                  </span>
+                  <span v-if="key.description" class="key-description"> > {{ key.description }}</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Word Component -->
-          <div v-else-if="component.type === 'word'" class="word">
-            <div class="component-header">
-              <div class="main-info">
-                <span class="glyph">{{ component.glyph }}</span>
-                <div class="pinyin-translation">
-                  <div class="pinyin">
-                    <span v-for="(p, pIndex) in component.pinyin" :key="pIndex" class="syllable">
-                      {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
-                    </span>
+            <!-- Word Component -->
+            <div v-else-if="component.type === 'word'" class="word">
+              <div class="component-header">
+                <div class="main-info">
+                  <span class="glyph">{{ component.glyph }}</span>
+                  <div class="pinyin-translation">
+                    <div class="pinyin-translation-pinyin">
+                      <div v-for="(p, pIndex) in component.pinyin" :key="pIndex">
+                        <PinyinText
+                          :pinyin="p.value"
+                          :tone="{
+                            index: p.toneIndex,
+                            type: p.toneType as ToneType,
+                          }"
+                        />
+                      </div>
+                    </div>
+                    <div class="pinyin-translation-translation">
+                      {{ component.translate }}
+                    </div>
                   </div>
-                  <div class="translation">{{ component.translate }}</div>
                 </div>
+                <span class="part-of-speech">{{ component.partOfSpeech }}</span>
               </div>
-              <span class="part-of-speech">{{ component.partOfSpeech }}</span>
-            </div>
 
-            <!-- Nested Hieroglyphs -->
-            <div class="nested-hieroglyphs">
-              <div v-for="(hieroglyph, hIndex) in component.hieroglyphs" :key="hIndex" class="hieroglyph nested">
-                <!-- Повтор структуры для иероглифа -->
-                <div class="component-header">
-                  <div class="main-info">
-                    <span class="glyph">{{ hieroglyph.glyph }}</span>
-                    <div class="pinyin-translation">
-                      <div class="pinyin">
-                        <span v-for="(p, pIndex) in hieroglyph.pinyin" :key="pIndex" class="syllable">
-                          {{ p.value }}<sup class="tone">{{ p.toneType !== 5 ? p.toneType : '⁰' }}</sup>
+              <!-- Nested Hieroglyphs -->
+              <div class="nested-hieroglyphs">
+                <div v-for="(hieroglyph, hIndex) in component.hieroglyphs" :key="hIndex" class="hieroglyph nested">
+                  <!-- Повтор структуры для иероглифа -->
+                  <div class="component-header">
+                    <div class="main-info">
+                      <span class="glyph">{{ hieroglyph.glyph }}</span>
+                      <div class="pinyin-translation">
+                        <div class="pinyin-translation-pinyin">
+                          <div v-for="(p, pIndex) in hieroglyph.pinyin" :key="pIndex">
+                            <PinyinText
+                              :pinyin="p.value"
+                              :tone="{
+                                index: p.toneIndex,
+                                type: p.toneType as ToneType,
+                              }"
+                            />
+                          </div>
+                        </div>
+                        <div class="pinyin-translation-translation">
+                          {{ hieroglyph.translate }}
+                        </div>
+                      </div>
+                    </div>
+                    <span class="part-of-speech">{{ hieroglyph.partOfSpeech }}</span>
+                  </div>
+
+                  <div class="details-grid">
+                    <div v-if="hieroglyph.strokeCount" class="detail-item">
+                      <span class="detail-label">Черт:</span>
+                      <span class="detail-desc">{{ hieroglyph.strokeCount }}</span>
+                    </div>
+                    <div v-if="hieroglyph.etymology" class="detail-item">
+                      <span class="detail-label">Этимология:</span>
+                      <span class="detail-desc">{{ hieroglyph.etymology }}</span>
+                    </div>
+                    <div v-if="hieroglyph.mnemonic" class="detail-item full-width">
+                      <span class="detail-label">Мнемоника:</span>
+                      <span class="detail-desc">{{ hieroglyph.mnemonic }}</span>
+                    </div>
+                  </div>
+
+                  <!-- Grammar & Hints -->
+                  <div class="sub-sections">
+                    <details v-if="hieroglyph.grammarRules?.length" class="collapsible">
+                      <summary>
+                        <div>Грамматика</div>
+                        <div>({{ hieroglyph.grammarRules.length }})</div>
+                      </summary>
+                      <div class="collapsible-content">
+                        <div v-for="(rule, rIndex) in hieroglyph.grammarRules" :key="rIndex" class="collapsible-card">
+                          <div class="collapsible-card-header">
+                            {{ rule.description }}
+                          </div>
+                          <p v-if="rule.example" class="collapsible-card-desc">
+                            Пример: {{ rule.example }}
+                          </p>
+                        </div>
+                      </div>
+                    </details>
+
+                    <details v-if="hieroglyph.hints?.length" class="collapsible">
+                      <summary>
+                        <div>Особенности</div>
+                        <div>({{ hieroglyph.hints.length }})</div>
+                      </summary>
+                      <div class="collapsible-content">
+                        <ul>
+                          <li v-for="(hint, hIndex) in hieroglyph.hints" :key="hIndex">
+                            {{ hint }}
+                          </li>
+                        </ul>
+                      </div>
+                    </details>
+                  </div>
+
+                  <!-- Keys for nested hieroglyph -->
+                  <div class="keys-section">
+                    <h4 class="keys-section-header">
+                      Составные ключи
+                    </h4>
+                    <div v-for="(key, kIndex) in hieroglyph.keys" :key="kIndex" class="key-block">
+                      <div class="key-header">
+                        <div class="key-meta">
+                          <div class="key-glyph">
+                            {{ key.glyph }}
+                          </div>
+                          <span class="key-pinyin">
+                            <div v-for="(p, pIndex) in key.pinyin" :key="pIndex">
+                              <PinyinText
+                                :pinyin="p.value"
+                                :tone="{
+                                  index: p.toneIndex,
+                                  type: p.toneType as ToneType,
+                                }"
+                              />
+                            </div>
+                          </span>
+                          <span v-if="key.translate" class="key-translation">- {{ key.translate }}</span>
+                        </div>
+                        <div class="key-tags">
+                          <span class="key-position">{{ positionTranslations[key.position] ?? key.position }}</span>
+                          <span class="key-role">{{ roleTranslations[key.role] ?? key.role }}</span>
+                        </div>
+                      </div>
+                      <div v-if="key.keyInfo" class="kangxi-info">
+                        Канси #{{ key.keyInfo.number }} ({{ key.keyInfo.name }}),
+                        Частота: {{ key.keyInfo.frequencyRank }}
+                      </div>
+                      <span v-if="key.keyInfo?.variants?.length" class="key-variants">
+                        Варианты написания:
+                        <span v-for="glyph in key.keyInfo.variants" :key="glyph" class="key-variants-glyph">
+                          {{ glyph }}
                         </span>
-                      </div>
-                      <div class="translation">{{ hieroglyph.translate }}</div>
-                    </div>
-                  </div>
-                  <span class="part-of-speech">{{ hieroglyph.partOfSpeech }}</span>
-                </div>
-
-                <div class="details-grid">
-                  <div class="detail-item">
-                    <span class="detail-label">Черт:</span>
-                    {{ hieroglyph.strokeCount }}
-                  </div>
-                  <div class="detail-item full-width">
-                    <span class="detail-label">Этимология:</span>
-                    {{ hieroglyph.etymology }}
-                  </div>
-                </div>
-
-                <!-- Keys for nested hieroglyph -->
-                <div class="keys-section">
-                  <h5 class="keys-section-header">Составные ключи</h5>
-                  <div v-for="(key, kIndex) in hieroglyph.keys" :key="kIndex" class="key">
-                    <div class="key-header">
-                      <div class="key-meta">
-                        <span class="key-glyph">{{ key.glyph }}</span>
-                        <span class="key-translation">{{ key.translate }}</span>
-                      </div>
-                      <div class="key-tags">
-                        <span class="key-position">{{ key.position }}</span>
-                        <span class="key-role">{{ key.role }}</span>
-                      </div>
+                      </span>
+                      <span v-if="key.description" class="key-description"> > {{ key.description }}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          <hr class="divider">
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.component-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 12px;
+.sentence {
+  background: var(--bg-primary-color);
+  border-left: 2px solid var(--border-secondary-color);
+  border-right: 2px solid var(--border-secondary-color);
+  padding: 16px;
 
-  .main-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  @include mobile {
+    border: none;
+    padding: 2px;
+  }
 
-    .glyph {
-      font-size: 2rem;
+  &-header {
+    text-align: center;
+    margin-bottom: 24px;
+
+    .glyph-block {
+      font-size: 48px;
+      margin-bottom: 8px;
       letter-spacing: 2px;
       font-weight: 500;
       padding: 2px 4px;
@@ -217,201 +378,340 @@ defineProps<Props>()
       color: var(--fg-primary-color);
       font-family: var(--font-family-cn);
     }
-  }
 
-  .pinyin-translation {
-    .pinyin {
-      font-size: 0.95em;
+    .pinyin-block {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+
+      .pinyin-tone {
+        font-size: 1.4rem;
+      }
+
+      > div {
+        margin: 04px;
+      }
+
+      border-bottom: 2px dashed var(--border-secondary-color);
     }
-    .translation {
+
+    .translation-block {
+      color: var(--fg-primary-color);
+      font-weight: 400;
+      font-size: 1rem;
+      letter-spacing: 0.2px;
+    }
+
+    .transcription-block {
       color: var(--fg-tertiary-color);
-      font-size: 0.9em;
+      font-size: 14px;
     }
   }
-
-  .part-of-speech {
-    background: var(--bg-secondary-color);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    color: var(--fg-tertiary-color);
-    align-self: flex-start;
-  }
-}
-
-.key-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-
-  .key-tags {
-    display: flex;
-    gap: 6px;
-
-    > span {
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.75em;
-    }
-  }
-
-  .key-position { background: #e0f2fe; color: #0369a1; }
-  .key-role { background: #f3e8ff; color: #6b21a8; }
 }
 
 .collapsible {
-  background: var(--bg-tertiary-color);
+  background: var(--bg-secondary-color);
   border: 1px solid var(--border-secondary-color);
   border-radius: 6px;
   margin: 8px 0;
   padding: 0 12px;
 
+  @include mobile {
+    padding: 0 6px;
+  }
+
+  &-content {
+    margin-bottom: 8px;
+    font-size: 1rem;
+
+    @include mobile {
+      font-size: 0.9rem;
+    }
+  }
+
+  &-card {
+    margin: 12px 0;
+    margin-top: 4px;
+    padding: 12px;
+    background: var(--bg-tertiary-color);
+    border-left: 4px solid var(--border-accent-color);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    @include mobile {
+      margin: 6px 0;
+    }
+
+    &-header {
+      display: flex;
+      gap: 8px;
+      color: var(--fg-action-color);
+      font-style: italic;
+      font-size: 1rem;
+
+      @include mobile {
+        font-size: 0.9rem;
+      }
+    }
+
+    &-desc {
+      font-size: 0.9rem;
+
+      @include mobile {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
   summary {
-    padding: 8px 0;
+    padding: 8px 4px;
     cursor: pointer;
     color: var(--fg-accent-color);
     font-weight: 500;
     list-style: none;
-  }
-}
-
-.nested-hieroglyphs {
-  margin-left: 24px;
-  border-left: 2px solid var(--border-secondary-color);
-  padding-left: 16px;
-
-  .hieroglyph {
-    margin: 12px 0;
-    padding: 12px;
-    background: var(--bg-primary-color);
-  }
-}
-
-.sentence-card {
-  background: var(--bg-primary-color);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px var(--bg-overlay-primary-color);
-  padding: 24px;
-  margin-bottom: 32px;
-}
-
-.sentence-header {
-  text-align: center;
-  margin-bottom: 24px;
-
-  .glyph {
-    font-size: 48px;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
-    font-weight: 500;
-    padding: 2px 4px;
-    border-radius: 5px;
-    background: var(--bg-accent-color);
-    box-shadow: inset 0 0 2px var(--border-accent-color);
-    color: var(--fg-primary-color);
-    font-family: var(--font-family-cn);
-  }
-
-  .pinyin {
-    margin-bottom: 8px;
-    color: var(--fg-secondary-color);
-    font-weight: 400;
-    font-size: 1rem;
-    letter-spacing: 0.2px;
-    font-family: var(--font-family-cn);
-    font-weight: 500;
-  }
-
-  .translation {
-    color: var(--fg-primary-color);
-    font-weight: 400;
-    font-size: 1rem;
-    letter-spacing: 0.2px;
-  }
-
-  .transcription {
-    color: var(--fg-tertiary-color);
-    font-size: 14px;
-  }
-}
-
-.section {
-  margin: 20px 0;
-  padding: 16px;
-  background: var(--bg-primary-color);
-  border-radius: 8px;
-
-  h3 {
-    color: var(--fg-primary-color);
-    font-size: 18px;
-    margin-bottom: 12px;
-  }
-}
-
-.rule {
-  margin: 12px 0;
-  padding: 12px;
-  background: var(--bg-secondary-color);
-  border-left: 4px solid var(--border-accent-color);
-  border-radius: 4px;
-
-  .rule-header {
     display: flex;
-    gap: 8px;
-    margin-bottom: 6px;
+    justify-content: space-between;
+  }
+}
 
-    .rule-type {
-      font-weight: 600;
-      color: var(--fg-accent-color);
+.details-grid {
+  .detail-item {
+    display: flex;
+    margin: 4px 0;
+    font-size: 0.9rem;
+
+    @include mobile {
+      flex-wrap: wrap;
+      margin: 8px 0;
     }
 
-    .rule-example {
-      color: var(--fg-action-color);
-      font-style: italic;
+    .detail-label {
+      color: var(--fg-primary-color);
+      font-weight: 400;
+      margin-right: 8px;
+    }
+
+    .detail-desc {
+      color: var(--fg-tertiary-color);
+      font-weight: 300;
     }
   }
+}
+
+.divider {
+  border: 2px dashed var(--border-secondary-color);
 }
 
 .components {
   margin-top: 32px;
-}
-.component {
-  margin: 16px 0;
-  padding: 16px;
-  background: var(--bg-secondary-color);
-  border: 1px solid var(--border-secondary-color);
-  border-radius: 8px;
+  padding-top: 16px;
+  border-top: 2px dashed var(--border-secondary-color);
+
+  &-header {
+    color: var(--fg-tertiary-color);
+    text-align: center;
+  }
+
+  .component {
+    margin: 16px 0;
+    padding: 16px;
+    border-left: 2px solid var(--border-accent-color);
+
+    @include mobile {
+      padding: 8px;
+    }
+
+    .component-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+
+      .main-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .glyph {
+          font-size: 2rem;
+          letter-spacing: 2px;
+          font-weight: 500;
+          padding: 2px 4px;
+          border-radius: 5px;
+          background: var(--bg-accent-color);
+          box-shadow: inset 0 0 2px var(--border-accent-color);
+          color: var(--fg-primary-color);
+          font-family: var(--font-family-cn);
+        }
+      }
+
+      .pinyin-translation {
+        &-pinyin {
+          font-size: 1em;
+          display: flex;
+          gap: 8px;
+        }
+        &-translation {
+          color: var(--fg-tertiary-color);
+          font-size: 1em;
+        }
+      }
+
+      .part-of-speech {
+        background: var(--bg-tertiary-color);
+        color: var(--fg-tertiary-color);
+        border: 1px solid var(--border-secondary-color);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        align-self: flex-start;
+
+        @include mobile {
+          font-size: 0.7em;
+          padding: 2px 4px;
+        }
+      }
+    }
+
+    .sub-sections {
+      margin-top: 16px;
+    }
+  }
 }
 
-.keys-section{
+//
+
+.nested-hieroglyphs {
+  padding-left: 16px;
+  border-left: 2px solid var(--border-secondary-color);
+
+  @include mobile {
+    padding-left: 8px;
+  }
+
+  .hieroglyph {
+    margin: 12px 0;
+    padding: 12px 0;
+    background: var(--bg-primary-color);
+  }
+}
+
+.keys-section {
+  margin-top: 32px;
+  border-top: 2px dashed var(--border-secondary-color);
+
   &-header {
     margin-top: 16px;
     color: var(--fg-tertiary-color);
+    text-align: center;
   }
-}
-.key {
-  margin: 12px 0;
-  padding: 12px;
-  background: var(--bg-primary-color);
-  border-radius: 6px;
 
-  .key-glyph {
-    letter-spacing: 2px;
-    font-weight: 500;
-    padding: 2px 4px;
-    border-radius: 5px;
-    background: var(--bg-accent-color);
-    box-shadow: inset 0 0 2px var(--border-accent-color);
-    color: var(--fg-primary-color);
-    font-family: var(--font-family-cn);
+  .kangxi-info {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--fg-tertiary-color);
   }
-  .key-translation {
-    margin-left: 8px;
-    color: var(--fg-primary-color);
-    font-weight: 400;
-    font-size: 1rem;
-    letter-spacing: 0.2px;
+
+  .key-description {
+    display: flex;
+    font-size: 0.9rem;
+    color: var(--fg-tertiary-color);
+    margin-top: 4px;
+  }
+
+  .key-variants {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--fg-tertiary-color);
+    &-glyph {
+      border-radius: 10px;
+      text-align: center;
+      min-width: 34px;
+      min-height: 34px;
+      letter-spacing: 2px;
+      font-weight: 500;
+      margin-left: 8px;
+      padding: 2px 4px;
+      border-radius: 5px;
+      background: var(--bg-accent-color);
+      box-shadow: inset 0 0 2px var(--border-accent-color);
+      color: var(--fg-primary-color);
+      font-family: var(--font-family-cn);
+    }
+  }
+
+  .key-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .key-tags {
+      display: flex;
+      gap: 6px;
+
+      @include mobile {
+        flex-direction: column;
+      }
+
+      > span {
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.75em;
+      }
+
+      .key-position {
+        background: #e0f2fe;
+        color: #0369a1;
+        border: 1px solid var(--border-secondary-color);
+      }
+      .key-role {
+        background: #f3e8ff;
+        color: #6b21a8;
+        border: 1px solid var(--border-secondary-color);
+      }
+    }
+
+    .key-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .key-glyph {
+        font-size: 1.2rem;
+        border-radius: 10px;
+        text-align: center;
+        min-width: 34px;
+        min-height: 34px;
+        letter-spacing: 2px;
+        font-weight: 500;
+        padding: 2px 4px;
+        border-radius: 5px;
+        background: var(--bg-accent-color);
+        box-shadow: inset 0 0 2px var(--border-accent-color);
+        color: var(--fg-primary-color);
+        font-family: var(--font-family-cn);
+      }
+      .key-pinyin {
+        color: var(--fg-secondary-color);
+      }
+      .key-translation {
+        color: var(--fg-primary-color);
+        font-weight: 400;
+        font-size: 1rem;
+        letter-spacing: 0.2px;
+      }
+    }
+  }
+
+  .key-block {
+    margin: 12px 0;
+    padding: 4px 0;
+    padding-left: 8px;
+    background: var(--bg-primary-color);
+    border-left: 2px solid var(--border-secondary-color);
   }
 }
 
@@ -419,15 +719,5 @@ defineProps<Props>()
   font-size: 0.8em;
   vertical-align: super;
   color: var(--fg-accent-color);
-}
-
-.detail-item {
-  margin: 8px 0;
-  color: var(--fg-tertiary-color);
-
-  .detail-label {
-    color: var(--fg-primary-color);
-    font-weight: 500;
-  }
 }
 </style>
