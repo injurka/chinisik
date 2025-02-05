@@ -8,9 +8,14 @@ interface Params {
   isExampleEnable: Ref<boolean>
 }
 
+interface LinguisticAnalysisContentControl {
+  value: string
+  model: string
+}
+
 function useLinguisticAnalysisContent(params: Params) {
   const analyzedText = ref<unknown | null>(null)
-  const control = ref({
+  const control = ref<LinguisticAnalysisContentControl>({
     value: '',
     model: 'google/gemini-flash-1.5',
   })
@@ -59,3 +64,4 @@ function useLinguisticAnalysisContent(params: Params) {
 }
 
 export { useLinguisticAnalysisContent }
+export type { LinguisticAnalysisContentControl }

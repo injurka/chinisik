@@ -21,7 +21,7 @@ const {
 <template>
   <div class="content">
     <Control
-      v-model="control.value"
+      v-model="control"
       :disabled="isLoadingSubmit"
       @submit="analyze"
     />

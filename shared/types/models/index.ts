@@ -1,5 +1,6 @@
 export * from './auth'
 export * from './hiroglyph-key'
+export * from './linguistic-analysis'
 export * from './llvm'
 export * from './pinyin'
 export * from './quiz'

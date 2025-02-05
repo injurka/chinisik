@@ -14,13 +14,8 @@ const isProfileDrawer = ref<boolean>(false)
     v-model:profile-drawer="isProfileDrawer"
   />
   <VLayout>
-    <HeaderMenuDrawer
-      v-if="$vuetify.display.mobile"
-      v-model="isMenuDrawer"
-    />
-    <HeaderProfileDrawer
-      v-model="isProfileDrawer"
-    />
+    <HeaderMenuDrawer v-model="isMenuDrawer" />
+    <HeaderProfileDrawer v-model="isProfileDrawer" />
 
     <VMain>
       <slot />
