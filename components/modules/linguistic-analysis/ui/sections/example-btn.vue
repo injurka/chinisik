@@ -14,7 +14,7 @@ const isExample = defineModel<boolean>({ default: false })
     variant="tonal"
     @click="isExample = !isExample"
   >
-    {{ isExample ? 'Скрыть' : 'Показать' }} пример разобранного слова
+    <span> {{ isExample ? 'Скрыть' : 'Показать' }} пример для </span>
     <HieroglyphWord
       :variant="0"
       glyph="打电话"
@@ -34,7 +34,7 @@ const isExample = defineModel<boolean>({ default: false })
   margin: 0 auto;
   padding: 0 32px;
 
-  .word {
+  .hw-word {
     margin-left: 8px;
   }
 

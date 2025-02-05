@@ -58,7 +58,7 @@ const linguisticAnalysisMock = {
               toneIndex: 1,
             },
           ],
-          partOfSpeech: 'verb',
+          partOfSpeech: 'глагол',
           translate: 'звонить',
           transcription: 'да',
           strokeCount: 5,
@@ -93,6 +93,7 @@ const linguisticAnalysisMock = {
               role: 'phonetic',
               translate: 'гвоздь',
               keyInfo: null,
+              description: 'В древнекитайском языке произношение 丁 было ближе к dǎ, что объясняет его роль как фонетика',
               pinyin: [
                 {
                   value: 'ding',
@@ -129,7 +130,7 @@ const linguisticAnalysisMock = {
               toneIndex: 2,
             },
           ],
-          partOfSpeech: 'noun',
+          partOfSpeech: 'существительное',
           translate: 'телефон',
           transcription: 'диан хуа',
           grammarRules: [
@@ -151,10 +152,10 @@ const linguisticAnalysisMock = {
                 {
                   value: 'dian',
                   toneType: 4,
-                  toneIndex: 3,
+                  toneIndex: 2,
                 },
               ],
-              partOfSpeech: 'noun',
+              partOfSpeech: 'существительное',
               translate: 'электричество',
               transcription: 'дянь',
               strokeCount: 5,
@@ -177,6 +178,7 @@ const linguisticAnalysisMock = {
                   position: 'top',
                   role: 'semantic',
                   translate: 'солнце/поле (вариант 田)',
+                  description: 'В данном случае может ассоциироваться с яркостью или светом (как у электричества).',
                   keyInfo: {
                     number: 73,
                     name: '日',
@@ -190,29 +192,20 @@ const linguisticAnalysisMock = {
                     {
                       value: 'yue',
                       toneType: 1,
-                      toneIndex: 4,
+                      toneIndex: 2,
                     },
                   ],
                 },
                 {
                   glyph: '乚',
                   position: 'bottom',
-                  role: 'phonetic',
-                  translate: 'искра/крюк',
-                  keyInfo: {
-                    number: 6,
-                    name: '亅',
-                    variants: [
-                      '亅',
-                      '乚',
-                    ],
-                    frequencyRank: 194,
-                  },
+                  role: 'structural',
+                  description: 'В традиционном иероглифе 電 заменялась элементом 厶 (sī — «частный») и ⻗ (дождь). В упрощённой версии остался лишь условный штрих, не являющийся самостоятельным ключом.',
                   pinyin: [
                     {
-                      value: 'ha',
+                      value: 'yin',
                       toneType: 3,
-                      toneIndex: 2,
+                      toneIndex: 1,
                     },
                   ],
                 },
@@ -228,7 +221,7 @@ const linguisticAnalysisMock = {
                   toneIndex: 2,
                 },
               ],
-              partOfSpeech: 'verb',
+              partOfSpeech: 'глагол',
               translate: 'речь, разговор',
               transcription: 'хуа',
               strokeCount: 8,
@@ -264,7 +257,7 @@ const linguisticAnalysisMock = {
                     {
                       value: 'yan',
                       toneType: 2,
-                      toneIndex: 3,
+                      toneIndex: 1,
                     },
                   ],
                 },
@@ -274,6 +267,7 @@ const linguisticAnalysisMock = {
                   role: 'phonetic',
                   translate: 'язык',
                   keyInfo: null,
+                  description: 'Хотя в современном языке 舌 читается как shé, в древнекитайском произношение этого компонента было ближе к huà, что объясняет его роль как фонетика',
                   pinyin: [
                     {
                       value: 'she',

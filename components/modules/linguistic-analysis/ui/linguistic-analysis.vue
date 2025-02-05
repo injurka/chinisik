@@ -15,7 +15,6 @@ const {
   isLoadingSubmit,
   isAnalyzedText,
   errorSubmit,
-
 } = useLinguisticAnalysisContent({ isExampleEnable: isExample })
 </script>
 
