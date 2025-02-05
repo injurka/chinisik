@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { PinyinText } from '~/components/domain/pinyin-text'
+import { positionTranslations, roleTranslations } from '../../constant'
 
 interface Props {
   content: any
@@ -176,8 +177,8 @@ defineProps<Props>()
                       <span v-if="key.translate" class="key-translation">- {{ key.translate }}</span>
                     </div>
                     <div class="key-tags">
-                      <span class="key-position">{{ key.position }}</span>
-                      <span class="key-role">{{ key.role }}</span>
+                      <span class="key-position">{{ positionTranslations[key.position] ?? key.position }}</span>
+                      <span class="key-role">{{ roleTranslations[key.role] ?? key.role }}</span>
                     </div>
                   </div>
                   <div v-if="key.keyInfo" class="kangxi-info">
@@ -321,8 +322,8 @@ defineProps<Props>()
                           <span v-if="key.translate" class="key-translation">- {{ key.translate }}</span>
                         </div>
                         <div class="key-tags">
-                          <span class="key-position">{{ key.position }}</span>
-                          <span class="key-role">{{ key.role }}</span>
+                          <span class="key-position">{{ positionTranslations[key.position] ?? key.position }}</span>
+                          <span class="key-role">{{ roleTranslations[key.role] ?? key.role }}</span>
                         </div>
                       </div>
                       <div v-if="key.keyInfo" class="kangxi-info">
