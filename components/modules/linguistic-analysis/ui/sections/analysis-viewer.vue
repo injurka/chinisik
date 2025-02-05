@@ -390,7 +390,8 @@ defineProps<Props>()
       }
 
       > div {
-        margin: 04px;
+        margin: 4px;
+        display: flex;
       }
 
       border-bottom: 2px dashed var(--border-secondary-color);

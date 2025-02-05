@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type { LinguisticAnalysisContentControl } from '../../composable'
+
 defineProps<{ disabled: boolean }>()
 const emits = defineEmits<{ submit: [void] }>()
-const value = defineModel<string>({ required: true, default: '' })
+const control = defineModel<LinguisticAnalysisContentControl>({ required: true })
 
 const errors = ref<string[]>([])
 const isError = ref<boolean>(false)
@@ -21,7 +23,7 @@ function handleKeyDown(event: KeyboardEvent) {
 <template>
   <div class="control">
     <v-text-field
-      v-model="value"
+      v-model="control.value"
       :disabled="disabled"
       label="Текст для разбора (RU / CN)"
       variant="outlined"
@@ -38,6 +40,22 @@ function handleKeyDown(event: KeyboardEvent) {
         />
       </template>
     </v-text-field>
+    <v-select
+      v-model="control.model"
+      class="control-model"
+      density="compact"
+      hide-details
+      label="LLVM модель"
+      :items="[
+        'deepseek-chat',
+        'deepseek/deepseek-r1-distill-llama-70b',
+        'deepseek/deepseek-chat',
+        'google/gemini-flash-1.5-8b',
+        'google/gemini-flash-1.5',
+        'mistralai/mistral-small-24b-instruct-2501',
+      ]"
+      variant="filled"
+    />
   </div>
   <v-snackbar
     v-model="isError"
@@ -60,6 +78,17 @@ function handleKeyDown(event: KeyboardEvent) {
   @include mobile() {
     border: none;
     padding: 0;
+  }
+
+  &-model {
+    margin-top: 8px;
+    color: var(--fg-secondary-color);
+    &:deep(.v-field) {
+      border-radius: 4px;
+    }
+    &:deep(.v-field__outline) {
+      display: none;
+    }
   }
 
   > input {

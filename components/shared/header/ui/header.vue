@@ -2,19 +2,6 @@
 import { HaoticLines } from '~/components/domain/haotic-lines'
 import SettingsControl from './dialog/settings-control.vue'
 
-interface NavItem {
-  name: string
-  routeName: string
-  routePath: string
-}
-
-const navItems: NavItem[] = [
-  { name: 'Ключи', routeName: RouteNames.Keys, routePath: RoutePaths.Keys },
-  { name: 'Пиньин', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
-  { name: 'Разбор иероглифов', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
-  { name: 'Глоссарий', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
-]
-
 const store = useStore(['auth'])
 
 const sentinelEl = ref<HTMLElement>()
@@ -69,33 +56,12 @@ onMounted(() => {
       <div class="header-nav">
         <div class="logo">
           <Icon class="logo-icon" name="game-icons:sea-dragon" size="24" />
-          <span v-if="!$vuetify.display.mobile" class="logo-title"> Chinisik </span>
         </div>
-        <template v-if="!$vuetify.display.mobile">
-          <div class="vr">
-            //
-          </div>
-          <nav>
-            <ul>
-              <li
-                v-for="item in navItems"
-                :key="item.routeName"
-                class="link"
-                :class="{ actived: $route.name === item.routeName }"
-                @click="navigateTo(item.routePath)"
-              >
-                {{ item.name }}
-              </li>
-            </ul>
-          </nav>
-        </template>
-        <template v-else>
-          <VBtn
-            icon="mdi-menu"
-            variant="text"
-            @click="isMenuDrawer = !isMenuDrawer"
-          />
-        </template>
+        <VBtn
+          icon="mdi-menu"
+          variant="text"
+          @click="isMenuDrawer = !isMenuDrawer"
+        />
       </div>
 
       <div class="header-utils">
