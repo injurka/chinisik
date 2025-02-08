@@ -5,12 +5,6 @@ export const baseCfg: NuxtConfig = {
     //
   },
 
-  // routeRules: {
-  //   '/keys': { isr: true },
-  //   '/pinyin': { isr: true },
-  //   '/split-glyphs': { isr: true },
-  // },
-
   devServer: {
     port: 5173,
   },
@@ -79,6 +73,7 @@ export const baseCfg: NuxtConfig = {
       icons: [
         'material-symbols:slab-serif-outline',
         'mdi:fullscreen',
+        'mdi:trophy-broken',
         'material-symbols:settings-suggest-outline',
         'mdi-tune',
         'mdi:key',

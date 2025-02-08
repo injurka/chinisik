@@ -5,6 +5,7 @@ import { createInstance } from '.'
 import {
   authService,
   cmsService,
+  hskService,
   keysService,
   llvmService,
   pinyinService,
@@ -14,6 +15,7 @@ const services: IService[] = [
   keysService,
   llvmService,
   pinyinService,
+  hskService,
   cmsService,
   authService,
 ]
