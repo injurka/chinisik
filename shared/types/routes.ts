@@ -4,6 +4,7 @@ export enum RouteNames {
   Glossary = 'glossary',
   SplitGlyphs = 'split-glyphs',
   LinguisticAnalysis = 'linguistic-analysis',
+  HSK = 'hsk',
 
   About = 'about',
 
@@ -19,6 +20,7 @@ export const RoutePaths = {
   GlossaryTopic: (value: string) => `/glossary/${value}/topic`,
   SplitGlyphs: '/split-glyphs',
   LinguisticAnalysis: '/linguistic-analysis',
+  HSK: '/hsk',
 
   About: '/about',
 

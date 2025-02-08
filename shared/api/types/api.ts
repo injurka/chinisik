@@ -8,6 +8,7 @@ export type ServiceMethods =
   IPinyinMethods |
   ILlvmMethods |
   ICmsMethods |
+  IHskMethods |
   IAuthMethods
 
 export interface IApi {
@@ -15,6 +16,7 @@ export interface IApi {
   pinyin: IPinyinMethods
   llvm: ILlvmMethods
   cms: ICmsMethods
+  hsk: IHskMethods
   auth: IAuthMethods
 }
 export interface IService {

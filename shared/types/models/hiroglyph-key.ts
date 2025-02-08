@@ -1,4 +1,6 @@
-export interface HieroglyphKey {
+import type { ToneType } from './pinyin'
+
+interface HieroglyphKey {
   index?: number
   alternative?: string | null
   toneType: ToneType
@@ -8,3 +10,5 @@ export interface HieroglyphKey {
   translate: string
   transcription: string
 }
+
+export type { HieroglyphKey }

@@ -3,6 +3,7 @@ import { JsonToDom } from '~/components/domain/json-to-dom'
 import { KeyHieroglyph, KeyHieroglyphControl, KeyHieroglyphInfo } from '~/components/modules/keys'
 import { PageLoader } from '~/components/shared/page-loader'
 
+const { isMobile } = useDevice()
 const store = useStore(['keys'])
 const {
   isLoadingContent,
@@ -48,15 +49,11 @@ definePageMeta({
       :node="description!"
     />
 
-    <!-- <hr>
-    <KeyHieroglyphControl />
-    <hr> -->
-
     <div class="tabs">
       <v-tabs
         v-model="tab"
         align-tabs="center"
-        :fixed-tabs="$vuetify.display.mobile ? false : true"
+        :fixed-tabs="isMobile ? false : true"
         color="var(--fg-accent-color)"
         bg-color="transparent"
         slider-color="var(--fg-action-color)"
@@ -64,12 +61,12 @@ definePageMeta({
         <v-tab
           prepend-icon="mdi-book-open-page-variant"
           :value="1"
-          :text="$vuetify.display.mobile ? '' : 'Полный список'"
+          :text="isMobile ? '' : 'Полный список'"
         />
         <v-tab
           prepend-icon="mdi-test-tube"
           :value="2"
-          :text="$vuetify.display.mobile ? '' : 'Проверка знаний'"
+          :text="isMobile ? '' : 'Проверка знаний'"
         />
       </v-tabs>
       <div class="settings">
