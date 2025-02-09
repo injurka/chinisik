@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import type { PinyinTextProps, PinyinTextTone } from '~/components/domain/pinyin-text'
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
+import HskWordsControl from '~/components/modules/hsk/words/ui/hsk-words-control.vue'
 import PageLoader from '~/components/shared/page-loader/ui/page-loader.vue'
+
+interface HskWordsControlValues {
+  isFixedStyle: boolean
+}
 
 const HSK_LEVELS = Array.from({ length: 9 }, (_, i) => i + 1)
 const ITEMS_PER_PAGE_DEFAULT = 30
@@ -9,11 +14,16 @@ const VISIBLE_PAGES = 7
 const MOBILE_VISIBLE_PAGES = 3
 const KEY = 'hieroglyph-hsk_words'
 const SEARCH_DEBOUNCE = 300
+const HSK_WORDS_CONTROL_KEY = 'hsk_words_control'
+
+const controlValues = useCookie<HskWordsControlValues>(HSK_WORDS_CONTROL_KEY)
 
 const page = ref<number>(1)
 const searchKeyword = ref<string>('')
 const selectedLevel = ref<number>(1)
 const itemsPerPage = ref<number>(ITEMS_PER_PAGE_DEFAULT)
+const controlMenu = ref<boolean>(false)
+const controls = ref<HskWordsControlValues>(controlValues.value ?? { isFixedStyle: true })
 
 const { isMobile } = useDevice()
 const { data, refresh, status } = await useAsyncData(
@@ -55,6 +65,12 @@ function formatPinyinData(pinyinArray: HieroglyphHsk['pinyin']): PinyinTextProps
     }) as unknown as PinyinTextTone,
   }
 }
+function toggleControl(key: keyof HskWordsControlValues) {
+  const rawValues = { ...controlValues.value }
+  rawValues[key] = !rawValues[key]
+  controlValues.value = rawValues
+  controls.value = rawValues
+}
 
 watch(searchKeyword, () => {
   page.value = 1
@@ -90,6 +106,22 @@ watch([page, itemsPerPage, selectedLevel], () => {
         variant="outlined"
         density="comfortable"
       />
+      <v-menu
+        v-model="controlMenu"
+        :close-on-content-click="false"
+      >
+        <template #activator="{ props }">
+          <v-btn
+            icon
+            variant="plain"
+            v-bind="props"
+          >
+            <Icon size="24" name="mdi-tune" />
+          </v-btn>
+        </template>
+
+        <HskWordsControl v-model="controls" @toggle-control="toggleControl" />
+      </v-menu>
     </div>
 
     <PageLoader v-if="isLoading" class="loader" />
@@ -98,7 +130,7 @@ watch([page, itemsPerPage, selectedLevel], () => {
       <HieroglyphWord
         v-for="item in data.data.data"
         :key="item.id"
-        :variant="5"
+        :variant="controls.isFixedStyle ? 5 : undefined"
         :glyph="item.glyph"
         :translate="item.translation.ru"
         :pinyin="formatPinyinData(item.pinyin)"
