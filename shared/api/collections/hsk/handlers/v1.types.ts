@@ -13,6 +13,8 @@ export interface IHieroglyphsLevelP {
 
 export interface IHieroglyphsLevelListP {
   level: number
+  keyword: string
+
   page: PageType
   limit: PageLimitType
 }

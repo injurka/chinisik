@@ -65,12 +65,16 @@
     text-align: center;
     padding: 0 8px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
   }
   .hw-pinyin-translate {
     padding-left: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 0;
 
     .hw-pinyin {
       padding: 2px;
@@ -80,6 +84,10 @@
       padding: 2px;
       border-top: 2px dashed var(--border-secondary-color);
       font-weight: 500;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      min-width: 0;
     }
   }
 }

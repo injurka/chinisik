@@ -289,7 +289,7 @@ defineProps<Props>()
                       </summary>
                       <div class="collapsible-content">
                         <ul>
-                          <li v-for="(hint, hIndex) in hieroglyph.hints" :key="hIndex">
+                          <li v-for="(hint, hhIndex) in hieroglyph.hints" :key="hhIndex">
                             {{ hint }}
                           </li>
                         </ul>
