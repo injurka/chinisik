@@ -48,22 +48,26 @@
       <p>Все 9 уровней по системе оценки HSK можно условно объединить в 3 укрупненные группы: начальный, средний и продвинутый уровни.</p>
 
       <table>
-        <tr>
-          <th>Уровень HSK</th>
-          <th>Группа</th>
-        </tr>
-        <tr>
-          <td>HSK-1, HSK-2, HSK-3</td>
-          <td>Начальный</td>
-        </tr>
-        <tr>
-          <td>HSK-4, HSK-5, HSK-6</td>
-          <td>Средний</td>
-        </tr>
-        <tr>
-          <td>HSK-7, HSK-8, HSK-9</td>
-          <td>Продвинутый</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Уровень HSK</th>
+            <th>Группа</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HSK-1, HSK-2, HSK-3</td>
+            <td>Начальный</td>
+          </tr>
+          <tr>
+            <td>HSK-4, HSK-5, HSK-6</td>
+            <td>Средний</td>
+          </tr>
+          <tr>
+            <td>HSK-7, HSK-8, HSK-9</td>
+            <td>Продвинутый</td>
+          </tr>
+        </tbody>
       </table>
     </section>
 

@@ -4,14 +4,14 @@ interface HieroglyphHsk {
   item: any
   id: number
   glyph: string
-  traditionalGlyph: ToneType
+  traditionalGlyph: string
   translation: {
     en: string
     ru: string
   }
   pinyin: {
     syllable: string
-    tone: number
+    tone: 0 | 1 | 2 | 3 | 4
     position: number
   }[]
 }
@@ -19,3 +19,5 @@ interface HieroglyphHsk {
 export type {
   HieroglyphHsk,
 }
+
+
