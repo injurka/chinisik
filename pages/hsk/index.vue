@@ -84,9 +84,6 @@ definePageMeta({
     .container {
       padding: 8px 2px;
     }
-    .hw-word {
-      flex-wrap: wrap;
-    }
   }
 
   .description {
@@ -96,6 +93,10 @@ definePageMeta({
 
     @include mobile {
       font-size: 0.9rem;
+
+      &:deep(.hw-word) {
+        flex-wrap: wrap;
+      }
     }
   }
 }
@@ -115,7 +116,7 @@ definePageMeta({
   }
 
   .v-btn {
-    color: var(--fg-primary-color);
+    color: var(--fg-secondary-color);
     text-transform: none;
   }
 }
