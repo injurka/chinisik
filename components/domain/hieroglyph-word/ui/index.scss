@@ -67,7 +67,7 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-    flex: 0 0 auto
+    flex: 0 0 auto;
   }
   .hw-pinyin-translate {
     padding-left: 12px;
@@ -86,7 +86,7 @@
       font-weight: 500;
       word-break: break-word;
       overflow-wrap: break-word;
-      hyphens: auto; 
+      hyphens: auto;
       min-width: 0;
     }
   }
