@@ -1,342 +1,301 @@
-<script lang="ts" setup>
-import type { IAnswer } from '~/shared/types'
-import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
+<script setup lang="ts">
+import { useCardQueue, useSwipeHandler } from '../composables'
 
-interface IProps {
-  test: any
+interface Props {
+  words: HieroglyphHsk[]
 }
 
-const props = defineProps<IProps>()
+const props = defineProps<Props>()
 
-const isFullscreen = defineModel<boolean>('fullscreen', { required: true, default: false })
+const { currentCard, markAsKnown, markForRepeat } = useCardQueue(props.words)
+const { cardStyle, swipeDirection, isSwiping, swipeHandlers } = useSwipeHandler({
+  onSwipeLeft: handleKnow,
+  onSwipeRight: handleRepeat,
+})
 
-const isAnswered = ref<boolean>(false)
-const selectedAnswered = ref<IAnswer | null>(null)
+const showDetails = ref(false)
+const lastAction = ref<'know' | 'repeat' | null>(null)
 
-const correctAnswer = computed(() => props.test.correct[0])
+function handleKnow() {
+  lastAction.value = 'know'
+  showDetails.value = true
+}
 
-function controlledAnswerStyled(answer: IAnswer) {
-  const selectedAnswerValue = selectedAnswered.value?.key
+function handleRepeat() {
+  lastAction.value = 'repeat'
+  showDetails.value = true
+}
 
-  if (!isAnswered.value) {
-    return {
-      selected: selectedAnswerValue === answer.key,
-    }
+function handleContinue() {
+  if (!currentCard.value)
+    return
+
+  if (lastAction.value === 'know') {
+    markAsKnown()
+  }
+  else if (lastAction.value === 'repeat') {
+    markForRepeat()
   }
 
-  const answerCorrect = props.test.correct[0].key
-
-  return {
-    correct: selectedAnswerValue === answer.key && answerCorrect === selectedAnswerValue,
-    uncorrect: selectedAnswerValue === answer.key && answerCorrect !== selectedAnswerValue,
-  }
+  showDetails.value = false
+  lastAction.value = null
 }
 
-function handleSelectAnswer(answer: IAnswer) {
-  selectedAnswered.value = answer
-}
-
-function handleSubmitAnswer() {
-  isAnswered.value = true
-}
-
-function handleNextAnswer() {
-  isAnswered.value = false
-  selectedAnswered.value = null
-}
+// Computed classes
+const cardClass = computed(() => ({
+  'card--swiping': isSwiping.value,
+  'card--swipe-left': swipeDirection.value === 'left',
+  'card--swipe-right': swipeDirection.value === 'right',
+}))
 </script>
 
 <template>
-  <div class="lab-test">
-    <div class="lab-test-content">
-      <div class="question">
-        <p class="question-title">
-          {{ test.question }}
-        </p>
-        <hr class="question-divider">
-      </div>
-      <div class="answer-list">
-        <VBtn
-          v-for="(answer, key) in test.answers"
-          :key="key"
-          variant="text"
-          class="answer"
-          :disabled="isAnswered"
-          :class="controlledAnswerStyled(answer)"
-          @click="handleSelectAnswer(answer)"
-        >
-          {{ answer.value }}
-        </VBtn>
-      </div>
-
-      <div v-if="isAnswered" class="answer-description">
-        <hr class="answer-description-divider">
-        <div class="answer-description-content">
-          <div class="answer-description-header">
-            Правильный ответ:
+  <div class="quiz-container">
+    <Transition name="card" mode="out-in">
+      <div
+        v-if="currentCard && !showDetails"
+        class="card"
+        :class="cardClass"
+        :style="cardStyle"
+        v-on="swipeHandlers"
+      >
+        <div class="card__content">
+          <div class="card__glyph">
+            {{ currentCard.glyph }}
           </div>
-          <div>
-            <HieroglyphWord
-              :="correctAnswer.meta.hieroglyph"
-              :variant="$vuetify.display.mobile ? 4 : 5"
-            />
-            <div class="answer-description-hint">
-              {{ correctAnswer.meta.description }}
-            </div>
+          <div class="card__actions">
+            <button class="btn btn--repeat" @click="handleRepeat">
+              Повторить
+            </button>
+            <button class="btn btn--know" @click="handleKnow">
+              Знаю
+            </button>
+          </div>
+        </div>
+
+        <div class="card__swipe-hints">
+          <div class="hint hint--left" :class="{ 'hint--active': swipeDirection === 'left' }">
+            Повторить
+          </div>
+          <div class="hint hint--right" :class="{ 'hint--active': swipeDirection === 'right' }">
+            Знаю
           </div>
         </div>
       </div>
 
-      <div class="check">
-        <div class="check-option left" />
-
-        <VBtn
-          v-if="!isAnswered"
-          class="check-btn"
-          rounded
-          variant="tonal"
-          @click="handleSubmitAnswer"
-        >
-          Проверить
-        </VBtn>
-        <VBtn
-          v-else
-          class="check-btn"
-          rounded
-          variant="tonal"
-          @click="handleNextAnswer"
-        >
-          Следующий вопрос
-        </VBtn>
-
-        <div class="check-option right">
-          <VTooltip
-            text="На весь экран"
-          >
-            <template #activator="{ props: templateProps }">
-              <Icon
-                v-bind="templateProps"
-                class="check-option-item check-fullscreen"
-                name="mdi:fullscreen"
-                size="32"
-                @click="isFullscreen = !isFullscreen"
-              />
-            </template>
-          </VTooltip>
-        </div>
+      <div v-else-if="!currentCard" class="empty">
+        Все карточки пройдены! 🎉
       </div>
-    </div>
+    </Transition>
+
+    <Transition name="fade">
+      <div v-if="showDetails" class="details">
+        <div class="details__content">
+          <h2 class="details__glyph">
+            {{ currentCard?.glyph }}
+          </h2>
+          <div v-if="currentCard?.traditionalGlyph" class="details__traditional">
+            Традиционный: {{ currentCard.traditionalGlyph }}
+          </div>
+          <div class="details__pinyin">
+            <span v-for="(p, idx) in currentCard?.pinyin" :key="idx">
+              {{ p.syllable }}<sup>{{ p.tone }}</sup>
+            </span>
+          </div>
+          <div class="details__translation">
+            <p>Английский: {{ currentCard?.translation.en }}</p>
+            <p>Русский: {{ currentCard?.translation.ru }}</p>
+          </div>
+        </div>
+        <button class="btn btn--continue" @click="handleContinue">
+          Продолжить
+        </button>
+      </div>
+    </Transition>
   </div>
 </template>
 
-<style scoped lang="scss">
-// Переопределенние стилей для лучшего отображения
-:deep() {
-  .word {
-    &.variant-4 {
-      padding-left: 0px !important;
-      border: none;
-      border-left: 3px dashed var(--border-accent-color);
-      border-right: 3px dashed var(--border-accent-color);
-      border-radius: 0;
-      width: 100%;
+<style lang="scss" scoped>
+.quiz-container {
+  position: relative;
+  max-width: 600px;
+  min-height: 600px;
+  margin: 0 auto;
+}
+
+.card {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  touch-action: none;
+  user-select: none;
+
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  &__glyph {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+    color: #333;
+    text-align: center;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  &__swipe-hints {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+
+    .hint {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+
+      &--active {
+        opacity: 1;
+      }
+
+      &--left {
+        left: 1rem;
+      }
+
+      &--right {
+        right: 1rem;
+      }
+    }
+  }
+
+  &--swiping {
+    cursor: grabbing;
+  }
+
+  &--swipe-left {
+    background: linear-gradient(45deg, #ffebee, #fff);
+  }
+
+  &--swipe-right {
+    background: linear-gradient(-45deg, #e8f5e9, #fff);
+  }
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &--know {
+    background: #4caf50;
+    color: white;
+
+    &:hover {
+      background: #388e3c;
+    }
+  }
+
+  &--repeat {
+    background: #f44336;
+    color: white;
+
+    &:hover {
+      background: #d32f2f;
     }
   }
 }
 
-.lab-test {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+// Анимации
+.card-enter-active,
+.card-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  &-content {
-    width: 100%;
-    background-color: var(--bg-secondary-color);
-    border: 1px solid var(--border-secondary-color);
-    padding: 16px;
+.card-enter-from {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
 
-    .question {
-      &-title {
-        display: flex;
-        font-size: 1.5rem;
-        align-items: center;
-        justify-content: center;
+.card-leave-to {
+  opacity: 0;
 
-        @include mobile() {
-          font-size: 1.1rem;
-        }
-      }
-      &-divider {
-        margin-top: 8px;
-        border: 1px solid var(--border-secondary-color);
-      }
-    }
+  &.card--swipe-left {
+    transform: translateX(-100px) rotate(-15deg);
+  }
 
-    .answer-list {
-      display: grid;
-      grid-template-rows: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 32px;
+  &.card--swipe-right {
+    transform: translateX(100px) rotate(15deg);
+  }
+}
 
-      @include mobile() {
-        grid-template-rows: 1fr;
-        grid-template-columns: 1fr;
-      }
-    }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
 
-    .answer {
-      min-width: 80px;
-      min-height: 80px;
-      color: var(--fg-primary-color);
-      font-family: var(--font-family-cn);
-      font-size: 2rem;
-      background-color: var(--bg-tertiary-color);
-      border: 1px solid var(--border-secondary-color);
-      border-radius: 4px;
-      padding: 8px;
-      flex-basis: 300px;
-      display: flex;
-      align-items: center;
-      flex-grow: 1;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 
-      &:hover {
-        color: var(--fg-action-color);
-      }
+.details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
 
-      &.selected {
-        color: var(--fg-action-color);
-        border: 2px solid var(--border-accent-color);
-        box-shadow: 0px 0px 0px 1px var(--border-accent-color);
-      }
-      &.correct {
-        opacity: 1;
-        border: 1px solid #00ff4c60;
-        background-color: #00ff9d21;
-        color: #0d4e00da;
-      }
-      &.uncorrect {
-        opacity: 1;
-        border: 1px solid #ff1e0060;
-        background-color: #ff000021;
-        color: #4e0024da;
-      }
+  &__content {
+    margin-bottom: 2rem;
+  }
 
-      @include mobile() {
-        flex-basis: 190px;
-        min-width: 50px;
-        min-height: 50px;
-        font-size: 1rem;
-      }
-    }
+  &__glyph {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
 
-    .answer-description {
-      display: flex;
-      flex-direction: column;
+  &__traditional {
+    color: #666;
+    margin-bottom: 1rem;
+  }
 
-      &-content {
-        padding: 0 16px;
-      }
-      &-header {
-        margin-bottom: 12px;
-        font-style: italic;
-        font-size: 1rem;
+  &__pinyin {
+    font-size: 1.5rem;
+    margin: 1.5rem 0;
 
-        @include mobile() {
-          font-size: 0.9rem;
-        }
-      }
-      &-divider {
-        width: 100%;
-        margin-top: 18px;
-        margin-bottom: 24px;
-        border: 1px solid var(--border-secondary-color);
-      }
-      &-hint {
-        margin: 0 2px;
-        margin-top: 12px;
-        font-size: 0.8rem;
-        font-family: 'Rubik';
-        color: var(--fg-secondary-color);
-      }
-    }
-
-    .check {
-      margin-top: 48px;
-      position: relative;
-      display: grid;
-      grid-template-rows: 1fr;
-      grid-template-columns: 1fr 2fr 1fr;
-      grid-template-areas: 'LEFT_OPTION BTN RIGHT_OPTION';
-
-      @include mobile() {
-        grid-template-columns: 1fr 4fr 1fr;
-      }
-
-      &-btn {
-        grid-area: BTN;
-        text-transform: none;
-        text-decoration: none;
-        letter-spacing: 1px;
-        padding: 0 24px;
-        color: var(--fg-primary-color);
-      }
-
-      &-option {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        &-item {
-          color: var(--fg-secondary-color);
-        }
-
-        > * {
-          cursor: pointer;
-        }
-
-        &.left {
-          grid-area: LEFT_OPTION;
-        }
-        &.right {
-          grid-area: RIGHT_OPTION;
-          display: flex;
-          flex-direction: row-reverse;
-        }
-      }
-    }
-
-    @include mobile() {
-      padding: 16px 8px;
+    span {
+      margin-right: 0.5rem;
     }
   }
 
-  &.fullscreen {
-    z-index: 100;
-    height: 100%;
-    background-color: transparent;
-
-    .lab-test-content {
-      background-color: transparent !important;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      max-width: 100%;
-      border: none;
-      padding: 8px;
-
-      .answer-list {
-        margin-top: auto;
-      }
-
-      .check {
-        margin-top: auto;
-      }
-    }
+  &__translation {
+    color: #444;
+    line-height: 1.6;
   }
 }
 </style>

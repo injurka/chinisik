@@ -334,36 +334,11 @@ export const mockCms = {
             tag: 'HieroglyphWord',
             props: {
               glyph: '汉语水平考试',
-              pinyin: {
-                pinyin: 'Hanyu Shuiping Kaoshi',
-                tone: [{
-                  index: 1,
-                  type: 4,
-                }, {
-                  index: 4,
-                  type: 3,
-                }, {
-                  index: 9,
-                  type: 4,
-                }, {
-                  index: 11,
-                  type: 2,
-                }, {
-                  index: 16,
-                  type: 3,
-                }, {
-                  index: 20,
-                  type: 4,
-                }],
-              },
+              pinyin: '',
               variant: 2,
               translate: 'HSK',
             },
           },
-          // {
-          //   tag: 'p',
-          //   children: 'Уровень знания китайского языка для лиц, не являющихся носителями китайского языка, определяется квалификационным экзаменом. Его результаты признаются во всем мире.',
-          // },
         ],
       },
     ],

@@ -1,5 +1,3 @@
-import type { ToneType } from './pinyin'
-
 interface HieroglyphHsk {
   item: any
   id: number
@@ -19,5 +17,3 @@ interface HieroglyphHsk {
 export type {
   HieroglyphHsk,
 }
-
-

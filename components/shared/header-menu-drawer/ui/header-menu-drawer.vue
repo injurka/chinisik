@@ -11,7 +11,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: 'Ключи', icon: 'mdi:key', routeName: RouteNames.Keys, routePath: RoutePaths.Keys },
   { name: 'Пиньин', icon: 'mdi:translate', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
-  { name: 'HSK словарь', icon: 'mdi:trophy-broken', routeName: RouteNames.HSK, routePath: RoutePaths.HSK },
+  { name: 'HSK словарь', icon: 'mdi:trophy-broken', routeName: RouteNames.HSK, routePath: RoutePaths.HSK('about') },
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
   { name: 'Лексический анализ', icon: 'mdi:layers-search-outline', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
   { name: 'Разбор иероглифов (устарело)', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },

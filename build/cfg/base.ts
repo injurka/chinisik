@@ -87,6 +87,7 @@ export const baseCfg: NuxtConfig = {
         'mdi:refresh',
         'material-symbols:stacks-outline',
         'mdi:close',
+        'mdi:tune',
         'mdi:logout',
         'mdi:wikipedia',
         'line-md:loading-loop',
