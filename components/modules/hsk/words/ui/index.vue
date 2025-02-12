@@ -94,6 +94,7 @@ const { controlMenu, controls, toggleControl } = useHskControls()
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 
   &:deep(.v-pagination__list) {
     .v-btn {

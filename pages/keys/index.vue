@@ -3,6 +3,19 @@ import { JsonToDom } from '~/components/domain/json-to-dom'
 import { KeyHieroglyph, KeyHieroglyphControl, KeyHieroglyphInfo } from '~/components/modules/keys'
 import { PageLoader } from '~/components/shared/page-loader'
 
+type TabVariant = 'list' | 'lab'
+interface TabsOption {
+  key: TabVariant
+  icon: string
+  hint: string
+}
+
+const tabsOptions = [
+  { key: 'list', icon: 'mdi-book-open-page-variant', hint: 'Полный список' },
+  { key: 'lab', icon: 'mdi-test-tube', hint: 'Проверка знаний' },
+] satisfies TabsOption[]
+
+const route = useRoute()
 const { isMobile } = useDevice()
 const store = useStore(['keys'])
 const {
@@ -12,8 +25,8 @@ const {
   control,
 } = storeToRefs(store.keys)
 
-const tab = ref(1)
 const controlMenu = ref(false)
+const currentTab = ref<TabVariant>(initialTab())
 
 await useAsyncData(
   'hieroglyph-keys',
@@ -32,8 +45,24 @@ function onHieroglyphExpand(hieroglyph: HieroglyphKey) {
   isExpandedDialog.value = true
 }
 
+function initialTab() {
+  const tab = route.query.tab as TabVariant | undefined
+  return tab && tabsOptions.some(t => t.key === tab) ? tab : 'list'
+}
+
+watch(
+  currentTab,
+  (newTab) => {
+    navigateTo({
+      path: `/${RouteNames.Keys}`,
+      query: { tab: newTab },
+      replace: true,
+    })
+  },
+)
+
 definePageMeta({
-  layout: 'base',
+  layout: 'base-with-effects',
   pageTransition: {
     name: 'fade',
     mode: 'out-in',
@@ -51,7 +80,7 @@ definePageMeta({
 
     <div class="tabs">
       <v-tabs
-        v-model="tab"
+        v-model="currentTab"
         align-tabs="center"
         :fixed-tabs="isMobile ? false : true"
         color="var(--fg-accent-color)"
@@ -59,14 +88,11 @@ definePageMeta({
         slider-color="var(--fg-action-color)"
       >
         <v-tab
-          prepend-icon="mdi-book-open-page-variant"
-          :value="1"
-          :text="isMobile ? '' : 'Полный список'"
-        />
-        <v-tab
-          prepend-icon="mdi-test-tube"
-          :value="2"
-          :text="isMobile ? '' : 'Проверка знаний'"
+          v-for="tab in tabsOptions"
+          :key="tab.key"
+          :prepend-icon="tab.icon"
+          :value="tab.key"
+          :text="isMobile ? '' : tab.hint"
         />
       </v-tabs>
       <div class="settings">
@@ -89,8 +115,8 @@ definePageMeta({
       </div>
     </div>
 
-    <v-tabs-window v-model="tab">
-      <v-tabs-window-item :value="1">
+    <v-tabs-window v-model="currentTab">
+      <v-tabs-window-item value="list">
         <v-container fluid>
           <div class="list">
             <KeyHieroglyph
@@ -100,27 +126,31 @@ definePageMeta({
               :control
               @on-expand="onHieroglyphExpand"
             />
+            <KeyHieroglyphInfo
+              v-model="isExpandedDialog"
+              :hieroglyph="expandedHieroglyphKey"
+            />
           </div>
         </v-container>
       </v-tabs-window-item>
-      <v-tabs-window-item :value="2">
+      <v-tabs-window-item value="lab">
         <v-container fluid>
-          В разработке
+          <p>
+            В разработке
+          </p>
         </v-container>
       </v-tabs-window-item>
     </v-tabs-window>
-
-    <KeyHieroglyphInfo
-      v-model="isExpandedDialog"
-      :hieroglyph="expandedHieroglyphKey"
-    />
   </section>
 </template>
 
 <style scoped lang="scss">
 .content {
-  padding: 16px;
   @include default-font();
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: var(--bg-primary-color);
 
   .description {
     font-size: 1rem;
@@ -166,6 +196,19 @@ definePageMeta({
 
   @include mobile() {
     padding: 8px;
+  }
+}
+
+.tabs {
+  position: relative;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 32px;
+  border-bottom: 1px solid var(--border-secondary-color);
+
+  &:deep(.v-tab__slider) {
+    height: 3px !important;
   }
 }
 </style>

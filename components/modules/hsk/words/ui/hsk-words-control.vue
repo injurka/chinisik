@@ -31,7 +31,6 @@ const control = defineModel<any>({ required: true })
 .controls {
   display: flex;
   flex-direction: column;
-
   gap: 10px;
   background-color: var(--bg-primary-color);
   margin: 8px;

@@ -59,7 +59,7 @@ async function submit() {
     onSuccess: async ({ data: { user, token } }) => {
       store.auth.$patch({ user })
       useCookie(TOKEN_KEY, { sameSite: 'lax' }).value = token
-      await navigateTo(RoutePaths.Keys)
+      await navigateTo(RoutePaths.Keys('list'))
     },
     onError: ({ error }) => {
       snackbarError.value = {

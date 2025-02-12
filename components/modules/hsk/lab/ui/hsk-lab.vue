@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { HaoticLines } from '~/components/domain/haotic-lines'
 import { PinyinText } from '~/components/domain/pinyin-text'
 import { useCardQueue, useSwipeHandler } from '../composables'
 
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const isFullscreen = defineModel<boolean>('fullscreen', { required: true, default: false })
 
 const { currentCard, markAsKnown, markForRepeat } = useCardQueue(props.words)
 const { cardStyle, swipeDirection, isSwiping, swipeHandlers } = useSwipeHandler({
@@ -16,6 +18,7 @@ const { cardStyle, swipeDirection, isSwiping, swipeHandlers } = useSwipeHandler(
 
 const showDetails = ref(false)
 const lastAction = ref<'know' | 'repeat' | null>(null)
+const contentEl = ref<HTMLElement>()
 
 function handleKnow() {
   lastAction.value = 'know'
@@ -50,7 +53,7 @@ const cardClass = computed(() => ({
 </script>
 
 <template>
-  <div class="quiz-container">
+  <div ref="contentEl" class="quiz-container" :class="{ isFullscreen: fullscreen }">
     <Transition name="card" mode="out-in">
       <div
         v-if="currentCard && !showDetails"
@@ -82,15 +85,22 @@ const cardClass = computed(() => ({
             </v-btn>
           </div>
         </div>
+
+        <v-btn
+          v-if="!fullscreen"
+          icon
+          variant="text"
+          class="fullscreen"
+          @click="isFullscreen = !isFullscreen"
+        >
+          <Icon
+            name="mdi:fullscreen"
+            size="26"
+          />
+        </v-btn>
       </div>
 
-      <div v-else-if="!currentCard" class="empty">
-        Все карточки пройдены! 🎉
-      </div>
-    </Transition>
-
-    <Transition name="fade">
-      <div v-if="showDetails" class="card-details">
+      <div v-else-if="showDetails" class="card-details">
         <div class="card-details-content">
           <h2 class="card-details-glyph">
             {{ currentCard?.glyph }}
@@ -118,24 +128,104 @@ const cardClass = computed(() => ({
         >
           Продолжить
         </v-btn>
+
+        <v-btn
+          v-if="!fullscreen"
+          icon
+          variant="text"
+          class="fullscreen"
+          @click="isFullscreen = !isFullscreen"
+        >
+          <Icon
+            name="mdi:fullscreen"
+            size="26"
+          />
+        </v-btn>
+      </div>
+
+      <div v-else-if="!currentCard" class="empty">
+        Все карточки пройдены! 🎉
       </div>
     </Transition>
+
+    <v-btn
+      v-if="!!fullscreen"
+      icon
+      variant="text"
+      class="fullscreen"
+      @click="isFullscreen = !isFullscreen"
+    >
+      <Icon
+        name="mdi:fullscreen"
+        size="32"
+      />
+    </v-btn>
+
+    <ClientOnly>
+      <HaoticLines
+        v-if="fullscreen"
+        class="haotic-lines"
+        :speed="2"
+        :weight-stroke="240"
+        :points-counts="15"
+        :cap="true"
+        :viewport-el="contentEl"
+        color="--bg-overlay-primary-color"
+      />
+    </ClientOnly>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.haotic-lines {
+  opacity: 0.1;
+}
 .quiz-container {
   position: relative;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
   margin-top: 32px;
-  max-width: 400px;
-  max-height: 400px;
-  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: 100%;
+
+  &.isFullscreen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    margin: 0;
+    background-color: var(--bg-primary-color);
+    align-items: center;
+
+    .card-details,
+    .card {
+      max-width: 600px;
+      max-height: 600px;
+      z-index: 10;
+      aspect-ratio: 1 / 1;
+      border-radius: 0;
+    }
+  }
+}
+
+.fullscreen {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  color: var(--fg-tertiary-color);
+  z-index: 10;
 }
 
 .card {
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  max-width: 500px;
+  max-height: 500px;
   position: relative;
-  background: var(--bg-secondary-color);
+  background: radial-gradient(ellipse at top, var(--bg-accent-color), var(--bg-secondary-color)),
+    radial-gradient(ellipse at bottom, var(--bg-secondary-color), var(--bg-secondary-color));
   border: 1px solid var(--border-secondary-color);
   border-radius: 16px;
   padding: 32px;
@@ -144,7 +234,7 @@ const cardClass = computed(() => ({
   user-select: none;
   height: 100%;
   width: 100%;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.4s ease-in-out;
 
   &-content {
     display: flex;
@@ -161,6 +251,7 @@ const cardClass = computed(() => ({
     justify-content: center;
     text-align: center;
     font-size: 5rem;
+    line-height: normal;
     letter-spacing: 2px;
     font-weight: 400;
     border-radius: 5px;
@@ -184,27 +275,27 @@ const cardClass = computed(() => ({
   }
 
   &--swipe-left {
-    background: linear-gradient(45deg, #ffebee, var(--bg-secondary-color));
-    box-shadow: 0px 0px 0px 2px #ffebee;
-    border: 1px solid #ffebee;
+    background: linear-gradient(45deg, var(--bg-error-color), var(--bg-secondary-color));
+    box-shadow: 0px 0px 0px 2px var(--bg-error-color);
+    border: 1px solid var(--bg-error-color);
   }
 
   &--swipe-right {
-    background: linear-gradient(-45deg, #e8f5e9, var(--bg-secondary-color));
-    box-shadow: 0px 0px 0px 2px #e8f5e9;
-    border: 1px solid #e8f5e9;
+    background: linear-gradient(-45deg, var(--bg-success-color), var(--bg-secondary-color));
+    box-shadow: 0px 0px 0px 2px var(--bg-success-color);
+    border: 1px solid var(--bg-success-color);
   }
 }
 
 .card-details {
+  position: relative;
+  margin: 0 auto;
+  max-width: 500px;
+  max-height: 500px;
+  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: var(--bg-secondary-color);
   border: 1px solid var(--border-secondary-color);
   border-radius: 16px;
@@ -219,6 +310,8 @@ const cardClass = computed(() => ({
   &-content {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex-grow: 1;
     gap: 4px;
   }
@@ -229,6 +322,7 @@ const cardClass = computed(() => ({
     justify-content: center;
     text-align: center;
     font-size: 5rem;
+    line-height: normal;
     letter-spacing: 2px;
     font-weight: 400;
     border-radius: 5px;
@@ -265,10 +359,9 @@ const cardClass = computed(() => ({
   }
 }
 
-// Анимации
 .card-enter-active,
 .card-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-enter-from {
@@ -286,15 +379,5 @@ const cardClass = computed(() => ({
   &.card--swipe-right {
     transform: translateX(100px) rotate(15deg);
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
