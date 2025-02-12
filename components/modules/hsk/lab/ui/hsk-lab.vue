@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { usePinyinFormatter } from '~/components/domain/hsk'
 import { PinyinText } from '~/components/domain/pinyin-text'
 import { useCardQueue, useSwipeHandler } from '../composables'
 

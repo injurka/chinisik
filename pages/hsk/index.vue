@@ -12,9 +12,9 @@ interface TabsOption {
 }
 
 const tabsOptions = [
-  { key: 'about', icon: 'mdi:book', hint: 'Подробнее о HSK' },
-  { key: 'words', icon: 'mdi:book-open-page-variant', hint: 'Слова' },
-  { key: 'lab', icon: 'mdi:test-tube', hint: 'Проверка знаний' },
+  { key: 'about', icon: 'mdi-book', hint: 'Подробнее о HSK' },
+  { key: 'words', icon: 'mdi-book-open-page-variant', hint: 'Слова' },
+  { key: 'lab', icon: 'mdi-test-tube', hint: 'Проверка знаний' },
 ] satisfies TabsOption[]
 
 const { isMobile } = useDevice()
