@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({ layout: 'base' })
 
-await navigateTo(RoutePaths.Keys)
+await navigateTo(RoutePaths.Keys('list'))
 </script>
 
 <template>

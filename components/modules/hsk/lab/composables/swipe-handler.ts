@@ -64,18 +64,15 @@ function useSwipeHandler({ onSwipeLeft, onSwipeRight }: SwipeCallbacks) {
 
   // Touch handlers
   function onTouchStart(e: TouchEvent) {
-    e.preventDefault()
     handleStart(e.touches[0].clientX)
   }
 
   function onTouchMove(e: TouchEvent) {
-    e.preventDefault()
     handleMove(e.touches[0].clientX)
   }
 
   // Mouse handlers
   function onMouseMove(e: MouseEvent) {
-    e.preventDefault()
     handleMove(e.clientX)
   }
 
@@ -86,7 +83,6 @@ function useSwipeHandler({ onSwipeLeft, onSwipeRight }: SwipeCallbacks) {
   }
 
   function onMouseDown(e: MouseEvent) {
-    e.preventDefault()
     handleStart(e.clientX)
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp)

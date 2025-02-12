@@ -31,7 +31,7 @@ watch(
   currentTab,
   (newTab) => {
     navigateTo({
-      path: '/hsk',
+      path: `/${RouteNames.HSK}`,
       query: { tab: newTab },
       replace: true,
     })
@@ -68,19 +68,19 @@ definePageMeta({
       </v-tabs>
     </div>
 
-    <v-tabs-window v-model="currentTab">
+    <v-tabs-window v-model="currentTab" class="window">
       <v-tabs-window-item value="about">
-        <v-container fluid class="container">
+        <v-container fluid>
           <HskAbout />
         </v-container>
       </v-tabs-window-item>
       <v-tabs-window-item value="words">
-        <v-container fluid class="container">
+        <v-container fluid>
           <HskWords />
         </v-container>
       </v-tabs-window-item>
       <v-tabs-window-item value="lab">
-        <v-container fluid class="container">
+        <v-container fluid>
           <HskLab />
         </v-container>
       </v-tabs-window-item>
@@ -90,8 +90,10 @@ definePageMeta({
 
 <style scoped lang="scss">
 .content {
+  @include default-font();
+  display: flex;
+  flex-direction: column;
   padding: 16px;
-  font-family: 'Rubik';
   max-width: 1200px;
   min-height: 100%;
   margin: 0 auto;
@@ -100,10 +102,6 @@ definePageMeta({
 
   @include mobile {
     padding: 4px;
-
-    .container {
-      padding: 8px 2px;
-    }
   }
 
   .description {
@@ -119,13 +117,36 @@ definePageMeta({
       }
     }
   }
+
+  .window {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    &:deep() {
+      .v-window__container {
+        display: flex;
+        flex-grow: 1;
+      }
+      .v-window-item {
+        display: flex;
+        flex-grow: 1;
+      }
+      .v-container {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+  }
 }
 
 .tabs {
   position: relative;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   margin-top: 32px;
+  border-bottom: 1px solid var(--border-secondary-color);
 
   .settings {
     position: absolute;
@@ -138,6 +159,10 @@ definePageMeta({
   .v-btn {
     color: var(--fg-secondary-color);
     text-transform: none;
+    z-index: 1000;
+  }
+  &:deep(.v-tab__slider) {
+    height: 3px !important;
   }
 }
 </style>

@@ -9,7 +9,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { name: 'Мой профиль', icon: 'material-symbols:frame-person-rounded', routeName: RouteNames.Keys, routePath: RoutePaths.Keys },
+  { name: 'Мой профиль', icon: 'material-symbols:frame-person-rounded', routeName: RouteNames.Keys, routePath: RoutePaths.Keys('list') },
   { name: 'Настройки', icon: 'material-symbols:settings-outline', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
 ]
 

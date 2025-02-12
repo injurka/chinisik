@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-// import { HaoticLines } from '~/components/domain/haotic-lines'
 import LabQuiz from './hsk-lab.vue'
 
 const KEY = 'hieroglyph-hsk_lab'
 
-// const isFullscreen = ref<boolean>(false)
-// const contentEl = ref<HTMLElement>()
+const isFullscreen = ref<boolean>(false)
 
 const { data } = await useAsyncData(
   KEY,
@@ -20,36 +18,9 @@ const { data } = await useAsyncData(
 <template>
   <LabQuiz
     v-if="data?.data"
+    v-model:fullscreen="isFullscreen"
     :words="data.data"
   />
-
-  <!-- <ClientOnly>
-    <v-dialog
-      v-model="isFullscreen"
-      class="dialog"
-      persistent
-    >
-      <div
-        ref="contentEl"
-        class="dialog-content"
-      >
-        <LabQuiz
-          v-model:fullscreen="isFullscreen"
-          class="fullscreen"
-          :test="mockTestQuestion"
-        />
-        <HaoticLines
-          v-if="isFullscreen"
-          :speed="2"
-          :weight-stroke="50"
-          :points-counts="10"
-          :cap="false"
-          :viewport-el="contentEl"
-          color="--bg-overlay-secondary-color"
-        />
-      </div>
-    </v-dialog>
-  </ClientOnly> -->
 </template>
 
 <style lang="scss" scoped>

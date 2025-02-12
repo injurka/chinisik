@@ -31,7 +31,7 @@ async function validateUser() {
     })
   }
   else {
-    navigateTo({ path: RoutePaths.Keys })
+    navigateTo({ path: RoutePaths.Keys('list') })
   }
 }
 

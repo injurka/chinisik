@@ -64,6 +64,8 @@ function onOpenWiki() {
         <div ref="hieroglyphEl" class="hieroglyph-container">
           <HaoticLines
             v-if="dialog"
+            :weight-stroke="40"
+            class="haotic-lines"
             :viewport-el="hieroglyphEl"
           />
           <div class="hieroglyph-item item">
@@ -135,6 +137,10 @@ function onOpenWiki() {
 </template>
 
 <style lang="scss" scoped>
+.haotic-lines {
+  opacity: 0.2;
+}
+
 .dialog {
   &-content {
     position: relative;
