@@ -1,21 +1,29 @@
 <script lang="ts" setup>
-import { HaoticLines } from '~/components/domain/haotic-lines'
+// import { HaoticLines } from '~/components/domain/haotic-lines'
 import LabQuiz from './hsk-lab.vue'
 
-const isFullscreen = ref<boolean>(false)
+const KEY = 'hieroglyph-hsk_lab'
 
-const mockTestQuestion: any[] = []
-const contentEl = ref<HTMLElement>()
+// const isFullscreen = ref<boolean>(false)
+// const contentEl = ref<HTMLElement>()
+
+const { data } = await useAsyncData(
+  KEY,
+  () => useRequest({
+    key: KEY,
+    fn: ({ api }) => api.hsk.v1.hieroglyphsByLevel({ level: 1 }),
+  }),
+  { dedupe: 'defer' },
+)
 </script>
 
 <template>
   <LabQuiz
-    v-if="!isFullscreen"
-    v-model:fullscreen="isFullscreen"
-    :test="mockTestQuestion"
+    v-if="data?.data"
+    :words="data.data"
   />
 
-  <ClientOnly>
+  <!-- <ClientOnly>
     <v-dialog
       v-model="isFullscreen"
       class="dialog"
@@ -41,7 +49,7 @@ const contentEl = ref<HTMLElement>()
         />
       </div>
     </v-dialog>
-  </ClientOnly>
+  </ClientOnly> -->
 </template>
 
 <style lang="scss" scoped>

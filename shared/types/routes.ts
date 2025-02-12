@@ -20,7 +20,7 @@ export const RoutePaths = {
   GlossaryTopic: (value: string) => `/glossary/${value}/topic`,
   SplitGlyphs: '/split-glyphs',
   LinguisticAnalysis: '/linguistic-analysis',
-  HSK: '/hsk',
+  HSK: (value: 'about' | 'words' | 'lab') => `/hsk?${value}`,
 
   About: '/about',
 

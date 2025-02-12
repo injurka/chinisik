@@ -1,84 +1,24 @@
 <script lang="ts" setup>
-import type { PinyinTextProps, PinyinTextTone } from '~/components/domain/pinyin-text'
 import { HieroglyphWord } from '~/components/domain/hieroglyph-word'
 import HskWordsControl from '~/components/modules/hsk/words/ui/hsk-words-control.vue'
 import PageLoader from '~/components/shared/page-loader/ui/page-loader.vue'
+import { useHskControls, useHskWords, usePinyinFormatter } from '../composables'
 
-interface HskWordsControlValues {
-  isFixedStyle: boolean
-}
+const {
+  HSK_LEVELS,
+  VISIBLE_PAGES,
+  MOBILE_VISIBLE_PAGES,
+  page,
+  searchKeyword,
+  selectedLevel,
+  isMobile,
+  data,
+  isLoading,
+  totalPages,
+} = await useHskWords()
 
-const HSK_LEVELS = Array.from({ length: 9 }, (_, i) => i + 1)
-const ITEMS_PER_PAGE_DEFAULT = 30
-const VISIBLE_PAGES = 7
-const MOBILE_VISIBLE_PAGES = 3
-const KEY = 'hieroglyph-hsk_words'
-const SEARCH_DEBOUNCE = 300
-const HSK_WORDS_CONTROL_KEY = 'hsk_words_control'
-
-const controlValues = useCookie<HskWordsControlValues>(HSK_WORDS_CONTROL_KEY)
-
-const page = ref<number>(1)
-const searchKeyword = ref<string>('')
-const selectedLevel = ref<number>(1)
-const itemsPerPage = ref<number>(ITEMS_PER_PAGE_DEFAULT)
-const controlMenu = ref<boolean>(false)
-const controls = ref<HskWordsControlValues>(controlValues.value ?? { isFixedStyle: true })
-
-const { isMobile } = useDevice()
-const { data, refresh, status } = await useAsyncData(
-  KEY,
-  () => useRequest({
-    key: KEY,
-    fn: ({ api }) => api.hsk.v1.hieroglyphsByLevelList({
-      level: selectedLevel.value,
-      page: page.value,
-      limit: itemsPerPage.value,
-      keyword: searchKeyword.value,
-    }),
-  }),
-  { dedupe: 'defer' },
-)
-const debouncedRefresh = useDebounceFn(() => refresh(), SEARCH_DEBOUNCE)
-
-const isLoading = computed(() => status.value === 'pending')
-
-const totalPages = computed(() => {
-  const total = data.value?.data?.pagination?.total
-  if (!total)
-    return 0
-  return Math.ceil(total / itemsPerPage.value)
-})
-
-function formatPinyinData(pinyinArray: HieroglyphHsk['pinyin']): PinyinTextProps {
-  return {
-    pinyin: pinyinArray.map(p => p.syllable).join(' '),
-    tone: pinyinArray.map((p, index, array) => {
-      const offset = array
-        .slice(0, index)
-        .reduce((sum, curr) => sum + curr.syllable.length + 1, 0)
-
-      return {
-        index: offset + p.position,
-        type: p.tone,
-      }
-    }) as unknown as PinyinTextTone,
-  }
-}
-function toggleControl(key: keyof HskWordsControlValues) {
-  const rawValues = { ...controlValues.value }
-  rawValues[key] = !rawValues[key]
-  controlValues.value = rawValues
-  controls.value = rawValues
-}
-
-watch(searchKeyword, () => {
-  page.value = 1
-  debouncedRefresh()
-})
-watch([page, itemsPerPage, selectedLevel], () => {
-  refresh()
-})
+const { formatPinyinData } = usePinyinFormatter()
+const { controlMenu, controls, toggleControl } = useHskControls()
 </script>
 
 <template>

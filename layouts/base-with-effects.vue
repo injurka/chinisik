@@ -5,6 +5,7 @@ import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
 
 const isMenuDrawer = ref<boolean>(false)
 const isProfileDrawer = ref<boolean>(false)
+const { isMobile } = useDevice()
 
 function getRandomChar() {
   const rangeStart = 0x4E00
@@ -38,22 +39,24 @@ const symbols = Array.from({ length: 40 }, () => ({
     <VMain>
       <slot />
 
-      <div class="background-effects">
-        <div
-          v-for="(symbol, index) in symbols"
-          :key="index"
-          class="symbol"
-          :style="{
-            top: `${symbol.top}%`,
-            left: `${symbol.left}%`,
-            animationDelay: `${symbol.delay}s`,
-            animationDuration: `${symbol.duration}s`,
-            fontSize: `${symbol.size}rem`,
-          }"
-        >
-          {{ symbol.char }}
+      <client-only>
+        <div v-if="!isMobile" class="background-effects">
+          <div
+            v-for="(symbol, index) in symbols"
+            :key="index"
+            class="symbol"
+            :style="{
+              top: `${symbol.top}%`,
+              left: `${symbol.left}%`,
+              animationDelay: `${symbol.delay}s`,
+              animationDuration: `${symbol.duration}s`,
+              fontSize: `${symbol.size}rem`,
+            }"
+          >
+            {{ symbol.char }}
+          </div>
         </div>
-      </div>
+      </client-only>
     </VMain>
   </VLayout>
 </template>

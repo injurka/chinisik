@@ -74,54 +74,58 @@
     <section>
       <h2>Критерии оценки уровней знания китайского языка</h2>
       <table>
-        <tr>
-          <th>Уровень</th>
-          <th>Иероглифы</th>
-          <th>Слова</th>
-          <th>Грамматические конструкции</th>
-        </tr>
-        <tr>
-          <td>HSK 1</td>
-          <td>300</td>
-          <td>500</td>
-          <td>48</td>
-        </tr>
-        <tr>
-          <td>HSK 2</td>
-          <td>600</td>
-          <td>1272</td>
-          <td>129</td>
-        </tr>
-        <tr>
-          <td>HSK 3</td>
-          <td>900</td>
-          <td>2245</td>
-          <td>210</td>
-        </tr>
-        <tr>
-          <td>HSK 4</td>
-          <td>1200</td>
-          <td>3245</td>
-          <td>286</td>
-        </tr>
-        <tr>
-          <td>HSK 5</td>
-          <td>1500</td>
-          <td>4316</td>
-          <td>357</td>
-        </tr>
-        <tr>
-          <td>HSK 6</td>
-          <td>1800</td>
-          <td>5456</td>
-          <td>424</td>
-        </tr>
-        <tr>
-          <td>HSK 7, 8 и 9</td>
-          <td>3000</td>
-          <td>11092</td>
-          <td>572</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Уровень</th>
+            <th>Иероглифы</th>
+            <th>Количество слов</th>
+            <th>Грамматические конструкции</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HSK 1</td>
+            <td>300</td>
+            <td>500</td>
+            <td>48</td>
+          </tr>
+          <tr>
+            <td>HSK 2</td>
+            <td>600</td>
+            <td>1272</td>
+            <td>129</td>
+          </tr>
+          <tr>
+            <td>HSK 3</td>
+            <td>900</td>
+            <td>2245</td>
+            <td>210</td>
+          </tr>
+          <tr>
+            <td>HSK 4</td>
+            <td>1200</td>
+            <td>3245</td>
+            <td>286</td>
+          </tr>
+          <tr>
+            <td>HSK 5</td>
+            <td>1500</td>
+            <td>4316</td>
+            <td>357</td>
+          </tr>
+          <tr>
+            <td>HSK 6</td>
+            <td>1800</td>
+            <td>5456</td>
+            <td>424</td>
+          </tr>
+          <tr>
+            <td>HSK 7, 8 и 9</td>
+            <td>3000</td>
+            <td>11092</td>
+            <td>572</td>
+          </tr>
+        </tbody>
       </table>
     </section>
 

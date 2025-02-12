@@ -1,10 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { JsonToDom } from '~/components/domain/json-to-dom'
-
-import { HskAbout, HskLab, HskWords } from '~/components/modules/hsk'
+import { PageLoader } from '~/components/shared/page-loader'
 import { mockCms } from '~/server/utils/mock/cms/description'
+import BaseLayout from './base-with-effects.vue'
 
-type TabVariant = 'about' | 'words' | 'lab'
+export type TabVariant = 'about' | 'words' | 'lab'
 interface TabsOption {
   key: TabVariant
   icon: string
@@ -19,36 +19,33 @@ const tabsOptions = [
 
 const { isMobile } = useDevice()
 const route = useRoute()
-
 const currentTab = ref<TabVariant>(initialTab())
+const isLoadingContent = ref<boolean>(false)
 
 function initialTab() {
-  const tab = route.query.tab as TabVariant | undefined
-  return tab && tabsOptions.some(t => t.key === tab) ? tab : 'about'
+  const hash = route.path.split('/').at(-1)
+  return tabsOptions.some(tab => tab.key === hash)
+    ? hash as TabVariant
+    : 'about'
 }
 
 watch(
-  currentTab,
+  () => currentTab.value,
   (newTab) => {
-    navigateTo({
-      path: '/hsk',
-      query: { tab: newTab },
-      replace: true,
-    })
+    if (newTab && tabsOptions.some(tab => tab.key === newTab)) {
+      navigateTo(`/hsk/${newTab}`)
+    }
   },
 )
-
-definePageMeta({
-  layout: 'base-with-effects',
-  pageTransition: false,
-})
 </script>
 
 <template>
-  <section class="content">
-    <JsonToDom :node="mockCms.hskLevels!" />
+  <BaseLayout>
+    <PageLoader v-if="isLoadingContent" />
 
-    <div class="tabs">
+    <section class="content">
+      <JsonToDom :node="mockCms.hskLevels!" />
+
       <v-tabs
         v-model="currentTab"
         class="tabs"
@@ -66,26 +63,14 @@ definePageMeta({
           :text="isMobile ? '' : tab.hint"
         />
       </v-tabs>
-    </div>
 
-    <v-tabs-window v-model="currentTab">
-      <v-tabs-window-item value="about">
-        <v-container fluid class="container">
-          <HskAbout />
-        </v-container>
-      </v-tabs-window-item>
-      <v-tabs-window-item value="words">
-        <v-container fluid class="container">
-          <HskWords />
-        </v-container>
-      </v-tabs-window-item>
-      <v-tabs-window-item value="lab">
-        <v-container fluid class="container">
-          <HskLab />
-        </v-container>
-      </v-tabs-window-item>
-    </v-tabs-window>
-  </section>
+      <v-container fluid class="container">
+        <keep-alive>
+          <slot />
+        </keep-alive>
+      </v-container>
+    </section>
+  </BaseLayout>
 </template>
 
 <style scoped lang="scss">
@@ -139,5 +124,10 @@ definePageMeta({
     color: var(--fg-secondary-color);
     text-transform: none;
   }
+}
+
+.container {
+  padding: 20px;
+  flex-grow: 1;
 }
 </style>
