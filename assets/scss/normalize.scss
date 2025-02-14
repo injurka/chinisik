@@ -96,3 +96,9 @@ hr {
   width: 100%;
   border: 1px solid var(--border-secondary-color);
 }
+.v-menu{
+  > div  > div  {
+    background: var(--bg-secondary-color) !important;
+    color: var(--fg-primary-color) !important;
+  }
+}

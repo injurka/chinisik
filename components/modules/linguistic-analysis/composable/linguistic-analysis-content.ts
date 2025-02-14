@@ -46,6 +46,9 @@ function useLinguisticAnalysisContent(params: Params) {
       key: RequestKeys.ANALYZE_TEXT,
       fn: ({ api }) => api.llvm.v1.analyzeText(control.value, abortController.value),
       onSuccess: ({ data }) => analyzedText.value = data,
+      onError: ({ error }) => {
+        console.log('error', error)
+      },
     })
   }
   const isLoadingSubmit = computed(() => useRequestStatus([RequestKeys.ANALYZE_TEXT]))

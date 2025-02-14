@@ -12,9 +12,10 @@ const navItems: NavItem[] = [
   { name: 'Ключи', icon: 'mdi:key', routeName: RouteNames.Keys, routePath: RoutePaths.Keys('list') },
   { name: 'Пиньин', icon: 'mdi:translate', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
   { name: 'HSK словарь', icon: 'mdi:trophy-broken', routeName: RouteNames.HSK, routePath: RoutePaths.HSK('about') },
+  { name: 'Тематический словарь', icon: 'mdi:book-open-variant', routeName: RouteNames.ThematicDictionary, routePath: RoutePaths.ThematicDictionary.Sections },
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
-  { name: 'Лексический анализ', icon: 'mdi:layers-search-outline', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
-  { name: 'Разбор иероглифов (устарело)', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
+  { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
+  { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
 ]
 </script>
 

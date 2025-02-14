@@ -79,7 +79,8 @@ export const baseCfg: NuxtConfig = {
         'mdi:key',
         'mdi:translate',
         'mdi:text-box-search',
-        'mdi:layers-search-outline',
+        'mdi:layers-search',
+        'mdi:book-open-variant',
         'mdi:book-open-page-variant',
         'mdi:test-tube',
         'mdi:book-alphabet',
@@ -145,6 +146,7 @@ export const baseCfg: NuxtConfig = {
   css: [
     '/assets/scss/fonts.scss',
     '/assets/scss/global.scss',
+    '/assets/scss/atomic.scss',
     '/assets/scss/normalize.scss',
   ],
 

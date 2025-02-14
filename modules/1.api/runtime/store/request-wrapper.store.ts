@@ -76,7 +76,7 @@ const useRequestWrapperStore = defineStore('request', {
           return { result, error: null }
         }
         catch (e: any) {
-          if (e?.response) {
+          if (!e?.response) {
             error = null
           }
           else {

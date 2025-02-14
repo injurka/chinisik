@@ -45,13 +45,12 @@ definePageMeta({
 </script>
 
 <template>
-  <section class="content">
+  <section class="content-wrapper">
     <JsonToDom :node="mockCms.hskLevels!" />
 
     <div class="tabs">
       <v-tabs
         v-model="currentTab"
-        class="tabs"
         align-tabs="center"
         :fixed-tabs="!isMobile"
         color="var(--fg-accent-color)"
@@ -89,32 +88,26 @@ definePageMeta({
 </template>
 
 <style scoped lang="scss">
-.content {
-  @include default-font();
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  max-width: 1200px;
-  min-height: 100%;
-  margin: 0 auto;
-  width: 100%;
-  background-color: var(--bg-primary-color);
-
-  @include mobile {
-    padding: 4px;
-  }
-
-  .description {
-    font-size: 1rem;
+.content-wrapper {
+  .tabs {
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
-    padding: 0 16px;
+    margin-top: 32px;
+    border-bottom: 1px solid var(--border-secondary-color);
 
-    @include mobile {
-      font-size: 0.9rem;
-
-      &:deep(.hw-word) {
-        flex-wrap: wrap;
-      }
+    .settings {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 48px;
+      height: 48px;
+    }
+    .v-btn {
+      color: var(--fg-secondary-color);
+      text-transform: none;
+      z-index: 1000;
     }
   }
 
@@ -135,34 +128,11 @@ definePageMeta({
       .v-container {
         display: flex;
         flex-grow: 1;
+        @include mobile {
+          padding: 4px;
+        }
       }
     }
-  }
-}
-
-.tabs {
-  position: relative;
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 32px;
-  border-bottom: 1px solid var(--border-secondary-color);
-
-  .settings {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 48px;
-    height: 48px;
-  }
-
-  .v-btn {
-    color: var(--fg-secondary-color);
-    text-transform: none;
-    z-index: 1000;
-  }
-  &:deep(.v-tab__slider) {
-    height: 3px !important;
   }
 }
 </style>
