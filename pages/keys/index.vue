@@ -73,7 +73,7 @@ definePageMeta({
 <template>
   <PageLoader v-if="isLoadingContent" />
 
-  <section v-else class="content">
+  <section v-else class="content-wrapper">
     <JsonToDom
       :node="description!"
     />
@@ -145,29 +145,14 @@ definePageMeta({
 </template>
 
 <style scoped lang="scss">
-.content {
-  @include default-font();
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px;
-  background-color: var(--bg-primary-color);
-
-  .description {
-    font-size: 1rem;
-    max-width: 1200px;
-    padding: 0 6px;
-    margin: 0 auto;
-
-    @include mobile {
-      font-size: 0.9rem;
-    }
-  }
-
+.content-wrapper {
   .tabs {
     position: relative;
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     margin-top: 32px;
+    border-bottom: 1px solid var(--border-secondary-color);
 
     .settings {
       position: absolute;
@@ -176,7 +161,6 @@ definePageMeta({
       width: 48px;
       height: 48px;
     }
-
     .v-btn {
       color: var(--fg-primary-color);
       text-transform: none;
@@ -192,23 +176,6 @@ definePageMeta({
     justify-content: center;
     flex-wrap: wrap;
     padding-bottom: 64px;
-  }
-
-  @include mobile() {
-    padding: 8px;
-  }
-}
-
-.tabs {
-  position: relative;
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 32px;
-  border-bottom: 1px solid var(--border-secondary-color);
-
-  &:deep(.v-tab__slider) {
-    height: 3px !important;
   }
 }
 </style>

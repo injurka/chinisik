@@ -33,7 +33,7 @@ definePageMeta({
 <template>
   <PageLoader v-if="isLoadingContent" />
 
-  <section v-else class="content">
+  <section v-else class="content-wrapper">
     <JsonToDom
       :node="description!"
     />
@@ -47,29 +47,7 @@ definePageMeta({
 </template>
 
 <style lang="scss" scoped>
-.content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-family: 'Rubik';
-  width: 100%;
-  padding: 16px;
-
-  @include mobile() {
-    padding: 2px;
-  }
-
-  .description {
-    font-size: 1rem;
-    max-width: 1200px;
-    padding: 0 14px;
-    margin: 0 auto;
-    margin-bottom: 16px;
-
-    @include mobile {
-      font-size: 0.9rem;
-    }
-  }
+.content-wrapper {
+  max-width: 100%;
 }
 </style>

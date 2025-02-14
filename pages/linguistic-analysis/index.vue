@@ -13,34 +13,8 @@ definePageMeta({
 </script>
 
 <template>
-  <section class="content">
+  <section class="content-wrapper">
     <JsonToDom :node="mockCms.linguisticAnalysis!" />
     <LinguisticAnalysis />
   </section>
 </template>
-
-<style scoped lang="scss">
-.content {
-  padding: 16px;
-  font-family: 'Rubik';
-  max-width: 1200px;
-  min-height: 100%;
-  margin: 0 auto;
-  width: 100%;
-  background-color: var(--bg-primary-color);
-
-  @include mobile {
-    padding: 4px;
-  }
-
-  .description {
-    font-size: 1rem;
-    margin: 0 auto;
-    padding: 0 6px;
-
-    @include mobile {
-      font-size: 0.9rem;
-    }
-  }
-}
-</style>

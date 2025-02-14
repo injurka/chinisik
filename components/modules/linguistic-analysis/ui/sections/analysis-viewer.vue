@@ -367,6 +367,7 @@ defineProps<Props>()
     margin-bottom: 24px;
 
     .glyph-block {
+      line-height: normal;
       font-size: 48px;
       margin-bottom: 8px;
       letter-spacing: 2px;
@@ -537,6 +538,7 @@ defineProps<Props>()
         gap: 12px;
 
         .glyph {
+          line-height: normal;
           font-size: 2rem;
           letter-spacing: 2px;
           font-weight: 500;
