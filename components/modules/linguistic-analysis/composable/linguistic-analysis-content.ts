@@ -17,7 +17,7 @@ function useLinguisticAnalysisContent(params: Params) {
   const analyzedText = ref<unknown | null>(null)
   const control = ref<LinguisticAnalysisContentControl>({
     value: '',
-    model: 'google/gemini-flash-1.5',
+    model: 'google/gemini-2.0-flash-001',
   })
   const abortController = ref<AbortController>(new AbortController())
 
@@ -46,11 +46,9 @@ function useLinguisticAnalysisContent(params: Params) {
       key: RequestKeys.ANALYZE_TEXT,
       fn: ({ api }) => api.llvm.v1.analyzeText(control.value, abortController.value),
       onSuccess: ({ data }) => analyzedText.value = data,
-      onError: ({ error }) => {
-        console.log('error', error)
-      },
     })
   }
+  const isAnalyzedText = computed(() => !!analyzedText.value)
   const isLoadingSubmit = computed(() => useRequestStatus([RequestKeys.ANALYZE_TEXT]))
   const errorSubmit = computed(() => useRequestError(RequestKeys.ANALYZE_TEXT))
 
@@ -61,7 +59,7 @@ function useLinguisticAnalysisContent(params: Params) {
     content,
     control,
     isLoadingSubmit,
-    isAnalyzedText: !!analyzedText.value,
+    isAnalyzedText,
     errorSubmit,
   }
 }
