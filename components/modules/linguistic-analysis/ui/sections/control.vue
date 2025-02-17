@@ -48,11 +48,10 @@ function handleKeyDown(event: KeyboardEvent) {
       label="LLVM модель"
       :items="[
         'deepseek-chat',
-        'deepseek/deepseek-r1-distill-llama-70b',
         'deepseek/deepseek-chat',
         'google/gemini-flash-1.5-8b',
         'google/gemini-flash-1.5',
-        'mistralai/mistral-small-24b-instruct-2501',
+        'google/gemini-2.0-flash-001',
       ]"
       variant="filled"
     />
