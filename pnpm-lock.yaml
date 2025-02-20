@@ -17,9 +17,6 @@ importers:
       '@vueuse/nuxt':
         specifier: 12.3.0
         version: 12.3.0(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(better-sqlite3@11.8.1)(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3)))(rollup@4.30.1)(typescript@5.7.3)
-      github-markdown-css:
-        specifier: ^5.8.1
-        version: 5.8.1
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
@@ -35,9 +32,6 @@ importers:
       markdown-it-obsidian-callouts:
         specifier: ^0.3.1
         version: 0.3.1(markdown-it@14.1.0)
-      markdown-it-obsidian-images:
-        specifier: ^1.0.1
-        version: 1.0.1
       markdown-it-regexp:
         specifier: ^0.4.0
         version: 0.4.0
@@ -3402,9 +3396,6 @@ packages:
     resolution: {integrity: sha512-bFi65yM+xZgk+u/KRIpekdSYkTB5W1pEf0Lt8Q8Msh7b+eQ7LXVtIB1Bkm4fvclDEL1b2CZkMhv2mOeF8tMdkA==}
     engines: {node: '>=12.0.0'}
 
-  extend@3.0.2:
-    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
-
   externality@1.0.2:
     resolution: {integrity: sha512-LyExtJWKxtgVzmgtEHyQtLFpw1KFhQphF9nTG8TpAIVkiI/xQ3FJh75tRFLYl4hkn7BNIIdLJInuDAavX35pMw==}
 
@@ -3591,10 +3582,6 @@ packages:
 
   github-from-package@0.0.0:
     resolution: {integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==}
-
-  github-markdown-css@5.8.1:
-    resolution: {integrity: sha512-8G+PFvqigBQSWLQjyzgpa2ThD9bo7+kDsriUIidGcRhXgmcaAWUIpCZf8DavJgc+xifjbCG+GvMyWr0XMXmc7g==}
-    engines: {node: '>=10'}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -4238,9 +4225,6 @@ packages:
     resolution: {integrity: sha512-MCvbHofaDxUD9hwrQg9+62Yq5Ev1K2glr5ogUxvFWm7WGG3SKqC90/ozWZ/ofqUvD5iw2KLElSWLHvL1crUeqA==}
     peerDependencies:
       markdown-it: ^14.0.0
-
-  markdown-it-obsidian-images@1.0.1:
-    resolution: {integrity: sha512-fTF7Mt9U0jhuXnA2I2DhzJkp4IJVeWFw7qggvn3u/jYo5XOlzaqEcjkoHi3S3+qlJmCB/L17JA57x6rJuIBSxQ==}
 
   markdown-it-regexp@0.4.0:
     resolution: {integrity: sha512-0XQmr46K/rMKnI93Y3CLXsHj4jIioRETTAiVnJnjrZCEkGaDOmUxTbZj/aZ17G5NlRcVpWBYjqpwSlQ9lj+Kxw==}
@@ -5263,9 +5247,6 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sanitize-filename@1.6.3:
-    resolution: {integrity: sha512-y/52Mcy7aw3gRm7IrcGDFx/bCk4AhRh2eI9luHOQM86nZsqwiRkkq2GekHXBBD+SmPidc8i2PqtYZl+pWJ8Oeg==}
-
   sass@1.80.6:
     resolution: {integrity: sha512-ccZgdHNiBF1NHBsWvacvT5rju3y1d/Eu+8Ex6c21nHp2lZGLBEtuwc415QfiI1PJa1TpCo3iXwwSRjRpn2Ckjg==}
     engines: {node: '>=14.0.0'}
@@ -5685,9 +5666,6 @@ packages:
     resolution: {integrity: sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g==}
     engines: {node: '>=18'}
 
-  truncate-utf8-bytes@1.0.2:
-    resolution: {integrity: sha512-95Pu1QXQvruGEhv62XCMO3Mm90GscOCClvrIUwCM0PYOXK3kaF3l3sIHxx71ThJfcbM2O5Au6SO3AWCSEfW4mQ==}
-
   ts-api-utils@2.0.0:
     resolution: {integrity: sha512-xCt/TOAc+EOHS1XPnijD3/yzpH6qg2xppZO1YDqGoVsNXfQfzHpOdNuXwrwOU8u4ITXJyDCTyt8w5g1sZv9ynQ==}
     engines: {node: '>=18.12'}
@@ -5955,9 +5933,6 @@ packages:
 
   urlpattern-polyfill@8.0.2:
     resolution: {integrity: sha512-Qp95D4TPJl1kC9SKigDcqgyM2VDVO4RiJc2d4qe5GrYm+zbIQCWWKAFaJNQ4BhdFeDGwBmAxqJBwWSJDb9T3BQ==}
-
-  utf8-byte-length@1.0.5:
-    resolution: {integrity: sha512-Xn0w3MtiQ6zoz2vFyUVruaCL53O/DwUvkEeOvj+uulMm0BkUGYWmBYVyElqZaSLhY6ZD0ulfU3aBra2aVT4xfA==}
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -10344,8 +10319,6 @@ snapshots:
 
   expect-type@1.1.0: {}
 
-  extend@3.0.2: {}
-
   externality@1.0.2:
     dependencies:
       enhanced-resolve: 5.18.0
@@ -10567,8 +10540,6 @@ snapshots:
 
   github-from-package@0.0.0:
     optional: true
-
-  github-markdown-css@5.8.1: {}
 
   glob-parent@5.1.2:
     dependencies:
@@ -11258,12 +11229,6 @@ snapshots:
   markdown-it-obsidian-callouts@0.3.1(markdown-it@14.1.0):
     dependencies:
       markdown-it: 14.1.0
-
-  markdown-it-obsidian-images@1.0.1:
-    dependencies:
-      extend: 3.0.2
-      markdown-it-regexp: 0.4.0
-      sanitize-filename: 1.6.3
 
   markdown-it-regexp@0.4.0: {}
 
@@ -12632,10 +12597,6 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sanitize-filename@1.6.3:
-    dependencies:
-      truncate-utf8-bytes: 1.0.2
-
   sass@1.80.6:
     dependencies:
       chokidar: 4.0.3
@@ -13142,10 +13103,6 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  truncate-utf8-bytes@1.0.2:
-    dependencies:
-      utf8-byte-length: 1.0.5
-
   ts-api-utils@2.0.0(typescript@5.7.3):
     dependencies:
       typescript: 5.7.3
@@ -13434,8 +13391,6 @@ snapshots:
       punycode: 2.3.1
 
   urlpattern-polyfill@8.0.2: {}
-
-  utf8-byte-length@1.0.5: {}
 
   util-deprecate@1.0.2: {}
 
