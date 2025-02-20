@@ -9,6 +9,7 @@ export default withNuxt(
       '**/.output/**',
       '**/.vitestcache/**',
       '**/e2e-**/**',
+      '**/personal/content/**',
     ],
   }),
 )

@@ -153,7 +153,7 @@ defineProps<Props>()
               </div>
 
               <!-- Keys -->
-              <div class="keys-section">
+              <div v-if="component.keys?.length" class="keys-section">
                 <h4 class="keys-section-header">
                   Составные ключи
                 </h4>
@@ -298,7 +298,7 @@ defineProps<Props>()
                   </div>
 
                   <!-- Keys for nested hieroglyph -->
-                  <div class="keys-section">
+                  <div v-if="hieroglyph.keys?.length" class="keys-section">
                     <h4 class="keys-section-header">
                       Составные ключи
                     </h4>
