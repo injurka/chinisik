@@ -3,6 +3,8 @@ import { Header } from '~/components/shared/header'
 import { HeaderMenuDrawer } from '~/components/shared/header-menu-drawer'
 import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
 
+const route = useRoute()
+
 const daysNavList = [
   { sysname: '10-maya', title: 'Начало пути' },
   { sysname: '11-maya', title: 'Bund (Waitan)' },
@@ -20,10 +22,12 @@ const daysNavList = [
   { sysname: '23-maya', title: '(Урумчи)' },
 ]
 
+const sysname = route.params.sysname as string
+
 const contentType = ref<string>('slot')
 const isMenuDrawer = ref<boolean>(false)
 const isProfileDrawer = ref<boolean>(false)
-const selectedDay = ref<string>(daysNavList[0].sysname)
+const selectedDay = ref<string>(sysname ?? daysNavList[0].sysname)
 const { isMobile } = useDevice()
 
 function getRandomChar() {
@@ -44,6 +48,7 @@ const symbols = Array.from({ length: 40 }, () => ({
 }))
 
 function selectDay(sysname: string) {
+  selectedDay.value = sysname
   navigateTo(RoutePaths.Personal.Shanghai(sysname))
 }
 
