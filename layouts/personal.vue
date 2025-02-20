@@ -44,7 +44,7 @@ const symbols = Array.from({ length: 40 }, () => ({
 }))
 
 function selectDay(sysname: string) {
-  navigateTo(`/personal/shanghai/${sysname}`)
+  navigateTo(RoutePaths.Personal.Shanghai(sysname))
 }
 
 watch(
