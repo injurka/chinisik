@@ -16,7 +16,25 @@ importers:
         version: 12.3.0(typescript@5.7.3)
       '@vueuse/nuxt':
         specifier: 12.3.0
-        version: 12.3.0(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(db0@0.2.1)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3)))(rollup@4.30.1)(typescript@5.7.3)
+        version: 12.3.0(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(better-sqlite3@11.8.1)(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3)))(rollup@4.30.1)(typescript@5.7.3)
+      markdown-it:
+        specifier: ^14.1.0
+        version: 14.1.0
+      markdown-it-attrs:
+        specifier: ^4.3.1
+        version: 4.3.1(markdown-it@14.1.0)
+      markdown-it-collapsible:
+        specifier: ^2.0.2
+        version: 2.0.2(markdown-it@14.1.0)
+      markdown-it-container:
+        specifier: ^4.0.0
+        version: 4.0.0
+      markdown-it-obsidian-callouts:
+        specifier: ^0.3.1
+        version: 0.3.1(markdown-it@14.1.0)
+      markdown-it-regexp:
+        specifier: ^0.4.0
+        version: 0.4.0
       p5i:
         specifier: 0.6.0
         version: 0.6.0
@@ -44,13 +62,13 @@ importers:
         version: 0.7.5(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.18.0(jiti@2.4.2)))(eslint@9.18.0(jiti@2.4.2))(magicast@0.3.5)(rollup@4.30.1)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))
       '@nuxt/fonts':
         specifier: 0.10.3
-        version: 0.10.3(db0@0.2.1)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))
+        version: 0.10.3(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))
       '@nuxt/icon':
         specifier: 1.10.3
         version: 1.10.3(magicast@0.3.5)(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue@3.5.13(typescript@5.7.3))
       '@nuxt/image':
         specifier: 1.8.1
-        version: 1.8.1(db0@0.2.1)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)
+        version: 1.8.1(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)
       '@nuxt/types':
         specifier: 2.18.1
         version: 2.18.1
@@ -66,6 +84,15 @@ importers:
       '@types/jsdom':
         specifier: 21.1.7
         version: 21.1.7
+      '@types/markdown-it':
+        specifier: ^14.1.2
+        version: 14.1.2
+      '@types/markdown-it-attrs':
+        specifier: ^4.1.3
+        version: 4.1.3
+      '@types/markdown-it-container':
+        specifier: ^2.0.10
+        version: 2.0.10
       '@types/node':
         specifier: 22.10.5
         version: 22.10.5
@@ -95,7 +122,7 @@ importers:
         version: 25.0.1
       nuxt:
         specifier: 3.13.2
-        version: 3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(db0@0.2.1)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3))
+        version: 3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(better-sqlite3@11.8.1)(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3))
       sass:
         specifier: 1.80.6
         version: 1.80.6
@@ -1901,8 +1928,23 @@ packages:
   '@types/less@3.0.6':
     resolution: {integrity: sha512-PecSzorDGdabF57OBeQO/xFbAkYWo88g4Xvnsx7LRwqLC17I7OoKtA3bQB9uXkY6UkMWCOsA8HSVpaoitscdXw==}
 
+  '@types/linkify-it@5.0.0':
+    resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
+
+  '@types/markdown-it-attrs@4.1.3':
+    resolution: {integrity: sha512-1JsseFdHD6rQHsPcy4W3xx/whxvZ09Z+CqPpnOtrGtpmkFW07N11q7oM383//LtoKv54yn+HGnk6r4ZHUTHJVg==}
+
+  '@types/markdown-it-container@2.0.10':
+    resolution: {integrity: sha512-zv+YxrlSYRq51e9kzm3orv4OvF4U79Ll1OyplNXr00o4ZC/8PukJk/jEWH7CnsMtrSWZlyv0czhz42jm9J4uLw==}
+
+  '@types/markdown-it@14.1.2':
+    resolution: {integrity: sha512-promo4eFwuiW+TfGxhi+0x3czqTYJkG8qB17ZUJiVF10Xm7NLVRSLUsfRTU/6h1e24VvRnXCx+hG7li58lkzog==}
+
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
+
+  '@types/mdurl@2.0.0':
+    resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
 
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
@@ -2445,6 +2487,9 @@ packages:
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+
+  better-sqlite3@11.8.1:
+    resolution: {integrity: sha512-9BxNaBkblMjhJW8sMRZxnxVTRgbRmssZW0Oxc1MPBTfiR+WW21e2Mk4qu8CzrcZb1LwPCnFsfDEzq+SNcBU8eg==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -3018,6 +3063,9 @@ packages:
   encodeurl@2.0.0:
     resolution: {integrity: sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==}
     engines: {node: '>= 0.8'}
+
+  encoding@0.1.13:
+    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
 
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
@@ -4076,6 +4124,9 @@ packages:
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
+  linkify-it@5.0.0:
+    resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
+
   listhen@1.9.0:
     resolution: {integrity: sha512-I8oW2+QL5KJo8zXNWX046M134WchxsXC7SawLPvRQpogCbkyQIaFxPE89A2HiwR7vAK2Dm2ERBAmyjTYGYEpBg==}
     hasBin: true
@@ -4156,6 +4207,32 @@ packages:
   magicast@0.3.5:
     resolution: {integrity: sha512-L0WhttDl+2BOsybvEOLK7fW3UA0OQ0IQ2d6Zl2x/a6vVRs3bAY0ECOSHHeL5jD+SbOpOCUEi0y1DgHEn9Qn1AQ==}
 
+  markdown-it-attrs@4.3.1:
+    resolution: {integrity: sha512-/ko6cba+H6gdZ0DOw7BbNMZtfuJTRp9g/IrGIuz8lYc/EfnmWRpaR3CFPnNbVz0LDvF8Gf1hFGPqrQqq7De0rg==}
+    engines: {node: '>=6'}
+    peerDependencies:
+      markdown-it: '>= 9.0.0'
+
+  markdown-it-collapsible@2.0.2:
+    resolution: {integrity: sha512-rDOBBCVogON8pRsitSamyR/eIgfPqcjyraLGLJ+5AY/2xfN5iHtqX4+Bo9zABdVSltbVPn2PI+3PRBWlRCWS7w==}
+    peerDependencies:
+      markdown-it: '>=5'
+
+  markdown-it-container@4.0.0:
+    resolution: {integrity: sha512-HaNccxUH0l7BNGYbFbjmGpf5aLHAMTinqRZQAEQbMr2cdD3z91Q6kIo1oUn1CQndkT03jat6ckrdRYuwwqLlQw==}
+
+  markdown-it-obsidian-callouts@0.3.1:
+    resolution: {integrity: sha512-MCvbHofaDxUD9hwrQg9+62Yq5Ev1K2glr5ogUxvFWm7WGG3SKqC90/ozWZ/ofqUvD5iw2KLElSWLHvL1crUeqA==}
+    peerDependencies:
+      markdown-it: ^14.0.0
+
+  markdown-it-regexp@0.4.0:
+    resolution: {integrity: sha512-0XQmr46K/rMKnI93Y3CLXsHj4jIioRETTAiVnJnjrZCEkGaDOmUxTbZj/aZ17G5NlRcVpWBYjqpwSlQ9lj+Kxw==}
+
+  markdown-it@14.1.0:
+    resolution: {integrity: sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==}
+    hasBin: true
+
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
@@ -4204,6 +4281,9 @@ packages:
 
   mdn-data@2.12.2:
     resolution: {integrity: sha512-IEn+pegP1aManZuckezWCO+XZQDplx1366JoVhTpMpBB1sPey/SbveZQUosKiKiGYjg1wH4pMlNgXbCiYgihQA==}
+
+  mdurl@2.0.0:
+    resolution: {integrity: sha512-Lf+9+2r+Tdp5wXDXC4PcIBjTDtq4UKjCPMQhKIuzpJNW0b96kVqSwW0bT7FhRSfmAiFYgP+SCRvdrDozfh0U5w==}
 
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -4955,6 +5035,10 @@ packages:
   pump@3.0.2:
     resolution: {integrity: sha512-tUPXtzlGM8FE3P0ZL6DVs/3P58k9nk8/jZeQCurTJylQA8qFYzHFfhBJkuqyE0FifOsQ0uKWekiZ5g8wtr28cw==}
 
+  punycode.js@2.3.1:
+    resolution: {integrity: sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA==}
+    engines: {node: '>=6'}
+
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
@@ -5650,6 +5734,9 @@ packages:
     resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  uc.micro@2.1.0:
+    resolution: {integrity: sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==}
 
   ufo@1.5.4:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
@@ -7054,10 +7141,10 @@ snapshots:
 
   '@capsizecss/metrics@2.2.0': {}
 
-  '@capsizecss/unpack@2.3.0':
+  '@capsizecss/unpack@2.3.0(encoding@0.1.13)':
     dependencies:
       blob-to-buffer: 1.2.9
-      cross-fetch: 3.2.0
+      cross-fetch: 3.2.0(encoding@0.1.13)
       fontkit: 2.0.4
     transitivePeerDependencies:
       - encoding
@@ -7521,12 +7608,12 @@ snapshots:
 
   '@kwsites/promise-deferred@1.1.1': {}
 
-  '@mapbox/node-pre-gyp@2.0.0-rc.0':
+  '@mapbox/node-pre-gyp@2.0.0-rc.0(encoding@0.1.13)':
     dependencies:
       consola: 3.4.0
       detect-libc: 2.0.3
       https-proxy-agent: 7.0.6(supports-color@9.4.0)
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       nopt: 8.0.0
       semver: 7.6.3
       tar: 7.4.3
@@ -7708,7 +7795,7 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@nuxt/fonts@0.10.3(db0@0.2.1)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))':
+  '@nuxt/fonts@0.10.3(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))':
     dependencies:
       '@nuxt/devtools-kit': 1.7.0(magicast@0.3.5)(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))
       '@nuxt/kit': 3.15.2(magicast@0.3.5)(rollup@4.30.1)
@@ -7716,7 +7803,7 @@ snapshots:
       css-tree: 3.1.0
       defu: 6.1.4
       esbuild: 0.24.2
-      fontaine: 0.5.0
+      fontaine: 0.5.0(encoding@0.1.13)
       h3: 1.13.1
       jiti: 2.4.2
       magic-regexp: 0.8.0
@@ -7729,7 +7816,7 @@ snapshots:
       ufo: 1.5.4
       unifont: 0.1.7
       unplugin: 2.1.2
-      unstorage: 1.14.4(db0@0.2.1)(ioredis@5.4.2)
+      unstorage: 1.14.4(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -7778,7 +7865,7 @@ snapshots:
       - vite
       - vue
 
-  '@nuxt/image@1.8.1(db0@0.2.1)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)':
+  '@nuxt/image@1.8.1(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.30.1)':
     dependencies:
       '@nuxt/kit': 3.15.2(magicast@0.3.5)(rollup@4.30.1)
       consola: 3.4.0
@@ -7791,7 +7878,7 @@ snapshots:
       std-env: 3.8.0
       ufo: 1.5.4
     optionalDependencies:
-      ipx: 2.1.0(db0@0.2.1)(ioredis@5.4.2)
+      ipx: 2.1.0(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -8098,7 +8185,7 @@ snapshots:
 
   '@redocly/config@0.20.1': {}
 
-  '@redocly/openapi-core@1.27.2(supports-color@9.4.0)':
+  '@redocly/openapi-core@1.27.2(encoding@0.1.13)(supports-color@9.4.0)':
     dependencies:
       '@redocly/ajv': 8.11.2
       '@redocly/config': 0.20.1
@@ -8107,7 +8194,7 @@ snapshots:
       js-levenshtein: 1.1.6
       js-yaml: 4.1.0
       minimatch: 5.1.6
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
       pluralize: 8.0.0
       yaml-ast-parser: 0.0.43
     transitivePeerDependencies:
@@ -8409,9 +8496,26 @@ snapshots:
 
   '@types/less@3.0.6': {}
 
+  '@types/linkify-it@5.0.0': {}
+
+  '@types/markdown-it-attrs@4.1.3':
+    dependencies:
+      '@types/markdown-it': 14.1.2
+
+  '@types/markdown-it-container@2.0.10':
+    dependencies:
+      '@types/markdown-it': 14.1.2
+
+  '@types/markdown-it@14.1.2':
+    dependencies:
+      '@types/linkify-it': 5.0.0
+      '@types/mdurl': 2.0.0
+
   '@types/mdast@4.0.4':
     dependencies:
       '@types/unist': 3.0.3
+
+  '@types/mdurl@2.0.0': {}
 
   '@types/mime@1.3.5': {}
 
@@ -8605,9 +8709,9 @@ snapshots:
       vue: 3.5.13(typescript@5.7.3)
       vue-router: 4.5.0(vue@3.5.13(typescript@5.7.3))
 
-  '@vercel/nft@0.27.10(rollup@4.30.1)':
+  '@vercel/nft@0.27.10(encoding@0.1.13)(rollup@4.30.1)':
     dependencies:
-      '@mapbox/node-pre-gyp': 2.0.0-rc.0
+      '@mapbox/node-pre-gyp': 2.0.0-rc.0(encoding@0.1.13)
       '@rollup/pluginutils': 5.1.4(rollup@4.30.1)
       acorn: 8.14.0
       acorn-import-attributes: 1.9.5(acorn@8.14.0)
@@ -8878,13 +8982,13 @@ snapshots:
 
   '@vueuse/metadata@12.3.0': {}
 
-  '@vueuse/nuxt@12.3.0(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(db0@0.2.1)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3)))(rollup@4.30.1)(typescript@5.7.3)':
+  '@vueuse/nuxt@12.3.0(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(better-sqlite3@11.8.1)(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3)))(rollup@4.30.1)(typescript@5.7.3)':
     dependencies:
       '@nuxt/kit': 3.15.2(magicast@0.3.5)(rollup@4.30.1)
       '@vueuse/core': 12.3.0(typescript@5.7.3)
       '@vueuse/metadata': 12.3.0
       local-pkg: 0.5.1
-      nuxt: 3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(db0@0.2.1)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3))
+      nuxt: 3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(better-sqlite3@11.8.1)(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3))
       vue: 3.5.13(typescript@5.7.3)
     transitivePeerDependencies:
       - magicast
@@ -9084,6 +9188,12 @@ snapshots:
     optional: true
 
   base64-js@1.5.1: {}
+
+  better-sqlite3@11.8.1:
+    dependencies:
+      bindings: 1.5.0
+      prebuild-install: 7.1.2
+    optional: true
 
   binary-extensions@2.3.0: {}
 
@@ -9376,9 +9486,9 @@ snapshots:
 
   cronstrue@2.53.0: {}
 
-  cross-fetch@3.2.0:
+  cross-fetch@3.2.0(encoding@0.1.13):
     dependencies:
-      node-fetch: 2.7.0
+      node-fetch: 2.7.0(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
 
@@ -9506,7 +9616,9 @@ snapshots:
       es-errors: 1.3.0
       is-data-view: 1.0.2
 
-  db0@0.2.1: {}
+  db0@0.2.1(better-sqlite3@11.8.1):
+    optionalDependencies:
+      better-sqlite3: 11.8.1
 
   de-indent@1.0.2: {}
 
@@ -9648,6 +9760,11 @@ snapshots:
   encodeurl@1.0.2: {}
 
   encodeurl@2.0.0: {}
+
+  encoding@0.1.13:
+    dependencies:
+      iconv-lite: 0.6.3
+    optional: true
 
   end-of-stream@1.4.4:
     dependencies:
@@ -10278,10 +10395,10 @@ snapshots:
 
   flatted@3.3.2: {}
 
-  fontaine@0.5.0:
+  fontaine@0.5.0(encoding@0.1.13):
     dependencies:
       '@capsizecss/metrics': 2.2.0
-      '@capsizecss/unpack': 2.3.0
+      '@capsizecss/unpack': 2.3.0(encoding@0.1.13)
       magic-regexp: 0.8.0
       magic-string: 0.30.17
       pathe: 1.1.2
@@ -10649,7 +10766,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ipx@2.1.0(db0@0.2.1)(ioredis@5.4.2):
+  ipx@2.1.0(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2):
     dependencies:
       '@fastify/accept-negotiator': 1.1.0
       citty: 0.1.6
@@ -10665,7 +10782,7 @@ snapshots:
       sharp: 0.32.6
       svgo: 3.3.2
       ufo: 1.5.4
-      unstorage: 1.14.4(db0@0.2.1)(ioredis@5.4.2)
+      unstorage: 1.14.4(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2)
       xss: 1.0.15
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -10996,6 +11113,10 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
+  linkify-it@5.0.0:
+    dependencies:
+      uc.micro: 2.1.0
+
   listhen@1.9.0:
     dependencies:
       '@parcel/watcher': 2.5.0
@@ -11094,6 +11215,31 @@ snapshots:
       '@babel/parser': 7.26.5
       '@babel/types': 7.26.5
       source-map-js: 1.2.1
+
+  markdown-it-attrs@4.3.1(markdown-it@14.1.0):
+    dependencies:
+      markdown-it: 14.1.0
+
+  markdown-it-collapsible@2.0.2(markdown-it@14.1.0):
+    dependencies:
+      markdown-it: 14.1.0
+
+  markdown-it-container@4.0.0: {}
+
+  markdown-it-obsidian-callouts@0.3.1(markdown-it@14.1.0):
+    dependencies:
+      markdown-it: 14.1.0
+
+  markdown-it-regexp@0.4.0: {}
+
+  markdown-it@14.1.0:
+    dependencies:
+      argparse: 2.0.1
+      entities: 4.5.0
+      linkify-it: 5.0.0
+      mdurl: 2.0.0
+      punycode.js: 2.3.1
+      uc.micro: 2.1.0
 
   markdown-table@3.0.4: {}
 
@@ -11206,6 +11352,8 @@ snapshots:
   mdn-data@2.0.30: {}
 
   mdn-data@2.12.2: {}
+
+  mdurl@2.0.0: {}
 
   merge-stream@2.0.0: {}
 
@@ -11496,7 +11644,7 @@ snapshots:
 
   natural-orderby@5.0.0: {}
 
-  nitropack@2.10.4(typescript@5.7.3):
+  nitropack@2.10.4(better-sqlite3@11.8.1)(encoding@0.1.13)(typescript@5.7.3):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@netlify/functions': 2.8.2
@@ -11509,7 +11657,7 @@ snapshots:
       '@rollup/plugin-terser': 0.4.4(rollup@4.30.1)
       '@rollup/pluginutils': 5.1.4(rollup@4.30.1)
       '@types/http-proxy': 1.17.15
-      '@vercel/nft': 0.27.10(rollup@4.30.1)
+      '@vercel/nft': 0.27.10(encoding@0.1.13)(rollup@4.30.1)
       archiver: 7.0.1
       c12: 2.0.1(magicast@0.3.5)
       chokidar: 3.6.0
@@ -11520,7 +11668,7 @@ snapshots:
       cookie-es: 1.2.2
       croner: 9.0.0
       crossws: 0.3.1
-      db0: 0.2.1
+      db0: 0.2.1(better-sqlite3@11.8.1)
       defu: 6.1.4
       destr: 2.0.3
       dot-prop: 9.0.0
@@ -11545,7 +11693,7 @@ snapshots:
       node-fetch-native: 1.6.4
       ofetch: 1.4.1
       ohash: 1.1.4
-      openapi-typescript: 7.5.2(typescript@5.7.3)
+      openapi-typescript: 7.5.2(encoding@0.1.13)(typescript@5.7.3)
       pathe: 1.1.2
       perfect-debounce: 1.0.0
       pkg-types: 1.3.1
@@ -11563,7 +11711,7 @@ snapshots:
       unctx: 2.4.1
       unenv: 1.10.0
       unimport: 3.14.6(rollup@4.30.1)
-      unstorage: 1.14.4(db0@0.2.1)(ioredis@5.4.2)
+      unstorage: 1.14.4(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2)
       untyped: 1.5.2
       unwasm: 0.3.9
     transitivePeerDependencies:
@@ -11605,9 +11753,11 @@ snapshots:
 
   node-fetch-native@1.6.4: {}
 
-  node-fetch@2.7.0:
+  node-fetch@2.7.0(encoding@0.1.13):
     dependencies:
       whatwg-url: 5.0.0
+    optionalDependencies:
+      encoding: 0.1.13
 
   node-forge@1.3.1: {}
 
@@ -11644,7 +11794,7 @@ snapshots:
 
   nuxi@3.20.0: {}
 
-  nuxt@3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(db0@0.2.1)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3)):
+  nuxt@3.13.2(@parcel/watcher@2.5.0)(@types/node@22.10.5)(better-sqlite3@11.8.1)(db0@0.2.1(better-sqlite3@11.8.1))(encoding@0.1.13)(eslint@9.18.0(jiti@2.4.2))(ioredis@5.4.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.30.1)(sass@1.80.6)(terser@5.37.0)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue-tsc@2.2.0(typescript@5.7.3)):
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/devtools': 1.7.0(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(sass@1.80.6)(terser@5.37.0))(vue@3.5.13(typescript@5.7.3))
@@ -11681,7 +11831,7 @@ snapshots:
       magic-string: 0.30.17
       mlly: 1.7.4
       nanotar: 0.1.1
-      nitropack: 2.10.4(typescript@5.7.3)
+      nitropack: 2.10.4(better-sqlite3@11.8.1)(encoding@0.1.13)(typescript@5.7.3)
       nuxi: 3.20.0
       nypm: 0.3.12
       ofetch: 1.4.1
@@ -11704,7 +11854,7 @@ snapshots:
       unimport: 3.14.6(rollup@4.30.1)
       unplugin: 1.16.1
       unplugin-vue-router: 0.10.9(rollup@4.30.1)(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
-      unstorage: 1.14.4(db0@0.2.1)(ioredis@5.4.2)
+      unstorage: 1.14.4(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2)
       untyped: 1.5.2
       vue: 3.5.13(typescript@5.7.3)
       vue-bundle-renderer: 2.1.1
@@ -11829,9 +11979,9 @@ snapshots:
       is-docker: 2.2.1
       is-wsl: 2.2.0
 
-  openapi-typescript@7.5.2(typescript@5.7.3):
+  openapi-typescript@7.5.2(encoding@0.1.13)(typescript@5.7.3):
     dependencies:
-      '@redocly/openapi-core': 1.27.2(supports-color@9.4.0)
+      '@redocly/openapi-core': 1.27.2(encoding@0.1.13)(supports-color@9.4.0)
       ansi-colors: 4.1.3
       change-case: 5.4.4
       parse-json: 8.1.0
@@ -12202,6 +12352,8 @@ snapshots:
       end-of-stream: 1.4.4
       once: 1.4.0
     optional: true
+
+  punycode.js@2.3.1: {}
 
   punycode@2.3.1: {}
 
@@ -13022,6 +13174,8 @@ snapshots:
 
   typescript@5.7.3: {}
 
+  uc.micro@2.1.0: {}
+
   ufo@1.5.4: {}
 
   ultrahtml@1.5.3: {}
@@ -13176,7 +13330,7 @@ snapshots:
       acorn: 8.14.0
       webpack-virtual-modules: 0.6.2
 
-  unstorage@1.14.4(db0@0.2.1)(ioredis@5.4.2):
+  unstorage@1.14.4(db0@0.2.1(better-sqlite3@11.8.1))(ioredis@5.4.2):
     dependencies:
       anymatch: 3.1.3
       chokidar: 3.6.0
@@ -13187,7 +13341,7 @@ snapshots:
       ofetch: 1.4.1
       ufo: 1.5.4
     optionalDependencies:
-      db0: 0.2.1
+      db0: 0.2.1(better-sqlite3@11.8.1)
       ioredis: 5.4.2
 
   untun@0.1.3:
