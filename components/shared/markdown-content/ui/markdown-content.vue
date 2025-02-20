@@ -66,12 +66,28 @@ watch(() => props.content, (newContent) => {
     }
   }
 
-  img {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    overflow: hidden;
+  details {
+    p {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 10px;
+
+      br {
+        display: none;
+      }
+      img {
+        object-fit: contain;
+        max-width: 400px;
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      @include mobile() {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
   }
 }
 

@@ -46,12 +46,11 @@
 - **13:30 - 15:00** - Обед
 	- *Miss Fu in Chengdu 付小姐在成都*
 	- *McDonald's 付小姐在成都*
-> [!INFO]- Картинки
-> > Miss Fu in Chengdu 付小姐在成都
+> [!INFO]- Картинки Miss Fu in Chengdu 付小姐在成都
 > ![[20250217230124.png]]
 > ![[20250217225444.png]]
-> 
-> > McDonald's 付小姐在成都
+
+> [!INFO]- Картинки McDonald's 付小姐在成都
 > ![[20250217230103.png]]
 
 - **15:00 - 16:00** - Посетить храм (*Jade Buddha Temple 玉佛禅寺*) (работае до 16:30)
