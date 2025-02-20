@@ -33,19 +33,15 @@ definePageMeta({
 </script>
 
 <template>
-  <VLayout>
-    <VMain>
-      <section class="content-wrapper shanghai">
-        <PageLoader v-if="isLoading" />
+  <section class="content-wrapper shanghai">
+    <PageLoader v-if="isLoading" />
 
-        <MarkdownContent v-else-if="dayContent" :content="dayContent" />
+    <MarkdownContent v-else-if="dayContent" :content="dayContent" />
 
-        <v-alert v-else type="info" class="tip">
-          Ничего не найдено. Выберите другой день из меню
-        </v-alert>
-      </section>
-    </VMain>
-  </VLayout>
+    <v-alert v-else type="info" class="tip">
+      Ничего не найдено. Выберите другой день из меню
+    </v-alert>
+  </section>
 </template>
 
 <style scoped lang="scss">
