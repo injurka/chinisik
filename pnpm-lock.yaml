@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@luohc92/vue3-image-viewer':
+        specifier: ^1.0.3
+        version: 1.0.3(typescript@5.7.3)
       '@pinia/nuxt':
         specifier: 0.9.0
         version: 0.9.0(magicast@0.3.5)(pinia@2.3.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(rollup@4.30.1)
@@ -1394,6 +1397,9 @@ packages:
 
   '@kwsites/promise-deferred@1.1.1':
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
+
+  '@luohc92/vue3-image-viewer@1.0.3':
+    resolution: {integrity: sha512-JasGGJgROB71Ynqvk7IWTemZ73+Av6Nq61TKz0ZprUlma7UBO2wuMJOjI58fVYWOrBC8S2OV8fBSHU+Yhwvj6w==}
 
   '@mapbox/node-pre-gyp@2.0.0-rc.0':
     resolution: {integrity: sha512-nhSMNprz3WmeRvd8iUs5JqkKr0Ncx46JtPxM3AhXes84XpSJfmIwKeWXRpsr53S7kqPkQfPhzrMFUxSNb23qSA==}
@@ -7607,6 +7613,12 @@ snapshots:
       - supports-color
 
   '@kwsites/promise-deferred@1.1.1': {}
+
+  '@luohc92/vue3-image-viewer@1.0.3(typescript@5.7.3)':
+    dependencies:
+      vue: 3.5.13(typescript@5.7.3)
+    transitivePeerDependencies:
+      - typescript
 
   '@mapbox/node-pre-gyp@2.0.0-rc.0(encoding@0.1.13)':
     dependencies:
