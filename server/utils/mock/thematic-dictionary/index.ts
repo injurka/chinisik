@@ -1,2 +1,1 @@
 export * from './thematic-dictionary'
-
