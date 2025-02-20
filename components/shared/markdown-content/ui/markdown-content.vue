@@ -45,6 +45,15 @@ watch(() => props.content, (newContent) => {
     margin-top: 32px;
     margin-bottom: 8px;
     opacity: 0.5;
+    border-radius: 4px;
+
+    code {
+      white-space: wrap;
+      word-wrap: break-word;
+      line-height: normal;
+      display: flex;
+      padding: 8px 0;
+    }
   }
 
   blockquote {
@@ -61,8 +70,7 @@ watch(() => props.content, (newContent) => {
     object-fit: contain;
     width: 100%;
     height: 100%;
-    padding: 4px;
-    border-radius: 16px;
+    border-radius: 8px;
     overflow: hidden;
   }
 }
