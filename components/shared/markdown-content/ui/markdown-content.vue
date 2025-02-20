@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import ImageViewer from '@luohc92/vue3-image-viewer'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { createMarkdownRenderer } from '../lib'
+import '@luohc92/vue3-image-viewer/dist/style.css'
 
 interface Props {
   content: string
@@ -7,12 +10,54 @@ interface Props {
 
 const props = defineProps<Props>()
 const renderedContent = ref('')
-
 const md = createMarkdownRenderer()
 
-watch(() => props.content, (newContent) => {
-  renderedContent.value = md.render(newContent || '')
-}, { immediate: true })
+const currentImages = ref<string[]>([])
+
+watch(
+  () => props.content,
+  (newContent) => {
+    renderedContent.value = md.render(newContent || '')
+  },
+  { immediate: true },
+)
+
+function openImageViewer() {
+  document.documentElement.style.overflow = 'hidden'
+  ImageViewer({
+    images: currentImages.value,
+    showThumbnail: true,
+    showDownload: true,
+    handlePosition: 'bottom',
+    onClose: () => {
+      document.documentElement.style.overflow = 'auto'
+    },
+    maskBgColor: 'rgba(0,0,0,0.7)',
+  })
+}
+
+onMounted(() => {
+  nextTick(() => {
+    const callouts = document.querySelectorAll('.callout')
+
+    callouts.forEach((callout) => {
+      const imagesInCallout = callout.querySelectorAll<HTMLImageElement>('.callout-content img')
+
+      if (imagesInCallout.length > 0) {
+        const imageUrls: string[] = Array.from(imagesInCallout).map(img => img.src)
+
+        Array.from(imagesInCallout).forEach((img) => {
+          img.addEventListener('click', (event) => {
+            event.stopPropagation()
+            currentImages.value = imageUrls
+            openImageViewer()
+          })
+          img.style.cursor = 'pointer'
+        })
+      }
+    })
+  })
+})
 </script>
 
 <template>
@@ -69,18 +114,22 @@ watch(() => props.content, (newContent) => {
   details {
     p {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(370px, 2fr));
       gap: 10px;
 
       br {
         display: none;
       }
+
       img {
-        object-fit: contain;
-        max-width: 400px;
+        object-fit: cover;
+        max-width: 600px;
+        min-height: 200px;
+        height: 100%;
         width: 100%;
         border-radius: 8px;
         overflow: hidden;
+        cursor: pointer;
       }
 
       @include mobile() {
