@@ -21,6 +21,7 @@ const navItems: NavItem[] = [
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
   { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
   { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
+  { name: 'Shanghai', icon: 'mdi:wallet-travel', routeName: RouteNames.PersonalShanghai, routePath: RoutePaths.Personal.Shanghai('10-maya') },
 ]
 
 const hasSlotContent = computed(() => {

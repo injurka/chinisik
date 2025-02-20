@@ -79,6 +79,7 @@ export const baseCfg: NuxtConfig = {
         'mdi:key',
         'mdi:translate',
         'mdi:text-box-search',
+        'mdi:wallet-travel',
         'mdi:layers-search',
         'mdi:book-open-variant',
         'mdi:book-open-page-variant',

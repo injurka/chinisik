@@ -12,6 +12,9 @@ export enum RouteNames {
   AuthSignIn = 'auth-sign-in',
   AuthSignUp = 'auth-sign-up',
   AuthForgotPassword = 'auth-forgot-password',
+
+  PersonalShanghai = 'personal-shanghai',
+
 }
 
 export const RoutePaths = {
@@ -34,5 +37,9 @@ export const RoutePaths = {
     SignIn: '/auth/sign-in',
     SignUp: '/auth/sign-up',
     ForgotPassword: '/auth/forgot-password',
+  },
+
+  Personal: {
+    Shanghai: (sysname: string) => `/personal/shanghai/${sysname}`,
   },
 }
