@@ -49,7 +49,14 @@ onMounted(() => {
         Array.from(imagesInCallout).forEach((img) => {
           img.addEventListener('click', (event) => {
             event.stopPropagation()
-            currentImages.value = imageUrls
+            const clickedImageUrl = (img as HTMLImageElement).src
+
+            const reorderedImages = [
+              clickedImageUrl,
+              ...imageUrls.filter(url => url !== clickedImageUrl),
+            ]
+
+            currentImages.value = reorderedImages
             openImageViewer()
           })
           img.style.cursor = 'pointer'
