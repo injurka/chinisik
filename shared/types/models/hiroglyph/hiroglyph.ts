@@ -1,12 +1,8 @@
-interface HieroglyphHsk {
-  item: any
+interface HieroglyphStructure {
   id: number
   glyph: string
   traditionalGlyph: string
-  translation: {
-    en: string
-    ru: string
-  }
+  translation: string
   pinyin: {
     syllable: string
     tone: 0 | 1 | 2 | 3 | 4
@@ -15,5 +11,5 @@ interface HieroglyphHsk {
 }
 
 export type {
-  HieroglyphHsk,
+  HieroglyphStructure,
 }

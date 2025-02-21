@@ -96,7 +96,7 @@ onMounted(() => {
   </header>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sentinel {
   position: absolute;
   top: 0;

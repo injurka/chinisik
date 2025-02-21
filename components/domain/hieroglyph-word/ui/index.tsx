@@ -24,20 +24,20 @@ const HieroglyphWordVarious = defineComponent({
       const isPinyinComplex = !isPinyinText && !!props.pinyin?.pinyin
 
       return (
-        <div class="tip">
+        <div class="hw-tip">
           {isPinyinComplex && (
-            <div class="tip-pinyin">
+            <div class="hw-tip-pinyin">
               <PinyinText {...props.pinyin} colored={props.pinyin.colored} />
             </div>
           )}
           {isPinyinText && (
-            <div class="tip-pinyin">
+            <div class="hw-tip-pinyin">
               {props.pinyin}
             </div>
           )}
-          {(isPinyinText || isPinyinComplex) && props.translate && <hr class="tip-hr" />}
+          {(isPinyinText || isPinyinComplex) && props.translate && <hr class="hw-tip-hr" />}
           {props.translate && (
-            <div class="tip-translate">
+            <div class="hw-tip-translate">
               {props.translate}
             </div>
           )}

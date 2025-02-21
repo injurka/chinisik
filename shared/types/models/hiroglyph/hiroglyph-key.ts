@@ -1,4 +1,4 @@
-import type { ToneType } from './pinyin'
+import type { ToneType } from '../pinyin'
 
 interface HieroglyphKey {
   index?: number

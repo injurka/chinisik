@@ -1,11 +1,16 @@
 <script lang="ts" setup>
+import { ThematicDictionaryCategory } from '~/components/modules/thematic-dictionary/thematic-dictionary-category'
 import { thematicDictionaryDataMock } from '~/server/utils/mock/thematic-dictionary'
 
 const route = useRoute()
 const categorySysname = route.params.category as string
 const sectionSysname = route.params.section as string
 
-const currentSection = thematicDictionaryDataMock.sections.find(s => s.sysname === sectionSysname) ?? null
+const { data } = await useAsyncData('thematic-dictionary-catalog', async () => {
+  return thematicDictionaryDataMock.catalog
+})
+
+const currentSection = data.value?.find(s => s.sysname === sectionSysname) ?? null
 const currentCategory = currentSection?.categories.find(c => c.sysname === categorySysname) ?? null
 
 const nextCategory = computed(() => {
@@ -19,18 +24,6 @@ const nextCategory = computed(() => {
   return currentSection.categories[currentIndex + 1]
 })
 
-const breadcrumbs = computed(() => {
-  const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections }]
-
-  if (currentSection) {
-    crumbs.push({ title: currentSection.name, to: RoutePaths.ThematicDictionary.Categories(currentSection.sysname) })
-  }
-  if (currentSection && currentCategory) {
-    crumbs.push({ title: currentCategory.name, to: RoutePaths.ThematicDictionary.Category(currentSection.sysname, currentCategory.sysname) })
-  }
-  return crumbs
-})
-
 definePageMeta({
   layout: 'base-with-effects',
   pageTransition: false,
@@ -39,34 +32,12 @@ definePageMeta({
 
 <template>
   <section class="content-wrapper">
-    <v-breadcrumbs :items="breadcrumbs" color="var(--fg-secondary-color)">
-      <template #item="{ item }">
-        <v-breadcrumbs-item :to="item.to" :title="item.title" />
-      </template>
-    </v-breadcrumbs>
-
-    <template v-if="currentCategory">
-      <h1>{{ currentCategory.name }}</h1>
-      <p v-if="currentCategory.description">
-        {{ currentCategory.description }}
-      </p>
-
-      <v-list v-if="currentCategory.words && currentCategory.words.length">
-        <v-list-item v-for="word in currentCategory.words" :key="word.id">
-          <v-list-item-title>{{ word.term }}</v-list-item-title>
-          <v-list-item-subtitle v-if="word.definition">
-            {{ word.definition }}
-          </v-list-item-subtitle>
-        </v-list-item>
-      </v-list>
-      <v-btn
-        v-if="nextCategory"
-        :to="RoutePaths.ThematicDictionary.Category(sectionSysname, nextCategory.sysname)"
-      >
-        Следующая категория: {{ nextCategory.name }}
-      </v-btn>
-    </template>
-
+    <ThematicDictionaryCategory
+      v-if="currentCategory && currentSection"
+      :category="currentCategory"
+      :section="currentSection"
+      :next-category="nextCategory!"
+    />
     <p v-else>
       Категория не найдена.
     </p>
