@@ -30,11 +30,7 @@ const breadcrumbs = computed(() => {
 
 <template>
   <div class="thematic-dictionary-category">
-    <v-breadcrumbs :items="breadcrumbs" color="var(--fg-secondary-color)">
-      <template #item="{ item }">
-        <v-breadcrumbs-item :to="item.to" :title="item.title" />
-      </template>
-    </v-breadcrumbs>
+    <ThematicDictionaryBreadcrumbs :items="breadcrumbs" />
 
     <div class="content">
       <div class="header">
@@ -57,10 +53,7 @@ const breadcrumbs = computed(() => {
         variant="tonal"
         :to="RoutePaths.ThematicDictionary.Category(section.sysname, nextCategory.sysname)"
       >
-        Следующая категория: {{ nextCategory.name }}
-        <template #append>
-          <Icon name="mdi:arrow-right" />
-        </template>
+        « {{ nextCategory.name }} »
       </VBtn>
     </div>
   </div>
@@ -86,7 +79,7 @@ const breadcrumbs = computed(() => {
   }
 
   .list {
-    margin-top: 32px;
+    margin-top: 16px;
     display: flex;
     flex-direction: column;
 

@@ -69,6 +69,14 @@ const symbols = Array.from({ length: 40 }, () => ({
       </div>
     </div>
 
+    <VBtn
+      variant="tonal"
+      class="back"
+      @click="navigateTo(RoutePaths.Keys('list'))"
+    >
+      Вернуться на главную
+    </VBtn>
+
     <ClientOnly>
       <HaoticLines
         class="haotic-lines"
@@ -111,6 +119,23 @@ const symbols = Array.from({ length: 40 }, () => ({
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.back {
+  z-index: 10;
+  text-transform: none;
+  text-decoration: none;
+  letter-spacing: 1px;
+  color: var(--fg-tertiary-color);
+  width: auto;
+  margin: 1rem auto;
+  margin-bottom: 2rem;
+  font-size: 0.85rem;
+
+  @include mobile {
+    font-size: 0.8rem;
+  }
 }
 
 .background-effects {
@@ -159,7 +184,9 @@ const symbols = Array.from({ length: 40 }, () => ({
   z-index: 10;
   position: relative;
   max-width: 800px;
-  margin: 4rem auto;
+  margin: 0 auto;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
   padding: 1rem;
   color: var(--fg-primary-color);
   line-height: 1.6;

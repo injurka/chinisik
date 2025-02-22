@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Footer } from '~/components/shared/footer'
 import { Header } from '~/components/shared/header'
 import { HeaderMenuDrawer } from '~/components/shared/header-menu-drawer'
 import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
@@ -94,7 +95,7 @@ watch(
     <VMain>
       <slot />
 
-      <client-only>
+      <ClientOnly>
         <div v-if="!isMobile" class="background-effects">
           <div
             v-for="(symbol, index) in symbols"
@@ -111,7 +112,9 @@ watch(
             {{ symbol.char }}
           </div>
         </div>
-      </client-only>
+      </ClientOnly>
+
+      <Footer />
     </VMain>
   </VLayout>
 </template>
