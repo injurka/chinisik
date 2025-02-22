@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Footer } from '~/components/shared/footer'
 import { Header } from '~/components/shared/header'
 import { HeaderMenuDrawer } from '~/components/shared/header-menu-drawer'
 import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
@@ -10,6 +11,7 @@ const { isMobile } = useDevice()
 function getRandomChar() {
   const rangeStart = 0x4E00
   const rangeEnd = 0x62FF
+
   return String.fromCodePoint(
     Math.floor(Math.random() * (rangeEnd - rangeStart) + rangeStart),
   )
@@ -22,7 +24,6 @@ const symbols = Array.from({ length: 40 }, () => ({
   delay: Math.random() * 5,
   duration: 5 + Math.random() * 15,
   size: 1 + Math.random() * 0.4,
-
 }))
 </script>
 
@@ -39,7 +40,7 @@ const symbols = Array.from({ length: 40 }, () => ({
     <VMain>
       <slot />
 
-      <client-only>
+      <ClientOnly>
         <div v-if="!isMobile" class="background-effects">
           <div
             v-for="(symbol, index) in symbols"
@@ -56,7 +57,9 @@ const symbols = Array.from({ length: 40 }, () => ({
             {{ symbol.char }}
           </div>
         </div>
-      </client-only>
+      </ClientOnly>
+
+      <Footer />
     </VMain>
   </VLayout>
 </template>

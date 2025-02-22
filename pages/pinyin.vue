@@ -22,7 +22,7 @@ await useAsyncData(
 )
 
 definePageMeta({
-  layout: 'base',
+  layout: 'base-with-effects',
   pageTransition: {
     name: 'fade',
     mode: 'out-in',
