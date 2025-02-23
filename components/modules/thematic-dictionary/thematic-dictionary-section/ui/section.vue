@@ -29,9 +29,11 @@ const breadcrumbs = computed(() => {
     <div class="content">
       <div class="header">
         <h1>{{ section.name }}</h1>
-        <p v-if="section.description">
-          {{ section.description }}
-        </p>
+        <div v-if="section.description" class="description">
+          <p class="description-text">
+            {{ section.description }}
+          </p>
+        </div>
       </div>
 
       <div class="list">
@@ -61,6 +63,19 @@ const breadcrumbs = computed(() => {
     flex-direction: column;
     flex-grow: 1;
     height: 100%;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+
+    &-text {
+      margin-top: 12яpx;
+      white-space: pre-line;
+      position: relative;
+    }
   }
 }
 

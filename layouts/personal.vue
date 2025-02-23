@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { BackgroundEffects } from '~/components/shared/background-effects'
 import { Footer } from '~/components/shared/footer'
 import { Header } from '~/components/shared/header'
 import { HeaderMenuDrawer } from '~/components/shared/header-menu-drawer'
@@ -96,24 +97,8 @@ watch(
       <slot />
 
       <ClientOnly>
-        <div v-if="!isMobile" class="background-effects">
-          <div
-            v-for="(symbol, index) in symbols"
-            :key="index"
-            class="symbol"
-            :style="{
-              top: `${symbol.top}%`,
-              left: `${symbol.left}%`,
-              animationDelay: `${symbol.delay}s`,
-              animationDuration: `${symbol.duration}s`,
-              fontSize: `${symbol.size}rem`,
-            }"
-          >
-            {{ symbol.char }}
-          </div>
-        </div>
+        <BackgroundEffects v-if="!isMobile" />
       </ClientOnly>
-
       <Footer />
     </VMain>
   </VLayout>
@@ -165,49 +150,6 @@ watch(
         color: var(--fg-accent-color);
       }
     }
-  }
-}
-
-.background-effects {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-  background: linear-gradient(to center, var(--bg-primary-color), var(--bg-tertiary-color));
-  z-index: -1;
-
-  .symbol {
-    position: absolute;
-    color: var(--fg-seconday-color);
-    animation: floatEffect linear infinite;
-    user-select: none;
-    font-family: 'Arial', sans-serif;
-    opacity: 0;
-  }
-}
-
-@keyframes floatEffect {
-  0% {
-    opacity: 0;
-    transform: translateY(0) rotate(0deg);
-  }
-  20% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateY(-40px) rotate(180deg);
-  }
-  80% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-80px) rotate(360deg);
   }
 }
 </style>

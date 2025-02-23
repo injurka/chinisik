@@ -1,45 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { HaoticLines } from '~/components/domain/haotic-lines'
+import { BackgroundEffects } from '~/components/shared/background-effects'
 
 const contentEl = ref<HTMLElement>()
-
-function getRandomChar() {
-  const rangeStart = 0x4E00
-  const rangeEnd = 0x62FF
-  return String.fromCodePoint(
-    Math.floor(Math.random() * (rangeEnd - rangeStart) + rangeStart),
-  )
-}
-
-const symbols = Array.from({ length: 40 }, () => ({
-  char: getRandomChar(),
-  top: Math.random() * 100,
-  left: Math.random() * 100,
-  delay: Math.random() * 5,
-  duration: 5 + Math.random() * 15,
-  size: 0.8 + Math.random() * 0.4,
-}))
+const { isMobile } = useDevice()
 </script>
 
 <template>
   <section ref="contentEl" class="wrapper">
-    <div class="background-effects">
-      <div
-        v-for="(symbol, index) in symbols"
-        :key="index"
-        class="symbol"
-        :style="{
-          top: `${symbol.top}%`,
-          left: `${symbol.left}%`,
-          animationDelay: `${symbol.delay}s`,
-          animationDuration: `${symbol.duration}s`,
-          fontSize: `${symbol.size}rem`,
-        }"
-      >
-        {{ symbol.char }}
-      </div>
-    </div>
+    <BackgroundEffects v-if="!isMobile" />
 
     <div class="content">
       <h1>О проекте</h1>
@@ -135,48 +104,6 @@ const symbols = Array.from({ length: 40 }, () => ({
 
   @include mobile {
     font-size: 0.8rem;
-  }
-}
-
-.background-effects {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-  background: radial-gradient(circle at center, var(--bg-primary-color) 0%, var(--bg-tertiary-color) 100%);
-
-  .symbol {
-    position: absolute;
-    color: var(--fg-seconday-color);
-    animation: floatEffect linear infinite;
-    user-select: none;
-    font-family: 'Arial', sans-serif;
-    opacity: 0;
-  }
-}
-
-@keyframes floatEffect {
-  0% {
-    opacity: 0;
-    transform: translateY(0) rotate(0deg);
-  }
-  20% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateY(-40px) rotate(180deg);
-  }
-  80% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-80px) rotate(360deg);
   }
 }
 

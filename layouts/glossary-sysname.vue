@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { PageLoader } from '~/components/shared/page-loader'
-import BaseLayout from './base.vue'
+import BaseLayout from './base-with-effects.vue'
 
 export type TabVariant = 'topic' | 'brief' | 'lab'
 interface TabsOption {
