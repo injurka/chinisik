@@ -185,6 +185,7 @@ const cardClass = computed(() => ({
   display: flex;
   justify-content: center;
   margin-top: 32px;
+  padding-bottom: 64px;
   width: 100%;
   height: 100%;
 

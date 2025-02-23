@@ -46,7 +46,7 @@ definePageMeta({
 
 <style scoped lang="scss">
 .shanghai {
-  margin: 16px 0;
+  margin: 16px auto;
 
   @include mobile() {
     font-size: 0.8rem;

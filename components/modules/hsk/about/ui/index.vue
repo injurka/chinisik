@@ -47,86 +47,158 @@
 
       <p>Все 9 уровней по системе оценки HSK можно условно объединить в 3 укрупненные группы: начальный, средний и продвинутый уровни.</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Уровень HSK</th>
-            <th>Группа</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>HSK-1, HSK-2, HSK-3</td>
-            <td>Начальный</td>
-          </tr>
-          <tr>
-            <td>HSK-4, HSK-5, HSK-6</td>
-            <td>Средний</td>
-          </tr>
-          <tr>
-            <td>HSK-7, HSK-8, HSK-9</td>
-            <td>Продвинутый</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Уровень HSK</th>
+              <th>Группа</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Уровень HSK">
+                HSK-1, HSK-2, HSK-3
+              </td>
+              <td data-label="Группа">
+                Начальный
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень HSK">
+                HSK-4, HSK-5, HSK-6
+              </td>
+              <td data-label="Группа">
+                Средний
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень HSK">
+                HSK-7, HSK-8, HSK-9
+              </td>
+              <td data-label="Группа">
+                Продвинутый
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section>
       <h2>Критерии оценки уровней знания китайского языка</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Уровень</th>
-            <th>Иероглифы</th>
-            <th>Количество слов</th>
-            <th>Грамматические конструкции</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>HSK 1</td>
-            <td>300</td>
-            <td>500</td>
-            <td>48</td>
-          </tr>
-          <tr>
-            <td>HSK 2</td>
-            <td>600</td>
-            <td>1272</td>
-            <td>129</td>
-          </tr>
-          <tr>
-            <td>HSK 3</td>
-            <td>900</td>
-            <td>2245</td>
-            <td>210</td>
-          </tr>
-          <tr>
-            <td>HSK 4</td>
-            <td>1200</td>
-            <td>3245</td>
-            <td>286</td>
-          </tr>
-          <tr>
-            <td>HSK 5</td>
-            <td>1500</td>
-            <td>4316</td>
-            <td>357</td>
-          </tr>
-          <tr>
-            <td>HSK 6</td>
-            <td>1800</td>
-            <td>5456</td>
-            <td>424</td>
-          </tr>
-          <tr>
-            <td>HSK 7, 8 и 9</td>
-            <td>3000</td>
-            <td>11092</td>
-            <td>572</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Уровень</th>
+              <th>Иероглифы</th>
+              <th>Количество слов</th>
+              <th>Грамматические конструкции</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Уровень">
+                HSK 1
+              </td>
+              <td data-label="Иероглифы">
+                300
+              </td>
+              <td data-label="Количество слов">
+                500
+              </td>
+              <td data-label="Грамматические конструкции">
+                48
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень">
+                HSK 2
+              </td>
+              <td data-label="Иероглифы">
+                600
+              </td>
+              <td data-label="Количество слов">
+                1272
+              </td>
+              <td data-label="Грамматические конструкции">
+                129
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень">
+                HSK 3
+              </td>
+              <td data-label="Иероглифы">
+                900
+              </td>
+              <td data-label="Количество слов">
+                2245
+              </td>
+              <td data-label="Грамматические конструкции">
+                210
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень">
+                HSK 4
+              </td>
+              <td data-label="Иероглифы">
+                1200
+              </td>
+              <td data-label="Количество слов">
+                3245
+              </td>
+              <td data-label="Грамматические конструкции">
+                286
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень">
+                HSK 5
+              </td>
+              <td data-label="Иероглифы">
+                1500
+              </td>
+              <td data-label="Количество слов">
+                4316
+              </td>
+              <td data-label="Грамматические конструкции">
+                357
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень">
+                HSK 6
+              </td>
+              <td data-label="Иероглифы">
+                1800
+              </td>
+              <td data-label="Количество слов">
+                5456
+              </td>
+              <td data-label="Грамматические конструкции">
+                424
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Уровень">
+                HSK 7, 8 и 9
+              </td>
+              <td data-label="Иероглифы">
+                3000
+              </td>
+              <td data-label="Количество слов">
+                11092
+              </td>
+              <td data-label="Грамматические конструкции">
+                572
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section>
@@ -174,6 +246,10 @@
     padding: 8px 0;
   }
 
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
   table {
     border-collapse: collapse;
     width: 100%;
@@ -189,6 +265,52 @@
 
   th {
     background-color: var(--bg-secondary-color);
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  @include mobile() {
+    table {
+      display: block;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      display: block;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-secondary-color);
+    }
+
+    td {
+      display: block;
+      border: none;
+      padding-left: 50%;
+      position: relative;
+      text-align: left;
+      word-break: break-word;
+      text-align: right;
+
+      &:before {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        content: attr(data-label);
+        text-align: left;
+      }
+    }
   }
 
   h3 {

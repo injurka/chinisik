@@ -9,19 +9,19 @@ const route = useRoute()
 
 const daysNavList = [
   { sysname: '10-maya', title: 'Начало пути' },
-  { sysname: '11-maya', title: 'Bund (Waitan)' },
-  { sysname: '12-maya', title: 'Коммерческий мир' },
-  { sysname: '13-maya', title: 'Pudong' },
-  { sysname: '14-maya', title: 'Искусство и Архитектура' },
-  { sysname: '15-maya', title: 'Ancient Town (Zhujiajiao Water Town)' },
-  { sysname: '16-maya', title: 'Сады, Храмы и Чаи' },
-  { sysname: '17-maya', title: 'Море (Jinshan City Beach)' },
-  { sysname: '18-maya', title: 'День Утки по-пекински и Ночной жизни!' },
-  { sysname: '19-maya', title: 'Шоппинг и Развлечения' },
+  { sysname: '11-maya', title: 'Привет Шанхай (Waitan))' },
+  { sysname: '12-maya', title: 'Сады, Храмы и Чаи' },
+  { sysname: '13-maya', title: 'Коммерческий мир' },
+  { sysname: '14-maya', title: 'Ура небоскребам (Pudong)' },
+  { sysname: '15-maya', title: 'Древний город (Zhujiajiao Water Town)' },
+  { sysname: '16-maya', title: 'День Утки по-пекински и Ночной жизни!' },
+  { sysname: '17-maya', title: 'Искусство и Архитектура' },
+  { sysname: '18-maya', title: 'Шоппинг и Развлечения' },
+  { sysname: '19-maya', title: 'Гимн Спокойствию (Suzhou)' },
   { sysname: '20-maya', title: 'День на выбор' },
   { sysname: '21-maya', title: 'Подготовка к отъезду' },
   { sysname: '22-maya', title: 'Побег' },
-  { sysname: '23-maya', title: '(Урумчи)' },
+  { sysname: '23-maya', title: 'На распутье (Урумчи)' },
 ]
 
 const sysname = route.params.sysname as string
@@ -31,23 +31,6 @@ const isMenuDrawer = ref<boolean>(false)
 const isProfileDrawer = ref<boolean>(false)
 const selectedDay = ref<string>(sysname ?? daysNavList[0].sysname)
 const { isMobile } = useDevice()
-
-function getRandomChar() {
-  const rangeStart = 0x4E00
-  const rangeEnd = 0x62FF
-  return String.fromCodePoint(
-    Math.floor(Math.random() * (rangeEnd - rangeStart) + rangeStart),
-  )
-}
-
-const symbols = Array.from({ length: 40 }, () => ({
-  char: getRandomChar(),
-  top: Math.random() * 100,
-  left: Math.random() * 100,
-  delay: Math.random() * 5,
-  duration: 5 + Math.random() * 15,
-  size: 1 + Math.random() * 0.4,
-}))
 
 function selectDay(sysname: string) {
   selectedDay.value = sysname
@@ -94,17 +77,24 @@ watch(
     </ClientOnly>
 
     <VMain>
-      <slot />
+      <div class="main-content">
+        <slot />
+      </div>
 
       <ClientOnly>
         <BackgroundEffects v-if="!isMobile" />
       </ClientOnly>
+
       <Footer />
     </VMain>
   </VLayout>
 </template>
 
 <style scoped lang="scss">
+.main-content {
+  height: 100%;
+}
+
 .drawer {
   border-right: 1px solid var(--border-primary-color);
   user-select: none;
