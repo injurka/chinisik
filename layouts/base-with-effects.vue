@@ -21,7 +21,9 @@ const { isMobile } = useDevice()
     <HeaderProfileDrawer v-model="isProfileDrawer" />
 
     <VMain>
-      <slot />
+      <div class="main-content">
+        <slot />
+      </div>
 
       <ClientOnly>
         <BackgroundEffects v-if="!isMobile" />
@@ -33,5 +35,7 @@ const { isMobile } = useDevice()
 </template>
 
 <style scoped lang="scss">
-
+.main-content {
+  height: 100%;
+}
 </style>
