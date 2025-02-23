@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { JsonToDom } from '~/components/domain/json-to-dom'
+import { ThematicDictionaryBreadcrumbs } from '~/components/domain/thematic-dictionary/thematic-dictionary-breadcrumbs'
 
 interface Props {
   section: ThematicDictionarySection
@@ -8,6 +9,19 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const showFullText = ref<boolean>(false)
+
+const maxLines = 5
+
+const isLongText = computed(() => {
+  const lines = props.category.description?.split('\n')
+
+  return (lines?.length ?? 0) > maxLines
+})
+
+function toggleShowFullText() {
+  showFullText.value = !showFullText.value
+}
 
 const breadcrumbs = computed(() => {
   const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections }]
@@ -35,15 +49,26 @@ const breadcrumbs = computed(() => {
     <div class="content">
       <div class="header">
         <h1>{{ category.name }}</h1>
-        <p v-if="category.description">
-          {{ category.description }}
-        </p>
+        <div v-if="section.description" class="description">
+          <p
+            class="description-text"
+            :class="{ truncated: !showFullText && isLongText }"
+          >
+            {{ category.description }}
+          </p>
+          <VBtn
+            v-if="isLongText"
+            rounded
+            variant="plain"
+            class="description-toggle-full"
+            @click="toggleShowFullText"
+          >
+            {{ showFullText ? 'Скрыть' : 'Показать больше' }}
+          </VBtn>
+        </div>
       </div>
 
-      <JsonToDom
-        v-if="category.words && category.words.length"
-        :node="category.content"
-      />
+      <JsonToDom v-if="category.words && category.words.length" :node="category.content" />
     </div>
 
     <div v-if="nextCategory" class="navigate-panel">
@@ -76,6 +101,47 @@ const breadcrumbs = computed(() => {
 
   .header {
     margin-top: 16px;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+
+    &-text {
+      white-space: pre-line;
+      position: relative;
+      margin-top: 12px;
+
+      &.truncated {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        line-clamp: 5;
+        -webkit-box-orient: vertical;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 3.5rem;
+          background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--bg-primary-color));
+          pointer-events: none;
+        }
+      }
+    }
+
+    &-toggle-full {
+      margin: 16px auto;
+      text-transform: none;
+      letter-spacing: 0;
+      width: 320px;
+      color: var(--fg-secondary-color);
+    }
   }
 
   .list {
