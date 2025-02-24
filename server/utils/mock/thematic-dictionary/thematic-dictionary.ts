@@ -756,10 +756,6 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
               },
             ],
           },
-          words: [
-            { id: 'hello', term: 'Здравствуйте', definition: 'Приветствие' },
-            { id: 'please', term: 'Пожалуйста', definition: 'Просьба' },
-          ],
         },
         {
           id: 2,
@@ -770,10 +766,47 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           content: {
             tag: 'div',
           },
-          words: [
-            { id: 'weather', term: 'Погода', definition: 'Обсуждение погоды' },
-            { id: 'hobbies', term: 'Хобби', definition: 'Обсуждение увлечений' },
-          ],
+        },
+        {
+          id: 3,
+          sysname: 'greetings',
+          name: 'Приветствия',
+          glyph: '问',
+          description: 'Различные способы приветствовать людей.',
+          content: {
+            tag: 'div',
+          },
+        },
+        {
+          id: 4,
+          sysname: 'farewells',
+          name: 'Прощания',
+          glyph: '别',
+          description: 'Различные способы прощаться с людьми.',
+          content: {
+            tag: 'div',
+          },
+        },
+        {
+          id: 5,
+          sysname: 'introductions',
+          name: 'Представления',
+          glyph: '介',
+          description: 'Фразы для представления себя и других.',
+          content: {
+            tag: 'div',
+          },
+        },
+        {
+          id: 6,
+          sysname: 'asking-for-information',
+          name: 'Запрос информации',
+          glyph: '询',
+          description: 'Фразы для запроса информации.',
+          content: {
+            tag: 'div',
+          },
+
         },
       ],
     },
@@ -793,10 +826,6 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           content: {
             tag: 'div',
           },
-          words: [
-            { id: 'airport', term: 'Аэропорт', definition: 'Место отправления и прибытия самолетов' },
-            { id: 'train', term: 'Поезд', definition: 'Железнодорожный транспорт' },
-          ],
         },
         {
           id: 4,
@@ -807,10 +836,409 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           content: {
             tag: 'div',
           },
-          words: [
-            { id: 'hotel', term: 'Отель', definition: 'Место для временного проживания' },
-            { id: 'hostel', term: 'Хостел', definition: 'Бюджетный вариант проживания' },
-          ],
+        },
+      ],
+    },
+    {
+      id: 3,
+      sysname: 'food',
+      description: 'Раздел, посвященный словам и фразам, связанным с едой и напитками.',
+      name: 'Еда',
+      glyph: '食',
+      categories: [
+        {
+          id: 11,
+          sysname: 'restaurants',
+          name: 'Рестораны',
+          glyph: '餐',
+          description: 'Фразы для использования в ресторанах.',
+          content: {
+            tag: 'div',
+          },
+        },
+        {
+          id: 12,
+          sysname: 'drinks',
+          name: 'Напитки',
+          glyph: '饮',
+          description: 'Слова, связанные с различными видами напитков.',
+          content: {
+            tag: 'div',
+          },
+        },
+        {
+          id: 13,
+          sysname: 'dishes',
+          name: 'Блюда',
+          glyph: '菜',
+          description: 'Названия различных блюд.',
+          content: {
+            tag: 'div',
+          },
+        },
+      ],
+    },
+    {
+      id: 4,
+      sysname: 'color',
+      description: 'Раздел, посвященный названиям цветов.',
+      name: 'Цвет',
+      glyph: '色',
+      categories: [
+        {
+          id: 17,
+          sysname: 'basic-colors',
+          name: 'Основные цвета',
+          glyph: '基',
+          description: `Базовые цвета, часто связанные с культурой, философией (например, теорией Пяти Элементов) и историей. Красный (红色) ключевой цвет в китайской культуре, символ удачи и праздника. Белый (白色) традиционно связан с трауром, в отличие от западной традиции.`,
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '白',
+                  pinyin: {
+                    pinyin: 'bai',
+                    tone: [{
+                      index: 1,
+                      type: 2,
+                    }],
+                  },
+                  translate: 'Белый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '黑',
+                  pinyin: {
+                    pinyin: 'hei',
+                    tone: [{
+                      index: 1,
+                      type: 1,
+                    }],
+                  },
+                  translate: 'Черный',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '红',
+                  pinyin: {
+                    pinyin: 'hong',
+                    tone: [{
+                      index: 1,
+                      type: 2,
+                    }],
+                  },
+                  translate: 'Красный',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '绿',
+                  pinyin: {
+                    pinyin: 'lu',
+                    tone: [{
+                      index: 1,
+                      type: 4,
+                    }],
+                  },
+                  translate: 'Зеленый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '蓝',
+                  pinyin: {
+                    pinyin: 'lan',
+                    tone: [{
+                      index: 1,
+                      type: 2,
+                    }],
+                  },
+                  translate: 'Синий/Голубой',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '黄',
+                  pinyin: {
+                    pinyin: 'huang',
+                    tone: [{
+                      index: 2,
+                      type: 2,
+                    }],
+                  },
+                  translate: 'Желтый',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+        {
+          id: 18,
+          sysname: 'secondary-colors',
+          name: 'Вторичные цвета',
+          glyph: '次',
+          description: 'Смешанные или широко употребимые, но не базовые.',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '橙',
+                  pinyin: {
+                    pinyin: 'cheng',
+                    tone: [{
+                      index: 2,
+                      type: 2,
+                    }],
+                  },
+                  translate: 'Оранжевый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '紫',
+                  pinyin: {
+                    pinyin: 'zi',
+                    tone: [{
+                      index: 1,
+                      type: 3,
+                    }],
+                  },
+                  translate: 'Фиолетовый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '粉',
+                  pinyin: {
+                    pinyin: 'fen',
+                    tone: [{
+                      index: 1,
+                      type: 3,
+                    }],
+                  },
+                  translate: 'Розовый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '灰',
+                  pinyin: {
+                    pinyin: 'hui',
+                    tone: [{
+                      index: 1,
+                      type: 1,
+                    }],
+                  },
+                  translate: 'Серый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '棕',
+                  pinyin: {
+                    pinyin: 'zong',
+                    tone: [{
+                      index: 1,
+                      type: 1,
+                    }],
+                  },
+                  translate: 'Коричневый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '青',
+                  pinyin: {
+                    pinyin: 'qing',
+                    tone: [{
+                      index: 1,
+                      type: 1,
+                    }],
+                  },
+                  translate: 'Цин (сине-зеленый)',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+        {
+          id: 19,
+          sysname: 'other-colors',
+          name: 'Другие цвета',
+          glyph: '他',
+          description: `Специфичные, современные или заимствованные названия. Золотой и серебряный часто ассоциируются с богатством и праздниками. Цин (青色) — исторически сложный цвет, может обозначать сине-зеленые оттенки (бирюзовый, морской волны) или даже черный в классических текстах.
+`,
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '金',
+                  pinyin: { pinyin: 'jin', tone: [{ index: 1, type: 1 }] },
+                  translate: 'Золотой',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '银',
+                  pinyin: { pinyin: 'yin', tone: [{ index: 1, type: 2 }] },
+                  translate: 'Серебряный',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '咖',
+                  pinyin: { pinyin: 'ka', tone: [{ index: 1, type: 1 }] },
+                  translate: 'Кофейный',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '珊',
+                  pinyin: { pinyin: 'shan', tone: [{ index: 2, type: 1 }] },
+                  translate: 'Коралловый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '米',
+                  pinyin: { pinyin: 'mi', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Бежевый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '栗',
+                  pinyin: { pinyin: 'li', tone: [{ index: 1, type: 4 }] },
+                  translate: 'Каштановый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '藏',
+                  pinyin: { pinyin: 'zang', tone: [{ index: 1, type: 4 }] },
+                  translate: 'Темно-синий (индиго)',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '翡',
+                  pinyin: { pinyin: 'fei', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Нефритовый/Изумрудный',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '桃',
+                  pinyin: { pinyin: 'tao', tone: [{ index: 1, type: 2 }] },
+                  translate: 'Персиковый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '墨',
+                  pinyin: { pinyin: 'mo', tone: [{ index: 1, type: 4 }] },
+                  translate: 'Цвет туши (глубокий черный)',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '朱',
+                  pinyin: { pinyin: 'zhu', tone: [{ index: 2, type: 1 }] },
+                  translate: 'Киноварный (ярко-красный)',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '橄',
+                  pinyin: { pinyin: 'gan', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Оливковый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '酒',
+                  pinyin: { pinyin: 'jiu', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Бордовый',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '天',
+                  pinyin: { pinyin: 'tian', tone: [{ index: 1, type: 1 }] },
+                  translate: 'Небесно-голубой',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '玫',
+                  pinyin: { pinyin: 'mei', tone: [{ index: 1, type: 2 }] },
+                  translate: 'Малиновый/Рубиновый',
+                  variant: 5,
+                },
+              },
+            ],
+          },
         },
       ],
     },

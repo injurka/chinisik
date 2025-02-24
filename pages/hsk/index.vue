@@ -70,17 +70,23 @@ definePageMeta({
     <v-tabs-window v-model="currentTab" class="window">
       <v-tabs-window-item value="about">
         <v-container fluid>
-          <HskAbout />
+          <Transition name="smooth-appear" mode="out-in">
+            <HskAbout />
+          </Transition>
         </v-container>
       </v-tabs-window-item>
       <v-tabs-window-item value="words">
         <v-container fluid>
-          <HskWords />
+          <Transition name="smooth-appear" mode="out-in">
+            <HskWords />
+          </Transition>
         </v-container>
       </v-tabs-window-item>
       <v-tabs-window-item value="lab">
         <v-container fluid>
-          <HskLab />
+          <Transition name="smooth-appear" mode="out-in">
+            <HskLab />
+          </Transition>
         </v-container>
       </v-tabs-window-item>
     </v-tabs-window>
