@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { JsonToDom } from '~/components/domain/json-to-dom'
+import { JsonToDom, type JsonToDomChildren } from '~/components/domain/json-to-dom'
 import { ThematicDictionaryBreadcrumbs } from '~/components/domain/thematic-dictionary/thematic-dictionary-breadcrumbs'
+import Control from '~/components/modules/thematic-dictionary/thematic-dictionary-category/ui/control.vue'
+import { useThematicDictionaryCategoryControls } from '../composables'
 
 interface Props {
   section: ThematicDictionarySection
@@ -10,9 +12,24 @@ interface Props {
 
 const props = defineProps<Props>()
 const showFullText = ref<boolean>(false)
+const { controlMenu, controls, toggleControl } = useThematicDictionaryCategoryControls()
 
 const maxLines = 5
 
+const content = computed<JsonToDomChildren>(() => {
+  const content = props.category.content
+  const isFixedStyle = controls.value.isFixedStyle
+
+  if (Array.isArray(content.children)) {
+    content.children = content.children.map((item) => {
+      if (item.props && Object.hasOwn(item.props, 'variant'))
+        item.props.variant = isFixedStyle ? 5 : null
+      return item
+    })
+  }
+
+  return content
+})
 const isLongText = computed(() => {
   const lines = props.category.description?.split('\n')
 
@@ -68,7 +85,31 @@ const breadcrumbs = computed(() => {
         </div>
       </div>
 
-      <JsonToDom v-if="category.words && category.words.length" :node="category.content" />
+      <div class="tabs">
+        <div class="settings">
+          <VMenu
+            v-model="controlMenu"
+            :close-on-content-click="false"
+          >
+            <template #activator="{ props }">
+              <v-btn
+                icon
+                variant="text"
+                v-bind="props"
+              >
+                <Icon size="24" name="mdi-tune" />
+              </v-btn>
+            </template>
+
+            <Control v-model="controls" @toggle-control="toggleControl" />
+          </VMenu>
+        </div>
+      </div>
+
+      <JsonToDom
+        v-if="content"
+        :node="content"
+      />
     </div>
 
     <div v-if="nextCategory" class="navigate-panel">
@@ -101,6 +142,23 @@ const breadcrumbs = computed(() => {
 
   .header {
     margin-top: 16px;
+  }
+
+  .tabs {
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border-secondary-color);
+    height: 48px;
+
+    .settings {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 48px;
+      height: 48px;
+    }
   }
 
   .description {

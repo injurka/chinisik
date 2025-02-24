@@ -18,6 +18,7 @@ const JsonToDom = defineComponent({
       type: Object as PropType<JsonToDomChildren>,
       required: true,
     },
+    // TODO variants
   },
   setup(props) {
     useRender(() => {

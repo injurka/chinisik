@@ -12,7 +12,7 @@ async function useHskWords() {
   const itemsPerPage = ref(ITEMS_PER_PAGE_DEFAULT)
 
   const { isMobile } = useDevice()
-  const { data, refresh, status } = await useAsyncData(
+  const { data, refresh } = await useAsyncData(
     KEY,
     () => useRequest({
       key: KEY,
@@ -27,7 +27,7 @@ async function useHskWords() {
   )
 
   const debouncedRefresh = useDebounceFn(() => refresh(), SEARCH_DEBOUNCE)
-  const isLoading = computed(() => status.value === 'pending')
+  const isLoading = computed(() => useRequestStatus([KEY]))
 
   const totalPages = computed(() => {
     const total = data.value?.data?.pagination?.total
