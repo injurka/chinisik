@@ -143,6 +143,7 @@ const haoticLineEl = ref<HTMLElement>()
 
 // onUnmounted(() => {
 //   window.removeEventListener('resize', resizeListener)
+//   haoticLineCanavas.value?.remove()
 // })
 </script>
 

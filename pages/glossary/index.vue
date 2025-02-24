@@ -26,7 +26,7 @@ definePageMeta({
 <template>
   <PageLoader v-if="isLoadingContent" />
 
-  <section v-else class="content">
+  <section v-else class="content-wrapper">
     <JsonToDom
       :node="mockCms.glossary"
     />
@@ -46,32 +46,15 @@ definePageMeta({
 </template>
 
 <style scoped lang="scss">
-.content {
-  padding: 16px;
-  @include default-font();
-
-  .description {
-    font-size: 1rem;
-    max-width: 1200px;
-    padding: 16px 6px;
-    padding-top: 0;
-    margin: 0 auto;
-
-    @include mobile {
-      font-size: 0.9rem;
-    }
-  }
-
+.content-wrapper {
   .topic {
     &-list {
       max-width: 1200px;
+      width: 100%;
       margin: 24px auto;
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
     }
 
     &-item {
@@ -104,10 +87,6 @@ definePageMeta({
         box-shadow: 0 0 8px var(--bg-overlay-secondary-color);
       }
     }
-  }
-
-  @include mobile() {
-    padding: 8px;
   }
 }
 </style>

@@ -81,6 +81,7 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
 
 <style scoped lang="scss">
 .content {
+  background-color: var(--bg-primary-color);
   font-family: 'Rubik';
   max-width: 1200px;
   display: flex;
