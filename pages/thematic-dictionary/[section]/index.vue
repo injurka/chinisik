@@ -30,5 +30,9 @@ definePageMeta({
 </template>
 
 <style scoped lang="scss">
-
+.content-wrapper {
+  @include mobile() {
+    padding: 8px;
+  }
+}
 </style>

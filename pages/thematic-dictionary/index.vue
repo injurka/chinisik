@@ -23,6 +23,11 @@ definePageMeta({
 
 <style scoped lang="scss">
 .content-wrapper {
-  padding: 20px;
+  padding-top: 20px;
+
+  @include mobile() {
+    padding: 8px;
+    padding-top: 20px;
+  }
 }
 </style>
