@@ -27,7 +27,7 @@ export const usePinyinStore = defineStore('pinyin', {
   },
 
   actions: {
-    async getPinyin() {
+    async getAndSetPinyin() {
       await useRequest({
         key: RequestKeys.ALL,
         fn: ({ api }) => api.pinyin.v1.all(),
@@ -38,7 +38,7 @@ export const usePinyinStore = defineStore('pinyin', {
         },
       })
     },
-    async getDescriptionKeys() {
+    async getAndSetDescriptionKeys() {
       await useRequest({
         key: RequestKeys.DESCRIPTION,
         fn: ({ api }) => api.cms.v1.description({ sysname: 'pinyin' }),

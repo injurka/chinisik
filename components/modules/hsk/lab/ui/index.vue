@@ -1,25 +1,21 @@
 <script lang="ts" setup>
 import LabQuiz from './hsk-lab.vue'
 
-const KEY = 'hieroglyph-hsk_lab'
+const { api } = useApi()
 
 const isFullscreen = ref<boolean>(false)
 
 const { data } = await useAsyncData(
-  KEY,
-  () => useRequest({
-    key: KEY,
-    fn: ({ api }) => api.hsk.v1.hieroglyphsByLevel({ level: 1 }),
-  }),
-  { dedupe: 'defer' },
+  'hieroglyph-hsk_lab',
+  () => api.hsk.v1.hieroglyphsByLevel({ level: 1 }),
 )
 </script>
 
 <template>
   <LabQuiz
-    v-if="data?.data"
+    v-if="data"
     v-model:fullscreen="isFullscreen"
-    :words="data.data"
+    :words="data"
   />
 </template>
 

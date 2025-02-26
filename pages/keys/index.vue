@@ -31,8 +31,8 @@ const currentTab = ref<TabVariant>(initialTab())
 await useAsyncData(
   'hieroglyph-keys',
   () => Promise.all([
-    store.keys.getAllKeys(),
-    store.keys.getDescriptionKeys(),
+    store.keys.getAndSetAllKeys(),
+    store.keys.getAndSetDescriptionKeys(),
   ]),
   { dedupe: 'defer' },
 )
