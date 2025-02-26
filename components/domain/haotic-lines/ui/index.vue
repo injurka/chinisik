@@ -1,6 +1,7 @@
-<!-- eslint-disable unused-imports/no-unused-vars -->
 <script lang="ts" setup>
-import { type P5I, p5i } from 'p5i'
+import type { P5I } from 'p5i'
+import { useDebounceFn } from '@vueuse/core'
+import { p5i } from 'p5i'
 
 interface Props {
   width?: number
@@ -26,125 +27,155 @@ const props = withDefaults(defineProps<Props>(), {
   viewportEl: null,
 })
 
-const haoticLineEl = ref<HTMLElement>()
-// const haoticLineCanavas = ref<P5I>()
-// const viewport = computed(() => ({
-//   width: props.viewportEl?.offsetWidth || props.width,
-//   height: props.viewportEl?.offsetHeight || props.height,
-// }))
+const haoticLineEl = ref<HTMLElement | null>(null)
+const haoticLineCanvas = ref<P5I | null>(null)
+const viewport = computed(() => ({
+  width: props.viewportEl?.offsetWidth || props.width,
+  height: props.viewportEl?.offsetHeight || props.height,
+}))
 
-// function createHaoticLines(el: HTMLElement) {
-//   const sketch = p5i(() => {
-//     const {
-//       speed,
-//       pointsCounts,
-//       scaleFactor,
-//       weightStroke,
-//       color,
-//     } = props
+const points = ref<{ x: number, y: number, dx: number, dy: number }[]>([])
 
-//     const {
-//       width: widthEl,
-//       height: heightEl,
-//     } = viewport.value
+function createHaoticLines(el: HTMLElement) {
+  const sketch = p5i(() => {
+    const {
+      speed,
+      pointsCounts,
+      scaleFactor,
+      weightStroke,
+      color,
+    } = props
 
-//     const points: { x: number, y: number, dx: number, dy: number }[] = []
+    const {
+      width: widthEl,
+      height: heightEl,
+    } = viewport.value
 
-//     return {
-//       setup({ createCanvas, random, WEBGL }) {
-//         const canvas = createCanvas(widthEl, heightEl, WEBGL)
-//         canvas.parent(el)
+    return {
+      setup({ createCanvas, random, WEBGL }) {
+        const canvas = createCanvas(widthEl, heightEl, WEBGL)
+        canvas.parent(el)
 
-//         const step = (widthEl * 1) / (pointsCounts - 1)
+        const step = (widthEl * 1) / (pointsCounts - 1)
 
-//         const scalefactorX = scaleFactor * Math.max((heightEl / widthEl), 1)
-//         const scalefactorY = scaleFactor * Math.max((widthEl / heightEl), 1)
+        const scalefactorX = scaleFactor * Math.max(heightEl / widthEl, 1)
+        const scalefactorY = scaleFactor * Math.max(widthEl / heightEl, 1)
 
-//         for (let i = 0; i < pointsCounts; i++) {
-//           points.push({
-//             x: i * step - (widthEl * scalefactorX) / 2,
-//             y: random(-(heightEl / 2) * scalefactorY, (heightEl / 2) * scalefactorY),
-//             dx: random(-speed, speed),
-//             dy: random(-speed, speed),
-//           })
-//         }
-//       },
-//       draw({
-//         background,
-//         beginShape,
-//         vertex,
-//         endShape,
-//         width,
-//         height,
-//         CLOSE,
-//         dist,
-//         ellipse,
-//         noFill,
-//         stroke,
-//         strokeWeight,
-//       }) {
-//         background(0, 0)
-//         strokeWeight(weightStroke)
-//         stroke(getComputedStyle(document.documentElement).getPropertyValue(color))
-//         noFill()
+        points.value = []
 
-//         beginShape()
-//         for (const point of points) {
-//           vertex(point.x, point.y)
-//           point.x += point.dx
-//           point.y += point.dy
+        for (let i = 0; i < pointsCounts; i++) {
+          points.value.push({
+            x: i * step - (widthEl * scalefactorX) / 2,
+            y: random(-(heightEl / 2) * scalefactorY, (heightEl / 2) * scalefactorY),
+            dx: random(-speed, speed),
+            dy: random(-speed, speed),
+          })
+        }
+      },
+      draw({
+        background,
+        beginShape,
+        vertex,
+        endShape,
+        width,
+        height,
+        CLOSE,
+        dist,
+        ellipse,
+        noFill,
+        stroke,
+        strokeWeight,
+      }: P5I) {
+        background(0, 0)
+        strokeWeight(weightStroke)
+        stroke(getComputedStyle(document.documentElement).getPropertyValue(color))
+        noFill()
 
-//           if (point.x < -width / 2 || point.x > width / 2)
-//             point.dx = -point.dx
-//           if (point.y < -height / 2 || point.y > height / 2)
-//             point.dy = -point.dy
-//         }
-//         endShape(props.cap ? CLOSE : undefined)
+        beginShape()
+        for (const point of points.value) {
+          vertex(point.x, point.y)
+          point.x += point.dx
+          point.y += point.dy
 
-//         checkIntersection()
+          if (point.x < -width / 2 || point.x > width / 2) {
+            point.dx = -point.dx
+          }
+          if (point.y < -height / 2 || point.y > height / 2) {
+            point.dy = -point.dy
+          }
+        }
+        endShape(props.cap ? CLOSE : undefined)
 
-//         function checkIntersection() {
-//           for (let i = 0; i < points.length; i++) {
-//             for (let j = i + 1; j < points.length; j++) {
-//               if (dist(points[i].x, points[i].y, points[j].x, points[j].y) < 10) {
-//                 ellipse(points[i].x, points[i].y, 10, 10)
-//               }
-//             }
-//           }
-//         }
-//       },
-//     }
-//   })
+        checkIntersection()
 
-//   sketch.mount(el)
-//   return sketch
-// }
+        function checkIntersection() {
+          for (let i = 0; i < points.value.length; i++) {
+            for (let j = i + 1; j < points.value.length; j++) {
+              if (dist(points.value[i].x, points.value[i].y, points.value[j].x, points.value[j].y) < 10) {
+                ellipse(points.value[i].x, points.value[i].y, 10, 10)
+              }
+            }
+          }
+        }
+      },
+      windowResized({ resizeCanvas }) {
+        const { width: widthEl, height: heightEl } = viewport.value
+        resizeCanvas(widthEl, heightEl)
+      },
+    }
+  })
+  sketch.mount(el)
+  return sketch
+}
 
-// function createSketchs() {
-//   nextTick(() => {
-//     haoticLineCanavas.value?.remove?.()
-//     haoticLineCanavas.value = createHaoticLines(haoticLineEl.value!)
-//   })
-// }
+async function createSketchs() {
+  if (!haoticLineEl.value) {
+    return
+  }
+  await nextTick()
+  if (haoticLineCanvas.value) {
+    try {
+      haoticLineCanvas.value.remove()
+    }
+    catch (error) {
+      console.warn('Error removing canvas:', error)
+    }
+  }
 
-// function resizeListener() {
-//   try {
-//     createSketchs()
-//   }
-//   catch (err) {
-//     console.error(err)
-//   }
-// }
+  try {
+    haoticLineCanvas.value = createHaoticLines(haoticLineEl.value)
+  }
+  catch (error) {
+    console.error('Error creating sketch:', error)
+  }
+}
 
-// onMounted(() => {
-//   createSketchs()
-//   window.addEventListener('resize', resizeListener)
-// })
+const debouncedResizeListener = useDebounceFn(createSketchs, 250)
 
-// onUnmounted(() => {
-//   window.removeEventListener('resize', resizeListener)
-//   haoticLineCanavas.value?.remove()
-// })
+onMounted(() => {
+  createSketchs()
+  window.addEventListener('resize', debouncedResizeListener)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', debouncedResizeListener)
+  if (haoticLineCanvas.value) {
+    try {
+      haoticLineCanvas.value.remove()
+    }
+    catch (error) {
+      console.warn('Error removing canvas on unmount:', error)
+    }
+  }
+})
+
+watch(viewport, () => {
+  createSketchs()
+}, { deep: true })
+
+watch(props, () => {
+  createSketchs()
+}, { deep: true })
 </script>
 
 <template>

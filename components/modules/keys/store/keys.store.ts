@@ -38,14 +38,14 @@ export const useKeysStore = defineStore('keys', {
   },
 
   actions: {
-    async getAllKeys() {
+    async getAndSetAllKeys() {
       await useRequest({
         key: RequestKeys.ALL,
         fn: ({ api }) => api.keys.v1.all(),
         onSuccess: ({ data }) => this.hieroglyphKeys = data,
       })
     },
-    async getDescriptionKeys() {
+    async getAndSetDescriptionKeys() {
       await useRequest({
         key: RequestKeys.DESCRIPTION,
         fn: ({ api }) => api.cms.v1.description({ sysname: 'keys' }),

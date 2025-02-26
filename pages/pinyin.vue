@@ -15,8 +15,8 @@ const {
 await useAsyncData(
   'pinyin',
   () => Promise.all([
-    store.pinyin.getPinyin(),
-    store.pinyin.getDescriptionKeys(),
+    store.pinyin.getAndSetPinyin(),
+    store.pinyin.getAndSetDescriptionKeys(),
   ]),
   { dedupe: 'defer' },
 )

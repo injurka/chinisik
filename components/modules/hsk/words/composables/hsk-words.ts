@@ -11,26 +11,23 @@ async function useHskWords() {
   const selectedLevel = ref(1)
   const itemsPerPage = ref(ITEMS_PER_PAGE_DEFAULT)
 
+  const { api } = useApi()
   const { isMobile } = useDevice()
   const { data, refresh } = await useAsyncData(
-    KEY,
-    () => useRequest({
-      key: KEY,
-      fn: ({ api }) => api.hsk.v1.hieroglyphsByLevelList({
-        level: selectedLevel.value,
-        page: page.value,
-        limit: itemsPerPage.value,
-        keyword: searchKeyword.value,
-      }),
+    'hieroglyph-hsk_words',
+    () => api.hsk.v1.hieroglyphsByLevelList({
+      level: selectedLevel.value,
+      page: page.value,
+      limit: itemsPerPage.value,
+      keyword: searchKeyword.value,
     }),
-    { dedupe: 'defer' },
   )
 
   const debouncedRefresh = useDebounceFn(() => refresh(), SEARCH_DEBOUNCE)
   const isLoading = computed(() => useRequestStatus([KEY]))
 
   const totalPages = computed(() => {
-    const total = data.value?.data?.pagination?.total
+    const total = data.value?.pagination?.total
     return total ? Math.ceil(total / itemsPerPage.value) : 0
   })
 

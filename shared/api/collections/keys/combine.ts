@@ -1,4 +1,5 @@
-import { ApiNames, type Instance, type IService } from '~/shared/api'
+import type { Instance, IService } from '~/shared/api'
+import { ApiNames } from '~/shared/api'
 import { v1 } from './handlers'
 
 interface IMethods {
