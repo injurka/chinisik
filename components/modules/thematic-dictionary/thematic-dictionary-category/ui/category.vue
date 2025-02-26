@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { JsonToDom, type JsonToDomChildren } from '~/components/domain/json-to-dom'
+import type { JsonToDomChildren } from '~/components/domain/json-to-dom'
+import { JsonToDom } from '~/components/domain/json-to-dom'
 import { ThematicDictionaryBreadcrumbs } from '~/components/domain/thematic-dictionary/thematic-dictionary-breadcrumbs'
 import Control from '~/components/modules/thematic-dictionary/thematic-dictionary-category/ui/control.vue'
 import { useThematicDictionaryCategoryControls } from '../composables'

@@ -1,7 +1,8 @@
 import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word/types'
+import type { PinyinTextProps } from '~/components/domain/pinyin-text'
 import { VTooltip } from 'vuetify/components'
 import { useHieroglyphWordStore } from '~/components/domain/hieroglyph-word/store'
-import { PinyinText, type PinyinTextProps } from '~/components/domain/pinyin-text'
+import { PinyinText } from '~/components/domain/pinyin-text'
 
 import './index.scss'
 

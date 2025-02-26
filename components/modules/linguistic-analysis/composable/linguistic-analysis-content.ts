@@ -14,8 +14,6 @@ interface LinguisticAnalysisContentControl {
 }
 
 function useLinguisticAnalysisContent(params: Params) {
-  const { api } = useApi()
-
   const analyzedText = ref<unknown | null>(null)
   const control = ref<LinguisticAnalysisContentControl>({
     value: '',
