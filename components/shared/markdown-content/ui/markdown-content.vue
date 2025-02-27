@@ -6,11 +6,12 @@ import '@luohc92/vue3-image-viewer/dist/style.css'
 
 interface Props {
   content: string
+  imageBasePath?: string
 }
 
 const props = defineProps<Props>()
-const renderedContent = ref('')
-const md = createMarkdownRenderer()
+const renderedContent = ref<string>('')
+const md = createMarkdownRenderer({ imageBasePath: props.imageBasePath })
 
 const currentImages = ref<string[]>([])
 

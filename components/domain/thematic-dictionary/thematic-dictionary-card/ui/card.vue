@@ -33,10 +33,10 @@ defineProps<Props>()
   --tw-gradient-to-position: 100%;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) var(--tw-gradient-via-position),
     var(--tw-gradient-to) var(--tw-gradient-to-position);
+  background: linear-gradient(to right, var(--tw-gradient-stops));
 
   border-radius: 6px;
   border: 1px solid var(--border-secondary-color);
-  background: linear-gradient(to right, var(--tw-gradient-stops));
   transition: all 0.2s ease-in-out;
   &:hover {
     border: 1px solid var(--border-accent-color);

@@ -3,6 +3,7 @@ import { MarkdownContent } from '~/components/shared/markdown-content'
 import { PageLoader } from '~/components/shared/page-loader'
 
 const route = useRoute()
+// const { apiBaseUrl } = useRuntimeConfig().public
 const sysname = route.params.sysname as string
 
 const dayContent = ref<string>('')
@@ -36,7 +37,11 @@ definePageMeta({
   <section class="content-wrapper shanghai">
     <PageLoader v-if="isLoading" />
 
-    <MarkdownContent v-else-if="dayContent" :content="dayContent" />
+    <MarkdownContent
+      v-else-if="dayContent"
+      :content="dayContent"
+    />
+    <!-- :image-base-path="cleanDoubleSlashes(`${apiBaseUrl}/static/personal/img/`)" -->
 
     <v-alert v-else type="info" class="tip">
       Ничего не найдено. Выберите другой день из меню

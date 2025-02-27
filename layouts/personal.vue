@@ -6,6 +6,8 @@ import { HeaderMenuDrawer } from '~/components/shared/header-menu-drawer'
 import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
 
 const route = useRoute()
+const store = useStore(['auth'])
+const { isMobile } = useDevice()
 
 const daysNavList = [
   { sysname: '10-maya', title: 'Начало пути' },
@@ -30,7 +32,6 @@ const contentType = ref<string>('slot')
 const isMenuDrawer = ref<boolean>(false)
 const isProfileDrawer = ref<boolean>(false)
 const selectedDay = ref<string>(sysname ?? daysNavList[0].sysname)
-const { isMobile } = useDevice()
 
 function selectDay(sysname: string) {
   selectedDay.value = sysname
@@ -73,7 +74,10 @@ watch(
           </ul>
         </template>
       </HeaderMenuDrawer>
-      <HeaderProfileDrawer v-model="isProfileDrawer" />
+      <HeaderProfileDrawer
+        v-if="store.auth.isAuthenticated"
+        v-model="isProfileDrawer"
+      />
     </ClientOnly>
 
     <VMain>

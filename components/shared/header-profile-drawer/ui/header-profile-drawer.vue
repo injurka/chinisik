@@ -29,6 +29,7 @@ function handleLogout() {
     class="drawer"
     width="320"
     temporary
+    :touchless="true"
   >
     <div class="profile-header">
       <NuxtImg

@@ -7,7 +7,9 @@ import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
 
 const isMenuDrawer = ref<boolean>(false)
 const isProfileDrawer = ref<boolean>(false)
+
 const { isMobile } = useDevice()
+const store = useStore(['auth'])
 </script>
 
 <template>
@@ -18,7 +20,7 @@ const { isMobile } = useDevice()
   />
   <VLayout>
     <HeaderMenuDrawer v-model="isMenuDrawer" />
-    <HeaderProfileDrawer v-model="isProfileDrawer" />
+    <HeaderProfileDrawer v-if="store.auth.isAuthenticated" v-model="isProfileDrawer" />
 
     <VMain>
       <div class="main-content">
