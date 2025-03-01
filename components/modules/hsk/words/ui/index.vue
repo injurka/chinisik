@@ -15,6 +15,7 @@ const {
   data,
   isLoading,
   totalPages,
+  error,
 } = await useHskWords()
 
 const { formatPinyinData } = usePinyinFormatter()
@@ -66,9 +67,9 @@ const { controlMenu, controls, toggleControl } = useHskControls()
 
     <PageLoader v-if="isLoading" class="loader" />
 
-    <div v-else-if="data?.data?.data.length" class="words-list">
+    <div v-else-if="data?.data?.length && !error?.data" class="words-list">
       <HieroglyphWord
-        v-for="item in data.data.data"
+        v-for="item in data.data"
         :key="item.id"
         :variant="controls.isFixedStyle ? 5 : undefined"
         :glyph="item.glyph"
@@ -83,8 +84,19 @@ const { controlMenu, controls, toggleControl } = useHskControls()
         color="primary"
       />
     </div>
+
     <div v-else class="empty">
-      Ничего не найдено :(
+      <NuxtImg
+        width="200"
+        height="200"
+        src="/images/not-found.gif"
+      />
+      <span v-if="error?.data">
+        Ошибка получения данных :(
+      </span>
+      <span v-else>
+        Ничего не найдено :(
+      </span>
     </div>
   </div>
 </template>
@@ -147,10 +159,25 @@ const { controlMenu, controls, toggleControl } = useHskControls()
     }
   }
   .empty {
-    margin: 0 auto;
-    font-size: 1.5rem;
-    margin-top: 32px;
-    color: var(--fg-secondary-color) !important;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 32px 0;
+
+    > img {
+      box-shadow: 0 0 30px var(--bg-error-color);
+      border: 2px solid var(--border-primary-color);
+      border-radius: 8px;
+    }
+
+    > span {
+      margin: 0 auto;
+      font-size: 1.2rem;
+      margin-top: 24px;
+      color: var(--fg-secondary-color) !important;
+    }
   }
   .loader {
     margin-top: 100px;

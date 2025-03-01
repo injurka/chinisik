@@ -5,19 +5,23 @@ import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 const app = useAppConfig()
 const { $pwa } = useNuxtApp()
 const { getHeadThemeColor } = useChangeTheme()
+const fontFamilyCookie = useCookie(FONT_FAMILY_CN, { default: () => 'base', sameSite: 'lax' })
 
 useHead({
   ...app,
   htmlAttrs: {
     'lang': 'ru',
-    'data-cn': `${useCookie(FONT_FAMILY_CN, { default: () => 'base', sameSite: 'lax' }).value}`,
+    'data-cn': fontFamilyCookie.value,
   },
   meta: [
     { name: 'theme-color', content: getHeadThemeColor() },
   ],
 })
 
-await useAsyncData('initialize', initializeApp, { server: true, dedupe: 'cancel' })
+await useAsyncData('initialize', initializeApp, {
+  server: true,
+  dedupe: 'cancel',
+})
 
 onMounted(() => {
   if ($pwa?.offlineReady) {

@@ -5,9 +5,9 @@ enum ThemesVariant {
 }
 
 const themesColors: Record<ThemesVariant, string> = {
-  [ThemesVariant.Light]: '#eeeeee',
-  [ThemesVariant.Dark]: '#1e1f20',
-  [ThemesVariant.Rainy]: '#0d1117',
+  [ThemesVariant.Light]: '#dcdfe1',
+  [ThemesVariant.Dark]: '#161b22',
+  [ThemesVariant.Rainy]: '#121314',
 }
 
 function useChangeTheme() {

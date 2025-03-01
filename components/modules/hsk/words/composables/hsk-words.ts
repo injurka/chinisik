@@ -6,14 +6,14 @@ const KEY = 'hieroglyph-hsk_words'
 const SEARCH_DEBOUNCE = 300
 
 async function useHskWords() {
-  const page = ref(1)
-  const searchKeyword = ref('')
-  const selectedLevel = ref(1)
-  const itemsPerPage = ref(ITEMS_PER_PAGE_DEFAULT)
+  const page = ref<number>(1)
+  const searchKeyword = ref<string>('')
+  const selectedLevel = ref<number>(1)
+  const itemsPerPage = ref<number>(ITEMS_PER_PAGE_DEFAULT)
 
   const { api } = useApi()
   const { isMobile } = useDevice()
-  const { data, refresh } = await useAsyncData(
+  const { data, refresh, error } = await useAsyncData(
     'hieroglyph-hsk_words',
     () => api.hsk.v1.hieroglyphsByLevelList({
       level: selectedLevel.value,
@@ -52,6 +52,7 @@ async function useHskWords() {
     data,
     isLoading,
     totalPages,
+    error,
   }
 }
 

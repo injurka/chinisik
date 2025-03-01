@@ -15,6 +15,22 @@ function method(instance: Instance) {
         method: 'GET',
       })
     },
+
+    refresh(payload: DTO.IRefreshAuthP) {
+      return instance<DTO.IAuthUserR>(`/v1/auth/refresh`, {
+        method: 'POST',
+        body: payload,
+        // Важно: не отправляем авто-заголовок Authorization
+        skipAuth: true,
+      })
+    },
+
+    // Добавляем метод для выхода
+    signOut() {
+      return instance(`/v1/auth/logout`, {
+        method: 'POST',
+      })
+    },
   }
 }
 

@@ -1,3 +1,4 @@
+export * from './auth-service'
 export * from './change-font-cn'
 export * from './change-theme'
 export * from './combine-stores'

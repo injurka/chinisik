@@ -12,9 +12,15 @@ interface ISignInUserP {
 interface IAuthUserR {
   token: string
   user: User
+  refreshToken: string
+}
+
+interface IRefreshAuthP {
+  refreshToken: string
 }
 
 export type {
   IAuthUserR,
+  IRefreshAuthP,
   ISignInUserP,
 }
