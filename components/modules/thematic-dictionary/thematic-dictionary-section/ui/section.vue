@@ -9,6 +9,14 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const search = ref<string>('')
+
+const categories = computed(() => (
+  props.section.categories.filter(
+    categorie => categorie.name.includes(search.value),
+  )
+))
+
 const breadcrumbs = computed(() => {
   const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections }]
 
@@ -28,15 +36,6 @@ const breadcrumbs = computed(() => {
     <ThematicDictionaryBreadcrumbs :items="breadcrumbs" />
 
     <div class="content">
-      <div class="header">
-        <h1>{{ section.name }}</h1>
-        <div v-if="section.description" class="description">
-          <p class="description-text">
-            {{ section.description }}
-          </p>
-        </div>
-      </div>
-
       <aside class="side-catalog">
         <ul class="side-catalog-list">
           <li
@@ -52,9 +51,30 @@ const breadcrumbs = computed(() => {
         </ul>
       </aside>
 
+      <div class="header">
+        <h1>{{ section.name }}</h1>
+        <div v-if="section.description" class="description">
+          <p class="description-text">
+            {{ section.description }}
+          </p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <v-text-field
+          v-model="search"
+          class="controls-search"
+          label="Поиск "
+          variant="outlined"
+          density="comfortable"
+          hide-details
+          prepend-inner-icon="mdi-text-search"
+        />
+      </div>
+
       <div class="list">
         <ThematicDictionaryCard
-          v-for="category in section.categories"
+          v-for="category in categories"
           :key="category.sysname"
           :navigate-url="RoutePaths.ThematicDictionary.Category(section.sysname, category.sysname)"
           :sysname="category.sysname"
@@ -105,6 +125,15 @@ const breadcrumbs = computed(() => {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   margin: 16px 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 8px;
 }
 
 .side-catalog {

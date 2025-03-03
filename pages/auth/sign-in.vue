@@ -1,6 +1,6 @@
 <script setup lang="ts">
+// @ts-expect-error svg loader
 import LogoSVG from '~/assets/svg/logo.svg?raw'
-
 import { HaoticLines } from '~/components/domain/haotic-lines'
 import { OAuthErrors, OAuthProviders } from '~/shared/types/models'
 
@@ -35,7 +35,7 @@ const passwordRules = [
 
 const isLoading = computed(() => useRequestStatus([RequestKeys.SIGN_IN]))
 
-async function submit() {
+async function submitSignIn() {
   formHasErrors.value = false
 
   const emailValid = emailRules.every(rule => rule(email.value) === true)
@@ -46,28 +46,21 @@ async function submit() {
     return
   }
 
-  await useRequest({
-    key: RequestKeys.SIGN_IN,
-    fn: async ({ api }) => {
-      await new Promise(r => setTimeout(r, 1_000))
+  try {
+    await store.auth.signIn({ email: email.value, password: password.value }, true)
 
-      return api.auth.v1.signIn({
-        email: email.value,
-        password: password.value,
-      })
-    },
-    onSuccess: async ({ data: { user, token } }) => {
-      store.auth.$patch({ user })
-      useCookie(TOKEN_KEY, { sameSite: 'lax' }).value = token
-      await navigateTo(RoutePaths.Keys('list'))
-    },
-    onError: ({ error }) => {
-      snackbarError.value = {
-        showed: true,
-        msg: error.message,
-      }
-    },
-  })
+    await navigateTo(RoutePaths.Keys('list'))
+  }
+  catch (error) {
+    let errorMessage: string = 'Неизвестная ошибка.'
+
+    if (isIApiError(error))
+      errorMessage = error.message
+    else if (error instanceof Error)
+      errorMessage = error.message
+
+    snackbarError.value = { showed: true, msg: errorMessage }
+  }
 }
 
 function customizeSvgColors(content: string) {
@@ -139,7 +132,7 @@ onMounted(() => {
         <span v-html="customizeSvgColors(LogoSVG)" />
       </div>
 
-      <v-form :disabled="isLoading" class="form" @submit.prevent="submit">
+      <v-form :disabled="isLoading" class="form" @submit.prevent="submitSignIn">
         <v-text-field
           v-model="email"
           label="Почтовый адрес"

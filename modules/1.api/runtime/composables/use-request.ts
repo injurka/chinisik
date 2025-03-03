@@ -7,7 +7,7 @@ import type {
 import { useRequestWrapperStore } from '../store/request-wrapper.store'
 
 const useRequest: UseRequest = (payload) => {
-  return useRequestWrapperStore().requestWrapper(payload)
+  return useRequestWrapperStore().request(payload)
 }
 
 const useRequestStatus: UseRequestStatus = (keys, status) => {

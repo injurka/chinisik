@@ -75,7 +75,7 @@ export const baseCfg: NuxtConfig = {
         'mdi:fullscreen',
         'mdi:trophy-broken',
         'material-symbols:settings-suggest-outline',
-        'mdi-tune',
+        'mdi:tune',
         'mdi:key',
         'mdi:translate',
         'mdi:text-box-search',

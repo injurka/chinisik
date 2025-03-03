@@ -3,7 +3,7 @@ import type { IApiError, IRequestReturn, IRequestWrapperPayload } from './store'
 import type { CreateApiParams } from '~/shared/api'
 
 // Типизация для useRequest
-export type UseRequest = <T>(payload: IRequestWrapperPayload<T>) => Promise<IRequestReturn<Awaited<T>>>
+export type UseRequest = <T>(payload: IRequestWrapperPayload<T>) => Promise<IRequestReturn<T>>
 
 // Типизация для useRequestStatus
 export type UseRequestStatus = (keys: string[], status?: ApiStatus) => boolean
@@ -17,4 +17,5 @@ export type UseApiInitParams = Partial<CreateApiParams>
 export type UseApi = () => {
   init: (params: UseApiInitParams) => Promise<void>
   api: IApi
+  refresh: (() => Promise<void>) | null
 }

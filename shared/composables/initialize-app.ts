@@ -11,23 +11,9 @@ interface InitializeResult {
  */
 export async function initializeApp(_?: NuxtApp): Promise<InitializeResult> {
   const store = useStore(['auth'])
-  let user: User | null = null
 
-  try {
-    // Пробуем получить текущего пользователя
-    const { data } = await store.auth.me()
-    user = data?.user ?? null
-  }
-  catch {
-    try {
-      // Если не удалось, пробуем обновить токен
-      const { data } = await store.auth.refresh()
-      user = data?.user ?? null
-    }
-    catch {
-      // Если обе попытки не удались, пользователь не аутентифицирован
-    }
-  }
+  // Пробуем получить текущего пользователя
+  const { data } = await store.auth.me()
 
-  return { user }
+  return { user: data ?? null }
 }

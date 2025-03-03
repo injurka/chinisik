@@ -11,6 +11,7 @@ enum RequestKeys {
 
 interface AuthState {
   user: User | null
+  tokenPair: TokenPair | null
 }
 
 interface TokenPair {
@@ -24,6 +25,11 @@ interface TokenPair {
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
+
+    tokenPair: {
+      access: useCookie<string>(TOKEN_KEY).value,
+      refresh: useCookie<string>(REFRESH_TOKEN_KEY).value,
+    },
   }),
 
   getters: {
@@ -34,48 +40,50 @@ export const useAuthStore = defineStore('auth', {
       RequestKeys.SIGN_OUT,
     ]),
     isAuthenticated: state => !!state.user,
-    token: () => useCookie<string>(TOKEN_KEY).value,
   },
 
   actions: {
     /**
      * Получает информацию о текущем пользователе
      */
-    async me() {
+    async me(withCookie = false) {
       return await useRequest({
         key: RequestKeys.ME,
         fn: ({ api }) => api.auth.v1.me(),
         onSuccess: ({ data }) => {
-          this.user = data.user
+          this.user = data
         },
-        onError: () => this.clearAuth(),
+        onError: ({ error }) => {
+          this.clearAuth(withCookie)
+          throw error
+        },
       })
     },
 
     /**
      * Обновляет токен авторизации
      */
-    async refresh() {
-      const refreshToken = useCookie(REFRESH_TOKEN_KEY).value ?? ''
-
+    async refresh(refreshToken: string, withCookie = false) {
       return await useRequest({
         key: RequestKeys.REFRESH,
         fn: ({ api }) => api.auth.v1.refresh({ refreshToken }),
         onSuccess: ({ data }) => {
-          this.user = data.user
           this.saveTokens({
             access: data.token,
             refresh: data.refreshToken,
-          })
+          }, withCookie)
         },
-        onError: () => this.clearAuth(),
+        onError: ({ error }) => {
+          this.clearAuth(withCookie)
+          throw error
+        },
       })
     },
 
     /**
      * Авторизует пользователя
      */
-    async signIn(payload: DTO.ISignInUserP) {
+    async signIn(payload: DTO.ISignInUserP, withCookie = false) {
       return await useRequest({
         key: RequestKeys.SIGN_IN,
         fn: ({ api }) => api.auth.v1.signIn(payload),
@@ -84,46 +92,67 @@ export const useAuthStore = defineStore('auth', {
           this.saveTokens({
             access: data.token,
             refresh: data.refreshToken,
-          })
+          }, withCookie)
         },
-        onError: () => this.clearAuth(),
+        onError: ({ error }) => {
+          this.clearAuth(withCookie)
+          throw error
+        },
       })
     },
 
     /**
      * Выход пользователя из системы
      */
-    async signOut() {
+    async signOut(withCookie = true) {
       await useRequest({
         key: RequestKeys.SIGN_OUT,
         fn: ({ api }) => api.auth.v1.signOut(),
-        onSuccess: () => this.clearAuth(),
-        onError: () => this.clearAuth(),
+        onSuccess: () => {
+          this.clearAuth(withCookie)
+        },
+        onError: ({ error }) => {
+          this.clearAuth(withCookie)
+          throw error
+        },
       })
     },
 
     /**
      * Сохраняет токены в куки
      */
-    saveTokens(tokens: TokenPair) {
-      const isProduction = import.meta.env.NODE_ENV === 'production'
-      const cookieOptions = {
-        secure: isProduction,
-        maxAge: 60 * 60 * 24, // 24 часа
-        sameSite: 'lax' as const,
-      }
+    saveTokens(tokens: TokenPair, withCookie = false) {
+      this.tokenPair = tokens
 
-      useCookie(TOKEN_KEY, cookieOptions).value = tokens.access
-      useCookie(REFRESH_TOKEN_KEY, cookieOptions).value = tokens.refresh
+      if (withCookie) {
+        const cookieOptions = {
+          secure: import.meta.env.NODE_ENV === 'production',
+          maxAge: 60 * 60 * 24, // 24 часа (in seconds)
+          sameSite: 'lax' as const,
+        }
+        useCookie(TOKEN_KEY, cookieOptions).value = tokens.access
+        useCookie(REFRESH_TOKEN_KEY, cookieOptions).value = tokens.refresh
+      }
+    },
+
+    /**
+     * Очищает токены из кук
+     */
+    clearTokens(withCookie = false) {
+      this.tokenPair = null
+
+      if (withCookie) {
+        useCookie(TOKEN_KEY).value = null
+        useCookie(REFRESH_TOKEN_KEY).value = null
+      }
     },
 
     /**
      * Очищает данные авторизации
      */
-    clearAuth() {
+    clearAuth(withCookie = false) {
       this.user = null
-      useCookie(TOKEN_KEY).value = null
-      useCookie(REFRESH_TOKEN_KEY).value = null
+      this.clearTokens(withCookie)
     },
   },
 })

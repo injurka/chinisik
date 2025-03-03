@@ -1,11 +1,10 @@
 import type {
   ApiStatus,
   IApiError,
-  ICallback,
   IRequestReturn,
   IRequestWrapperPayload,
   IRequestWrapperState,
-  IRetryResult,
+  ITryRequest,
 } from '../../types'
 import { computed, useApi } from '#imports'
 
@@ -26,19 +25,18 @@ const useRequestWrapperStore = defineStore('request', {
         this._error.delete(key)
     },
 
-    async requestWrapper<T = boolean>(payload: IRequestWrapperPayload<T>): Promise<IRequestReturn<Awaited<T>>> {
+    async request<T = boolean>(payload: IRequestWrapperPayload<T>): Promise<IRequestReturn<T>> {
       const {
         key,
         fn,
         onSuccess,
         onError,
-        attemptCounts,
       } = payload
 
       this._setLoading(key, 'PENDING')
       this._setError(key, null)
 
-      const { result, error } = await this.retryAsync(fn, attemptCounts ?? 1)
+      const { result, error } = await this.tryRequest(fn)
 
       try {
         await (result && !error
@@ -57,55 +55,78 @@ const useRequestWrapperStore = defineStore('request', {
       }
 
       return {
-        data: result as Awaited<T>,
+        data: result,
         error,
         status: result ? 'FULFILLED' : 'REJECTED',
       }
     },
-    async retryAsync<T>(
-      fn: (payload: ICallback) => T,
-      attemptCounts: number,
-    ): Promise<IRetryResult<T>> {
-      const { api } = useApi()
-      let error: IApiError | null = {} as IApiError
+    async tryRequest<T>(fn: IRequestWrapperPayload<T>['fn'], skipRefresh = false): Promise<ITryRequest<T>> {
+      const { api, refresh } = useApi()
+      let error: IApiError | null = null
 
-      for (let i = 0; i < attemptCounts; i++) {
-        try {
-          const result = ((await fn({ state: this.$state, api })) ?? true) as Awaited<T>
-
-          return { result, error: null }
+      try {
+        const result = (await fn({ state: this.$state, api }) ?? null)
+        return {
+          result,
+          error: null,
         }
-        catch (e: any) {
-          if (!e?.response) {
-            error = null
+      }
+      catch (e: any) {
+        if (e.status === 401 && !skipRefresh) {
+          try {
+            await refresh?.()
+            return this.tryRequest(fn, true)
           }
-          else {
-            error = {
-              status: e.status,
-              ...e?.response?._data ?? e,
-            }
+          catch (refreshError) {
+            error = this.adapterError(refreshError)
           }
-
-          if (!(import.meta.server && import.meta.env.NODE_ENV === 'production'))
-            console.error('[REQUEST ERROR] - ', e)
+        }
+        else {
+          error = this.adapterError(e)
         }
       }
 
-      return { error }
+      return {
+        error,
+        result: null,
+      }
     },
 
+    adapterError(e: any): IApiError | null {
+      if (!e?.response) {
+        return null
+      }
+
+      const status = e.response.status
+      const data = e.response._data || e
+
+      const error: IApiError = {
+        status,
+        message: (data?.message) || 'Произошла ошибка',
+      }
+
+      if (!(import.meta.server && import.meta.env.NODE_ENV === 'production')) {
+        console.error('[REQUEST ERROR] - ', e)
+      }
+
+      return error
+    },
     getStatus(key: string): ApiStatus {
-      return this._status.get(key)!
+      return this._status.get(key) || 'NONE'
     },
     checkStatus(keys: string[], status = 'PENDING'): boolean {
       return keys.some(s => this.getStatus(s) === status)
     },
     getError(key: string): IApiError | null {
-      return this._error.get(key)!
+      return this._error.get(key) || null
     },
     getAnyError(keys: string[]): IApiError | null {
-      const key = keys.find(key => !!this._error.get(key))
-      return key ? this._error.get(key)! : null
+      for (const key of keys) {
+        const error = this._error.get(key)
+        if (error)
+          return error
+      }
+      return null
     },
     isAnyLoading(keys: string[]) {
       return computed(() => this.checkStatus(keys, 'PENDING'))

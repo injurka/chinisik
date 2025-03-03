@@ -1,5 +1,3 @@
-import type { FetchOptions } from 'ofetch'
-
 declare module 'ofetch' {
   interface FetchOptions {
     // Опция для пропуска добавления заголовка авторизации
