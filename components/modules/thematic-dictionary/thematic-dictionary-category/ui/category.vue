@@ -102,7 +102,10 @@ const breadcrumbs = computed(() => {
               </v-btn>
             </template>
 
-            <Control v-model="controls" @toggle-control="toggleControl" />
+            <Control
+              v-model="controls"
+              @toggle-control="toggleControl"
+            />
           </VMenu>
         </div>
       </div>

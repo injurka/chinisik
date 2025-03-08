@@ -25,7 +25,6 @@ const navItems: NavItem[] = [
 ]
 
 const hasSlotContent = computed(() => {
-  // Почему `undefined`
   return !!slots.default()
 })
 </script>

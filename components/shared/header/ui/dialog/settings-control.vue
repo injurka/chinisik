@@ -18,7 +18,7 @@ const controlledTheme = computed({
 
 const controlledHieroglyphVariant = computed({
   get: () => store.hieroglyphWord.variant,
-  set: (value: HieroglyphWordVariant) => store.hieroglyphWord.variant = value,
+  set: (value: HieroglyphWordVariant) => store.hieroglyphWord.setVariant(value),
 })
 
 const controlledColorPinyin = computed({

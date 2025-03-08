@@ -1,6 +1,7 @@
 import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word/types'
 import type { PinyinTextProps } from '~/components/domain/pinyin-text'
-import { VTooltip } from 'vuetify/components'
+import { useDisplay } from 'vuetify' // Импортируем useDisplay
+import { VSnackbar, VTooltip } from 'vuetify/components'
 import { useHieroglyphWordStore } from '~/components/domain/hieroglyph-word/store'
 import { PinyinText } from '~/components/domain/pinyin-text'
 
@@ -16,49 +17,155 @@ const props = {
 const HieroglyphWordVarious = defineComponent({
   name: 'WordVarious',
   props,
-  components: { VTooltip, PinyinText },
+  components: { VTooltip, PinyinText, VSnackbar },
   setup(props) {
     const isActive = ref<boolean>(false)
+    const isTooltipHovered = ref<boolean>(false)
+    const snackbar = ref<boolean>(false)
+    const snackbarText = ref<string>('')
+    const { mobile } = useDisplay()
 
-    const tooltipText = () => {
+    const handleActivatorMouseEnter = () => {
+      isActive.value = true
+    }
+
+    const handleActivatorMouseLeave = () => {
+      setTimeout(() => {
+        if (!isTooltipHovered.value) {
+          isActive.value = false
+        }
+      }, 100)
+    }
+
+    const handleTooltipMouseEnter = () => {
+      isTooltipHovered.value = true
+      isActive.value = true
+    }
+
+    const handleTooltipMouseLeave = () => {
+      isTooltipHovered.value = false
+      setTimeout(() => {
+        if (!isTooltipHovered.value) {
+          isActive.value = false
+        }
+      }, 300)
+    }
+
+    const showSnackbar = (text: string) => {
+      snackbarText.value = text
+      snackbar.value = true
+    }
+
+    const copyTranslate = () => {
+      navigator.clipboard.writeText(`${props.translate}`).then(() => {
+        showSnackbar('Перевод скопирован!')
+      }).catch((err) => {
+        console.error('Failed to copy text: ', err)
+        showSnackbar('Ошибка при копировании перевода!')
+      })
+    }
+
+    const copyPinyin = () => {
+      const isPinyinText = typeof props.pinyin === 'string'
+      const isPinyinComplex = !isPinyinText && !!props.pinyin?.pinyin
+      const textToCopy = isPinyinText ? props.pinyin : isPinyinComplex ? props.pinyin.pinyin : ''
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showSnackbar('Пиньинь скопирован!')
+      }).catch((err) => {
+        console.error('Failed to copy text: ', err)
+        showSnackbar('Ошибка при копировании пиньиня!')
+      })
+    }
+
+    const tooltipText = (variant: 'full' | 'pinyin' | 'translate') => {
       const isPinyinText = typeof props.pinyin === 'string'
       const isPinyinComplex = !isPinyinText && !!props.pinyin?.pinyin
 
-      return (
-        <div class="hw-tip">
-          {isPinyinComplex && (
-            <div class="hw-tip-pinyin">
-              <PinyinText {...props.pinyin} colored={props.pinyin.colored} />
+      switch (variant) {
+        case 'full':
+          return (
+            <div
+              class="hw-tip"
+              onMouseenter={handleTooltipMouseEnter}
+              onMouseleave={handleTooltipMouseLeave}
+            >
+              {isPinyinComplex && (
+                <div class="hw-tip-pinyin" onClick={() => copyPinyin()}>
+                  <PinyinText
+                    {...props.pinyin}
+                    colored={props.pinyin.colored}
+                  />
+                </div>
+              )}
+              {isPinyinText && (
+                <div class="hw-tip-pinyin" onClick={() => copyPinyin()}>
+                  {props.pinyin}
+                </div>
+              )}
+              {(isPinyinText || isPinyinComplex) && props.translate && <hr class="hw-tip-hr" />}
+              {props.translate && (
+                <div class="hw-tip-translate" onClick={() => copyTranslate()}>
+                  {props.translate}
+                </div>
+              )}
             </div>
-          )}
-          {isPinyinText && (
-            <div class="hw-tip-pinyin">
-              {props.pinyin}
+          )
+        case 'pinyin':
+          return (
+            <div
+              class="hw-tip"
+              onMouseenter={handleTooltipMouseEnter}
+              onMouseleave={handleTooltipMouseLeave}
+            >
+              {isPinyinComplex && (
+                <div class="hw-tip-pinyin" onClick={() => copyPinyin()}>
+                  <PinyinText
+                    {...props.pinyin}
+                    colored={props.pinyin.colored}
+                  />
+                </div>
+              )}
+              {isPinyinText && (
+                <div class="hw-tip-pinyin" onClick={() => copyPinyin()}>
+                  {props.pinyin}
+                </div>
+              )}
             </div>
-          )}
-          {(isPinyinText || isPinyinComplex) && props.translate && <hr class="hw-tip-hr" />}
-          {props.translate && (
-            <div class="hw-tip-translate">
-              {props.translate}
+          )
+        case 'translate':
+          return (
+            <div
+              class="hw-tip"
+              onMouseenter={handleTooltipMouseEnter}
+              onMouseleave={handleTooltipMouseLeave}
+            >
+              {props.translate && (
+                <div class="hw-tip-translate" onClick={() => copyTranslate()}>
+                  {props.translate}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      )
+          )
+        default:
+          break
+      }
     }
+
     const tooltipProps = {
-      'openDelay': 50,
+      'openDelay': 100,
       'activator': 'parent',
       'location': 'top',
-      'transition': 'none',
       'noClickAnimation': true,
       'zIndex': 9999,
       'modelValue': isActive.value,
-      'onUpdate:modelValue': (value: boolean) => {
-        isActive.value = value
-      },
+      'onUpdate:modelValue': (value: boolean) => isActive.value = value,
       'openOnClick': true,
       'openOnFocus': true,
-      'openOnHover': true,
+      'openOnHover': false,
+      'transition': 'fade-transition',
+      'closeDelay': 300,
+      'offset': 4,
     } satisfies VTooltip['$props']
 
     const graphContent = computed(() => {
@@ -71,6 +178,7 @@ const HieroglyphWordVarious = defineComponent({
           typeof props.pinyin === 'string'
             ? props.pinyin
             : (
+                // @ts-expect-error vue/jsx-runtime
                 <PinyinText
                   {...props.pinyin}
                   colored={props.pinyin.colored}
@@ -105,75 +213,105 @@ const HieroglyphWordVarious = defineComponent({
     })
 
     useRender(() => {
-      switch (props.variant) {
-        case 0:
-          return (
-            <span class="hw-glyph">
-              <VTooltip {...tooltipProps} modelValue={isActive.value}>
-                {tooltipText}
-              </VTooltip>
-              {graphContent.value}
-            </span>
-          )
+      return (
+        <>
+          <VSnackbar
+            v-model={snackbar.value}
+            timeout={2000}
+            location={mobile.value ? 'bottom' : 'top'}
+            color="var(--bg-tertiary-color)"
+            variant="flat"
+          >
+            <div class="hw-snackbar">
+              {snackbarText.value}
+            </div>
+          </VSnackbar>
 
-        case 1:
-          return (
-            <>
-              <span class="hw-glyph">
-                <VTooltip {...tooltipProps}>
-                  {pinyinContent.value}
-                </VTooltip>
-                {graphContent.value}
-              </span>
-              —
-              {translateContent.value}
-            </>
-          )
+          {(() => {
+            switch (props.variant) {
+              case 0:
+                return (
+                  <span
+                    class="hw-glyph"
+                    onMouseenter={handleActivatorMouseEnter}
+                    onMouseleave={handleActivatorMouseLeave}
+                  >
+                    <VTooltip class="hw-tooltip" {...tooltipProps} modelValue={isActive.value}>
+                      {tooltipText('full')}
+                    </VTooltip>
+                    {graphContent.value}
+                  </span>
+                )
 
-        case 2:
-          return (
-            <>
-              <span class="hw-glyph">
-                <VTooltip {...tooltipProps}>
-                  {translateContent.value}
-                </VTooltip>
-                {graphContent.value}
-              </span>
-              {pinyinContent.value}
-            </>
-          )
+              case 1:
+                return (
+                  <>
+                    <span
+                      class="hw-glyph"
+                      onMouseenter={handleActivatorMouseEnter}
+                      onMouseleave={handleActivatorMouseLeave}
+                    >
+                      <VTooltip {...tooltipProps} modelValue={isActive.value}>
+                        {tooltipText('pinyin')}
+                      </VTooltip>
+                      {graphContent.value}
+                    </span>
+                    —
+                    {translateContent.value}
+                  </>
+                )
 
-        case 3:
-          return (
-            <>
-              {pinyinContent.value}
-              <span class="hw-glyph">{graphContent.value}</span>
-              {translateContent.value}
-            </>
-          )
+              case 2:
+                return (
+                  <>
+                    <span
+                      class="hw-glyph"
+                      onMouseenter={handleActivatorMouseEnter}
+                      onMouseleave={handleActivatorMouseLeave}
+                    >
+                      <VTooltip {...tooltipProps} modelValue={isActive.value}>
+                        {tooltipText('translate')}
+                      </VTooltip>
+                      {graphContent.value}
+                    </span>
+                    {pinyinContent.value}
+                  </>
+                )
 
-        case 4:
-          return (
-            <>
-              {pinyinContent.value}
-              <span class="hw-glyph">{graphContent.value}</span>
-              {translateContent.value}
-            </>
-          )
+              case 3:
+                return (
+                  <>
+                    {pinyinContent.value}
+                    <span class="hw-glyph">{graphContent.value}</span>
+                    {translateContent.value}
+                  </>
+                )
 
-        case 5:
-          return (
-            <>
-              <span class="hw-glyph">{graphContent.value}</span>
-              <div class="hw-pinyin-translate">
-                {pinyinContent.value}
-                {translateContent.value}
-              </div>
-            </>
-          )
-        default:
-          return <template />
-      }
+              case 4:
+                return (
+                  <>
+                    {pinyinContent.value}
+                    <span class="hw-glyph">{graphContent.value}</span>
+                    {translateContent.value}
+                  </>
+                )
+
+              case 5:
+                return (
+                  <>
+                    <span class="hw-glyph">{graphContent.value}</span>
+                    <div class="hw-pinyin-translate">
+                      {pinyinContent.value}
+                      {translateContent.value}
+                    </div>
+                  </>
+                )
+              default:
+                return <template />
+            }
+          })()}
+        </>
+      )
     })
   },
 })

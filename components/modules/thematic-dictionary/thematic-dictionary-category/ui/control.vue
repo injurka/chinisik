@@ -1,14 +1,22 @@
 <script lang="ts" setup>
-type Controls = Record<string, string>
+import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word'
 
-const emits = defineEmits<{ toggleControl: [any] }>()
+type Controls = Record<any, unknown>
+
+const emits = defineEmits<{ toggleControl: [keyof Controls] }>()
+const control = defineModel<Controls>({ required: true })
+
+const store = useStore(['hieroglyphWord'])
 
 const controls: { key: keyof Controls, label: string }[] = [{
   key: 'isFixedStyle',
   label: 'Фиксированный стиль отображения',
 }]
 
-const control = defineModel<any>({ required: true })
+const controlledHieroglyphVariant = computed({
+  get: () => store.hieroglyphWord.variant,
+  set: (value: HieroglyphWordVariant) => store.hieroglyphWord.setVariant(value),
+})
 </script>
 
 <template>
@@ -26,6 +34,31 @@ const control = defineModel<any>({ required: true })
       </span>
       <Icon class="controls-selected" name="re:checked" size="20" />
     </div>
+    <v-btn-toggle
+      v-model="controlledHieroglyphVariant"
+      density="compact"
+      variant="text"
+      class="controls-item-grouped"
+      color="var(--fg-action-color)"
+      :disabled="!!control.isFixedStyle"
+      mandatory
+    >
+      <v-btn class="group-item">
+        1
+      </v-btn>
+      <v-btn class="group-item">
+        2
+      </v-btn>
+      <v-btn class="group-item">
+        3
+      </v-btn>
+      <v-btn class="group-item">
+        4
+      </v-btn>
+      <v-btn class="group-item">
+        5
+      </v-btn>
+    </v-btn-toggle>
   </div>
 </template>
 
@@ -33,7 +66,6 @@ const control = defineModel<any>({ required: true })
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   background-color: var(--bg-primary-color);
   margin: 8px;
   padding: 16px;
@@ -43,21 +75,25 @@ const control = defineModel<any>({ required: true })
 
   &-item {
     position: relative;
-
     background-color: var(--bg-secondary-color);
     border: 2px solid var(--border-secondary-color);
     color: var(--fg-primary-color);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 5px 10px;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     min-width: 140px;
     font-size: 0.9rem;
     text-align: center;
     cursor: pointer;
+
+    &-grouped {
+      border-radius: 0 0 10px 10px;
+      width: 100%;
+      background-color: var(--bg-tertiary-color);
+      color: var(--fg-secondary-color);
+    }
 
     &.actived {
       border: 2px solid var(--border-accent-color);
