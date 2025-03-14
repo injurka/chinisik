@@ -17,8 +17,8 @@ const store = useStore(['auth'])
 
 const { user } = storeToRefs(store.auth)
 
-function handleLogout() {
-  store.auth.signOut()
+async function handleLogout() {
+  await store.auth.signOut(true)
 }
 </script>
 
@@ -29,6 +29,7 @@ function handleLogout() {
     class="drawer"
     width="320"
     temporary
+    :touchless="true"
   >
     <div class="profile-header">
       <NuxtImg

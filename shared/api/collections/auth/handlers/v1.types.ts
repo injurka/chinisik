@@ -9,12 +9,22 @@ interface ISignInUserP {
 
 // Response //
 
-interface IAuthUserR {
+interface IAuthTokenPair {
   token: string
+  refreshToken: string
+}
+
+interface IAuthUserR extends IAuthTokenPair {
   user: User
 }
 
+interface IRefreshAuthP {
+  refreshToken: string
+}
+
 export type {
+  IAuthTokenPair,
   IAuthUserR,
+  IRefreshAuthP,
   ISignInUserP,
 }

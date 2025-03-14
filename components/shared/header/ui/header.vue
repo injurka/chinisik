@@ -177,9 +177,9 @@ onMounted(() => {
       color: var(--fg-primary-color);
       cursor: pointer;
       border-radius: 6px;
-
       transition: all 0.2s ease-in-out;
       padding: 2px 8px;
+
       &:hover {
         color: var(--fg-action-color);
         background-color: var(--bg-tertiary-color);

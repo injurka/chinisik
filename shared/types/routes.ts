@@ -40,6 +40,7 @@ export const RoutePaths = {
   },
 
   Personal: {
-    Shanghai: (sysname: string) => `/personal/shanghai/${sysname}`,
+    Vault: (vault: string, pwd: string) => `/personal/${vault}/${pwd}`,
+    Shanghai: (value: string) => `/personal/shanghai/${value}`,
   },
 }

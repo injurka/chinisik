@@ -22,6 +22,7 @@ definePageMeta({
     <ThematicDictionarySection
       v-if="currentSection"
       :section="currentSection"
+      :sections="thematicDictionaryDataMock.catalog"
     />
     <p v-else>
       Раздел не найден.

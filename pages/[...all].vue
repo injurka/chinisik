@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-definePageMeta({ layout: 'base' })
+definePageMeta({ layout: 'base-with-effects' })
 
 await navigateTo(RoutePaths.Keys('list'))
 </script>

@@ -92,17 +92,20 @@ const breadcrumbs = computed(() => {
             v-model="controlMenu"
             :close-on-content-click="false"
           >
-            <template #activator="{ props }">
+            <template #activator="{ props: menuProps }">
               <v-btn
                 icon
                 variant="text"
-                v-bind="props"
+                v-bind="menuProps"
               >
                 <Icon size="24" name="mdi-tune" />
               </v-btn>
             </template>
 
-            <Control v-model="controls" @toggle-control="toggleControl" />
+            <Control
+              v-model="controls"
+              @toggle-control="toggleControl"
+            />
           </VMenu>
         </div>
       </div>

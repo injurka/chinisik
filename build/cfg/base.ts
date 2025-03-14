@@ -75,7 +75,7 @@ export const baseCfg: NuxtConfig = {
         'mdi:fullscreen',
         'mdi:trophy-broken',
         'material-symbols:settings-suggest-outline',
-        'mdi-tune',
+        'mdi:tune',
         'mdi:key',
         'mdi:translate',
         'mdi:text-box-search',
@@ -113,6 +113,7 @@ export const baseCfg: NuxtConfig = {
         'line-md:moon-alt-loop',
         'line-md:cloud-twotone',
         'mdi:github',
+        'mdi:folder-outline',
       ],
     },
     serverBundle: {

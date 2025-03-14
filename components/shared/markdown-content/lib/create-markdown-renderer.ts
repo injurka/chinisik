@@ -52,7 +52,13 @@ export function markdownItWikiImages(md: MarkdownIt, options: WikiImageOptions =
   })
 }
 
-export function createMarkdownRenderer() {
+interface CreateMarkdownRendererParams {
+  imageBasePath?: string
+}
+
+export function createMarkdownRenderer(params: CreateMarkdownRendererParams) {
+  const { imageBasePath = '/personal/img/' } = params
+
   const md = new MarkdownIt({
     html: true,
     breaks: true,
@@ -62,7 +68,7 @@ export function createMarkdownRenderer() {
 
   md
     .use(markdownItWikiImages, {
-      baseURL: '/personal/img/',
+      baseURL: imageBasePath,
       defaultAlt: '',
     })
     .use(MarkdownItObsidianCallouts)

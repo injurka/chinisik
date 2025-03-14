@@ -11,8 +11,24 @@ function method(instance: Instance) {
     },
 
     me() {
-      return instance<DTO.IAuthUserR>(`/v1/auth/me`, {
+      return instance<DTO.IAuthUserR['user']>(`/v1/auth/me`, {
         method: 'GET',
+      })
+    },
+
+    refresh(payload: DTO.IRefreshAuthP) {
+      return instance<DTO.IAuthTokenPair>(`/v1/auth/refresh`, {
+        method: 'POST',
+        body: payload,
+        // Важно: не отправляем авто-заголовок Authorization
+        skipAuth: true,
+      })
+    },
+
+    // Добавляем метод для выхода
+    signOut() {
+      return instance(`/v1/auth/logout`, {
+        method: 'POST',
       })
     },
   }

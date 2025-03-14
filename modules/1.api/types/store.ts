@@ -9,11 +9,10 @@ interface IRequestWrapperState {
   _error: Map<string, IApiError | null>
 }
 
-interface IRequestReturn<T> { data?: T, error?: IApiError | null, status: ApiStatus }
+interface IRequestReturn<T> { data: T | null, error?: IApiError | null, status: ApiStatus }
 interface IRequestWrapperPayload<T> {
   key: string
-  attemptCounts?: number
-  fn: (payload: ICallback) => T extends boolean ? void : T
+  fn: (payload: ICallback) => Promise<T>
   onSuccess?: (payload: SuccessCallback<T>) => Promise<void> | void | unknown
   onError?: (payload: ErrorCallback) => Promise<void> | void | unknown
 }
@@ -26,11 +25,11 @@ interface ICallback {
   state: IRequestWrapperState
   api: IApi
 }
-type SuccessCallback<T> = Omit<ICallback, 'api'> & { data: Awaited<T> }
+type SuccessCallback<T> = Omit<ICallback, 'api'> & { data: T }
 type ErrorCallback = Omit<ICallback, 'api'> & { error: IApiError }
 
-interface IRetryResult<T> {
-  result?: Awaited<T> | null
+interface ITryRequest<T> {
+  result: T | null
   error: IApiError | null
 }
 
@@ -40,5 +39,5 @@ export type {
   IRequestReturn,
   IRequestWrapperPayload,
   IRequestWrapperState,
-  IRetryResult,
+  ITryRequest,
 }
