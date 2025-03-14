@@ -13,7 +13,7 @@ export const runtimeCfg: Record<InputConfig, NuxtConfig['runtimeConfig']> = {
   production: {
     public: {
       stand: 'production',
-      staticBaseUrl: 'http://localhost:8080/',
+      staticBaseUrl: 'https://api.kvakushnik.ru',
       apiBaseUrl: 'https://api.kvakushnik.ru/api/',
       apiVerbose: false,
     },
