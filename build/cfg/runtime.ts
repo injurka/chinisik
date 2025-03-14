@@ -5,6 +5,7 @@ export const runtimeCfg: Record<InputConfig, NuxtConfig['runtimeConfig']> = {
   development: {
     public: {
       stand: 'development',
+      staticBaseUrl: 'http://localhost:8080/',
       apiBaseUrl: 'http://localhost:8080/api/',
       apiVerbose: true,
     },
@@ -12,6 +13,7 @@ export const runtimeCfg: Record<InputConfig, NuxtConfig['runtimeConfig']> = {
   production: {
     public: {
       stand: 'production',
+      staticBaseUrl: 'http://localhost:8080/',
       apiBaseUrl: 'https://api.kvakushnik.ru/api/',
       apiVerbose: false,
     },

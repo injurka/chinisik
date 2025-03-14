@@ -113,6 +113,7 @@ export const baseCfg: NuxtConfig = {
         'line-md:moon-alt-loop',
         'line-md:cloud-twotone',
         'mdi:github',
+        'mdi:folder-outline',
       ],
     },
     serverBundle: {

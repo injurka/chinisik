@@ -6,13 +6,16 @@ interface NavItem {
   routePath: string
 }
 
+const canGoBack = defineProps<{
+  canGoBack?: boolean
+}>()
+
 const slots = defineSlots<{
   default: () => unknown
 }>()
 
 const isDrawer = defineModel<boolean>({ required: true })
 const contentType = defineModel<string>('contentType', { default: 'sections' })
-
 const navItems: NavItem[] = [
   { name: 'Ключи', icon: 'mdi:key', routeName: RouteNames.Keys, routePath: RoutePaths.Keys('list') },
   { name: 'Пиньин', icon: 'mdi:translate', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
@@ -21,7 +24,7 @@ const navItems: NavItem[] = [
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
   { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
   { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
-  { name: 'Shanghai', icon: 'mdi:wallet-travel', routeName: RouteNames.PersonalShanghai, routePath: RoutePaths.Personal.Shanghai('10-maya') },
+  { name: 'Shanghai', icon: 'mdi:wallet-travel', routeName: RouteNames.PersonalShanghai, routePath: RoutePaths.Personal.Vault('shanghai', '') },
 ]
 
 const hasSlotContent = computed(() => {
@@ -41,8 +44,7 @@ const hasSlotContent = computed(() => {
       <div v-if="contentType === 'sections'">
         Разделы
       </div>
-      <div v-else class="title-back" @click="contentType = 'sections'">
-        <Icon name="mdi:arrow-left" class="icon" />
+      <div v-else-if="contentType === 'slot' && canGoBack" class="title-back" @click="contentType = 'sections'">
         Вернуться к разделам
       </div>
     </header>
@@ -93,7 +95,6 @@ const hasSlotContent = computed(() => {
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--border-primary-color);
   }
-
   .title {
     text-align: center;
     font-size: 1.2rem;

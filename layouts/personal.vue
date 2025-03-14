@@ -1,79 +1,222 @@
 <script lang="ts" setup>
+import { computed, ref, watch } from 'vue'
 import { BackgroundEffects } from '~/components/shared/background-effects'
 import { Footer } from '~/components/shared/footer'
 import { Header } from '~/components/shared/header'
 import { HeaderMenuDrawer } from '~/components/shared/header-menu-drawer'
 import { HeaderProfileDrawer } from '~/components/shared/header-profile-drawer'
 
-const route = useRoute()
+enum NavItemType {
+  File = 'file',
+  Directory = 'directory',
+}
+
+interface NavItem {
+  sysname: string
+  title: string
+  type: NavItemType
+  children?: NavItem[]
+}
+
+interface RouteParams {
+  pwd: string[]
+  vault: string
+}
+
+const router = useRouter()
 const store = useStore(['auth'])
 const { isMobile } = useDevice()
 
-const daysNavList = [
-  { sysname: '10-maya', title: 'Начало пути' },
-  { sysname: '11-maya', title: 'Привет Шанхай (Waitan))' },
-  { sysname: '12-maya', title: 'Сады, Храмы и Чаи' },
-  { sysname: '13-maya', title: 'Коммерческий мир' },
-  { sysname: '14-maya', title: 'Ура небоскребам (Pudong)' },
-  { sysname: '15-maya', title: 'Древний город (Zhujiajiao Water Town)' },
-  { sysname: '16-maya', title: 'День Утки по-пекински и Ночной жизни!' },
-  { sysname: '17-maya', title: 'Искусство и Архитектура' },
-  { sysname: '18-maya', title: 'Шоппинг и Развлечения' },
-  { sysname: '19-maya', title: 'Гимн Спокойствию (Suzhou)' },
-  { sysname: '20-maya', title: 'День на выбор' },
-  { sysname: '21-maya', title: 'Подготовка к отъезду' },
-  { sysname: '22-maya', title: 'Побег' },
-  { sysname: '23-maya', title: 'На распутье (Урумчи)' },
-]
+const params = computed<RouteParams>(() => {
+  const routeParams = router.currentRoute.value.params
 
-const sysname = route.params.sysname as string
+  return {
+    vault: routeParams.vault as string,
+    pwd: Array.isArray(routeParams.pwd)
+      ? routeParams.pwd
+      : [routeParams.pwd as string].filter(Boolean),
+  }
+})
+
+const { data: navData } = await useAsyncData<NavItem[]>(`personal-${params.value.vault}`, async () => {
+  const { staticBaseUrl } = useRuntimeConfig().public
+
+  return await $fetch<NavItem[]>(
+    cleanDoubleSlashes(`${staticBaseUrl}/static/personal/${params.value.vault}/nav.json`),
+    { method: 'get', responseType: 'json' },
+  )
+})
 
 const contentType = ref<string>('slot')
 const isMenuDrawer = ref<boolean>(false)
 const isProfileDrawer = ref<boolean>(false)
-const selectedDay = ref<string>(sysname ?? daysNavList[0].sysname)
 
-function selectDay(sysname: string) {
-  selectedDay.value = sysname
-  navigateTo(RoutePaths.Personal.Shanghai(sysname))
+const navigationHistory = ref<string[][]>([])
+const currentNavLevel = ref<NavItem[]>([])
+
+const isFileRoute = computed(() => {
+  if (!navData.value || !params.value.pwd.length) {
+    return false
+  }
+
+  let level = navData.value
+  let currentItem: NavItem | undefined
+
+  for (const segment of params.value.pwd) {
+    currentItem = level.find(item => item.sysname === segment)
+
+    if (!currentItem) {
+      return false
+    }
+
+    if (currentItem.type === NavItemType.File) {
+      return true
+    }
+
+    if (currentItem.type === NavItemType.Directory && currentItem.children) {
+      level = currentItem.children
+    }
+    else {
+      return false
+    }
+  }
+  return false
+})
+
+const currentPath = computed(() => {
+  return isFileRoute.value
+    ? params.value.pwd.slice(0, -1)
+    : params.value.pwd
+})
+
+function updateCurrentNavLevel() {
+  if (!navData.value) {
+    currentNavLevel.value = []
+    return
+  }
+
+  let level = navData.value
+
+  if (currentPath.value.length === 0) {
+    currentNavLevel.value = level
+    return
+  }
+
+  for (const segment of currentPath.value) {
+    const currentItem = level.find(item => item.sysname === segment)
+
+    if (!currentItem || currentItem.type !== NavItemType.Directory || !currentItem.children) {
+      currentNavLevel.value = []
+      return
+    }
+
+    level = currentItem.children
+  }
+
+  currentNavLevel.value = level
 }
+
+function navigateToItem(item: NavItem) {
+  if (item.type === NavItemType.Directory) {
+    navigationHistory.value.push([...currentPath.value])
+    const newPath = [...currentPath.value, item.sysname].join('/')
+
+    navigateTo(RoutePaths.Personal.Vault(params.value.vault, newPath))
+  }
+  else if (item.type === NavItemType.File) {
+    const newPath = [...currentPath.value, item.sysname].join('/')
+
+    isMenuDrawer.value = false
+    navigateTo(RoutePaths.Personal.Vault(params.value.vault, newPath))
+  }
+}
+
+function navigateBack() {
+  if (navigationHistory.value.length > 0) {
+    const previousPath = navigationHistory.value.pop() || []
+    const pathString = previousPath.join('/')
+
+    navigateTo(RoutePaths.Personal.Vault(params.value.vault, pathString))
+  }
+  else if (currentPath.value.length > 0) {
+    const parentPath = currentPath.value.slice(0, -1)
+    const pathString = parentPath.join('/')
+
+    navigateTo(RoutePaths.Personal.Vault(params.value.vault, pathString))
+  }
+}
+
+watch(
+  () => [params.value, navData.value],
+  () => {
+    nextTick(() => updateCurrentNavLevel())
+  },
+  { immediate: true, deep: true },
+)
 
 watch(
   () => isMenuDrawer.value,
   (value) => {
-    if (value)
+    if (value) {
       contentType.value = 'slot'
+    }
   },
 )
 </script>
 
 <template>
-  <!-- eslint-disable vue/no-multiple-template-root -->
   <Header
     v-model:menu-drawer="isMenuDrawer"
     v-model:profile-drawer="isProfileDrawer"
   />
+  <!-- eslint-disable-next-line vue/no-multiple-template-root -->
   <VLayout>
     <ClientOnly>
       <HeaderMenuDrawer
         v-model="isMenuDrawer"
         v-model:content-type="contentType"
         class="drawer"
+        :can-go-back="currentPath.length > 0"
+        @go-back="navigateBack"
       >
         <template #default>
-          <ul class="nav-list">
-            <li
-              v-for="item in daysNavList"
-              :key="item.sysname"
-              v-ripple
-              :class="{ actived: selectedDay === item.sysname }"
-              @click="selectDay(item.sysname)"
-            >
-              <span>{{ item.title }}</span>
-            </li>
-          </ul>
+          <div>
+            <div v-if="currentPath.length > 0" class="nav-header">
+              <button class="back-button" @click="navigateBack">
+                <div class="back-button-title">
+                  Назад
+                </div>
+              </button>
+            </div>
+
+            <ul class="nav-list">
+              <li
+                v-for="item in currentNavLevel"
+                :key="`${item.sysname}_${item.type}`"
+                v-ripple
+                :class="[
+                  {
+                    actived: params.pwd.includes(item.sysname),
+                  },
+                  item.type,
+                ]"
+                @click.stop="navigateToItem(item)"
+              >
+                <template v-if="item.type === NavItemType.Directory">
+                  <Icon
+                    name="mdi:folder-outline"
+                    class="item-icon"
+                  />
+                  <span>{{ item.title }}</span>
+                </template>
+
+                <span v-else>{{ item.title }}</span>
+              </li>
+            </ul>
+          </div>
         </template>
       </HeaderMenuDrawer>
+
       <HeaderProfileDrawer
         v-if="store.auth.isAuthenticated"
         v-model="isProfileDrawer"
@@ -100,14 +243,40 @@ watch(
 }
 
 .drawer {
-  border-right: 1px solid var(--border-primary-color);
-  user-select: none;
-
   &:deep(.v-navigation-drawer__content) {
     display: flex;
     flex-direction: column;
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--border-primary-color);
+  }
+
+  .nav-header {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 10px;
+
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 8px;
+      cursor: pointer;
+      border-radius: 6px;
+
+      &:hover {
+        background-color: var(--bg-tertiary-color);
+      }
+
+      &-title {
+        font-weight: 500;
+        color: var(--fg-accent-color);
+        font-size: 0.9rem;
+
+        &:hover {
+          color: var(--fg-action-color);
+        }
+      }
+    }
   }
 
   .nav-list {
@@ -134,6 +303,15 @@ watch(
       transition: all 0.2s ease-in-out;
       font-size: 0.84rem;
 
+      .item-icon {
+        min-width: 22px;
+      }
+
+      .chevron-icon {
+        margin-left: auto;
+        opacity: 0.7;
+      }
+
       &:hover {
         color: var(--fg-action-color);
         background-color: var(--bg-tertiary-color);
@@ -142,6 +320,10 @@ watch(
 
       &.actived {
         color: var(--fg-accent-color);
+      }
+
+      &.directory {
+        font-weight: 500;
       }
     }
   }

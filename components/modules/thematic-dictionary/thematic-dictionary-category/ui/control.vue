@@ -27,9 +27,7 @@ const controlledHieroglyphVariant = computed({
       :class="{ actived: control[item.key] }"
       @click="emits('toggleControl', item.key)"
     >
-      <span
-        class="controls-button"
-      >
+      <span class="controls-button">
         {{ item.label }}
       </span>
       <Icon class="controls-selected" name="re:checked" size="20" />
