@@ -102,3 +102,24 @@ hr {
     color: var(--fg-primary-color) !important;
   }
 }
+
+.divider-text {
+  display: flex;
+  align-items: center;
+  margin: 16px 0 8px;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-secondary-color);
+  }
+
+  span {
+    padding: 0 10px;
+    color: var(--fg-secondary-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}

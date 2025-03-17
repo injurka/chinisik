@@ -21,7 +21,7 @@ const { data: content, refresh, status } = useAsyncData(`personal-${params.value
   const path = params.value.pwd.join('/')
 
   return $fetch<string>(
-    `${staticBaseUrl}/static/personal/${params.value.vault}/content/${path}.md`,
+    cleanDoubleSlashes(`${staticBaseUrl}/static/personal/${params.value.vault}/content/${path}.md`),
     { method: 'get', responseType: 'text' },
   )
 })
@@ -65,7 +65,7 @@ definePageMeta({
 
 <style scoped lang="scss">
 .personal {
-  margin: 16px auto;
+  margin: auto;
 
   @include mobile() {
     font-size: 0.8rem;
