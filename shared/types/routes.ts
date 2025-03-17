@@ -13,8 +13,7 @@ export enum RouteNames {
   AuthSignUp = 'auth-sign-up',
   AuthForgotPassword = 'auth-forgot-password',
 
-  PersonalShanghai = 'personal-shanghai',
-
+  Personal = 'personal-vault-pwd',
 }
 
 export const RoutePaths = {
@@ -41,6 +40,5 @@ export const RoutePaths = {
 
   Personal: {
     Vault: (vault: string, pwd: string) => `/personal/${vault}/${pwd}`,
-    Shanghai: (value: string) => `/personal/shanghai/${value}`,
   },
 }

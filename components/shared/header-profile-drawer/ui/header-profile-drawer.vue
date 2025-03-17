@@ -75,7 +75,6 @@ async function handleLogout() {
 
   &:deep(.v-navigation-drawer__content) {
     background-color: var(--bg-secondary-color);
-    border-right: 1px solid var(--border-primary-color);
     padding: 16px;
   }
 

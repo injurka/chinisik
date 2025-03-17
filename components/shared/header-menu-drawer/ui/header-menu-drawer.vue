@@ -14,8 +14,12 @@ const slots = defineSlots<{
   default: () => unknown
 }>()
 
+const route = useRoute()
+
+const { isMobile } = useDevice()
 const isDrawer = defineModel<boolean>({ required: true })
 const contentType = defineModel<string>('contentType', { default: 'sections' })
+
 const navItems: NavItem[] = [
   { name: 'Ключи', icon: 'mdi:key', routeName: RouteNames.Keys, routePath: RoutePaths.Keys('list') },
   { name: 'Пиньин', icon: 'mdi:translate', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
@@ -24,7 +28,11 @@ const navItems: NavItem[] = [
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
   { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
   { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
-  { name: 'Shanghai', icon: 'mdi:wallet-travel', routeName: RouteNames.PersonalShanghai, routePath: RoutePaths.Personal.Vault('shanghai', '') },
+]
+
+const navItemsPersonal: NavItem[] = [
+  { name: 'Путешествия', icon: 'mdi:wallet-travel', routeName: RouteNames.Personal, routePath: RoutePaths.Personal.Vault('city', '') },
+  { name: 'Чай', icon: 'mdi:tea', routeName: RouteNames.Personal, routePath: RoutePaths.Personal.Vault('tea', '') },
 ]
 
 const hasSlotContent = computed(() => {
@@ -36,9 +44,10 @@ const hasSlotContent = computed(() => {
   <VNavigationDrawer
     v-model="isDrawer"
     location="left"
-    width="320"
+    :width="isMobile ? 320 : 380"
+    :temporary="route.name !== RouteNames.Personal"
     class="drawer"
-    temporary
+    persistent
   >
     <header class="title">
       <div v-if="contentType === 'sections'">
@@ -55,6 +64,21 @@ const hasSlotContent = computed(() => {
       <ul v-if="contentType === 'sections'" class="nav-list">
         <li
           v-for="item in navItems"
+          :key="item.routeName"
+          v-ripple
+          :class="{ actived: $route.name === item.routeName }"
+          @click="navigateTo(item.routePath)"
+        >
+          <Icon size="22" :name="item.icon" />
+          <span>{{ item.name }}</span>
+        </li>
+
+        <div class="divider-text">
+          <span>Другое</span>
+        </div>
+
+        <li
+          v-for="item in navItemsPersonal"
           :key="item.routeName"
           v-ripple
           :class="{ actived: $route.name === item.routeName }"
@@ -86,6 +110,7 @@ const hasSlotContent = computed(() => {
 
 <style lang="scss" scoped>
 .drawer {
+  border: none;
   border-right: 1px solid var(--border-primary-color);
   user-select: none;
 
@@ -93,7 +118,6 @@ const hasSlotContent = computed(() => {
     display: flex;
     flex-direction: column;
     background-color: var(--bg-secondary-color);
-    border-right: 1px solid var(--border-primary-color);
   }
   .title {
     text-align: center;
@@ -113,6 +137,8 @@ const hasSlotContent = computed(() => {
 
   .divider {
     margin: 12px 0;
+    border: none;
+    border-bottom: 1px solid var(--border-primary-color);
   }
 
   .nav-list {

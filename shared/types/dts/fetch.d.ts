@@ -4,5 +4,7 @@ declare module 'ofetch' {
     skipAuth?: boolean
     // Опция для предотвращения автоматического обновления токена при 401
     skipAuthRefresh?: boolean
+
+    responseType: 'json' | 'text'
   }
 }
