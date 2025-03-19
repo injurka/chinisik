@@ -43,15 +43,15 @@ function handleKeyDown(event: KeyboardEvent) {
     <v-select
       v-model="control.model"
       class="control-model"
+      :disabled="disabled"
       density="compact"
       hide-details
       label="LLVM модель"
       :items="[
         'deepseek-chat',
-        'deepseek/deepseek-chat',
-        'google/gemini-flash-1.5-8b',
-        'google/gemini-flash-1.5',
+        'google/gemini-2.0-flash-lite-001',
         'google/gemini-2.0-flash-001',
+        'google/gemma-3-27b-it',
       ]"
       variant="filled"
     />

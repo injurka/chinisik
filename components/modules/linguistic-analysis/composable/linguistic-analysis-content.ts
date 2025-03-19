@@ -14,14 +14,14 @@ interface LinguisticAnalysisContentControl {
 }
 
 function useLinguisticAnalysisContent(params: Params) {
-  const analyzedText = ref<unknown | null>(null)
+  const analyzedText = ref<LlvmLinguisticAnalysis | null>(null)
   const control = ref<LinguisticAnalysisContentControl>({
     value: '',
     model: 'google/gemini-2.0-flash-001',
   })
   const abortController = ref<AbortController>(new AbortController())
 
-  const content = computed<unknown>(() => {
+  const content = computed<LlvmLinguisticAnalysis | null>(() => {
     if (analyzedText.value)
       return analyzedText.value
 
