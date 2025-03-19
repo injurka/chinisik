@@ -1,3 +1,5 @@
+import type { LlvmLinguisticAnalysis } from '~/shared/types'
+
 const linguisticAnalysisMock = {
   sentences: [
     {
@@ -7,23 +9,7 @@ const linguisticAnalysisMock = {
         description: 'Глагол + объект действия',
       },
       glyph: '打电话',
-      pinyin: [
-        {
-          value: 'da',
-          toneType: 3,
-          toneIndex: 1,
-        },
-        {
-          value: 'dian',
-          toneType: 4,
-          toneIndex: 2,
-        },
-        {
-          value: 'hua',
-          toneType: 4,
-          toneIndex: 2,
-        },
-      ],
+      pinyin: 'da3 dia4n hua4',
       translate: 'позвонить по телефону',
       transcription: 'да диан хуа',
       grammarRules: [
@@ -51,13 +37,7 @@ const linguisticAnalysisMock = {
         {
           type: 'hieroglyph',
           glyph: '打',
-          pinyin: [
-            {
-              value: 'da',
-              toneType: 3,
-              toneIndex: 1,
-            },
-          ],
+          pinyin: 'da3',
           partOfSpeech: 'глагол',
           translate: 'звонить',
           transcription: 'да',
@@ -79,13 +59,7 @@ const linguisticAnalysisMock = {
                 ],
                 frequencyRank: 23,
               },
-              pinyin: [
-                {
-                  value: 'shou',
-                  toneType: 3,
-                  toneIndex: 2,
-                },
-              ],
+              pinyin: 'sho3u',
             },
             {
               glyph: '丁',
@@ -94,13 +68,7 @@ const linguisticAnalysisMock = {
               translate: 'гвоздь',
               keyInfo: null,
               description: 'В древнекитайском языке произношение 丁 было ближе к dǎ, что объясняет его роль как фонетика',
-              pinyin: [
-                {
-                  value: 'ding',
-                  toneType: 1,
-                  toneIndex: 1,
-                },
-              ],
+              pinyin: 'di1ng',
             },
           ],
           grammarRules: [
@@ -118,18 +86,7 @@ const linguisticAnalysisMock = {
         {
           type: 'word',
           glyph: '电话',
-          pinyin: [
-            {
-              value: 'dian',
-              toneType: 4,
-              toneIndex: 2,
-            },
-            {
-              value: 'hua',
-              toneType: 4,
-              toneIndex: 2,
-            },
-          ],
+          pinyin: 'dia4n hua4',
           partOfSpeech: 'существительное',
           translate: 'телефон',
           transcription: 'диан хуа',
@@ -148,13 +105,7 @@ const linguisticAnalysisMock = {
             {
               type: 'hieroglyph',
               glyph: '电',
-              pinyin: [
-                {
-                  value: 'dian',
-                  toneType: 4,
-                  toneIndex: 2,
-                },
-              ],
+              pinyin: 'dia4n',
               partOfSpeech: 'существительное',
               translate: 'электричество',
               transcription: 'дянь',
@@ -188,39 +139,21 @@ const linguisticAnalysisMock = {
                     ],
                     frequencyRank: 5,
                   },
-                  pinyin: [
-                    {
-                      value: 'yue',
-                      toneType: 1,
-                      toneIndex: 2,
-                    },
-                  ],
+                  pinyin: 'yue1',
                 },
                 {
                   glyph: '乚',
                   position: 'bottom',
                   role: 'structural',
                   description: 'В традиционном иероглифе 電 заменялась элементом 厶 (sī — «частный») и ⻗ (дождь). В упрощённой версии остался лишь условный штрих, не являющийся самостоятельным ключом.',
-                  pinyin: [
-                    {
-                      value: 'yin',
-                      toneType: 3,
-                      toneIndex: 1,
-                    },
-                  ],
+                  pinyin: 'yi3n',
                 },
               ],
             },
             {
               type: 'hieroglyph',
               glyph: '话',
-              pinyin: [
-                {
-                  value: 'hua',
-                  toneType: 4,
-                  toneIndex: 2,
-                },
-              ],
+              pinyin: 'hua4',
               partOfSpeech: 'глагол',
               translate: 'речь, разговор',
               transcription: 'хуа',
@@ -253,13 +186,7 @@ const linguisticAnalysisMock = {
                     ],
                     frequencyRank: 40,
                   },
-                  pinyin: [
-                    {
-                      value: 'yan',
-                      toneType: 2,
-                      toneIndex: 1,
-                    },
-                  ],
+                  pinyin: 'ya2n',
                 },
                 {
                   glyph: '舌',
@@ -268,13 +195,7 @@ const linguisticAnalysisMock = {
                   translate: 'язык',
                   keyInfo: null,
                   description: 'Хотя в современном языке 舌 читается как shé, в древнекитайском произношение этого компонента было ближе к huà, что объясняет его роль как фонетика',
-                  pinyin: [
-                    {
-                      value: 'she',
-                      toneType: 2,
-                      toneIndex: 2,
-                    },
-                  ],
+                  pinyin: 'she2',
                 },
               ],
             },
@@ -283,6 +204,6 @@ const linguisticAnalysisMock = {
       ],
     },
   ],
-}
+} satisfies LlvmLinguisticAnalysis
 
 export { linguisticAnalysisMock }

@@ -1,4 +1,9 @@
-import type { SplitedGlyphs, SplitGlyphsType, ToneType } from '~/shared/types/models'
+import type {
+  LlvmLinguisticAnalysis,
+  SplitedGlyphs,
+  SplitGlyphsType,
+  ToneType,
+} from '~/shared/types/models'
 
 // Request //
 export interface SplitGlyphsP {
@@ -21,4 +26,4 @@ export interface AnalyzeTextP {
 
 export type SplitGlyphsR = SplitedGlyphs
 export type PinyinHieroglyphsR = PinyinHieroglyphs
-export type AnalyzeTextR = unknown
+export type AnalyzeTextR = LlvmLinguisticAnalysis

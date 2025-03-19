@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { PinyinText } from '~/components/domain/pinyin-text'
+import { parseStringPinyin, PinyinText } from '~/components/domain/pinyin-text'
 import { positionTranslations, roleTranslations } from '../../constant'
 
 interface Props {
-  content: any
+  content: LlvmLinguisticAnalysis
 }
 
 defineProps<Props>()
@@ -18,12 +18,12 @@ defineProps<Props>()
           {{ sentence.glyph }}
         </div>
         <div class="pinyin-block">
-          <div v-for="(p, pIndex) in sentence.pinyin" :key="pIndex">
+          <div v-for="(p, pIndex) in parseStringPinyin(sentence.pinyin)" :key="pIndex">
             <PinyinText
-              :pinyin="p.value"
+              :pinyin="p.syllable"
               :tone="{
-                index: p.toneIndex,
-                type: p.toneType as ToneType,
+                index: p.position,
+                type: p.tone,
               }"
             />
           </div>
@@ -56,7 +56,7 @@ defineProps<Props>()
         <details class="collapsible">
           <summary>
             <div>Грамматические правила</div>
-            <div>({{ sentence.grammarRules.length }})</div>
+            <div>({{ sentence.grammarRules?.length }})</div>
           </summary>
           <div class="collapsible-content">
             <div v-for="(rule, rIndex) in sentence.grammarRules" :key="rIndex" class="collapsible-card">
@@ -85,12 +85,12 @@ defineProps<Props>()
                   <span class="glyph">{{ component.glyph }}</span>
                   <div class="pinyin-translation">
                     <div class="pinyin-translation-pinyin">
-                      <div v-for="(p, pIndex) in component.pinyin" :key="pIndex">
+                      <div v-for="(p, pIndex) in parseStringPinyin(component.pinyin)" :key="pIndex">
                         <PinyinText
-                          :pinyin="p.value"
+                          :pinyin="p.syllable"
                           :tone="{
-                            index: p.toneIndex,
-                            type: p.toneType as ToneType,
+                            index: p.position,
+                            type: p.tone,
                           }"
                         />
                       </div>
@@ -164,12 +164,12 @@ defineProps<Props>()
                         {{ key.glyph }}
                       </div>
                       <span class="key-pinyin">
-                        <div v-for="(p, pIndex) in key.pinyin" :key="pIndex">
+                        <div v-for="(p, pIndex) in parseStringPinyin(key.pinyin)" :key="pIndex">
                           <PinyinText
-                            :pinyin="p.value"
+                            :pinyin="p.syllable"
                             :tone="{
-                              index: p.toneIndex,
-                              type: p.toneType as ToneType,
+                              index: p.position,
+                              type: p.tone,
                             }"
                           />
                         </div>
@@ -203,12 +203,12 @@ defineProps<Props>()
                   <span class="glyph">{{ component.glyph }}</span>
                   <div class="pinyin-translation">
                     <div class="pinyin-translation-pinyin">
-                      <div v-for="(p, pIndex) in component.pinyin" :key="pIndex">
+                      <div v-for="(p, pIndex) in parseStringPinyin(component.pinyin)" :key="pIndex">
                         <PinyinText
-                          :pinyin="p.value"
+                          :pinyin="p.syllable"
                           :tone="{
-                            index: p.toneIndex,
-                            type: p.toneType as ToneType,
+                            index: p.position,
+                            type: p.tone,
                           }"
                         />
                       </div>
@@ -230,12 +230,12 @@ defineProps<Props>()
                       <span class="glyph">{{ hieroglyph.glyph }}</span>
                       <div class="pinyin-translation">
                         <div class="pinyin-translation-pinyin">
-                          <div v-for="(p, pIndex) in hieroglyph.pinyin" :key="pIndex">
+                          <div v-for="(p, pIndex) in parseStringPinyin(hieroglyph.pinyin)" :key="pIndex">
                             <PinyinText
-                              :pinyin="p.value"
+                              :pinyin="p.syllable"
                               :tone="{
-                                index: p.toneIndex,
-                                type: p.toneType as ToneType,
+                                index: p.position,
+                                type: p.tone,
                               }"
                             />
                           </div>
@@ -309,12 +309,12 @@ defineProps<Props>()
                             {{ key.glyph }}
                           </div>
                           <span class="key-pinyin">
-                            <div v-for="(p, pIndex) in key.pinyin" :key="pIndex">
+                            <div v-for="(p, pIndex) in parseStringPinyin(key.pinyin)" :key="pIndex">
                               <PinyinText
-                                :pinyin="p.value"
+                                :pinyin="p.syllable"
                                 :tone="{
-                                  index: p.toneIndex,
-                                  type: p.toneType as ToneType,
+                                  index: p.position,
+                                  type: p.tone,
                                 }"
                               />
                             </div>

@@ -43,6 +43,7 @@ function handleKeyDown(event: KeyboardEvent) {
     <v-select
       v-model="control.model"
       class="control-model"
+      :disabled="disabled"
       density="compact"
       hide-details
       label="LLVM модель"
