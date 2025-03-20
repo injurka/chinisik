@@ -1,6 +1,6 @@
 interface PinyinSyllable {
   syllable: string
-  tone: number
+  tone: ToneType
   position: number
 }
 
@@ -18,7 +18,7 @@ function parseStringPinyin(pinyinString: string): PinyinSyllable[] {
     const toneMatch = word.match(/([1-5])/)
 
     if (toneMatch) {
-      const tone = Number.parseInt(toneMatch[0], 10)
+      const tone = Number.parseInt(toneMatch[0], 10) as ToneType
       const position = word.indexOf(toneMatch[0]) - 1
       const syllable = word.replace(/[1-5]/, '')
 
@@ -31,7 +31,7 @@ function parseStringPinyin(pinyinString: string): PinyinSyllable[] {
     else {
       result.push({
         syllable: word,
-        tone: 5,
+        tone: 5 as ToneType,
         position: 0,
       })
     }

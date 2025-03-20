@@ -1,21 +1,35 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { PageLoader } from '~/components/shared/page-loader'
+import { linguisticAnalysisMdMock, linguisticAnalysisMock, linguisticAnalysisStrictMdMock } from '~/server/utils/mock/linguistic-analysis'
 import { useLinguisticAnalysisContent } from '../composable'
 
+import AnalysisViewerMd from './sections/analysis-viewer-md.vue'
 import AnalysisViewer from './sections/analysis-viewer.vue'
 import Control from './sections/control.vue'
 import ExampleBtn from './sections/example-btn.vue'
 
-const isExample = ref<boolean>(false)
+const isExample = ref(false)
 
 const {
-  content,
+  analyzedText,
+  analyzedTextMd,
   analyze,
   control,
   isLoadingSubmit,
   isAnalyzedText,
   errorSubmit,
-} = useLinguisticAnalysisContent({ isExampleEnable: isExample })
+} = useLinguisticAnalysisContent()
+
+// Computed properties для условий отображения
+const showAnalysisViewer = computed(() => (!!analyzedText.value || isExample.value) && control.value.dataType === 'json')
+const showAnalysisViewerMd = computed(() => !!analyzedTextMd.value || isExample.value)
+
+// Mock контент для примера
+const analysisViewerContent = computed(() => ((isExample.value && !analyzedText.value) ? linguisticAnalysisMock : analyzedText.value) as LlvmLinguisticAnalysis)
+const analysisViewerMdContent = computed(() => ((isExample.value && !analyzedTextMd.value)
+  ? control.value.dataType === 'strictMarkdown' ? linguisticAnalysisStrictMdMock : linguisticAnalysisMdMock
+  : analyzedTextMd.value) as string)
 </script>
 
 <template>
@@ -31,7 +45,15 @@ const {
     />
 
     <PageLoader v-if="isLoadingSubmit" />
-    <AnalysisViewer v-else-if="!!content" :content="content" />
+
+    <AnalysisViewer
+      v-else-if="showAnalysisViewer"
+      :content="analysisViewerContent "
+    />
+    <AnalysisViewerMd
+      v-else-if="showAnalysisViewerMd"
+      :content="analysisViewerMdContent "
+    />
 
     <VSnackbar
       :model-value="!!errorSubmit"
