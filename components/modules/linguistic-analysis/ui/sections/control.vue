@@ -1,16 +1,81 @@
 <script setup lang="ts">
-import type { LinguisticAnalysisContentControl } from '../../composable'
+import type { LinguisticAnalysisContentControl, LinguisticAnalysisDataType } from '../../composable'
+import { typeCopmonentMappingForControl, typeSplitMapping } from '~/components/modules/linguistic-analysis/constant'
 
 defineProps<{ disabled: boolean }>()
-const emits = defineEmits<{ submit: [void] }>()
+const emits = defineEmits<{ submit: [any] }>()
 const control = defineModel<LinguisticAnalysisContentControl>({ required: true })
 
+const LLMs = [
+  {
+    title: 'AI HUB MIX',
+    items: [
+      'gemini-2.0-flash-lite',
+      'gemini-2.0-flash',
+      'gemini-2.0-flash-search',
+      'gemini-2.0-pro-exp-02-05',
+      'gemini-2.0-pro-exp-02-05-search',
+      'Doubao-1.5-lite-32k',
+      'Doubao-1.5-pro-32k',
+      'Doubao-1.5-pro-256k',
+    ],
+  },
+  {
+    title: 'OPEN ROUTER',
+    items: [
+      'google/gemini-2.0-flash-001',
+      'google/gemini-2.0-flash-lite-001',
+    ],
+  },
+]
+
+const formattedLLMs = ref(formatItems(LLMs))
+
+function formatItems(items: any[]) {
+  const result = []
+  for (const group of items) {
+    result.push({
+      title: group.title,
+      header: true,
+      group: true,
+    })
+    for (const item of group.items) {
+      result.push({
+        value: item,
+        title: item,
+      })
+    }
+  }
+  return result
+}
 const errors = ref<string[]>([])
 const isError = ref<boolean>(false)
 
+const btnToggleValue = computed(() => {
+  return Object
+    .entries(typeSplitMapping)
+    .find(([_, value]) => value === control.value.dataType)?.[0]
+})
+
 function handleClickSubmit() {
   errors.value = []
-  emits('submit')
+
+  const payload = {
+    value: control.value,
+    model: control.value.model,
+    dataType: control.value.dataType,
+  }
+
+  emits('submit', payload)
+}
+
+function updateBtnToggleValue(index?: unknown) {
+  if (typeof index !== 'number')
+    return
+
+  control.value.dataType = Object
+    .entries(typeSplitMapping)
+    .find(([key, _]) => +key === +index)![1]! as LinguisticAnalysisDataType
 }
 
 function handleKeyDown(event: KeyboardEvent) {
@@ -40,6 +105,7 @@ function handleKeyDown(event: KeyboardEvent) {
         />
       </template>
     </v-text-field>
+
     <v-select
       v-model="control.model"
       class="control-model"
@@ -47,14 +113,58 @@ function handleKeyDown(event: KeyboardEvent) {
       density="compact"
       hide-details
       label="LLVM модель"
-      :items="[
-        'deepseek-chat',
-        'google/gemini-2.0-flash-lite-001',
-        'google/gemini-2.0-flash-001',
-        'google/gemma-3-27b-it',
-      ]"
+      :items="formattedLLMs"
+      item-title="title"
+      item-value="value"
       variant="filled"
-    />
+    >
+      <template #selection="{ item }">
+        {{ item.title }}
+      </template>
+
+      <template #item="{ item, props }">
+        <v-list-item
+          v-if="item.raw.header"
+          density="compact"
+          :title="item.raw.title"
+          :disabled="true"
+          class="group-header"
+        />
+        <v-list-item
+          v-else
+          density="compact"
+          v-bind="props"
+          :title="item.raw.title"
+        />
+      </template>
+    </v-select>
+
+    <div class="control-additional">
+      <span>Выберите формат вывода для анализа.</span>
+      <v-btn-toggle
+        :disabled="disabled"
+        divided
+        variant="outlined"
+        class="control-types"
+        :model-value="btnToggleValue"
+        @update:model-value="updateBtnToggleValue"
+      >
+        <v-btn v-for="type in typeCopmonentMappingForControl" :key="type">
+          {{ type }}
+        </v-btn>
+      </v-btn-toggle>
+    </div>
+
+    <!-- <v-switch
+      v-model="isMarkdown"
+      :disabled="disabled"
+      class="control-md"
+      density="compact"
+      label="Вывод в Markdown"
+      color="var(--fg-accent-color)"
+      hide-details
+      append-icon="mdi-language-markdown"
+    /> -->
   </div>
   <v-snackbar
     v-model="isError"
@@ -94,6 +204,12 @@ function handleKeyDown(event: KeyboardEvent) {
     font-weight: 500;
   }
 
+  &-md {
+    margin-top: 8px;
+    margin-left: 8px;
+    color: var(--fg-secondary-color);
+  }
+
   &-additional {
     margin-top: 8px;
     display: flex;
@@ -123,5 +239,12 @@ function handleKeyDown(event: KeyboardEvent) {
       }
     }
   }
+}
+
+.group-header {
+  font-weight: bold;
+  color: var(--fg-tertiary-color); /* Adjust color as needed */
+  cursor: default; /* No pointer on hover */
+  user-select: none; /* Prevent text selection */
 }
 </style>

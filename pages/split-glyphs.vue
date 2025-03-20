@@ -28,13 +28,30 @@ definePageMeta({
 <template>
   <PageLoader v-if="isLoadingContent" />
 
-  <section v-else class="content">
+  <section v-else class="content-wrapper">
+    <div class="deprecated">
+      УСТАРЕВШИЙ ФУНКЦИОНАЛ
+    </div>
     <JsonToDom :node="mockCms.splitGlyphs!" />
     <SplitGlyphs />
   </section>
 </template>
 
 <style scoped lang="scss">
+.deprecated {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(230, 173, 0);
+  letter-spacing: 3px;
+  border-top: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--border-primary-color);
+  margin-bottom: 32px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 .content {
   padding: 16px;
   font-family: 'Rubik';

@@ -26,6 +26,14 @@ function method(instance: Instance) {
       })
     },
 
+    analyzeTextFlat(payload: DTO.AnalyzeTextFlatP, abortController?: AbortController) {
+      return instance<string>(`/v1/llvm/linguistic-analysis-flat`, {
+        method: 'POST',
+        body: payload,
+        signal: abortController?.signal,
+      })
+    },
+
   }
 }
 

@@ -22,6 +22,12 @@ export interface AnalyzeTextP {
   model: string
 }
 
+export interface AnalyzeTextFlatP {
+  value: string
+  model: string
+  isTemplate: boolean
+}
+
 // Response //
 
 export type SplitGlyphsR = SplitedGlyphs
