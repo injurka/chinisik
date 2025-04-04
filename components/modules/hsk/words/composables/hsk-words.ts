@@ -13,8 +13,8 @@ async function useHskWords() {
 
   const { api } = useApi()
   const { isMobile } = useDevice()
-  const { data, refresh, error } = await useAsyncData(
-    'hieroglyph-hsk_words',
+  const { data, status, error, refresh } = await useAsyncData(
+    KEY,
     () => api.hsk.v1.hieroglyphsByLevelList({
       level: selectedLevel.value,
       page: page.value,
@@ -24,7 +24,7 @@ async function useHskWords() {
   )
 
   const debouncedRefresh = useDebounceFn(() => refresh(), SEARCH_DEBOUNCE)
-  const isLoading = computed(() => useRequestStatus([KEY]))
+  const isLoading = computed(() => status.value === 'pending')
 
   const totalPages = computed(() => {
     const total = data.value?.pagination?.total

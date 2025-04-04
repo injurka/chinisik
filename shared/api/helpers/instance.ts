@@ -44,9 +44,13 @@ function createInstance(params: CreateInstanceParams) {
       // retryDelay: 100,
       retry: 0,
       ...options,
+      // @ts-expect-error idk
       onRequest: (...params) => applyInterceptors(interceptops, options, 'onRequest', ...params),
+      // @ts-expect-error idk
       onRequestError: (...params) => applyInterceptors(interceptops, options, 'onRequestError', ...params),
+      // @ts-expect-error idk
       onResponse: (...params) => applyInterceptors(interceptops, options, 'onResponse', ...params),
+      // @ts-expect-error idk
       onResponseError: (...params) => applyInterceptors(interceptops, options, 'onResponseError', ...params),
     } satisfies FetchOption<R>
 

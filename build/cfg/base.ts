@@ -89,6 +89,7 @@ export const baseCfg: NuxtConfig = {
         'material-symbols:settings-outline',
         'mdi:book',
         'material-symbols:frame-person-rounded',
+        'material-symbols:manage-search',
         'mdi:account-box',
         'mdi:refresh',
         'material-symbols:stacks-outline',

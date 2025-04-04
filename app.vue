@@ -28,13 +28,9 @@ watch(
       ],
     })
   },
-  { immediate: true },
 )
 
-await useAsyncData('initialize', initializeApp, {
-  server: true,
-  dedupe: 'cancel',
-})
+await useAsyncData('initialize', initializeApp, { server: true, dedupe: 'cancel' })
 
 onMounted(() => {
   if ($pwa?.offlineReady) {

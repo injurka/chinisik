@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 import { HaoticLines } from '~/components/domain/haotic-lines'
+import DrawingControl from './dialog/drawing-control.vue'
 import SettingsControl from './dialog/settings-control.vue'
 
 const store = useStore(['auth'])
 
 const sentinelEl = ref<HTMLElement>()
 const headerEl = ref<HTMLElement>()
+
 const isDialogSettings = ref<boolean>(false)
+const isDialogDrawing = ref<boolean>(false)
+
 const isSticky = ref<boolean>(false)
 
 const isMenuDrawer = defineModel<boolean>('menuDrawer', { required: true })
@@ -65,12 +69,21 @@ onMounted(() => {
       </div>
 
       <div class="header-utils">
-        <button
-          class="utils-settings-btn"
+        <VBtn
+          icon="mdi-pencil"
+          variant="text"
+          title="Рисовалка"
+          @click="isDialogDrawing = !isDialogDrawing"
+        />
+        <DrawingControl v-model="isDialogDrawing" />
+
+        <VBtn
+          icon="mdi-cogs"
+          variant="text"
+          title="Настройки"
           @click="isDialogSettings = !isDialogSettings"
-        >
-          <Icon name="material-symbols:settings-suggest-outline" size="24" />
-        </button>
+        />
+
         <SettingsControl v-model="isDialogSettings" />
 
         <div class="vr" />

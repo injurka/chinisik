@@ -5,4 +5,5 @@ export enum ApiNames {
   Llvm = 'llvm',
   Cms = 'cms',
   Auth = 'auth',
+  LinguisticAnalysis = 'linguisticAnalysis',
 }
