@@ -12,8 +12,11 @@ interface InitializeResult {
 export async function initializeApp(_?: NuxtApp): Promise<InitializeResult> {
   const store = useStore(['auth'])
 
-  // Пробуем получить текущего пользователя
-  const { data } = await store.auth.me()
-
-  return { user: data ?? null }
+  try {
+    const { data } = await store.auth.me()
+    return { user: data }
+  }
+  catch {
+    return { user: null }
+  }
 }

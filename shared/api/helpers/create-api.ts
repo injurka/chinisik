@@ -7,17 +7,19 @@ import {
   cmsService,
   hskService,
   keysService,
+  linguisticAnalysisService,
   llvmService,
   pinyinService,
 } from '../collections'
 
 const services: IService[] = [
+  authService,
+  cmsService,
+  hskService,
   keysService,
+  linguisticAnalysisService,
   llvmService,
   pinyinService,
-  hskService,
-  cmsService,
-  authService,
 ]
 
 interface CreateApiParams {

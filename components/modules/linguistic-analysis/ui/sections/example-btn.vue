@@ -7,7 +7,7 @@ const isExample = defineModel<boolean>({ default: false })
 </script>
 
 <template>
-  <VBtn
+  <v-btn
     v-if="!isHidden"
     class="example-btn"
     rounded
@@ -21,7 +21,7 @@ const isExample = defineModel<boolean>({ default: false })
       translate="Привет"
       pinyin="ni hao"
     />
-  </VBtn>
+  </v-btn>
 </template>
 
 <style scoped lang="scss">

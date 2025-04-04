@@ -10,6 +10,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { name: 'Мой профиль', icon: 'material-symbols:frame-person-rounded', routeName: RouteNames.Keys, routePath: RoutePaths.Keys('list') },
+  { name: 'Лексические разборы', icon: 'material-symbols:manage-search', routeName: RouteNames.LinguisticAnalysisHistory, routePath: RoutePaths.LinguisticAnalysis.History },
   { name: 'Настройки', icon: 'material-symbols:settings-outline', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin },
 ]
 

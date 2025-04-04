@@ -1,7 +1,7 @@
 const typeCopmonentMappingForControl = {
   Json: 'Шаблонный',
-  StrictMarkdown: 'Шаблонный .md',
-  Markdown: 'Свободный .md',
+  StrictMarkdown: 'Markdown',
+  Markdown: 'Полотно',
 }
 
 const typeSplitMapping = {

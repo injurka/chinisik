@@ -26,7 +26,7 @@ const navItems: NavItem[] = [
   { name: 'HSK словарь', icon: 'mdi:trophy-broken', routeName: RouteNames.HSK, routePath: RoutePaths.HSK('about') },
   { name: 'Тематический словарь', icon: 'mdi:book-open-variant', routeName: RouteNames.ThematicDictionary, routePath: RoutePaths.ThematicDictionary.Sections },
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
-  { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis },
+  { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis.Index },
   { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
 ]
 
@@ -45,9 +45,10 @@ const hasSlotContent = computed(() => {
     v-model="isDrawer"
     location="left"
     :width="isMobile ? 320 : 380"
+    :disable-route-watche="route.name === RouteNames.Personal"
     :temporary="route.name !== RouteNames.Personal"
     class="drawer"
-    persistent
+    mobile-breakpoint="xl"
   >
     <header class="title">
       <div v-if="contentType === 'sections'">
@@ -67,7 +68,7 @@ const hasSlotContent = computed(() => {
           :key="item.routeName"
           v-ripple
           :class="{ actived: $route.name === item.routeName }"
-          @click="navigateTo(item.routePath)"
+          @click.stop="navigateTo(item.routePath)"
         >
           <Icon size="22" :name="item.icon" />
           <span>{{ item.name }}</span>
@@ -82,7 +83,7 @@ const hasSlotContent = computed(() => {
           :key="item.routeName"
           v-ripple
           :class="{ actived: $route.name === item.routeName }"
-          @click="navigateTo(item.routePath)"
+          @click.stop="navigateTo(item.routePath)"
         >
           <Icon size="22" :name="item.icon" />
           <span>{{ item.name }}</span>
