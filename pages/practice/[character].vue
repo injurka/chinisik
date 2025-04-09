@@ -28,16 +28,6 @@ const result = ref<CheckResult | null>(null)
 const error = ref<string | null>(null)
 const hasAttemptedDrawing = ref(false)
 
-onMounted(() => {
-  if (typeof route.params.character === 'string') {
-    targetCharacter.value = route.params.character
-  }
-  else {
-    targetCharacter.value = '?'
-    error.value = 'Не удалось определить целевой иероглиф.'
-  }
-})
-
 const isCheckingDisabled = computed(() => {
   return !drawingBoardRef.value
 })
@@ -107,6 +97,16 @@ async function handleCheck() {
     isLoading.value = false
   }
 }
+
+onMounted(() => {
+  if (typeof route.params.character === 'string') {
+    targetCharacter.value = route.params.character
+  }
+  else {
+    targetCharacter.value = '?'
+    error.value = 'Не удалось определить целевой иероглиф.'
+  }
+})
 </script>
 
 <template>

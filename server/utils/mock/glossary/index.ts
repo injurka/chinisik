@@ -1,6 +1,6 @@
-import { text } from './1_modal-verb'
+import { textModalVerb } from './1_modal-verb'
 
-export { text }
+export { textModalVerb as text }
 
 // export const glossaryItems: any[] = [
 //   mvGlossaryItem1,

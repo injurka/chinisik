@@ -70,7 +70,7 @@ onMounted(() => {
 
       <div class="header-utils">
         <VBtn
-          icon="mdi-pencil"
+          icon="mdi-draw"
           variant="text"
           title="Рисовалка"
           @click="isDialogDrawing = !isDialogDrawing"

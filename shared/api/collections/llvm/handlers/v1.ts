@@ -34,6 +34,14 @@ function method(instance: Instance) {
       })
     },
 
+    checkHanziDrawing(payload: DTO.CheckHanziDrawingP, abortController?: AbortController) {
+      return instance<DTO.CheckHanziDrawingR>(`/v1/llvm/hanzi-check`, {
+        method: 'POST',
+        body: payload,
+        signal: abortController?.signal,
+      })
+    },
+
   }
 }
 

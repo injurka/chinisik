@@ -1,6 +1,6 @@
 import type { HieroglyphWordVariant } from '~/components/domain/hieroglyph-word/types'
 import type { PinyinTextProps } from '~/components/domain/pinyin-text'
-import { useDisplay } from 'vuetify' // Импортируем useDisplay
+import { useDisplay } from 'vuetify'
 import { VSnackbar, VTooltip } from 'vuetify/components'
 import { useHieroglyphWordStore } from '~/components/domain/hieroglyph-word/store'
 import { PinyinText } from '~/components/domain/pinyin-text'
