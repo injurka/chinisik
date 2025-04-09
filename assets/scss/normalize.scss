@@ -123,3 +123,10 @@ hr {
     font-weight: 500;
   }
 }
+.dialog {
+  .v-overlay__content {
+    margin: 14px !important;
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+  }
+}

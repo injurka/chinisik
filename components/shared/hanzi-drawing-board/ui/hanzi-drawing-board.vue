@@ -21,8 +21,8 @@ const showTargetOverlay = ref(false)
 const canvasSize = reactive({ width: 400, height: 400 })
 
 // --- Constants ---
-const BASE_LINE_WIDTH = 15
-const MAX_LINE_WIDTH = 20
+const BASE_LINE_WIDTH = 25
+const MAX_LINE_WIDTH = 35
 const MIN_LINE_WIDTH = 2
 const VELOCITY_FACTOR = 15
 const GRID_COLOR = '#ddd'
@@ -38,39 +38,10 @@ const computedStyles = computed(() => {
   return null
 })
 
-const targetCharacterColor = computed(() => {
-  return computedStyles.value?.getPropertyValue('--fg-accent-color').trim() || DEFAULT_TARGET_COLOR
-})
-
-const targetCharacterFontFamily = computed(() => {
-  return computedStyles.value?.getPropertyValue('--font-family-cn').trim() || DEFAULT_TARGET_FONT_FAMILY
-})
-
-// --- Lifecycle Hooks ---
-onMounted(() => {
-  if (!canvasRef.value || !containerRef.value)
-    return
-  const canvas = canvasRef.value
-  const context = canvas.getContext('2d', {
-    willReadFrequently: true,
-  })
-
-  if (!context) {
-    console.error('Не удалось получить 2D контекст для canvas')
-    return
-  }
-  ctxRef.value = context
-
-  const container = containerRef.value
-  const width = container.clientWidth > 0 ? container.clientWidth : 400
-  canvas.width = width
-  canvas.height = width
-  canvasSize.width = width
-  canvasSize.height = width
-
-  setupCanvas()
-  drawGridOnContext(ctxRef.value, canvasSize.width, canvasSize.height)
-})
+const targetCharacterStyle = computed(() => ({
+  color: computedStyles.value?.getPropertyValue('--fg-accent-color').trim() || DEFAULT_TARGET_COLOR,
+  fontFamily: computedStyles.value?.getPropertyValue('--font-family-cn').trim() || DEFAULT_TARGET_FONT_FAMILY,
+}))
 
 // --- Canvas Setup ---
 function setupCanvas() {
@@ -79,12 +50,12 @@ function setupCanvas() {
     return
   ctx.lineCap = 'round'
   ctx.lineJoin = 'round'
-  ctx.strokeStyle = '#333'
+  ctx.strokeStyle = computedStyles.value?.getPropertyValue('--fg-primary-color').trim() || DEFAULT_TARGET_COLOR
+  ctx.fillStyle = computedStyles.value?.getPropertyValue('--fg-primary-color').trim() || DEFAULT_TARGET_COLOR
   ctx.lineWidth = lastLineWidth.value
   ctx.font = '10px sans-serif'
   ctx.textAlign = 'start'
   ctx.textBaseline = 'middle'
-  ctx.fillStyle = '#333'
 }
 
 // --- Grid Drawing ---
@@ -249,8 +220,8 @@ function getImageDataURL(type: string = 'image/png', quality?: number): { userIm
 
       // 2. Draw Target Character
       const fontSize = Math.min(width, height) * 0.8
-      targetCtx.font = `${fontSize}px ${targetCharacterFontFamily.value}`
-      targetCtx.fillStyle = targetCharacterColor.value
+      targetCtx.font = `${fontSize}px ${targetCharacterStyle.value.fontFamily}`
+      targetCtx.fillStyle = targetCharacterStyle.value.color
       targetCtx.textAlign = 'center'
       targetCtx.textBaseline = 'middle'
       targetCtx.fillText(props.targetCharacter, width / 2, height / 2)
@@ -285,6 +256,32 @@ function hideTargetCharacter() {
   showTargetOverlay.value = false
 }
 
+// --- Lifecycle Hooks ---
+onMounted(() => {
+  if (!canvasRef.value || !containerRef.value)
+    return
+  const canvas = canvasRef.value
+  const context = canvas.getContext('2d', {
+    willReadFrequently: true,
+  })
+
+  if (!context) {
+    console.error('Не удалось получить 2D контекст для canvas')
+    return
+  }
+  ctxRef.value = context
+
+  const container = containerRef.value
+  const width = container.clientWidth > 0 ? container.clientWidth : 400
+  canvas.width = width
+  canvas.height = width
+  canvasSize.width = width
+  canvasSize.height = width
+
+  setupCanvas()
+  drawGridOnContext(ctxRef.value, canvasSize.width, canvasSize.height)
+})
+
 defineExpose({
   clearCanvas,
   getImageDataURL,
@@ -310,6 +307,7 @@ defineExpose({
     <div
       v-if="showTargetOverlay && props.targetCharacter"
       class="target-character-overlay"
+      :style="`font-size: calc(${canvasSize.width} * 0.8 * 1px);`"
     >
       {{ props.targetCharacter }}
     </div>
@@ -341,7 +339,6 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: calc(min(var(--canvas-width, 400px), var(--canvas-height, 400px)) * 0.8);
   color: var(--fg-accent-color);
   opacity: 0.3;
   pointer-events: none;

@@ -1,4 +1,4 @@
-export const text = `
+export const textModalVerb = `
 <div>
   <span type="text">&nbsp;&nbsp;&nbsp;&nbsp;
     Благодаря глаголам, мы узнаем, что происходит. Благодаря модальным глаголам, мы показываем наше отношение. «Я плаваю» — не то же самое,

@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import type { IHieroglyphWordVariousProps } from '~/components/domain/hieroglyph-word'
 import type { JsonToDomChildren } from '~/components/domain/json-to-dom'
 import { JsonToDom } from '~/components/domain/json-to-dom'
 import { ThematicDictionaryBreadcrumbs } from '~/components/domain/thematic-dictionary/thematic-dictionary-breadcrumbs'
 import Control from '~/components/modules/thematic-dictionary/thematic-dictionary-category/ui/control.vue'
 import { useThematicDictionaryCategoryControls } from '../composables'
+import DrawingControl from './dialog/drawing-control.vue'
 
 interface Props {
   section: ThematicDictionarySection
@@ -12,13 +14,14 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const showFullText = ref<boolean>(false)
+const isShowFullText = ref<boolean>(false)
+const isDialogDrawing = ref<boolean>(false)
 const { controlMenu, controls, toggleControl } = useThematicDictionaryCategoryControls()
 
 const maxLines = 5
 
 const content = computed<JsonToDomChildren>(() => {
-  const content = props.category.content
+  const content = toRaw(props.category.content)
   const isFixedStyle = controls.value.isFixedStyle
 
   if (Array.isArray(content.children)) {
@@ -31,16 +34,16 @@ const content = computed<JsonToDomChildren>(() => {
 
   return content
 })
-const isLongText = computed(() => {
+const drawContent = computed<IHieroglyphWordVariousProps[]>(() => {
+  const data = toRaw(props.category.content.children) as JsonToDomChildren[]
+
+  return data.map(m => m.props) as unknown as IHieroglyphWordVariousProps[]
+})
+const isLongText = computed<boolean>(() => {
   const lines = props.category.description?.split('\n')
 
   return (lines?.length ?? 0) > maxLines
 })
-
-function toggleShowFullText() {
-  showFullText.value = !showFullText.value
-}
-
 const breadcrumbs = computed(() => {
   const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections }]
 
@@ -70,7 +73,7 @@ const breadcrumbs = computed(() => {
         <div v-if="section.description" class="description">
           <p
             class="description-text"
-            :class="{ truncated: !showFullText && isLongText }"
+            :class="{ truncated: !isShowFullText && isLongText }"
           >
             {{ category.description }}
           </p>
@@ -79,9 +82,9 @@ const breadcrumbs = computed(() => {
             rounded
             variant="plain"
             class="description-toggle-full"
-            @click="toggleShowFullText"
+            @click="isShowFullText = !isShowFullText"
           >
-            {{ showFullText ? 'Скрыть' : 'Показать больше' }}
+            {{ isShowFullText ? 'Скрыть' : 'Показать больше' }}
           </VBtn>
         </div>
       </div>
@@ -93,13 +96,13 @@ const breadcrumbs = computed(() => {
             :close-on-content-click="false"
           >
             <template #activator="{ props: menuProps }">
-              <v-btn
+              <VBtn
                 icon
                 variant="text"
                 v-bind="menuProps"
               >
                 <Icon size="24" name="mdi-tune" />
-              </v-btn>
+              </VBtn>
             </template>
 
             <Control
@@ -107,6 +110,17 @@ const breadcrumbs = computed(() => {
               @toggle-control="toggleControl"
             />
           </VMenu>
+
+          <VBtn
+            icon="mdi-draw"
+            variant="text"
+            title="Тренировка прописи"
+            @click="isDialogDrawing = !isDialogDrawing"
+          />
+          <DrawingControl
+            v-model="isDialogDrawing"
+            :items="drawContent"
+          />
         </div>
       </div>
 
@@ -157,10 +171,9 @@ const breadcrumbs = computed(() => {
     height: 48px;
 
     .settings {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 48px;
+      display: flex;
+      flex-direction: row-reverse;
+      width: 100%;
       height: 48px;
     }
   }

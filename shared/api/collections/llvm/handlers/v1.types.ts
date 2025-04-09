@@ -28,8 +28,18 @@ export interface AnalyzeTextFlatP {
   isTemplate: boolean
 }
 
+export interface CheckHanziDrawingP {
+  userImage: string
+  targetImage: string
+  targetWord: string
+}
+
 // Response //
 
 export type SplitGlyphsR = SplitedGlyphs
 export type PinyinHieroglyphsR = PinyinHieroglyphs
 export type AnalyzeTextR = LlvmLinguisticAnalysis
+export interface CheckHanziDrawingR {
+  similarity: number
+  feedback: string
+}
