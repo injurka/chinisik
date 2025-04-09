@@ -279,11 +279,11 @@ onMounted(initializePracticeCycle)
           v-model="settingsMenu"
           :close-on-content-click="false"
         >
-          <template #activator="{ props }">
+          <template #activator="{ props: menuProps }">
             <v-btn
               icon
               variant="text"
-              v-bind="props"
+              v-bind="menuProps"
             >
               <Icon size="24" name="mdi-tune" />
             </v-btn>
