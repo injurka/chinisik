@@ -8,7 +8,6 @@ const { isMobile } = useDevice()
 
 <template>
   <section ref="contentEl" class="wrapper">
-    <BackgroundEffects v-if="!isMobile" />
 
     <div class="content">
       <h1>О проекте</h1>
@@ -47,6 +46,8 @@ const { isMobile } = useDevice()
     </VBtn>
 
     <ClientOnly>
+      <BackgroundEffects v-if="!isMobile" />
+
       <HaoticLines
         class="haotic-lines"
         :speed="3"

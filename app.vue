@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Analytics } from '@vercel/analytics/nuxt'
-import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 
 const app = useAppConfig()
 const { $pwa } = useNuxtApp()
@@ -41,10 +39,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <Analytics />
-  <SpeedInsights />
   <NuxtLoadingIndicator color="var(--border-accent-color)" />
-  <NuxtPwaAssets />
+  <NuxtPwaManifest />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
