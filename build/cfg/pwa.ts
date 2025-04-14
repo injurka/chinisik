@@ -7,6 +7,7 @@ const sharedConf: NuxtConfig['pwa'] = {
   filename: 'sw.ts',
   base: '/',
   registerType: 'autoUpdate',
+  scope: '/',
   includeAssets: ['favicon.ico'],
   manifest: {
     name: 'Chinisik',
@@ -49,11 +50,12 @@ const sharedConf: NuxtConfig['pwa'] = {
   workbox: {
     navigateFallback: '/',
     globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    navigateFallbackDenylist: [/^\/api\//],
   },
   injectManifest: {
     globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
     globIgnores: ['emojis/**', 'manifest**.webmanifest'],
-    maximumFileSizeToCacheInBytes: 20 * 1024 * 1024, // Set to 20 MiB
+    maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
   },
   client: {
     installPrompt: true,

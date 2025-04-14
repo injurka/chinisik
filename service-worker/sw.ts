@@ -5,6 +5,10 @@ import { clientsClaim } from 'workbox-core'
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
 import { onNotificationClick, onPush } from './web-push-notifications'
+import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
+import { ExpirationPlugin } from 'workbox-expiration'
+import { onShareTarget } from './share-target'
 
 declare let self: ServiceWorkerGlobalScope
 
@@ -17,12 +21,8 @@ const entries = self.__WB_MANIFEST
 if (import.meta.env.DEV)
   entries.push({ url: '/', revision: Math.random().toString() })
 
-// self.__WB_MANIFEST is default injection point
 precacheAndRoute(entries)
-// ^ or
-// ^ precacheAndRoute(self.__WB_MANIFEST)
 
-// clean old assets
 cleanupOutdatedCaches()
 
 let allowlist: undefined | RegExp[]
@@ -33,14 +33,53 @@ if (import.meta.env.DEV)
 let denylist: undefined | RegExp[]
 if (import.meta.env.PROD) {
   denylist = [
-    // exclude sw: if the user navigates to it, fallback to index.html
+    /^\/api\//,
+    /^\/sign-in\//,
+    /^\/sign-up\//,
+    /^\/oauth\//,
+    /^\/web-share-target\//,
     /^\/sw.js$/,
-    // exclude webmanifest: has its own cache
     /^\/manifest-(.*).webmanifest$/,
   ]
 }
 
-// to allow work offline
+if (import.meta.env.PROD) {
+  registerRoute(
+    ({ request, sameOrigin }) => sameOrigin && request.destination === 'manifest',
+    new NetworkFirst({
+      cacheName: 'chinisik-webmanifest',
+      plugins: [
+        new CacheableResponsePlugin({ statuses: [200] }),
+        new ExpirationPlugin({ maxEntries: 100 }),
+      ],
+    }),
+  )
+  registerRoute(
+    ({ sameOrigin, url }) =>
+      sameOrigin
+      && url.pathname.startsWith('/fonts/'),
+    new StaleWhileRevalidate({
+      cacheName: 'chinisik-fonts',
+      plugins: [
+        new CacheableResponsePlugin({ statuses: [200] }),
+        new ExpirationPlugin({ purgeOnQuotaError: true, maxAgeSeconds: 60 * 60 * 24 * 15 }),  // 15 days max
+      ],
+    }),
+  )
+  registerRoute(
+    ({ sameOrigin, url }) =>
+      sameOrigin
+      && url.pathname.startsWith('/chinese-pinyin-sound/'),
+    new StaleWhileRevalidate({
+      cacheName: 'chinisik-pinyin',
+      plugins: [
+        new CacheableResponsePlugin({ statuses: [200] }),
+        new ExpirationPlugin({ purgeOnQuotaError: true, maxAgeSeconds: 60 * 60 * 24 * 15 }),  // 15 days max
+      ],
+    }),
+  )
+}
+
 registerRoute(new NavigationRoute(
   createHandlerBoundToURL('/'),
   { allowlist, denylist },
@@ -51,6 +90,4 @@ clientsClaim()
 
 self.addEventListener('push', onPush)
 self.addEventListener('notificationclick', onNotificationClick)
-
-// TODO
-// self.addEventListener('fetch', onShareTarget)
+self.addEventListener('fetch', onShareTarget)

@@ -1,6 +1,36 @@
 import type { NuxtConfig } from 'nuxt/schema'
 
 export const baseCfg: NuxtConfig = {
+  typescript: {
+    tsConfig: {
+      exclude: ['../service-worker'],
+      vueCompilerOptions: {
+        target: 3.5,
+      },
+    },
+  },
+
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
+    prerender: {
+      crawlLinks: true,
+    },
+  },
+
+  routeRules: {
+    '/about': { prerender: true },
+    '/manifest.webmanifest': {
+      headers: {
+        'Content-Type': 'application/manifest+json',
+        'Cache-Control': 'public, max-age=0, must-revalidate',
+      },
+    },
+  },
+
   components: {
     //
   },
