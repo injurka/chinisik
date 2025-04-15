@@ -41,7 +41,7 @@ export const viteCfg: NuxtConfig['vite'] = {
               return
 
             if (options.deprecation) {
-              if (message.startsWith('Using / for division outside of calc() is deprecated')) {
+              if (message?.startsWith('Using / for division outside of calc() is deprecated')) {
                 // silences above deprecation warning
                 return
               }

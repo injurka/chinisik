@@ -16,9 +16,6 @@ export const baseCfg: NuxtConfig = {
         target: 'esnext',
       },
     },
-    prerender: {
-      crawlLinks: true,
-    },
   },
 
   routeRules: {
