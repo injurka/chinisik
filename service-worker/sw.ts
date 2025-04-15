@@ -1,14 +1,14 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
 
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 import { clientsClaim } from 'workbox-core'
+import { ExpirationPlugin } from 'workbox-expiration'
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { NavigationRoute, registerRoute } from 'workbox-routing'
-import { onNotificationClick, onPush } from './web-push-notifications'
-import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies'
-import { CacheableResponsePlugin } from 'workbox-cacheable-response'
-import { ExpirationPlugin } from 'workbox-expiration'
+import { NetworkFirst } from 'workbox-strategies'
 import { onShareTarget } from './share-target'
+import { onNotificationClick, onPush } from './web-push-notifications'
 
 declare let self: ServiceWorkerGlobalScope
 
@@ -54,30 +54,30 @@ if (import.meta.env.PROD) {
       ],
     }),
   )
-  registerRoute(
-    ({ sameOrigin, url }) =>
-      sameOrigin
-      && url.pathname.startsWith('/fonts/'),
-    new StaleWhileRevalidate({
-      cacheName: 'chinisik-fonts',
-      plugins: [
-        new CacheableResponsePlugin({ statuses: [200] }),
-        new ExpirationPlugin({ purgeOnQuotaError: true, maxAgeSeconds: 60 * 60 * 24 * 15 }),  // 15 days max
-      ],
-    }),
-  )
-  registerRoute(
-    ({ sameOrigin, url }) =>
-      sameOrigin
-      && url.pathname.startsWith('/chinese-pinyin-sound/'),
-    new StaleWhileRevalidate({
-      cacheName: 'chinisik-pinyin',
-      plugins: [
-        new CacheableResponsePlugin({ statuses: [200] }),
-        new ExpirationPlugin({ purgeOnQuotaError: true, maxAgeSeconds: 60 * 60 * 24 * 15 }),  // 15 days max
-      ],
-    }),
-  )
+  // registerRoute(
+  //   ({ sameOrigin, url }) =>
+  //     sameOrigin
+  //     && url.pathname.startsWith('/fonts/'),
+  //   new StaleWhileRevalidate({
+  //     cacheName: 'chinisik-fonts',
+  //     plugins: [
+  //       new CacheableResponsePlugin({ statuses: [200] }),
+  //       new ExpirationPlugin({ purgeOnQuotaError: true, maxAgeSeconds: 60 * 60 * 24 * 15 }), // 15 days max
+  //     ],
+  //   }),
+  // )
+  // registerRoute(
+  //   ({ sameOrigin, url }) =>
+  //     sameOrigin
+  //     && url.pathname.startsWith('/chinese-pinyin-sound/'),
+  //   new StaleWhileRevalidate({
+  //     cacheName: 'chinisik-pinyin',
+  //     plugins: [
+  //       new CacheableResponsePlugin({ statuses: [200] }),
+  //       new ExpirationPlugin({ purgeOnQuotaError: true, maxAgeSeconds: 60 * 60 * 24 * 15 }), // 15 days max
+  //     ],
+  //   }),
+  // )
 }
 
 registerRoute(new NavigationRoute(
