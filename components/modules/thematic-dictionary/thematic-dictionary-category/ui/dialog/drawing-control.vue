@@ -336,8 +336,8 @@ onMounted(initializePracticeCycle)
 
     .settings {
       position: absolute;
-      right: 20px;
-      top: 20px;
+      left: 10px;
+      top: 10px;
       width: 48px;
       height: 48px;
     }
@@ -375,6 +375,9 @@ onMounted(initializePracticeCycle)
     margin-top: -10px;
     padding: 10px;
     width: 100%;
+
+    border-bottom: 1px dashed var(--border-button-secondary-color);
+    border-top: 1px dashed var(--border-button-secondary-color);
   }
 
   .result,
@@ -416,7 +419,6 @@ onMounted(initializePracticeCycle)
     flex-wrap: wrap;
     gap: 10px;
     width: 100%;
-    margin-top: 12px;
 
     .v-btn {
       text-transform: none;
@@ -449,9 +451,15 @@ onMounted(initializePracticeCycle)
       justify-content: center;
       align-items: center;
       gap: 4px;
+
+      .settings {
+        left: 5px;
+        top: 5px;
+      }
     }
 
     .title {
+      margin-top: 10px;
       font-size: 1rem;
     }
 
@@ -465,7 +473,6 @@ onMounted(initializePracticeCycle)
       flex-wrap: wrap;
       gap: 10px;
       width: 100%;
-      margin-top: 12px;
 
       .v-btn {
         text-transform: none;

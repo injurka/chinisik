@@ -25,7 +25,7 @@ function clearDrawing() {
       />
 
       <VBtn
-        color="primary"
+        color="var(--fg-accent-color)"
         variant="text"
         class="clear-btn"
         rounded
@@ -42,6 +42,9 @@ function clearDrawing() {
   .clear-btn {
     margin-top: 12px;
     width: 100%;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--fg-primary-color);
 
     @include mobile() {
       margin-top: 4px;

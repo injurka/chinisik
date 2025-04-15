@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { HaoticLines } from '~/components/domain/haotic-lines'
 import { PinyinText } from '~/components/domain/pinyin-text'
-import { useCardQueue, useSwipeHandler } from '../composables'
+import { useCardQueue, useSwipeHandler } from './composables'
 
 interface Props {
-  items: HieroglyphHsk[]
+  items: HieroglyphKey[]
 }
 
 const props = defineProps<Props>()
 const isFullscreen = defineModel<boolean>('fullscreen', { required: true, default: false })
 
-const { currentCard, markAsKnown, markForRepeat } = useCardQueue<HieroglyphHsk>(props.items)
+const { currentCard, markAsKnown, markForRepeat } = useCardQueue<HieroglyphKey>(props.items)
 const { cardStyle, swipeDirection, isSwiping, swipeHandlers } = useSwipeHandler({
   onSwipeLeft: handleKnow,
   onSwipeRight: handleRepeat,
@@ -107,18 +107,16 @@ const cardClass = computed(() => ({
           </h2>
 
           <div class="card-details-pinyin">
-            <div v-for="(p, pIndex) in currentCard.pinyin" :key="pIndex">
-              <PinyinText
-                :pinyin="p.syllable"
-                :tone="{
-                  index: p.position + pIndex,
-                  type: p.tone as ToneType,
-                }"
-              />
-            </div>
+            <PinyinText
+              :pinyin="currentCard.pinyin"
+              :tone="{
+                index: currentCard.toneIndex,
+                type: currentCard.toneType as ToneType,
+              }"
+            />
           </div>
           <div class="card-details-translation">
-            <p>{{ currentCard?.translation.ru }}</p>
+            <p>{{ currentCard?.transcription }}</p>
           </div>
         </div>
         <v-btn

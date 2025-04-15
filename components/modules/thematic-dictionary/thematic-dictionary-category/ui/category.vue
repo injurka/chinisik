@@ -112,6 +112,7 @@ const breadcrumbs = computed(() => {
           </VMenu>
 
           <VBtn
+            v-if="category.drawAllowed"
             icon="mdi-draw"
             variant="text"
             title="Тренировка прописи"

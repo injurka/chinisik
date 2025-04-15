@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ControlHieroglyphKey } from '../store/keys.store'
+import type { ControlHieroglyphKey } from '../../store/keys.store'
 import { useElementVisibility } from '@vueuse/core'
 import { PinyinText } from '~/components/domain/pinyin-text'
 
