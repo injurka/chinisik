@@ -6,6 +6,7 @@ interface ThematicDictionaryCategory {
   name: string
   description?: string
   glyph: string
+  drawAllowed: boolean
   content: JsonToDomChildren
 }
 

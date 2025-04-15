@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ControlHieroglyphKey } from '../store/keys.store'
+import type { ControlHieroglyphKey } from '../../store/keys.store'
 
 const store = useStore(['keys'])
 const { toggleControl } = store.keys

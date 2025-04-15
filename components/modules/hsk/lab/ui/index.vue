@@ -15,7 +15,7 @@ const { data } = await useAsyncData(
   <LabQuiz
     v-if="data"
     v-model:fullscreen="isFullscreen"
-    :words="data"
+    :items="data"
   />
 </template>
 

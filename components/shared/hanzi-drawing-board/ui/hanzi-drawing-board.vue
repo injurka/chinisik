@@ -6,6 +6,8 @@ const props = defineProps<{
   targetCharacter?: string
 }>()
 
+const { isMobile } = useDevice()
+
 // --- Refs ---
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const ctxRef = ref<CanvasRenderingContext2D | null>(null)
@@ -21,8 +23,8 @@ const showTargetOverlay = ref(false)
 const canvasSize = reactive({ width: 400, height: 400 })
 
 // --- Constants ---
-const BASE_LINE_WIDTH = 25
-const MAX_LINE_WIDTH = 35
+const BASE_LINE_WIDTH = isMobile ? 15 : 25
+const MAX_LINE_WIDTH = isMobile ? 25 : 35
 const MIN_LINE_WIDTH = 2
 const VELOCITY_FACTOR = 15
 const GRID_COLOR = '#ddd'

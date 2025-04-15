@@ -14,6 +14,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           sysname: 'politeness',
           name: 'Вежливость',
           glyph: '礼',
+          drawAllowed: false,
           description: `Вежливость в китайском языке и культуре — это не просто набор фраз, а сложная система взаимодействия, отражающая глубинные ценности общества: уважение к иерархии, стремление к гармонии и сохранение «лица» (面子, miànzi) как своего, так и собеседника. Её пронизывает конфуцианская идея «礼» (lǐ) — ритуала или правил поведения, которые определяют, как следует проявлять учтивость в разных ситуациях. Чтобы интегрироваться в это культурное пространство, важно понимать контекст, в котором используются те или иные выражения, и осознавать, что прямолинейность здесь часто уступает место косвенности и тонким нюансам.
 
 Основу вежливости составляют обращения. В китайском языке редко используют просто «ты» (你, nǐ) в разговоре с людьми старше по возрасту, статусу или незнакомцами. Вместо этого предпочтительнее вежливая форма «您» (nín), особенно в официальных ситуациях или при общении с клиентами. Обращения по родству (например, 叔叔, shūshu — дядя; 阿姨, āyí — тётя) или должности (经理, jīnglǐ — менеджер; 老师, lǎoshī — учитель) даже к малознакомым людям подчеркивают уважение и соблюдение социальной дистанции. Это создаёт атмосферу взаимного признания ролей, что крайне важно в коллективистском обществе.
@@ -761,6 +762,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 2,
           sysname: 'small-talk',
           name: 'Небольшой разговор',
+          drawAllowed: false,
           glyph: '谈',
           description: 'Фразы для поддержания непринужденной беседы.',
           content: {
@@ -771,6 +773,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 3,
           sysname: 'greetings',
           name: 'Приветствия',
+          drawAllowed: false,
           glyph: '问',
           description: 'Различные способы приветствовать людей.',
           content: {
@@ -781,6 +784,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 4,
           sysname: 'farewells',
           name: 'Прощания',
+          drawAllowed: false,
           glyph: '别',
           description: 'Различные способы прощаться с людьми.',
           content: {
@@ -792,6 +796,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           sysname: 'introductions',
           name: 'Представления',
           glyph: '介',
+          drawAllowed: false,
           description: 'Фразы для представления себя и других.',
           content: {
             tag: 'div',
@@ -801,6 +806,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 6,
           sysname: 'asking-for-information',
           name: 'Запрос информации',
+          drawAllowed: false,
           glyph: '询',
           description: 'Фразы для запроса информации.',
           content: {
@@ -815,6 +821,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       sysname: 'travel',
       description: 'Раздел, посвященный словам и фразам, связанным с путешествиями.',
       name: 'Путешествия',
+      drawAllowed: false,
       glyph: '旅',
       categories: [
         {
@@ -831,6 +838,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 4,
           sysname: 'accommodation',
           name: 'Проживание',
+          drawAllowed: false,
           glyph: '宿',
           description: 'Слова, связанные с местами проживания во время путешествий.',
           content: {
@@ -850,6 +858,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 11,
           sysname: 'restaurants',
           name: 'Рестораны',
+          drawAllowed: false,
           glyph: '餐',
           description: 'Фразы для использования в ресторанах.',
           content: {
@@ -860,6 +869,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 12,
           sysname: 'drinks',
           name: 'Напитки',
+          drawAllowed: false,
           glyph: '饮',
           description: 'Слова, связанные с различными видами напитков.',
           content: {
@@ -870,6 +880,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 13,
           sysname: 'dishes',
           name: 'Блюда',
+          drawAllowed: false,
           glyph: '菜',
           description: 'Названия различных блюд.',
           content: {
@@ -889,6 +900,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 17,
           sysname: 'basic-colors',
           name: 'Основные цвета',
+          drawAllowed: true,
           glyph: '基',
           description: `Базовые цвета, часто связанные с культурой, философией (например, теорией Пяти Элементов) и историей. Красный (红色) ключевой цвет в китайской культуре, символ удачи и праздника. Белый (白色) традиционно связан с трауром, в отличие от западной традиции.`,
           content: {
@@ -992,6 +1004,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 18,
           sysname: 'secondary-colors',
           name: 'Вторичные цвета',
+          drawAllowed: true,
           glyph: '次',
           description: 'Смешанные или широко употребимые, но не базовые.',
           content: {
@@ -1095,9 +1108,9 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           id: 19,
           sysname: 'other-colors',
           name: 'Другие цвета',
+          drawAllowed: true,
           glyph: '他',
-          description: `Специфичные, современные или заимствованные названия. Золотой и серебряный часто ассоциируются с богатством и праздниками. Цин (青色) — исторически сложный цвет, может обозначать сине-зеленые оттенки (бирюзовый, морской волны) или даже черный в классических текстах.
-`,
+          description: `Специфичные, современные или заимствованные названия. Золотой и серебряный часто ассоциируются с богатством и праздниками. Цин (青色) — исторически сложный цвет, может обозначать сине-зеленые оттенки (бирюзовый, морской волны) или даже черный в классических текстах.`,
           content: {
             tag: 'div',
             class: 'list',

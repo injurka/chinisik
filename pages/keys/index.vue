@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { JsonToDom } from '~/components/domain/json-to-dom'
-import { KeyHieroglyph, KeyHieroglyphControl, KeyHieroglyphInfo } from '~/components/modules/keys'
+import { KeyHieroglyphControl, KeyHieroglyphList, KeyHieroglyphPractice } from '~/components/modules/keys'
 import { PageLoader } from '~/components/shared/page-loader'
 
 type TabVariant = 'list' | 'lab'
@@ -18,12 +18,7 @@ const tabsOptions = [
 const route = useRoute()
 const { isMobile } = useDevice()
 const store = useStore(['keys'])
-const {
-  isLoadingContent,
-  description,
-  hieroglyphKeys,
-  control,
-} = storeToRefs(store.keys)
+const { isLoadingContent, description, hieroglyphKeys } = storeToRefs(store.keys)
 
 const controlMenu = ref(false)
 const currentTab = ref<TabVariant>(initialTab())
@@ -36,14 +31,6 @@ await useAsyncData(
   ]),
   { dedupe: 'defer' },
 )
-
-const isExpandedDialog = ref<boolean>(false)
-const expandedHieroglyphKey = ref<HieroglyphKey>()
-
-function onHieroglyphExpand(hieroglyph: HieroglyphKey) {
-  expandedHieroglyphKey.value = hieroglyph
-  isExpandedDialog.value = true
-}
 
 function initialTab() {
   const tab = route.query.tab as TabVariant | undefined
@@ -118,26 +105,12 @@ definePageMeta({
     <v-tabs-window v-model="currentTab">
       <v-tabs-window-item value="list">
         <v-container fluid>
-          <div class="list">
-            <KeyHieroglyph
-              v-for="(item, key) in hieroglyphKeys!"
-              :key="key + 1"
-              :hieroglyph="item"
-              :control
-              @on-expand="onHieroglyphExpand"
-            />
-            <KeyHieroglyphInfo
-              v-model="isExpandedDialog"
-              :hieroglyph="expandedHieroglyphKey"
-            />
-          </div>
+          <KeyHieroglyphList :items="hieroglyphKeys" />
         </v-container>
       </v-tabs-window-item>
       <v-tabs-window-item value="lab">
         <v-container fluid>
-          <p>
-            В разработке
-          </p>
+          <KeyHieroglyphPractice :items="hieroglyphKeys" />
         </v-container>
       </v-tabs-window-item>
     </v-tabs-window>
