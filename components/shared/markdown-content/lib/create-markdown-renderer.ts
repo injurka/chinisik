@@ -2,8 +2,6 @@ import MarkdownIt from 'markdown-it'
 import MarkdownItAttrs from 'markdown-it-attrs'
 import MarkdownItCollapsible from 'markdown-it-collapsible'
 import MarkdownItContainer from 'markdown-it-container'
-// @ts-expect-error no dts
-import MarkdownItObsidianCallouts from 'markdown-it-obsidian-callouts'
 
 interface WikiImageOptions {
   baseURL?: string
@@ -12,7 +10,7 @@ interface WikiImageOptions {
 
 export function markdownItWikiImages(md: MarkdownIt, options: WikiImageOptions = {}) {
   const {
-    baseURL = '/personal/img/',
+    baseURL = '',
     defaultAlt = '',
   } = options
 
@@ -71,7 +69,6 @@ export function createMarkdownRenderer(params: CreateMarkdownRendererParams) {
       baseURL: imageBasePath,
       defaultAlt: '',
     })
-    .use(MarkdownItObsidianCallouts)
     .use(MarkdownItAttrs)
     .use(MarkdownItCollapsible)
     .use(MarkdownItContainer)

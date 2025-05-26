@@ -16,7 +16,6 @@ export const viteCfg: NuxtConfig['vite'] = {
   },
   optimizeDeps: {
     include: [
-      'workbox-window',
       'workbox-precaching',
       'workbox-routing',
       'workbox-cacheable-response',

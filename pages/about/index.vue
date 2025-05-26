@@ -8,7 +8,6 @@ const { isMobile } = useDevice()
 
 <template>
   <section ref="contentEl" class="wrapper">
-
     <div class="content">
       <h1>О проекте</h1>
       <p>

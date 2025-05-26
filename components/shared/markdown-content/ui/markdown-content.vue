@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import ImageViewer from '@luohc92/vue3-image-viewer'
-import { nextTick, onMounted, ref, watch } from 'vue'
 import { createMarkdownRenderer } from '../lib'
-import '@luohc92/vue3-image-viewer/dist/style.css'
 
 interface Props {
   content: string
@@ -13,8 +10,6 @@ const props = defineProps<Props>()
 const renderedContent = ref<string>('')
 const md = createMarkdownRenderer({ imageBasePath: props.imageBasePath })
 
-const currentImages = ref<string[]>([])
-
 watch(
   () => props.content,
   (newContent) => {
@@ -22,50 +17,6 @@ watch(
   },
   { immediate: true },
 )
-
-function openImageViewer() {
-  document.documentElement.style.overflow = 'hidden'
-  ImageViewer({
-    images: currentImages.value,
-    showThumbnail: true,
-    showDownload: true,
-    handlePosition: 'bottom',
-    onClose: () => {
-      document.documentElement.style.overflow = 'auto'
-    },
-    maskBgColor: 'rgba(0,0,0,0.7)',
-  })
-}
-
-onMounted(() => {
-  nextTick(() => {
-    const callouts = document.querySelectorAll('.callout')
-
-    callouts.forEach((callout) => {
-      const imagesInCallout = callout.querySelectorAll<HTMLImageElement>('.callout-content img')
-
-      if (imagesInCallout.length > 0) {
-        const imageUrls: string[] = Array.from(imagesInCallout).map(img => img.src)
-
-        Array.from(imagesInCallout).forEach((img) => {
-          img.addEventListener('click', (event) => {
-            event.stopPropagation()
-            const clickedImageUrl = (img as HTMLImageElement).src
-
-            const reorderedImages = [
-              clickedImageUrl,
-              ...imageUrls.filter(url => url !== clickedImageUrl),
-            ]
-
-            currentImages.value = reorderedImages
-            openImageViewer()
-          })
-          img.style.cursor = 'pointer'
-        })
-      }
-    })
-  })
-})
 </script>
 
 <template>

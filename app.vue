@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 const app = useAppConfig()
 const { $pwa } = useNuxtApp()
 const { theme, getHeadThemeColor } = useChangeTheme()
