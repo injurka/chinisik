@@ -14,8 +14,6 @@ const slots = defineSlots<{
   default: () => unknown
 }>()
 
-const route = useRoute()
-
 const { isMobile } = useDevice()
 const isDrawer = defineModel<boolean>({ required: true })
 const contentType = defineModel<string>('contentType', { default: 'sections' })
@@ -30,11 +28,6 @@ const navItems: NavItem[] = [
   { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
 ]
 
-const navItemsPersonal: NavItem[] = [
-  { name: 'Путешествия', icon: 'mdi:wallet-travel', routeName: RouteNames.Personal, routePath: RoutePaths.Personal.Vault('city', '') },
-  { name: 'Чай', icon: 'mdi:tea', routeName: RouteNames.Personal, routePath: RoutePaths.Personal.Vault('tea', '') },
-]
-
 const hasSlotContent = computed(() => {
   return !!slots.default()
 })
@@ -45,8 +38,6 @@ const hasSlotContent = computed(() => {
     v-model="isDrawer"
     location="left"
     :width="isMobile ? 320 : 380"
-    :disable-route-watche="route.name === RouteNames.Personal"
-    :temporary="route.name !== RouteNames.Personal"
     class="drawer"
     mobile-breakpoint="xl"
   >
@@ -65,21 +56,6 @@ const hasSlotContent = computed(() => {
       <ul v-if="contentType === 'sections'" class="nav-list">
         <li
           v-for="item in navItems"
-          :key="item.routeName"
-          v-ripple
-          :class="{ actived: $route.name === item.routeName }"
-          @click.stop="navigateTo(item.routePath)"
-        >
-          <Icon size="22" :name="item.icon" />
-          <span>{{ item.name }}</span>
-        </li>
-
-        <div class="divider-text">
-          <span>Другое</span>
-        </div>
-
-        <li
-          v-for="item in navItemsPersonal"
           :key="item.routeName"
           v-ripple
           :class="{ actived: $route.name === item.routeName }"

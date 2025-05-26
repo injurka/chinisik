@@ -3,7 +3,7 @@
 
 // const clientResolves: { [key: string]: () => void } = {}
 
-export function onShareTarget(event: FetchEvent) {
+export function onShareTarget(_: FetchEvent) {
   //   if (!event.request.url.endsWith('/web-share-target') || event.request.method !== 'POST')
   //     return
 

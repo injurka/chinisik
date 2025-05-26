@@ -57,44 +57,6 @@ export const baseCfg: NuxtConfig = {
     inlineStyles: false,
   },
 
-  fonts: {
-    priority: ['google', 'local'],
-    providers: {
-      fontshare: false,
-      adobe: false,
-      bunny: false,
-      fontsource: false,
-      googleicons: false,
-    },
-    devtools: true,
-    families: [
-      {
-        name: 'MapleMono-CN',
-        provider: 'local',
-        src: '/fonts/MapleMono-CN/MapleMono-CN-Regular.ttf',
-        weight: 400,
-        style: 'normal',
-        global: true,
-      },
-      {
-        name: 'MapleMono-CN',
-        provider: 'local',
-        src: '/fonts/MapleMono-CN/MapleMono-CN-Medium.ttf',
-        weight: 500,
-        style: 'normal',
-        global: true,
-      },
-      {
-        name: 'MapleMono-CN',
-        provider: 'local',
-        src: '/fonts/MapleMono-CN/MapleMono-CN-SemiBold.ttf',
-        weight: 600,
-        style: 'normal',
-        global: true,
-      },
-    ],
-  },
-
   icon: {
     clientBundle: {
       icons: [
@@ -165,7 +127,6 @@ export const baseCfg: NuxtConfig = {
         defaultSet: 'mdi',
       },
     },
-
   },
 
   eslint: {
