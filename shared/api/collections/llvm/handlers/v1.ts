@@ -42,6 +42,16 @@ function method(instance: Instance) {
       })
     },
 
+    imageToTextTranslate(payload: DTO.ImageToTextTranslateP, abortController?: AbortController) {
+      const formData = new FormData()
+      formData.append('image', payload.image, 'area-selected')
+
+      return instance<DTO.ImageToTextTranslateR>(`/v1/llvm/image-to-text-translate`, {
+        method: 'POST',
+        body: formData,
+        signal: abortController?.signal,
+      })
+    },
   }
 }
 
