@@ -821,7 +821,6 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       sysname: 'travel',
       description: 'Раздел, посвященный словам и фразам, связанным с путешествиями.',
       name: 'Путешествия',
-      drawAllowed: false,
       glyph: '旅',
       categories: [
         {
@@ -833,6 +832,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
           content: {
             tag: 'div',
           },
+          drawAllowed: false,
         },
         {
           id: 4,

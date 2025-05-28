@@ -225,7 +225,8 @@ const cardClass = computed(() => ({
   max-width: 500px;
   max-height: 500px;
   position: relative;
-  background: radial-gradient(ellipse at top, var(--bg-accent-color), var(--bg-secondary-color)),
+  background:
+    radial-gradient(ellipse at top, var(--bg-accent-color), var(--bg-secondary-color)),
     radial-gradient(ellipse at bottom, var(--bg-secondary-color), var(--bg-secondary-color));
   border: 1px solid var(--border-secondary-color);
   border-radius: 16px;

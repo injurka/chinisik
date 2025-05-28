@@ -25,6 +25,7 @@ const navItems: NavItem[] = [
   { name: 'Тематический словарь', icon: 'mdi:book-open-variant', routeName: RouteNames.ThematicDictionary, routePath: RoutePaths.ThematicDictionary.Sections },
   { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary },
   { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis.Index },
+  { name: 'Перевод комиксов', icon: 'mdi:panorama-variant-outline', routeName: RouteNames.ToonManually, routePath: RoutePaths.Toon.Manually },
   { name: 'Разбор иероглифов', icon: 'mdi:text-box-search', routeName: RouteNames.SplitGlyphs, routePath: RoutePaths.SplitGlyphs },
 ]
 

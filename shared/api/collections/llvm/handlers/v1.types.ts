@@ -1,4 +1,5 @@
 import type {
+  ImageToTextTranslate,
   LlvmLinguisticAnalysis,
   SplitedGlyphs,
   SplitGlyphsType,
@@ -34,8 +35,13 @@ export interface CheckHanziDrawingP {
   targetWord: string
 }
 
+export interface ImageToTextTranslateP {
+  image: File
+}
+
 // Response //
 
+export type ImageToTextTranslateR = ImageToTextTranslate
 export type SplitGlyphsR = SplitedGlyphs
 export type PinyinHieroglyphsR = PinyinHieroglyphs
 export type AnalyzeTextR = LlvmLinguisticAnalysis

@@ -31,7 +31,8 @@ defineProps<Props>()
   --tw-gradient-to: var(--bg-secondary-color);
   --tw-gradient-via-position: 50%;
   --tw-gradient-to-position: 100%;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) var(--tw-gradient-via-position),
+  --tw-gradient-stops:
+    var(--tw-gradient-from), var(--tw-gradient-to) var(--tw-gradient-via-position),
     var(--tw-gradient-to) var(--tw-gradient-to-position);
   background: linear-gradient(to right, var(--tw-gradient-stops));
 

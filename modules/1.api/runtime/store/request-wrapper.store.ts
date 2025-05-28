@@ -41,13 +41,13 @@ const useRequestWrapperStore = defineStore('request', {
       try {
         await (result && !error
           ? onSuccess?.({
-            data: result as Awaited<T>,
-            state: this.$state,
-          })
+              data: result as Awaited<T>,
+              state: this.$state,
+            })
           : onError?.({
-            error: error as IApiError,
-            state: this.$state,
-          }))
+              error: error as IApiError,
+              state: this.$state,
+            }))
       }
       finally {
         this._setLoading(key, result ? 'FULFILLED' : 'REJECTED')
