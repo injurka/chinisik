@@ -19,7 +19,9 @@ definePageMeta({
       </p>
     </div>
 
-    <ToonManual />
+    <client-only>
+      <ToonManual />
+    </client-only>
   </section>
 </template>
 
