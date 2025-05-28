@@ -211,7 +211,7 @@ onMounted(() => {
   .settings {
     position: absolute;
     right: 42px;
-    top: -16px;
+    top: -40px;
     width: 30px;
     height: 30px;
     background-color: var(--bg-tertiary-color);
