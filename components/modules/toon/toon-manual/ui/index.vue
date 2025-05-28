@@ -5,7 +5,7 @@ import ImageUploader from './sections/image-uploader.vue'
 import TranslationResults from './sections/translation-results.vue'
 
 const store = useToonManuallyStore()
-const { uploadedImage, translationResults, selectedArea } = storeToRefs(store)
+const { uploadedImage, translationResults } = storeToRefs(store)
 </script>
 
 <template>

@@ -159,17 +159,17 @@ export function useToonReader(
       ctx.strokeStyle = isSelectedForEditUI
         ? 'rgba(0, 0, 255, 0.9)'
         : (isHovered
-          ? 'rgba(0, 255, 0, 0.7)'
-          : mode.value === 'edit'
-            ? 'rgba(255, 215, 0, 0.6)'
-            : 'transparent')
+            ? 'rgba(0, 255, 0, 0.7)'
+            : mode.value === 'edit'
+              ? 'rgba(255, 215, 0, 0.6)'
+              : 'transparent')
       ctx.fillStyle = isSelectedForEditUI
         ? 'rgba(0, 0, 255, 0.2)'
         : (isHovered
-          ? 'rgba(0, 255, 0, 0.15)'
-          : mode.value === 'edit'
-            ? 'rgba(255, 215, 0, 0.1)'
-            : 'transparent')
+            ? 'rgba(0, 255, 0, 0.15)'
+            : mode.value === 'edit'
+              ? 'rgba(255, 215, 0, 0.1)'
+              : 'transparent')
 
       ctx.lineWidth = (isSelectedForEditUI || isHovered ? 3 : 2) * scaleFactor
 

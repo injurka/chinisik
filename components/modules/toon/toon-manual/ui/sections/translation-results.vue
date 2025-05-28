@@ -24,7 +24,7 @@ function resetSelection() {
 }
 
 async function soundSource() {
-//  TODO
+  // TODO: Реализация воспроизведения звука
 }
 
 function drawPreview() {
@@ -57,6 +57,13 @@ function drawPreview() {
   }
   img.src = uploadedImage.value
 }
+
+// Следим за изменениями selectedArea и перерисовываем превью
+watch([selectedArea, uploadedImage], () => {
+  nextTick(() => {
+    drawPreview()
+  })
+})
 
 onMounted(() => {
   drawPreview()
@@ -142,7 +149,7 @@ onMounted(() => {
               </VBtn>
             </template>
 
-            <TranslationControl v-model="controls" @toggle-control="toggleControl" />
+            <TranslationControl v-model="controls" />
           </VMenu>
         </div>
       </div>

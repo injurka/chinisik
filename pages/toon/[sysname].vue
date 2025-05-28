@@ -1,3 +1,5 @@
+<!-- eslint-disable no-alert -->
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
 import type { HighlightArea, ToonReaderMode } from '~/components/modules/toon/toon-reader'
 import { ToonReader } from '~/components/modules/toon/toon-reader'
@@ -84,27 +86,6 @@ function handleAreaDeleted(payload: { areaId: string }) {
   if (lastCreatedSnippet.value?.area.id === payload.areaId) {
     lastCreatedSnippet.value = null
   }
-}
-
-async function processNewSnippetWithAI() {
-  if (!lastCreatedSnippet.value || !lastCreatedSnippet.value.snippetBase64) {
-    alert('No new snippet available to process.')
-    return
-  }
-  const { area, snippetBase64 } = lastCreatedSnippet.value
-  console.log(`Page: Processing snippet for area ${area.id} with AI...`, snippetBase64?.substring(0, 30))
-  // Имитация запроса к AI
-  alert('Simulating AI processing. Check console for snippet data.')
-  // После получения ответа от AI:
-  // const aiGeneratedText = "Текст от AI для " + area.id;
-  // const areaToUpdate = predefinedAreas.value.find(a => a.id === area.id);
-  // if (areaToUpdate) {
-  //   areaToUpdate.text = aiGeneratedText;
-  //   // Возможно, потребуется "протолкнуть" это обновление в ToonReader,
-  //   // если он не следит за изменениями в predefinedAreas напрямую.
-  //   // Это уже сделано через watch(initialAreas, ...) в composable.
-  // }
-  // lastCreatedSnippet.value = null; // Очищаем после обработки
 }
 
 function toggleMode() {

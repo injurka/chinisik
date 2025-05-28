@@ -84,6 +84,18 @@ function onPaste(event: ClipboardEvent) {
   }
 }
 
+async function loadExampleImage() {
+  store.isLoading = true
+  const response = await fetch('/images/toon-example.jpg')
+  if (!response.ok) {
+    throw new Error('Не удалось загрузить пример изображения')
+  }
+  const blob = await response.blob()
+  const file = new File([blob], 'example-image.jpg', { type: blob.type })
+
+  await handleFiles([file])
+}
+
 onMounted(() => {
   pasteSupported.value = navigator.clipboard && 'read' in navigator.clipboard
   document.addEventListener('paste', onPaste)
@@ -137,6 +149,15 @@ onUnmounted(() => {
         @click="pasteFromClipboard"
       >
         Вставить из буфера
+      </VBtn>
+
+      <VBtn
+        variant="tonal"
+        color="var(--bg-accent-overlay-color)"
+        prepend-icon="mdi-information-outline"
+        @click="loadExampleImage"
+      >
+        <span> Пример </span>
       </VBtn>
     </div>
 
