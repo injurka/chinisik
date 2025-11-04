@@ -5,8 +5,8 @@ export const runtimeCfg: Record<InputConfig, NuxtConfig['runtimeConfig']> = {
   development: {
     public: {
       stand: 'development',
-      staticBaseUrl: 'http://localhost:8080/',
-      apiBaseUrl: 'http://localhost:8080/api/',
+      staticBaseUrl: 'http://localhost:5173/',
+      apiBaseUrl: 'http://localhost:5173/api/',
       apiVerbose: true,
     },
   },

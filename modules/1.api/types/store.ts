@@ -1,8 +1,8 @@
-export type ApiStatus =
-  'NONE' |
-  'PENDING' |
-  'FULFILLED' |
-  'REJECTED'
+export type ApiStatus
+  = 'NONE'
+    | 'PENDING'
+    | 'FULFILLED'
+    | 'REJECTED'
 
 interface IRequestWrapperState {
   _status: Map<string, ApiStatus>

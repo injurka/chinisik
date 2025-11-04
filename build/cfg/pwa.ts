@@ -47,19 +47,16 @@ const sharedConf: NuxtConfig['pwa'] = {
       label: 'Application',
     }],
   },
-  workbox: {
-    navigateFallback: '/',
-    globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
-    navigateFallbackDenylist: [/^\/api\//],
-  },
   injectManifest: {
     globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
     globIgnores: ['emojis/**', 'manifest**.webmanifest'],
     maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
-  },
-  client: {
-    installPrompt: true,
-    periodicSyncForUpdates: 20,
+    dontCacheBustURLsMatching: /\.\w{8}\./,
+    additionalManifestEntries: [{
+      url: '/',
+      revision: new Date().toString(),
+      // revision: import.meta.env.APP_VERSION || new Date().toString(),
+    }],
   },
 }
 

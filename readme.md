@@ -1,5 +1,7 @@
 # Chinisik (Чайнизик) 🐉
 
+# Chinisik (Чайнизик) 🐉
+
 **Ваше персональное додзё для погружения в мир китайского языка!**
 
 ---
@@ -61,9 +63,9 @@
 Надеюсь, "Чайнизик" окажется полезным и для вас! Если есть идеи или предложения — буду рад обсудить.
 
 ---
+
 ![250529_14h07m16s_screenshot](https://github.com/user-attachments/assets/ef0f09ec-0135-4047-b5aa-3495c5ec236c)
 ![250529_14h10m11s_screenshot](https://github.com/user-attachments/assets/a20e8ed7-7538-4c76-8d95-b24e5e265553)
 ![250529_14h08m30s_screenshot](https://github.com/user-attachments/assets/9d2c41ac-fdb6-4a3a-826c-ea99f9c098b3)
 ![250529_14h06m35s_screenshot](https://github.com/user-attachments/assets/ded8fd4f-cf99-42ed-9171-46acf4c03ffc)
 ![250529_14h07m33s_screenshot](https://github.com/user-attachments/assets/8238c96c-7e74-4d09-b78b-a15530f0ab96)
-

@@ -8,7 +8,7 @@ export default defineNuxtModule({
     name: 'api',
     configKey: 'api',
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '^4.0.0',
     },
   },
   async setup(options, nuxt) {

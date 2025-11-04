@@ -1,0 +1,47 @@
+import { useHieroglyphWordStore } from '~/components/03.domain/hieroglyph-word'
+import { usePinyinTextStore } from '~/components/03.domain/pinyin-text'
+import { useKeysStore } from '~/components/05.modules/keys/store/keys.store'
+
+import { usePinyinStore } from '~/components/05.modules/pinyin/store/pinyin.store'
+
+type ExtractStoreId<T> = T extends { $id: infer U } ? U : never
+
+interface IStoreTypes {
+  request: ReturnType<typeof useRequestWrapperStore>
+  keys: ReturnType<typeof useKeysStore>
+  pinyin: ReturnType<typeof usePinyinStore>
+
+  // * domain components
+  hieroglyphWord: ReturnType<typeof useHieroglyphWordStore>
+  pinyinText: ReturnType<typeof usePinyinTextStore>
+
+  // * global
+  auth: ReturnType<typeof useAuthStore>
+}
+
+type StoreKeys = ExtractStoreId<IStoreTypes[keyof IStoreTypes]>
+
+export const stores: Readonly<{ [K in StoreKeys]: () => IStoreTypes[K] }> = Object.freeze({
+  request: useRequestWrapperStore,
+  keys: useKeysStore,
+  pinyin: usePinyinStore,
+
+  // * domain components
+  hieroglyphWord: useHieroglyphWordStore,
+  pinyinText: usePinyinTextStore,
+
+  // * global
+  auth: useAuthStore,
+
+})
+
+function useStore<T extends StoreKeys>(key: T): Readonly<IStoreTypes[T]>
+function useStore<T extends StoreKeys>(keys: T[]): Readonly<{ [K in T]: IStoreTypes[K]; }>
+function useStore<T extends StoreKeys>(keysOrKey: T[] | T) {
+  if (Array.isArray(keysOrKey))
+    return Object.fromEntries(keysOrKey.map(key => [key, stores[key]()])) as { [K in T]: IStoreTypes[K] }
+
+  return stores[keysOrKey]()
+}
+
+export { useStore }
