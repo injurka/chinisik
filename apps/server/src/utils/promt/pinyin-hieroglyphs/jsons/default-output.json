@@ -1,0 +1,96 @@
+{
+  "sourcePinyin": "man",
+  "tones": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "examples": [
+    {
+      "tone": 1,
+      "hieroglyphs": [
+        {
+          "glyph": "满",
+          "pinyin": "man",
+          "toneType": 1,
+          "toneIndex": 3,
+          "translate": "полный",
+          "transcription": "мэн"
+        },
+        {
+          "glyph": "慢",
+          "pinyin": "man",
+          "toneType": 1,
+          "toneIndex": 4,
+          "translate": "медленный",
+          "transcription": "мэн"
+        }
+      ]
+    },
+    {
+      "tone": 2,
+      "hieroglyphs": [
+        {
+          "glyph": "蛮",
+          "pinyin": "man",
+          "toneType": 2,
+          "toneIndex": 2,
+          "translate": "грубый",
+          "transcription": "мэн"
+        },
+        {
+          "glyph": "瞒",
+          "pinyin": "man",
+          "toneType": 2,
+          "toneIndex": 2,
+          "translate": "скрывать",
+          "transcription": "мэн"
+        }
+      ]
+    },
+    {
+      "tone": 3,
+      "hieroglyphs": [
+        {
+          "glyph": "蔓",
+          "pinyin": "man",
+          "toneType": 3,
+          "toneIndex": 3,
+          "translate": "виться",
+          "transcription": "мэн"
+        },
+        {
+          "glyph": "鳗",
+          "pinyin": "man",
+          "toneType": 3,
+          "toneIndex": 2,
+          "translate": "угорь",
+          "transcription": "мэн"
+        }
+      ]
+    },
+    {
+      "tone": 4,
+      "hieroglyphs": [
+        {
+          "glyph": "漫",
+          "pinyin": "man",
+          "toneType": 4,
+          "toneIndex": 4,
+          "translate": "распространяться",
+          "transcription": "мэн"
+        },
+        {
+          "glyph": "幔",
+          "pinyin": "man",
+          "toneType": 4,
+          "toneIndex": 4,
+          "translate": "занавес",
+          "transcription": "мэн"
+        }
+      ]
+    }
+  ],
+  "count": 2
+}

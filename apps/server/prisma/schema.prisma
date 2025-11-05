@@ -1,0 +1,221 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+//* ==== Models ==================================================================== *//
+
+model User {
+  id         Int      @id @unique @default(autoincrement())
+  email      String?  @unique
+  name       String?
+  password   String?
+  avatarUrl  String?
+
+  githubId   String? @unique
+  googleId   String? @unique
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  UserPermission UserPermission[]
+
+  @@map(name: "user")
+
+  refreshTokens RefreshToken[]
+  LinguisticAnalysisBase LinguisticAnalysisBase[]
+  LinguisticAnalysisError LinguisticAnalysisError[]
+}
+
+model RefreshToken {
+  id           Int      @id @unique @default(autoincrement())
+  token        String   @unique
+  userId       Int
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@map(name: "refresh_tokens")
+}
+
+model UserPermission {
+  id         Int        @id @unique @default(autoincrement())
+  userId     Int
+  permission Permission
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map(name: "user_permission")
+}
+
+model EmailVerificationCode {
+  id    Int    @id @default(autoincrement())
+  email String
+  code  String
+}
+
+model HieroglyphKey {
+  id            Int     @id @default(autoincrement())
+  index         Int
+  glyph         String
+  alternative   String?
+  pinyin        String
+  translate     String
+  transcription String
+  toneType      Int
+  toneIndex     Int
+
+  @@map(name: "hieroglyph_key")
+}
+
+model Cms {
+  id      Int     @id @default(autoincrement())
+  sysname String? @unique
+  value   Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map(name: "cms")
+}
+
+//* ==== LinguisticAnalysis ======================================================== *//
+
+model LinguisticAnalysisBase {
+  id                 Int    @id @unique @default(autoincrement())
+  type               String
+  userId             Int
+  model              String
+  sourceValue        String
+  glyph              String
+  totalTokens        Int
+  generationDuration Int
+  dataType           LinguisticAnalysisDataType
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  jsonAnalysis     LinguisticAnalysisJson?
+  markdownAnalysis LinguisticAnalysisMarkdown?
+
+  @@index([userId])
+  @@map(name: "linguistic_analysis_base")
+}
+
+model LinguisticAnalysisJson {
+  id                 Int    @id @unique
+  data               Json
+
+  base               LinguisticAnalysisBase @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map(name: "linguistic_analysis_json")
+}
+
+model LinguisticAnalysisMarkdown {
+  id                 Int    @id @unique
+  data               String
+
+  base               LinguisticAnalysisBase @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map(name: "linguistic_analysis_markdown")
+}
+
+enum LinguisticAnalysisDataType {
+  Markdown
+  Json
+}
+
+model LinguisticAnalysisError {
+  id             Int    @id @unique @default(autoincrement())
+  userId         Int
+  model          String
+  sourceValue    String
+  error          String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map(name: "linguistic_nalysis_error")
+}
+
+//* ==== HSK ======================================================================= *//
+
+model HieroglyphHsk {
+  id                Int     @id @default(autoincrement())
+  glyph             String
+  traditionalGlyph  String
+  level             Int
+  
+  translation       Json
+  pinyin            Json
+
+  @@map(name: "hieroglyph_hsk")
+}
+
+//* ==== Pinyin ==================================================================== *//
+
+model PinyinFinal {
+  id   Int    @id @default(autoincrement())
+  name String
+  pos  Int
+
+  finalsTones PinyinFinalsTone[]
+
+  @@map(name: "pinyin_final")
+}
+
+model PinyinInitial {
+  id   Int    @id @default(autoincrement())
+  name String
+  pos  Int
+
+  initialsFinals PinyinInitialsFinals[]
+  
+  @@map(name: "pinyin_initial")
+}
+
+model PinyinFinalsTone {
+  id       Int    @id @default(autoincrement())
+  name     String
+  toneType Int // Assuming ToneType is mapped to Int in Prisma
+  finalId  Int
+
+  final          PinyinFinal            @relation(fields: [finalId], references: [id])
+  initialsFinals PinyinInitialsFinals[]
+
+  @@index([finalId])
+  @@map(name: "pinyin_finals_tone")
+}
+
+model PinyinInitialsFinals {
+  id          Int  @id @default(autoincrement())
+  initialId   Int?
+  finalToneId Int
+
+  initial   PinyinInitial?   @relation(fields: [initialId], references: [id])
+  finalTone PinyinFinalsTone @relation(fields: [finalToneId], references: [id])
+
+  @@index([finalToneId])
+  @@index([initialId])
+  @@map(name: "pinyin_initial_finals")
+}
+
+
+//* ==== Enums ==================================================================== *//
+
+enum Permission {
+  AiGenerate
+}

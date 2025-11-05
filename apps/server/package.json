@@ -1,0 +1,70 @@
+{
+  "name": "@injurka/chinisik-server",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "bun@1.3.1",
+  "author": {
+    "name": "Ivan Kornilov",
+    "email": "injurka@gmail.com"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/main.js",
+      "require": "./dist/main.cjs"
+    }
+  },
+  "main": "./dist/main.js",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "bun": ">=1.2.0"
+  },
+  "scripts": {
+    "dev": "bun --hot src/main.ts",
+    "-----------------------------------------------------------------------------------------------------------": "",
+    "build": "bunx --bun tsup --config build/build-server.ts",
+    "start": "bun --bun run dist/main.js",
+    "------------------------------------------------------------------------------------------------------------": "",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "--------------------------------------------------------------------------------------------------------------": "",
+    "prisma:migrate": "prisma migrate dev --skip-seed",
+    "prisma:format": "prisma format",
+    "prisma:generate": "prisma generate",
+    "prisma:generate:watch": "prisma generate --watch",
+    "prisma:seed": "prisma db seed",
+    "prisma:studio": "prisma studio",
+    "prisma:reset": "prisma migrate reset"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@hono/swagger-ui": "^0.5.2",
+    "@hono/zod-openapi": "^1.1.4",
+    "@prisma/client": "^6.18.0",
+    "hono": "^4.10.4",
+    "openai": "^6.8.1",
+    "prisma": "^6.18.0",
+    "prom-client": "^15.1.3",
+    "resend": "^6.4.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.2.0",
+    "@types/bun": "latest",
+    "bun": "^1.1.42",
+    "eslint": "^9.39.1",
+    "eslint-plugin-format": "^1.0.2",
+    "jiti": "^2.6.1",
+    "tsup": "^8.5.0"
+  },
+  "prisma": {
+    "seed": "bun run prisma/seed.ts"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}

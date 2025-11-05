@@ -1,22 +1,20 @@
 # Logs
-.env
-.nuxt
-.output
 logs
 *.log
 npm-debug.log*
-html
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 node_modules
 dist
 dist-ssr
 *.local
-auto-imports.d.ts
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-!.vscode/settings.json
 .idea
 .DS_Store
 *.suo
@@ -24,19 +22,6 @@ auto-imports.d.ts
 *.njsproj
 *.sln
 *.sw?
-
-# pnpm
-pnpm-debug.log*
-
-
-# Vitest coverage
-coverage/
-
-# Special File
-.npmrc
-.vitestcache
-.eslintcache
-e2e-**
-playwright/.auth/**
-stats.html
-**tsbuildinfo**
+.env
+src_prompt.md
+project_prompt.md

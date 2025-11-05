@@ -1,0 +1,646 @@
+[
+  {
+    "sysname": "vidy-chaya-kitaya",
+    "title": "Виды чая Китая",
+    "type": "directory",
+    "children": [
+      {
+        "sysname": "zelenyy",
+        "title": "1. Зеленый",
+        "type": "directory",
+        "children": [
+          {
+            "sysname": "sorta-vysushennyy-nad-ognem-huncin-chaya",
+            "title": "Сорта Высушенный над огнем (Хунцин) чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "lyuan-guapyany-tykvennye-semechki-iz-lyuanya",
+                "title": "Люань Гуапянь (Тыквенные семечки из Люаня)",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-vysushennyy-nad-ognem-huncin-chaya",
+                "title": "Сорта Высушенный над огнем (Хунцин) чая",
+                "type": "file"
+              },
+              {
+                "sysname": "huanshan-maofen-vorsistye-piki-s-gory-huanshan",
+                "title": "Хуаншань Маофэн (Ворсистые пики с горы Хуаншань)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "sorta-vysushennyy-na-solnce-shaycin-chaya",
+            "title": "Сорта Высушенный на солнце (Шайцин) чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "dyancin",
+                "title": "Дяньцин",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-vysushennyy-na-solnce-shaycin-chaya",
+                "title": "Сорта Высушенный на солнце (Шайцин) чая",
+                "type": "file"
+              },
+              {
+                "sysname": "chuanqin",
+                "title": "Чуаньцин",
+                "type": "file"
+              },
+              {
+                "sysname": "shanqin",
+                "title": "Шаньцин",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "sorta-zharenogo-chaoqin-chaya",
+            "title": "Сорта Жареного (Чаоцин) чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "bi-lo-chun-izumrudnye-spirali-vesny",
+                "title": "Би Ло Чунь (Изумрудные спирали весны)",
+                "type": "file"
+              },
+              {
+                "sysname": "zhichzhao-lyuycha-zelenyy-chay-iz-zhichzhao",
+                "title": "Жичжао Люйча (Зеленый чай из Жичжао)",
+                "type": "file"
+              },
+              {
+                "sysname": "meycha-slivovyy-chay",
+                "title": "Мейча (Сливовый чай)",
+                "type": "file"
+              },
+              {
+                "sysname": "mendian-ganlu-sladkaya-rosa-mendina",
+                "title": "Мэндин Ганьлу (Сладкая роса Мэндина)",
+                "type": "file"
+              },
+              {
+                "sysname": "sinyan-maoczian-vorsistye-konchiki-iz-sinyana",
+                "title": "Синьян Маоцзянь (Ворсистые кончики из Синьяна)",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-zharenogo-chaoqin-chaya",
+                "title": "Сорта жареного (Чаоцин) чая",
+                "type": "file"
+              },
+              {
+                "sysname": "suhi-lunczin-kolodec-drakona",
+                "title": "Сухи Лунцзин (Колодец Дракона)",
+                "type": "file"
+              },
+              {
+                "sysname": "zhucha-ganpauder",
+                "title": "Чжуча (Ганпаудер)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "sorta-obrabotannyy-parom-chzhencin-chaya",
+            "title": "Сорта Обработанный паром (Чженцин) чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "gyokuro-zhemchuzhnaya-rosa",
+                "title": "Гёкуро (Жемчужная роса)",
+                "type": "file"
+              },
+              {
+                "sysname": "sencha",
+                "title": "Сенча",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-obrabotannyy-parom-chzhencin-chaya",
+                "title": "Сорта Обработанный паром (Чженцин) чая",
+                "type": "file"
+              },
+              {
+                "sysname": "emey-shifen-pik-desyati-budd-s-emey",
+                "title": "Эмэй Шифэн (Пик десяти будд с Эмэй)",
+                "type": "file"
+              },
+              {
+                "sysname": "yylu-nefritovaya-rosa",
+                "title": "Юйлу (Нефритовая роса)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "zelenyy-chay",
+            "title": "Зеленый чай",
+            "type": "file"
+          },
+          {
+            "sysname": "klassifikatsiya-zelenogo-chaya",
+            "title": "Классификация Зеленого чая",
+            "type": "file"
+          },
+          {
+            "sysname": "tehnika-polucheniya-zelenogo-chaya",
+            "title": "Техника получения Зеленого чая",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "sysname": "belyy",
+        "title": "2. Белый",
+        "type": "directory",
+        "children": [
+          {
+            "sysname": "sorta-belogo-chaya",
+            "title": "Сорта Белого чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "bay-mu-dan-belyy-pion",
+                "title": "Бай Му Дань (Белый пион)",
+                "type": "file"
+              },
+              {
+                "sysname": "bay-hao-in-chzhen-serebryanye-igly-s-belym-vorsom",
+                "title": "Бай Хао Инь Чжэнь (Серебряные иглы с белым ворсом)",
+                "type": "file"
+              },
+              {
+                "sysname": "gun-mey-dan-podnosheniya",
+                "title": "Гун Мэй (Дань подношения)",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-belogo-chaya",
+                "title": "Сорта Белого чая",
+                "type": "file"
+              },
+              {
+                "sysname": "shou-mey-brovi-dolgoletiya",
+                "title": "Шоу Мэй (Брови долголетия)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "belyy-chay",
+            "title": "Белый чай",
+            "type": "file"
+          },
+          {
+            "sysname": "istoriya-poyavleniya-belogo-chaya",
+            "title": "История появления Белого чая",
+            "type": "file"
+          },
+          {
+            "sysname": "klassifikatsiya-belogo-chaya",
+            "title": "Классификация Белого чая",
+            "type": "file"
+          },
+          {
+            "sysname": "tehnologiya-proizvodstva-belogo-chaya",
+            "title": "Технология производства Белого чая",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "sysname": "zheltyy",
+        "title": "3. Желтый",
+        "type": "directory",
+        "children": [
+          {
+            "sysname": "sorta-zheltogo-chaya",
+            "title": "Сорта Желтого чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "man-din-huan-ya-zheltye-pochki-s-gory-mendian",
+                "title": "Мэн Дин Хуан Я (Желтые почки с горы Мэндин)",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-zheltogo-chaya",
+                "title": "Сорта Желтого чая",
+                "type": "file"
+              },
+              {
+                "sysname": "ho-shan-huan-ya-zheltye-pochki-s-gory-hoshan",
+                "title": "Хо Шань Хуан Я (Желтые почки с горы Хошань)",
+                "type": "file"
+              },
+              {
+                "sysname": "czyun-shan-in-chzhen-serebryanye-igly-s-gory-czyun",
+                "title": "Цзюнь Шань Инь Чжэнь (Серебряные иглы с горы Цзюнь)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "zheltyy-chay",
+            "title": "Желтый чай",
+            "type": "file"
+          },
+          {
+            "sysname": "istoriya-poyavleniya-zheltogo-chaya",
+            "title": "История появления Желтого чая",
+            "type": "file"
+          },
+          {
+            "sysname": "klassifikatsiya-zheltogo-chaya",
+            "title": "Классификация Желтого чая",
+            "type": "file"
+          },
+          {
+            "sysname": "tehnologiya-proizvodstva-zheltogo-chaya",
+            "title": "Технология производства Желтого чая",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "sysname": "ulun",
+        "title": "4. Улун",
+        "type": "directory",
+        "children": [
+          {
+            "sysname": "sorta-ulun-chaya",
+            "title": "Сорта Улун чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "ansi-te-guan-in-zheleznaya-boginya-miloserdiya",
+                "title": "Аньси Те Гуань Инь (Железная Богиня Милосердия)",
+                "type": "file"
+              },
+              {
+                "sysname": "da-hun-pao-bolshoy-krasnyy-halat",
+                "title": "Да Хун Пао (Большой Красный Халат)",
+                "type": "file"
+              },
+              {
+                "sysname": "dunan-mayzhen-vostochnaya-krasavica",
+                "title": "Дунфан Мэйжень (Восточная Красавица)",
+                "type": "file"
+              },
+              {
+                "sysname": "mi-lan-syan-medovaya-orhideya",
+                "title": "Ми Лань Сян (Медовая орхидея)",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-ulun-chaya",
+                "title": "Сорта Улун чая",
+                "type": "file"
+              },
+              {
+                "sysname": "ui-shuy-syan-narciss-s-gor-ui",
+                "title": "Уи Шуй Сянь (Нарцисс с гор Уи)",
+                "type": "file"
+              },
+              {
+                "sysname": "fenhuan-dancun-odinokie-kusty-s-feniksovyh-gor",
+                "title": "Фэнхуан Даньцун (Одинокие Кусты с Фениксовых Гор)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "istoriya-poyavleniya-chaya-ulun",
+            "title": "История появления чая Улун",
+            "type": "file"
+          },
+          {
+            "sysname": "klassifikatsiya-ulunov",
+            "title": "Классификация улунов",
+            "type": "file"
+          },
+          {
+            "sysname": "tehnologiya-proizvodstva-chaya-ulun",
+            "title": "Технология производства чая Улун",
+            "type": "file"
+          },
+          {
+            "sysname": "ulun",
+            "title": "Улун",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "sysname": "krasnyy",
+        "title": "5. Красный",
+        "type": "directory",
+        "children": [
+          {
+            "sysname": "sorta-krasnogo-chaya",
+            "title": "Сорта Красного чая",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "bay-lin-gun-fu",
+                "title": "Бай Линь Гун Фу",
+                "type": "file"
+              },
+              {
+                "sysname": "dyan-hun-yunnanskiy-krasnyy",
+                "title": "Дянь Хун (Юньнаньский красный)",
+                "type": "file"
+              },
+              {
+                "sysname": "i-hun-mao-fen-krasnye-vorsistye-piki-iz-iyan",
+                "title": "И Хун Мао Фэн (Красные ворсистые пики из Иян)",
+                "type": "file"
+              },
+              {
+                "sysname": "sorta-krasnogo-chaya",
+                "title": "Сорта Красного чая",
+                "type": "file"
+              },
+              {
+                "sysname": "czin-czyun-may-zolotye-brovi",
+                "title": "Цзинь Цзюнь Мэй (Золотые брови)",
+                "type": "file"
+              },
+              {
+                "sysname": "cimen-hun-cha-krasnyy-chay-iz-cimen",
+                "title": "Цимэнь Хун Ча (Красный чай из Цимэнь)",
+                "type": "file"
+              },
+              {
+                "sysname": "chzhen-shan-syao-chzhun-lapsang-sushong",
+                "title": "Чжэн Шань Сяо Чжун (Лапсанг Сушонг)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "istoriya-poyavleniya-krasnogo-chaya",
+            "title": "История появления Красного чая",
+            "type": "file"
+          },
+          {
+            "sysname": "klassifikatsiya-krasnogo-chaya",
+            "title": "Классификация Красного чая",
+            "type": "file"
+          },
+          {
+            "sysname": "krasnyy-chay",
+            "title": "Красный чай",
+            "type": "file"
+          },
+          {
+            "sysname": "tehnologiya-proizvodstva-krasnogo-chaya",
+            "title": "Технология производства Красного чая",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "sysname": "chernyy-puer",
+        "title": "6. Черный (Пуэр)",
+        "type": "directory",
+        "children": [
+          {
+            "sysname": "znamenitye-sorta-puera",
+            "title": "Знаменитые сорта Пуэра",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "raznica-processa-proizvodstva-shu-puera-ot-shen-puera",
+                "title": "Разница процесса производства Шу Пуэра от Шен Пуэра",
+                "type": "file"
+              },
+              {
+                "sysname": "shu-puer-gotovyy-puer",
+                "title": "Шу Пуэр (Готовый Пуэр)",
+                "type": "file"
+              },
+              {
+                "sysname": "shen-puer-syroy-puer",
+                "title": "Шэн Пуэр (Сырой Пуэр)",
+                "type": "file"
+              },
+              {
+                "sysname": "znamenitye-sorta-puera",
+                "title": "Знаменитые сорта Пуэра",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "formy-pressovki-puera",
+            "title": "Формы прессовки пуэра",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "bin-cha-blin",
+                "title": "Бин Ча (Блин)",
+                "type": "file"
+              },
+              {
+                "sysname": "may-hua-cha-cvetok-slivy",
+                "title": "Мэй Хуа Ча (Цветок сливы)",
+                "type": "file"
+              },
+              {
+                "sysname": "tocha-gnezdo",
+                "title": "Точа (Гнездо)",
+                "type": "file"
+              },
+              {
+                "sysname": "formy-pressovki-puera",
+                "title": "Формы прессовки пуэра",
+                "type": "file"
+              },
+              {
+                "sysname": "czin-cha-grib",
+                "title": "Цзинь Ча (Гриб)",
+                "type": "file"
+              },
+              {
+                "sysname": "chzhuan-cha-kirpich",
+                "title": "Чжуань Ча (Кирпич)",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "istoriya-poyavleniya-chaya-puer",
+            "title": "История появления чая Пуэр",
+            "type": "file"
+          },
+          {
+            "sysname": "puer",
+            "title": "Пуэр",
+            "type": "file"
+          },
+          {
+            "sysname": "tehnologiya-proizvodstva-chaya-puer",
+            "title": "Технология производства чая Пуэр",
+            "type": "file"
+          },
+          {
+            "sysname": "tipy-puer-chaya",
+            "title": "Типы Пуэр чая",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "sysname": "vidy-chaya",
+        "title": "Виды чая",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "sysname": "istoricheskie-traktaty",
+    "title": "Исторические трактаты",
+    "type": "directory",
+    "children": [
+      {
+        "sysname": "da-guan-cha-lun-cai-san",
+        "title": "Да Гуань Ча Лунь (蔡襄)",
+        "type": "file"
+      },
+      {
+        "sysname": "istoricheskie-traktaty",
+        "title": "Исторические трактаты",
+        "type": "file"
+      },
+      {
+        "sysname": "cha-czin-ly-yu",
+        "title": "Ча Цзин (陆羽)",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "sysname": "regiony-proizvodstva",
+    "title": "Регионы производства",
+    "type": "directory",
+    "children": [
+      {
+        "sysname": "anhoy-ci-man-hun-cha",
+        "title": "Аньхой (Ци Мэнь Хун Ча)",
+        "type": "file"
+      },
+      {
+        "sysname": "tayvan-vysokogornye-uluny",
+        "title": "Тайвань (Высокогорные улуны)",
+        "type": "file"
+      },
+      {
+        "sysname": "fuczyan-uluny-i-belyy-chay",
+        "title": "Фуцзянь (Улуны и Белый чай)",
+        "type": "file"
+      },
+      {
+        "sysname": "hunan-czyun-shan-in-chzhen",
+        "title": "Хунань (Цзюнь Шань Инь Чжэнь)",
+        "type": "file"
+      },
+      {
+        "sysname": "chzhczyan-lunczin",
+        "title": "Чжэцзян (Лунцзин)",
+        "type": "file"
+      },
+      {
+        "sysname": "yunnany-puer",
+        "title": "Юньнань (Пуэр)",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "sysname": "chaynaya-ceremoniya",
+    "title": "Чайная церемония",
+    "type": "directory",
+    "children": [
+      {
+        "sysname": "chaynye-instrumenty",
+        "title": "Чайные инструменты",
+        "type": "directory",
+        "children": [
+          {
+            "sysname": "chayniki",
+            "title": "Чайники",
+            "type": "directory",
+            "children": [
+              {
+                "sysname": "isinskie-chayniki",
+                "title": "Исинские чайники",
+                "type": "file"
+              },
+              {
+                "sysname": "steklyannye-chayniki",
+                "title": "Стеклянные чайники",
+                "type": "file"
+              },
+              {
+                "sysname": "farforovye-chayniki",
+                "title": "Фарфоровые чайники",
+                "type": "file"
+              },
+              {
+                "sysname": "chayniki",
+                "title": "Чайники",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "sysname": "gayvan-chasha-s-kryshkoy",
+            "title": "Гайвань (Чаша с крышкой)",
+            "type": "file"
+          },
+          {
+            "sysname": "chaynye-instrumenty",
+            "title": "Чайные инструменты",
+            "type": "file"
+          },
+          {
+            "sysname": "chahay-more-chaya",
+            "title": "Чахай (Море чая)",
+            "type": "file"
+          },
+          {
+            "sysname": "chahe-chaynaya-korobochka",
+            "title": "Чахэ (Чайная коробочка)",
+            "type": "file"
+          },
+          {
+            "sysname": "chaczi-chaynoe-polotence",
+            "title": "Чацзи (Чайное полотенце)",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "sysname": "gunfu-cha-i-pincha-iskusstvo-chaepitiya",
+        "title": "Гунфу Ча и Пинча (Искусство чаепития)",
+        "type": "file"
+      },
+      {
+        "sysname": "chaynaya-ceremoniya",
+        "title": "Чайная церемония",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "sysname": "mehanizmy-formirovaniya-aromata-chaya",
+    "title": "Механизмы формирования аромата чая",
+    "type": "file"
+  }
+]

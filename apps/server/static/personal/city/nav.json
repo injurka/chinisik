@@ -1,0 +1,74 @@
+[
+  {
+    "sysname": "shanghai",
+    "title": "Shanghai",
+    "type": "directory",
+    "children": [
+      {
+        "sysname": "10-maya",
+        "title": "Начало пути",
+        "type": "file"
+      },
+      {
+        "sysname": "11-maya",
+        "title": "Привет Шанхай (Waitan))",
+        "type": "file"
+      },
+      {
+        "sysname": "12-maya",
+        "title": "Ура небоскребам (Pudong)",
+        "type": "file"
+      },
+      {
+        "sysname": "13-maya",
+        "title": "Сады, Храмы и Чаи",
+        "type": "file"
+      },
+      {
+        "sysname": "14-maya",
+        "title": "Древний город (Zhujiajiao Water Town)",
+        "type": "file"
+      },
+      {
+        "sysname": "15-maya",
+        "title": "Искусство и Архитектура",
+        "type": "file"
+      },
+      {
+        "sysname": "16-maya",
+        "title": "Гимн Спокойствию (Suzhou)",
+        "type": "file"
+      },
+      {
+        "sysname": "17-maya",
+        "title": "Коммерческий мир",
+        "type": "file"
+      },
+      {
+        "sysname": "19-maya",
+        "title": "Приход в чувства",
+        "type": "file"
+      },
+      {
+        "sysname": "20-maya",
+        "title": "Шоппинг и Развлечения",
+        "type": "file"
+      },
+      {
+        "sysname": "21-maya",
+        "title": "Небесный Рай (Hangzhou)",
+        "type": "file"
+      },
+      {
+        "sysname": "22-maya",
+        "title": "Побег",
+        "type": "file"
+      },
+      {
+        "sysname": "23-maya",
+        "title": "На распутье (Урумчи)",
+        "type": "file"
+      }
+    ]
+  }
+]
