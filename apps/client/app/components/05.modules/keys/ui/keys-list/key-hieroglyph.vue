@@ -2,7 +2,7 @@
 import type { ControlHieroglyphKey } from '../../store/keys.store'
 import { useElementVisibility } from '@vueuse/core'
 import { PinyinText } from '~/components/03.domain/pinyin-text'
-import { cancelSpeech, initSpeechSynthesis, voiceTheText } from '~/shared/lib'
+import { analyzePinyin, cancelSpeech, initSpeechSynthesis, voiceTheText } from '~/shared/lib'
 
 interface Props {
   control: ControlHieroglyphKey
@@ -15,57 +15,44 @@ const emits = defineEmits<{ onExpand: [HieroglyphKey] }>()
 const contentEl = ref<HTMLElement | null>(null)
 const isElementVisible = useElementVisibility(contentEl)
 
-const isToneCalculated = ref<boolean>(false)
 const isFullyShowed = ref<boolean>(false)
 const isSpeaking = ref<boolean>(false)
 
 const shouldShowPinyin = computed<boolean>(() => props.control.isPinyin || isFullyShowed.value)
 const shouldShowTranslate = computed<boolean>(() => props.control.isTranslate || isFullyShowed.value)
 
-/**
- * Обработчик клика по кнопке озвучивания.
- * Предотвращает всплытие события, чтобы не триггерить @click на родительском элементе.
- */
+const pinyinData = computed(() => {
+  if (!props.hieroglyph.pinyin)
+    return null
+
+  const analysis = analyzePinyin(props.hieroglyph.pinyin)
+
+  return analysis[0]
+})
+
 function handleVoiceClick() {
-  if (isSpeaking.value) {
-    cancelSpeech(() => { isSpeaking.value = false })
-  }
-  else {
-    // Иначе, запускаем озвучивание иероглифа
-    voiceTheText(
-      props.hieroglyph.glyph,
-      () => { isSpeaking.value = true }, // onStart
-      () => { isSpeaking.value = false }, // onEnd
-    )
-  }
+  isSpeaking.value
+    ? cancelSpeech(() => { isSpeaking.value = false })
+    : voiceTheText(
+        props.hieroglyph.glyph,
+        () => { isSpeaking.value = true },
+        () => { isSpeaking.value = false },
+      )
 }
 
 watch(
   () => [props.control.isPinyin, props.control.isTranslate],
-  () => isFullyShowed.value = false,
-)
-
-watch(
-  () => [
-    props.control.isPinyin,
-    isFullyShowed.value,
-    isElementVisible.value,
-  ],
   () => {
-    if (!shouldShowPinyin.value || !isElementVisible.value)
-      return
-
-    isToneCalculated.value = true
+    isFullyShowed.value = false
   },
 )
 
-onMounted(() => {
-  initSpeechSynthesis()
-})
+onMounted(() => initSpeechSynthesis())
 
 onUnmounted(() => {
-  if (isSpeaking.value)
+  if (isSpeaking.value) {
     cancelSpeech(() => { isSpeaking.value = false })
+  }
 })
 </script>
 
@@ -75,13 +62,14 @@ onUnmounted(() => {
       <div class="item-index">
         {{ hieroglyph.index }}
       </div>
+
       <Transition name="slide-up">
-        <div v-if="shouldShowPinyin && isToneCalculated" class="item-pinyin">
+        <div v-if="shouldShowPinyin && isElementVisible && pinyinData" class="item-pinyin">
           <PinyinText
-            :pinyin="hieroglyph.pinyin"
+            :pinyin="pinyinData.rawPinyin"
             :tone="{
-              index: hieroglyph.toneIndex,
-              type: hieroglyph.toneType,
+              index: pinyinData.position,
+              type: pinyinData.toneNumber as ToneType,
             }"
           />
           <div
@@ -92,16 +80,20 @@ onUnmounted(() => {
           </div>
         </div>
       </Transition>
+
       <div class="item-hieroglyph">
-        {{ hieroglyph.glyph }}
+        <span class="main-glyph">{{ hieroglyph.glyph }}</span>
+        <span v-if="hieroglyph.alternative" class="alternative-glyph">
+          {{ hieroglyph.alternative }}
+        </span>
       </div>
+
       <Transition name="slide-down">
         <div v-if="shouldShowTranslate" class="item-translate">
           {{ hieroglyph.translate }}
         </div>
       </Transition>
 
-      <!-- Контейнер для кнопок действий -->
       <div v-if="isElementVisible" class="item-actions">
         <div
           class="action-btn item-voice"
@@ -161,36 +153,27 @@ onUnmounted(() => {
 
   .item {
     overflow: hidden;
-
     background-color: var(--bg-secondary-color);
     border: 1px solid var(--border-secondary-color);
     border-radius: 10px;
     padding: 5px;
-
     height: 100%;
     width: 100%;
-
     display: grid;
     grid-template-rows: 1.5fr 2fr 1.5fr;
     grid-template-areas:
       'pinyin'
       'hieroglyph'
       'translate';
-
     text-align: center;
-    overflow: hidden;
-
     box-shadow: 0 0 5px var(--bg-overlay-primary-color);
 
     &:hover {
       box-shadow: 0 0 5px var(--bg-overlay-secondary-color);
       transition: box-shadow 0.2s ease-in-out;
-    }
 
-    &:hover {
       .item-index,
       .action-btn {
-        // Обновленный селектор для ховера
         opacity: 1;
         color: var(--fg-primary-color);
         transition: all 0.2s ease-in-out;
@@ -222,9 +205,23 @@ onUnmounted(() => {
       grid-area: hieroglyph;
       font-family: var(--font-family-cn);
       font-size: 2rem;
+      position: relative;
 
       @include tablet() {
         font-size: 3rem;
+      }
+
+      .alternative-glyph {
+        position: absolute;
+        top: 70%;
+        left: calc(50% + 30px);
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: var(--fg-secondary-color);
+        background-color: var(--bg-tertiary-color);
+        border-radius: 4px;
+        padding: 0 8px;
+        opacity: 0.8;
       }
     }
 
@@ -249,6 +246,7 @@ onUnmounted(() => {
       border: 1px solid var(--border-secondary-color);
       border-radius: 50%;
       color: var(--fg-secondary-color);
+      z-index: 10;
 
       @include mobile {
         top: -3px;
@@ -260,17 +258,15 @@ onUnmounted(() => {
       }
     }
 
-    // Новый контейнер для кнопок
     &-actions {
       position: absolute;
       bottom: -4px;
       right: -4px;
       display: flex;
       gap: 4px;
-      z-index: 5; // Убедимся, что кнопки поверх всего
+      z-index: 5;
     }
 
-    // Общий класс для кнопок действий
     .action-btn {
       display: inline-flex;
       align-items: center;

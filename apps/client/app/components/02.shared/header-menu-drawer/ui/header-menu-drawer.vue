@@ -148,7 +148,7 @@ function navigateTo(path: string) {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60px;
+    height: 56px;
     padding: 0 16px;
     border-bottom: 1px solid var(--border-primary-color);
     flex-shrink: 0;

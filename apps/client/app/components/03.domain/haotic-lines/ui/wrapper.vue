@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
   viewportEl: null,
 })
 
-const isShowed = ref<boolean>(false)
+const isShowed = ref<boolean>(true)
 </script>
 
 <template>

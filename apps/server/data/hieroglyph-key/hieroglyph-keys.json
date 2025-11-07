@@ -3,2140 +3,1712 @@
     "index": 1,
     "glyph": "一",
     "alternative": null,
-    "pinyin": "yi",
+    "pinyin": "yī",
     "translate": "единица",
-    "transcription": "и",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "и"
   },
   {
     "index": 2,
     "glyph": "丨",
     "alternative": null,
-    "pinyin": "gun",
+    "pinyin": "gǔn",
     "translate": "вертикальная",
-    "transcription": "гунь",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "гунь"
   },
   {
     "index": 3,
     "glyph": "丶",
     "alternative": null,
-    "pinyin": "zhu",
+    "pinyin": "zhǔ",
     "translate": "точка",
-    "transcription": "чжу",
-    "toneType": 3,
-    "toneIndex": 2
+    "transcription": "чжу"
   },
   {
     "index": 4,
     "glyph": "丿",
     "alternative": null,
-    "pinyin": "pie",
+    "pinyin": "piě",
     "translate": "откидная влево",
-    "transcription": "пье",
-    "toneType": 3,
-    "toneIndex": 2
+    "transcription": "пье"
   },
   {
     "index": 5,
     "glyph": "乙",
     "alternative": "乚",
-    "pinyin": "yi",
+    "pinyin": "yǐ",
     "translate": "второй (циклич. знак)",
-    "transcription": "и",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "и"
   },
   {
     "index": 6,
     "glyph": "亅",
     "alternative": null,
-    "pinyin": "jue",
+    "pinyin": "jué",
     "translate": "вертикальная с крюком",
-    "transcription": "цзюэ",
-    "toneType": 2,
-    "toneIndex": 2
+    "transcription": "цзюэ"
   },
   {
     "index": 7,
     "glyph": "二",
     "alternative": null,
-    "pinyin": "er",
+    "pinyin": "èr",
     "translate": "два",
-    "transcription": "эр",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "эр"
   },
   {
     "index": 8,
     "glyph": "亠",
     "alternative": null,
-    "pinyin": "tou",
+    "pinyin": "tóu",
     "translate": "горизонтальная с точкой",
-    "transcription": "тоу",
-    "toneType": 2,
-    "toneIndex": 2
+    "transcription": "тоу"
   },
   {
     "index": 9,
     "glyph": "人",
     "alternative": "亻",
-    "pinyin": "ren",
+    "pinyin": "rén",
     "translate": "человек",
-    "transcription": "жэнь",
-    "toneType": 2,
-    "toneIndex": 2
+    "transcription": "жэнь"
   },
   {
     "index": 10,
     "glyph": "儿",
     "alternative": null,
-    "pinyin": "er",
+    "pinyin": "ér",
     "translate": "идущий человек",
-    "transcription": "эр",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "эр"
   },
   {
     "index": 11,
     "glyph": "入",
     "alternative": null,
-    "pinyin": "ru",
+    "pinyin": "rù",
     "translate": "входить",
-    "transcription": "жу",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "жу"
   },
   {
     "index": 12,
     "glyph": "八",
     "alternative": null,
-    "pinyin": "ba",
+    "pinyin": "bā",
     "translate": "восемь; делить",
-    "transcription": "ба",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ба"
   },
   {
     "index": 13,
     "glyph": "冂",
     "alternative": null,
-    "pinyin": "jiong",
+    "pinyin": "jiōng",
     "translate": "границы",
-    "transcription": "цзюн",
-    "toneType": 1,
-    "toneIndex": 2
+    "transcription": "цзюн"
   },
   {
     "index": 14,
     "glyph": "冖",
     "alternative": null,
-    "pinyin": "mi",
+    "pinyin": "mì",
     "translate": "крышка",
-    "transcription": "ми",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ми"
   },
   {
     "index": 15,
     "glyph": "冫",
     "alternative": null,
-    "pinyin": "bing",
+    "pinyin": "bīng",
     "translate": "лёд",
-    "transcription": "бин",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "бин"
   },
   {
     "index": 16,
     "glyph": "几",
     "alternative": null,
-    "pinyin": "ji",
+    "pinyin": "jī",
     "translate": "столик; несколько",
-    "transcription": "цзи",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "цзи"
   },
   {
     "index": 17,
     "glyph": "凵",
     "alternative": null,
-    "pinyin": "kan",
+    "pinyin": "kǎn",
     "translate": "яма",
-    "transcription": "кан",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "кан"
   },
   {
     "index": 18,
     "glyph": "刀",
     "alternative": "刂",
-    "pinyin": "dao",
+    "pinyin": "dāo",
     "translate": "нож",
-    "transcription": "дао",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "дао"
   },
   {
     "index": 19,
     "glyph": "力",
     "alternative": null,
-    "pinyin": "li",
+    "pinyin": "lì",
     "translate": "сила",
-    "transcription": "ли",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ли"
   },
   {
     "index": 20,
     "glyph": "勹",
     "alternative": null,
-    "pinyin": "bao",
+    "pinyin": "bāo",
     "translate": "обёртывать",
-    "transcription": "бао",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "бао"
   },
   {
     "index": 21,
     "glyph": "匕",
     "alternative": null,
-    "pinyin": "bi",
+    "pinyin": "bǐ",
     "translate": "черпак; кинжал",
-    "transcription": "би",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "би"
   },
   {
     "index": 22,
     "glyph": "匚",
     "alternative": null,
-    "pinyin": "fang",
+    "pinyin": "fāng",
     "translate": "ящик; короб",
-    "transcription": "фан",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "фан"
   },
   {
     "index": 23,
     "glyph": "匸",
     "alternative": null,
-    "pinyin": "xi",
+    "pinyin": "xì",
     "translate": "прятать",
-    "transcription": "си",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "си"
   },
   {
     "index": 24,
     "glyph": "十",
     "alternative": null,
-    "pinyin": "shi",
+    "pinyin": "shí",
     "translate": "десять",
-    "transcription": "ши",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 25,
     "glyph": "卜",
     "alternative": null,
-    "pinyin": "bu",
+    "pinyin": "bǔ",
     "translate": "гадать",
-    "transcription": "бу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "бу"
   },
   {
     "index": 26,
     "glyph": "卩",
     "alternative": "⺋",
-    "pinyin": "jie",
+    "pinyin": "jié",
     "translate": "печать; власть",
-    "transcription": "цзе",
-    "toneType": 2,
-    "toneIndex": 2
+    "transcription": "цзе"
   },
   {
     "index": 27,
     "glyph": "厂",
     "alternative": null,
-    "pinyin": "han",
+    "pinyin": "hǎn",
     "translate": "обрыв; круча",
-    "transcription": "хан",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "хан"
   },
   {
     "index": 28,
     "glyph": "厶",
     "alternative": null,
-    "pinyin": "si",
+    "pinyin": "sī",
     "translate": "частный; личный",
-    "transcription": "си",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "си"
   },
   {
     "index": 29,
     "glyph": "又",
     "alternative": null,
-    "pinyin": "you",
+    "pinyin": "yòu",
     "translate": "правая рука; опять",
-    "transcription": "ю",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ю"
   },
   {
     "index": 30,
     "glyph": "口",
     "alternative": null,
-    "pinyin": "kou",
+    "pinyin": "kǒu",
     "translate": "рот",
-    "transcription": "коу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "коу"
   },
   {
     "index": 31,
     "glyph": "囗",
     "alternative": null,
-    "pinyin": "wei",
+    "pinyin": "wéi",
     "translate": "окружать; ограда",
-    "transcription": "вэй",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "вэй"
   },
   {
     "index": 32,
     "glyph": "土",
     "alternative": null,
-    "pinyin": "tu",
+    "pinyin": "tǔ",
     "translate": "земля",
-    "transcription": "ту",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ту"
   },
   {
     "index": 33,
     "glyph": "士",
     "alternative": null,
-    "pinyin": "shi",
+    "pinyin": "shì",
     "translate": "воин",
-    "transcription": "ши",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 34,
     "glyph": "夂",
     "alternative": null,
-    "pinyin": "zhi",
+    "pinyin": "zhǐ",
     "translate": "шагать вперед; продвигаться",
-    "transcription": "чжи",
-    "toneType": 3,
-    "toneIndex": 2
+    "transcription": "чжи"
   },
   {
     "index": 35,
     "glyph": "夊",
     "alternative": null,
-    "pinyin": "sui",
+    "pinyin": "suī",
     "translate": "медленно идти; волочить ноги",
-    "transcription": "сюй",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "сюй"
   },
   {
     "index": 36,
     "glyph": "夕",
     "alternative": null,
-    "pinyin": "xi",
+    "pinyin": "xī",
     "translate": "вечер",
-    "transcription": "си",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "си"
   },
   {
     "index": 37,
     "glyph": "大",
     "alternative": null,
-    "pinyin": "da",
+    "pinyin": "dà",
     "translate": "большой",
-    "transcription": "да",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "да"
   },
   {
     "index": 38,
     "glyph": "女",
     "alternative": null,
-    "pinyin": "nu",
+    "pinyin": "nǚ",
     "translate": "женщина",
-    "transcription": "ню",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ню"
   },
   {
     "index": 39,
     "glyph": "子",
     "alternative": null,
-    "pinyin": "zi",
+    "pinyin": "zǐ",
     "translate": "ребёнок; сын",
-    "transcription": "цзы",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "цзы"
   },
   {
     "index": 40,
     "glyph": "宀",
     "alternative": null,
-    "pinyin": "mian",
+    "pinyin": "mián",
     "translate": "крыша с точкой; крыша",
-    "transcription": "мянь",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "мянь"
   },
   {
     "index": 41,
     "glyph": "寸",
     "alternative": null,
-    "pinyin": "cun",
+    "pinyin": "cùn",
     "translate": "вершок",
-    "transcription": "цунь",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "цунь"
   },
   {
     "index": 42,
     "glyph": "小",
     "alternative": "⺌",
-    "pinyin": "xiao",
+    "pinyin": "xiǎo",
     "translate": "маленький",
-    "transcription": "сiao",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "сiao"
   },
   {
     "index": 43,
     "glyph": "尢",
     "alternative": "尣",
-    "pinyin": "wang",
+    "pinyin": "wāng",
     "translate": "хромой",
-    "transcription": "ван",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ван"
   },
   {
     "index": 44,
     "glyph": "尸",
     "alternative": null,
-    "pinyin": "shi",
+    "pinyin": "shī",
     "translate": "труп",
-    "transcription": "ши",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 45,
     "glyph": "屮",
     "alternative": null,
-    "pinyin": "che",
+    "pinyin": "chè",
     "translate": "росток",
-    "transcription": "че",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "че"
   },
   {
     "index": 46,
     "glyph": "山",
     "alternative": null,
-    "pinyin": "shan",
+    "pinyin": "shān",
     "translate": "гора",
-    "transcription": "шан",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "шан"
   },
   {
     "index": 47,
     "glyph": "巛",
     "alternative": "川",
-    "pinyin": "chuan",
+    "pinyin": "chuān",
     "translate": "поток; река",
-    "transcription": "чуань",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "чуань"
   },
   {
     "index": 48,
     "glyph": "工",
     "alternative": null,
-    "pinyin": "gong",
+    "pinyin": "gōng",
     "translate": "работа",
-    "transcription": "гон",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "гон"
   },
   {
     "index": 49,
     "glyph": "己",
     "alternative": "已",
-    "pinyin": "ji",
+    "pinyin": "jǐ",
     "translate": "сам",
-    "transcription": "джи",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "джи"
   },
   {
     "index": 50,
     "glyph": "巾",
     "alternative": null,
-    "pinyin": "jin",
+    "pinyin": "jīn",
     "translate": "полотенце; салфетка",
-    "transcription": "джин",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "джин"
   },
   {
     "index": 51,
     "glyph": "干",
     "alternative": null,
-    "pinyin": "gan",
+    "pinyin": "gān",
     "translate": "щит; вмешиваться",
-    "transcription": "ган",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ган"
   },
   {
     "index": 52,
     "glyph": "幺",
     "alternative": null,
-    "pinyin": "yao",
+    "pinyin": "yāo",
     "translate": "незрелый; младший",
-    "transcription": "яо",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "яо"
   },
   {
     "index": 53,
     "glyph": "广",
     "alternative": null,
-    "pinyin": "yan",
+    "pinyin": "yǎn",
     "translate": "навес",
-    "transcription": "ян",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ян"
   },
   {
     "index": 54,
     "glyph": "廴",
     "alternative": null,
-    "pinyin": "yin",
+    "pinyin": "yǐn",
     "translate": "двигаться вперед; тащить",
-    "transcription": "ин",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ин"
   },
   {
     "index": 55,
     "glyph": "廾",
     "alternative": null,
-    "pinyin": "gong",
+    "pinyin": "gǒng",
     "translate": "соединить руки",
-    "transcription": "гон",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "гон"
   },
   {
     "index": 56,
     "glyph": "弋",
     "alternative": null,
-    "pinyin": "yi",
+    "pinyin": "yì",
     "translate": "стрелять из лука",
-    "transcription": "и",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "и"
   },
   {
     "index": 57,
     "glyph": "弓",
     "alternative": null,
-    "pinyin": "gong",
+    "pinyin": "gōng",
     "translate": "лук",
-    "transcription": "гон",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "гон"
   },
   {
     "index": 58,
     "glyph": "彐",
     "alternative": "彑",
-    "pinyin": "ji",
+    "pinyin": "jì",
     "translate": "голова свиньи",
-    "transcription": "цзи",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "цзи"
   },
   {
     "index": 59,
     "glyph": "彡",
     "alternative": null,
-    "pinyin": "shan",
+    "pinyin": "shān",
     "translate": "перья; длинная шерсть",
-    "transcription": "шан",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "шан"
   },
   {
     "index": 60,
     "glyph": "彳",
     "alternative": null,
-    "pinyin": "chi",
+    "pinyin": "chì",
     "translate": "шаг (левой ногой)",
-    "transcription": "чи",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "чи"
   },
   {
     "index": 61,
     "glyph": "心",
     "alternative": "忄",
-    "pinyin": "xin",
+    "pinyin": "xīn",
     "translate": "сердце",
-    "transcription": "син",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "син"
   },
   {
     "index": 62,
     "glyph": "戈",
     "alternative": null,
-    "pinyin": "ge",
+    "pinyin": "gē",
     "translate": "копье; клевец",
-    "transcription": "гэ",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "гэ"
   },
   {
     "index": 63,
     "glyph": "户",
     "alternative": "戸",
-    "pinyin": "hu",
+    "pinyin": "hù",
     "translate": "двор",
-    "transcription": "ху",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ху"
   },
   {
     "index": 64,
     "glyph": "手",
     "alternative": "扌",
-    "pinyin": "shou",
+    "pinyin": "shǒu",
     "translate": "рука",
-    "transcription": "шоу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "шоу"
   },
   {
     "index": 65,
     "glyph": "支",
     "alternative": null,
-    "pinyin": "zhi",
+    "pinyin": "zhī",
     "translate": "ветка",
-    "transcription": "чжи",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "чжи"
   },
   {
     "index": 66,
     "glyph": "攴",
     "alternative": "攵",
-    "pinyin": "pu",
+    "pinyin": "pū",
     "translate": "бить; ударять",
-    "transcription": "пу",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "пу"
   },
   {
     "index": 67,
     "glyph": "文",
     "alternative": null,
-    "pinyin": "wen",
+    "pinyin": "wén",
     "translate": "текст; письмена",
-    "transcription": "вэнь",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "вэнь"
   },
   {
     "index": 68,
     "glyph": "斗",
     "alternative": null,
-    "pinyin": "dou",
+    "pinyin": "dǒu",
     "translate": "ковш; хлебная мерка",
-    "transcription": "доу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "доу"
   },
   {
     "index": 69,
     "glyph": "斤",
     "alternative": null,
-    "pinyin": "jin",
+    "pinyin": "jīn",
     "translate": "топор",
-    "transcription": "цзин",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "цзин"
   },
   {
     "index": 70,
     "glyph": "方",
     "alternative": null,
-    "pinyin": "fang",
+    "pinyin": "fāng",
     "translate": "квадрат; сторона",
-    "transcription": "фан",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "фан"
   },
   {
     "index": 71,
     "glyph": "无",
     "alternative": null,
-    "pinyin": "wu",
+    "pinyin": "wú",
     "translate": "не; без",
-    "transcription": "ву",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ву"
   },
   {
     "index": 72,
     "glyph": "日",
     "alternative": null,
-    "pinyin": "ri",
+    "pinyin": "rì",
     "translate": "солнце",
-    "transcription": "жи",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "жи"
   },
   {
     "index": 73,
     "glyph": "曰",
     "alternative": null,
-    "pinyin": "yue",
+    "pinyin": "yuē",
     "translate": "говорить",
-    "transcription": "юэ",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "юэ"
   },
   {
     "index": 74,
     "glyph": "月",
     "alternative": null,
-    "pinyin": "yue",
+    "pinyin": "yuè",
     "translate": "луна",
-    "transcription": "юэ",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "юэ"
   },
   {
     "index": 75,
     "glyph": "木",
     "alternative": null,
-    "pinyin": "mu",
+    "pinyin": "mù",
     "translate": "дерево",
-    "transcription": "му",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "му"
   },
   {
     "index": 76,
     "glyph": "欠",
     "alternative": null,
-    "pinyin": "qian",
+    "pinyin": "qiàn",
     "translate": "недоставать",
-    "transcription": "цянь",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "цянь"
   },
   {
     "index": 77,
     "glyph": "止",
     "alternative": null,
-    "pinyin": "zhi",
+    "pinyin": "zhǐ",
     "translate": "стопа; останавливаться",
-    "transcription": "чжи",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "чжи"
   },
   {
     "index": 78,
     "glyph": "歹",
     "alternative": "歺",
-    "pinyin": "dai",
+    "pinyin": "dǎi",
     "translate": "злой; плохой",
-    "transcription": "дай",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "дай"
   },
   {
     "index": 79,
     "glyph": "殳",
     "alternative": null,
-    "pinyin": "shu",
+    "pinyin": "shū",
     "translate": "бамбуковая пика",
-    "transcription": "шу",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "шу"
   },
   {
     "index": 80,
     "glyph": "毋",
     "alternative": null,
-    "pinyin": "wu",
+    "pinyin": "wú",
     "translate": "нет; нельзя",
-    "transcription": "ву",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ву"
   },
   {
     "index": 81,
     "glyph": "比",
     "alternative": null,
-    "pinyin": "bi",
+    "pinyin": "bǐ",
     "translate": "сравнивать",
-    "transcription": "би",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "би"
   },
   {
     "index": 82,
     "glyph": "毛",
     "alternative": null,
-    "pinyin": "mao",
+    "pinyin": "máo",
     "translate": "шерсть; волосы",
-    "transcription": "мао",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "мао"
   },
   {
     "index": 83,
     "glyph": "氏",
     "alternative": null,
-    "pinyin": "shi",
+    "pinyin": "shì",
     "translate": "род; клан",
-    "transcription": "ши",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 84,
     "glyph": "气",
     "alternative": null,
-    "pinyin": "qi",
+    "pinyin": "qì",
     "translate": "воздух; газ",
-    "transcription": "ци",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ци"
   },
   {
     "index": 85,
     "glyph": "水",
     "alternative": "氵",
-    "pinyin": "shui",
+    "pinyin": "shuǐ",
     "translate": "вода",
-    "transcription": "шуй",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "шуй"
   },
   {
     "index": 86,
     "glyph": "火",
     "alternative": "灬",
-    "pinyin": "huo",
+    "pinyin": "huǒ",
     "translate": "огонь",
-    "transcription": "хуо",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "хуо"
   },
   {
     "index": 87,
     "glyph": "爪",
     "alternative": "爫",
-    "pinyin": "zhao",
+    "pinyin": "zhǎo",
     "translate": "когти",
-    "transcription": "джао",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "джао"
   },
   {
     "index": 88,
     "glyph": "父",
     "alternative": null,
-    "pinyin": "fu",
+    "pinyin": "fù",
     "translate": "отец",
-    "transcription": "фу",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "фу"
   },
   {
     "index": 89,
     "glyph": "爻",
     "alternative": null,
-    "pinyin": "yao",
+    "pinyin": "yáo",
     "translate": "воздействие; влияние",
-    "transcription": "яо",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "яо"
   },
   {
     "index": 90,
     "glyph": "爿",
     "alternative": "丬",
-    "pinyin": "qiang",
+    "pinyin": "qiáng",
     "translate": "доска; кровать",
-    "transcription": "цян",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "цян"
   },
   {
     "index": 91,
     "glyph": "片",
     "alternative": null,
-    "pinyin": "pian",
+    "pinyin": "piàn",
     "translate": "карточка; щепка",
-    "transcription": "пянь",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "пянь"
   },
   {
     "index": 92,
     "glyph": "牙",
     "alternative": null,
-    "pinyin": "ya",
+    "pinyin": "yá",
     "translate": "зуб",
-    "transcription": "я",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "я"
   },
   {
     "index": 93,
     "glyph": "牛",
     "alternative": "牜",
-    "pinyin": "niu",
+    "pinyin": "niú",
     "translate": "корова; бык",
-    "transcription": "ню",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ню"
   },
   {
     "index": 94,
     "glyph": "犬",
     "alternative": "犭",
-    "pinyin": "quan",
+    "pinyin": "quǎn",
     "translate": "собака",
-    "transcription": "цюань",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "цюань"
   },
   {
     "index": 95,
     "glyph": "玄",
     "alternative": null,
-    "pinyin": "xuan",
+    "pinyin": "xuán",
     "translate": "темный; тайный",
-    "transcription": "сюань",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "сюань"
   },
   {
     "index": 96,
     "glyph": "玉",
     "alternative": "⺩",
-    "pinyin": "yu",
+    "pinyin": "yù",
     "translate": "яшма",
-    "transcription": "ю",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ю"
   },
   {
     "index": 97,
     "glyph": "瓜",
     "alternative": null,
-    "pinyin": "gua",
+    "pinyin": "guā",
     "translate": "дыня; тыква",
-    "transcription": "гуа",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "гуа"
   },
   {
     "index": 98,
     "glyph": "瓦",
     "alternative": null,
-    "pinyin": "wa",
+    "pinyin": "wǎ",
     "translate": "черепица",
-    "transcription": "ва",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ва"
   },
   {
     "index": 99,
     "glyph": "甘",
     "alternative": null,
-    "pinyin": "gan",
+    "pinyin": "gān",
     "translate": "сладкий",
-    "transcription": "ган",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ган"
   },
   {
     "index": 100,
     "glyph": "生",
     "alternative": null,
-    "pinyin": "sheng",
+    "pinyin": "shēng",
     "translate": "рождаться; сырой",
-    "transcription": "шэн",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "шэн"
   },
   {
     "index": 101,
     "glyph": "用",
     "alternative": "甩",
-    "pinyin": "yong",
+    "pinyin": "yòng",
     "translate": "применять; использовать",
-    "transcription": "юн",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "юн"
   },
   {
     "index": 102,
     "glyph": "田",
     "alternative": null,
-    "pinyin": "tian",
+    "pinyin": "tián",
     "translate": "поле",
-    "transcription": "тянь",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "тянь"
   },
   {
     "index": 103,
     "glyph": "疋",
     "alternative": "⺪",
-    "pinyin": "pi",
+    "pinyin": "pǐ",
     "translate": "нога; колено",
-    "transcription": "пи",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "пи"
   },
   {
     "index": 104,
     "glyph": "疒",
     "alternative": null,
-    "pinyin": "chuang",
+    "pinyin": "chuáng",
     "translate": "болезнь",
-    "transcription": "чуан",
-    "toneType": 2,
-    "toneIndex": 2
+    "transcription": "чуан"
   },
   {
     "index": 105,
     "glyph": "癶",
     "alternative": null,
-    "pinyin": "bo",
+    "pinyin": "bō",
     "translate": "ноги врозь",
-    "transcription": "бо",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "бо"
   },
   {
     "index": 106,
     "glyph": "白",
     "alternative": null,
-    "pinyin": "bai",
+    "pinyin": "bái",
     "translate": "белый",
-    "transcription": "бай",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "бай"
   },
   {
     "index": 107,
     "glyph": "皮",
     "alternative": null,
-    "pinyin": "pi",
+    "pinyin": "pí",
     "translate": "кожа; шкура",
-    "transcription": "пи",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "пи"
   },
   {
     "index": 108,
     "glyph": "皿",
     "alternative": null,
-    "pinyin": "min",
+    "pinyin": "mǐn",
     "translate": "блюдо; посуда",
-    "transcription": "мин",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "мин"
   },
   {
     "index": 109,
     "glyph": "目",
     "alternative": null,
-    "pinyin": "mu",
+    "pinyin": "mù",
     "translate": "глаз",
-    "transcription": "му",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "му"
   },
   {
     "index": 110,
     "glyph": "矛",
     "alternative": null,
-    "pinyin": "mao",
+    "pinyin": "máo",
     "translate": "копье",
-    "transcription": "мао",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "мао"
   },
   {
     "index": 111,
     "glyph": "矢",
     "alternative": null,
-    "pinyin": "shi",
+    "pinyin": "shǐ",
     "translate": "стрела",
-    "transcription": "ши",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 112,
     "glyph": "石",
     "alternative": null,
-    "pinyin": "shi",
+    "pinyin": "shí",
     "translate": "камень",
-    "transcription": "ши",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 113,
     "glyph": "示",
     "alternative": "礻",
-    "pinyin": "shi",
+    "pinyin": "shì",
     "translate": "алтарь; демонстрировать",
-    "transcription": "ши",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 114,
     "glyph": "禸",
     "alternative": null,
-    "pinyin": "rou",
+    "pinyin": "róu",
     "translate": "след ,зверя",
-    "transcription": "жоу",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "жоу"
   },
   {
     "index": 115,
     "glyph": "禾",
     "alternative": null,
-    "pinyin": "he",
+    "pinyin": "hé",
     "translate": "хлеб на корню",
-    "transcription": "хэ",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "хэ"
   },
   {
     "index": 116,
     "glyph": "穴",
     "alternative": null,
-    "pinyin": "xue",
+    "pinyin": "xué",
     "translate": "пещера",
-    "transcription": "сюэ",
-    "toneType": 2,
-    "toneIndex": 2
+    "transcription": "сюэ"
   },
   {
     "index": 117,
     "glyph": "立",
     "alternative": null,
-    "pinyin": "li",
+    "pinyin": "lì",
     "translate": "стоять",
-    "transcription": "ли",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ли"
   },
   {
     "index": 118,
     "glyph": "竹",
     "alternative": "⺮",
-    "pinyin": "zhu",
+    "pinyin": "zhú",
     "translate": "бамбук",
-    "transcription": "чжу",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "чжу"
   },
   {
     "index": 119,
     "glyph": "米",
     "alternative": null,
-    "pinyin": "mi",
+    "pinyin": "mǐ",
     "translate": "рис",
-    "transcription": "ми",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ми"
   },
   {
     "index": 120,
     "glyph": "纟",
     "alternative": "糹",
-    "pinyin": "mi",
+    "pinyin": "mì",
     "translate": "нить; шелк",
-    "transcription": "ми",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ми"
   },
   {
     "index": 121,
     "glyph": "缶",
     "alternative": null,
-    "pinyin": "fou",
+    "pinyin": "fǒu",
     "translate": "глиняная посуда; керамика",
-    "transcription": "фоу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "фоу"
   },
   {
     "index": 122,
     "glyph": "网",
     "alternative": "罒",
-    "pinyin": "wang",
+    "pinyin": "wǎng",
     "translate": "сеть",
-    "transcription": "ван",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ван"
   },
   {
     "index": 123,
     "glyph": "羊",
     "alternative": "⺶",
-    "pinyin": "yang",
+    "pinyin": "yáng",
     "translate": "баран",
-    "transcription": "ян",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ян"
   },
   {
     "index": 124,
     "glyph": "羽",
     "alternative": null,
-    "pinyin": "yu",
+    "pinyin": "yǔ",
     "translate": "перья; крылья",
-    "transcription": "ю",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ю"
   },
   {
     "index": 125,
     "glyph": "老",
     "alternative": "耂",
-    "pinyin": "lao",
+    "pinyin": "lǎo",
     "translate": "старый",
-    "transcription": "лао",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "лао"
   },
   {
     "index": 126,
     "glyph": "而",
     "alternative": null,
-    "pinyin": "er",
+    "pinyin": "ér",
     "translate": "а; но",
-    "transcription": "эр",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "эр"
   },
   {
     "index": 127,
     "glyph": "耒",
     "alternative": null,
-    "pinyin": "lei",
+    "pinyin": "lěi",
     "translate": "плуг; соха",
-    "transcription": "лей",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "лей"
   },
   {
     "index": 128,
     "glyph": "耳",
     "alternative": null,
-    "pinyin": "er",
+    "pinyin": "ěr",
     "translate": "ухо",
-    "transcription": "эр",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "эр"
   },
   {
     "index": 129,
     "glyph": "聿",
     "alternative": "⺻",
-    "pinyin": "yu",
+    "pinyin": "yù",
     "translate": "кисть для письма",
-    "transcription": "ю",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ю"
   },
   {
     "index": 130,
     "glyph": "肉",
     "alternative": "⺼",
-    "pinyin": "rou",
+    "pinyin": "ròu",
     "translate": "мясо",
-    "transcription": "жоу",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "жоу"
   },
   {
     "index": 131,
     "glyph": "臣",
     "alternative": null,
-    "pinyin": "chen",
+    "pinyin": "chén",
     "translate": "подданный",
-    "transcription": "чэн",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "чэн"
   },
   {
     "index": 132,
     "glyph": "自",
     "alternative": null,
-    "pinyin": "zi",
+    "pinyin": "zì",
     "translate": "сам; нос",
-    "transcription": "цзы",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "цзы"
   },
   {
     "index": 133,
     "glyph": "至",
     "alternative": null,
-    "pinyin": "zhi",
+    "pinyin": "zhì",
     "translate": "достигать; прибывать",
-    "transcription": "чжи",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "чжи"
   },
   {
     "index": 134,
     "glyph": "臼",
     "alternative": null,
-    "pinyin": "jiu",
+    "pinyin": "jiù",
     "translate": "ступа",
-    "transcription": "цзю",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "цзю"
   },
   {
     "index": 135,
     "glyph": "舌",
     "alternative": null,
-    "pinyin": "she",
+    "pinyin": "shé",
     "translate": "язык",
-    "transcription": "ше",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ше"
   },
   {
     "index": 136,
     "glyph": "舛",
     "alternative": null,
-    "pinyin": "chuan",
+    "pinyin": "chuǎn",
     "translate": "ошибка; неудача",
-    "transcription": "чуань",
-    "toneType": 3,
-    "toneIndex": 2
+    "transcription": "чуань"
   },
   {
     "index": 137,
     "glyph": "舟",
     "alternative": null,
-    "pinyin": "zhou",
+    "pinyin": "zhōu",
     "translate": "лодка; корабль",
-    "transcription": "жоу",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "жоу"
   },
   {
     "index": 138,
     "glyph": "艮",
     "alternative": null,
-    "pinyin": "gen",
+    "pinyin": "gèn",
     "translate": "твердый; крепкий",
-    "transcription": "ген",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ген"
   },
   {
     "index": 139,
     "glyph": "色",
     "alternative": null,
-    "pinyin": "se",
+    "pinyin": "sè",
     "translate": "цвет",
-    "transcription": "се",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "се"
   },
   {
     "index": 140,
     "glyph": "艸",
     "alternative": "艹",
-    "pinyin": "cao",
+    "pinyin": "cǎo",
     "translate": "трава",
-    "transcription": "цао",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "цао"
   },
   {
     "index": 141,
     "glyph": "虍",
     "alternative": null,
-    "pinyin": "hu",
+    "pinyin": "hū",
     "translate": "тигр",
-    "transcription": "ху",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ху"
   },
   {
     "index": 142,
     "glyph": "虫",
     "alternative": null,
-    "pinyin": "chong",
+    "pinyin": "chóng",
     "translate": "насекомое; ядовитая змея",
-    "transcription": "чун",
-    "toneType": 2,
-    "toneIndex": 2
+    "transcription": "чун"
   },
   {
     "index": 143,
     "glyph": "血",
     "alternative": null,
-    "pinyin": "xue",
+    "pinyin": "xuè",
     "translate": "кровь",
-    "transcription": "сюэ",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "сюэ"
   },
   {
     "index": 144,
     "glyph": "行",
     "alternative": null,
-    "pinyin": "xing",
+    "pinyin": "xíng",
     "translate": "идти; ряд",
-    "transcription": "син",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "син"
   },
   {
     "index": 145,
     "glyph": "衣",
     "alternative": "衤",
-    "pinyin": "yi",
+    "pinyin": "yī",
     "translate": "одежда",
-    "transcription": "и",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "и"
   },
   {
     "index": 146,
     "glyph": "襾",
     "alternative": "西",
-    "pinyin": "ya",
+    "pinyin": "yà",
     "translate": "накрывать; крышка",
-    "transcription": "я",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "я"
   },
   {
     "index": 147,
     "glyph": "见",
     "alternative": "見",
-    "pinyin": "jian",
+    "pinyin": "jiàn",
     "translate": "видеть; смотреть",
-    "transcription": "цянь",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "цянь"
   },
   {
     "index": 148,
     "glyph": "角",
     "alternative": null,
-    "pinyin": "jiao",
+    "pinyin": "jiǎo",
     "translate": "рог; угол",
-    "transcription": "цзяо",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "цзяо"
   },
   {
     "index": 149,
     "glyph": "讠",
     "alternative": "訁",
-    "pinyin": "yan",
+    "pinyin": "yán",
     "translate": "речь",
-    "transcription": "ян",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ян"
   },
   {
     "index": 150,
     "glyph": "谷",
     "alternative": null,
-    "pinyin": "gu",
+    "pinyin": "gǔ",
     "translate": "долина",
-    "transcription": "гу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "гу"
   },
   {
     "index": 151,
     "glyph": "豆",
     "alternative": null,
-    "pinyin": "dou",
+    "pinyin": "dòu",
     "translate": "бобы",
-    "transcription": "доу",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "доу"
   },
   {
     "index": 152,
     "glyph": "豕",
     "alternative": null,
-    "pinyin": "shi",
+    "pinyin": "shǐ",
     "translate": "свинья",
-    "transcription": "ши",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 153,
     "glyph": "豸",
     "alternative": null,
-    "pinyin": "zhi",
+    "pinyin": "zhì",
     "translate": "единорог",
-    "transcription": "чжи",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "чжи"
   },
   {
     "index": 154,
     "glyph": "贝",
     "alternative": "貝",
-    "pinyin": "bei",
+    "pinyin": "bèi",
     "translate": "раковина; сокровище",
-    "transcription": "бэй",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "бэй"
   },
   {
     "index": 155,
     "glyph": "赤",
     "alternative": null,
-    "pinyin": "chi",
+    "pinyin": "chì",
     "translate": "красный",
-    "transcription": "чи",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "чи"
   },
   {
     "index": 156,
     "glyph": "走",
     "alternative": "赱",
-    "pinyin": "zou",
+    "pinyin": "zǒu",
     "translate": "ходить; уходить",
-    "transcription": "цоу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "цоу"
   },
   {
     "index": 157,
     "glyph": "足",
     "alternative": "⻊",
-    "pinyin": "zu",
+    "pinyin": "zú",
     "translate": "нога",
-    "transcription": "цу",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "цу"
   },
   {
     "index": 158,
     "glyph": "身",
     "alternative": null,
-    "pinyin": "shen",
+    "pinyin": "shēn",
     "translate": "тело (человека)",
-    "transcription": "шен",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "шен"
   },
   {
     "index": 159,
     "glyph": "车",
     "alternative": "車",
-    "pinyin": "che",
+    "pinyin": "chē",
     "translate": "телега; повозка",
-    "transcription": "чэ",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "чэ"
   },
   {
     "index": 160,
     "glyph": "辛",
     "alternative": null,
-    "pinyin": "xin",
+    "pinyin": "xīn",
     "translate": "горький",
-    "transcription": "син",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "син"
   },
   {
     "index": 161,
     "glyph": "辰",
     "alternative": null,
-    "pinyin": "chen",
+    "pinyin": "chén",
     "translate": "время (циклический знак)",
-    "transcription": "чэн",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "чэн"
   },
   {
     "index": 162,
     "glyph": "辵",
     "alternative": "辶",
-    "pinyin": "chuo",
+    "pinyin": "chuò",
     "translate": "идти быстро",
-    "transcription": "чо",
-    "toneType": 4,
-    "toneIndex": 2
+    "transcription": "чо"
   },
   {
     "index": 163,
     "glyph": "邑",
     "alternative": "阝",
-    "pinyin": "yi",
+    "pinyin": "yì",
     "translate": "город",
-    "transcription": "и",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "и"
   },
   {
     "index": 164,
     "glyph": "酉",
     "alternative": null,
-    "pinyin": "you",
+    "pinyin": "yǒu",
     "translate": "сосуд для вина",
-    "transcription": "ю",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ю"
   },
   {
     "index": 165,
     "glyph": "釆",
     "alternative": null,
-    "pinyin": "bian",
+    "pinyin": "biàn",
     "translate": "различать; сортировать",
-    "transcription": "бянь",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "бянь"
   },
   {
     "index": 166,
     "glyph": "里",
     "alternative": null,
-    "pinyin": "li",
+    "pinyin": "lǐ",
     "translate": "верста; деревня",
-    "transcription": "ли",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ли"
   },
   {
     "index": 167,
     "glyph": "钅",
     "alternative": "釒",
-    "pinyin": "jin",
+    "pinyin": "jīn",
     "translate": "золото; металл",
-    "transcription": "цзин",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "цзин"
   },
   {
     "index": 168,
     "glyph": "长",
     "alternative": "镸",
-    "pinyin": "chang",
+    "pinyin": "cháng",
     "translate": "длинный; старший",
-    "transcription": "чан",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "чан"
   },
   {
     "index": 169,
     "glyph": "门",
     "alternative": "門",
-    "pinyin": "men",
+    "pinyin": "mén",
     "translate": "ворота",
-    "transcription": "мэн",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "мэн"
   },
   {
     "index": 170,
     "glyph": "阜",
     "alternative": "阝",
-    "pinyin": "fu",
+    "pinyin": "fù",
     "translate": "холм",
-    "transcription": "фу",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "фу"
   },
   {
     "index": 171,
     "glyph": "隶",
     "alternative": null,
-    "pinyin": "li",
+    "pinyin": "lì",
     "translate": "достигать; поймать",
-    "transcription": "ли",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ли"
   },
   {
     "index": 172,
     "glyph": "隹",
     "alternative": null,
-    "pinyin": "zhui",
+    "pinyin": "zhuī",
     "translate": "короткохвостая птица",
-    "transcription": "чжуй",
-    "toneType": 1,
-    "toneIndex": 2
+    "transcription": "чжуй"
   },
   {
     "index": 173,
     "glyph": "雨",
     "alternative": null,
-    "pinyin": "yu",
+    "pinyin": "yǔ",
     "translate": "дождь",
-    "transcription": "ю",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ю"
   },
   {
     "index": 174,
     "glyph": "青",
     "alternative": "靑",
-    "pinyin": "qing",
+    "pinyin": "qīng",
     "translate": "синий; зелёный",
-    "transcription": "цин",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "цин"
   },
   {
     "index": 175,
     "glyph": "非",
     "alternative": null,
-    "pinyin": "fei",
+    "pinyin": "fēi",
     "translate": "не быть; отрицать",
-    "transcription": "фэй",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "фэй"
   },
   {
     "index": 176,
     "glyph": "面",
     "alternative": "靣",
-    "pinyin": "mian",
+    "pinyin": "miàn",
     "translate": "лицо",
-    "transcription": "мянь",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "мянь"
   },
   {
     "index": 177,
     "glyph": "革",
     "alternative": null,
-    "pinyin": "ge",
+    "pinyin": "gé",
     "translate": "сырая кожа",
-    "transcription": "гэ",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "гэ"
   },
   {
     "index": 178,
     "glyph": "韦",
     "alternative": "韋",
-    "pinyin": "wei",
+    "pinyin": "wéi",
     "translate": "выделанная кожа",
-    "transcription": "вэй",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "вэй"
   },
   {
     "index": 179,
     "glyph": "韭",
     "alternative": null,
-    "pinyin": "jiu",
+    "pinyin": "jiǔ",
     "translate": "дикий чеснок",
-    "transcription": "цзю",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "цзю"
   },
   {
     "index": 180,
     "glyph": "音",
     "alternative": null,
-    "pinyin": "yin",
+    "pinyin": "yīn",
     "translate": "звук",
-    "transcription": "ин",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "ин"
   },
   {
     "index": 181,
     "glyph": "页",
     "alternative": "頁",
-    "pinyin": "ye",
+    "pinyin": "yè",
     "translate": "страница",
-    "transcription": "е",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "е"
   },
   {
     "index": 182,
     "glyph": "风",
     "alternative": "風",
-    "pinyin": "feng",
+    "pinyin": "fēng",
     "translate": "ветер",
-    "transcription": "фэн",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "фэн"
   },
   {
     "index": 183,
     "glyph": "飞",
     "alternative": "飛",
-    "pinyin": "fei",
+    "pinyin": "fēi",
     "translate": "летать",
-    "transcription": "фэй",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "фэй"
   },
   {
     "index": 184,
     "glyph": "饣",
     "alternative": "飠",
-    "pinyin": "shi",
+    "pinyin": "shí",
     "translate": "еда; пища",
-    "transcription": "ши",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ши"
   },
   {
     "index": 185,
     "glyph": "首",
     "alternative": null,
-    "pinyin": "shou",
+    "pinyin": "shǒu",
     "translate": "голова; глава",
-    "transcription": "шоу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "шоу"
   },
   {
     "index": 186,
     "glyph": "香",
     "alternative": null,
-    "pinyin": "xiang",
+    "pinyin": "xiāng",
     "translate": "аромат",
-    "transcription": "сян",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "сян"
   },
   {
     "index": 187,
     "glyph": "马",
     "alternative": "馬",
-    "pinyin": "ma",
+    "pinyin": "mǎ",
     "translate": "лошадь",
-    "transcription": "ма",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "ма"
   },
   {
     "index": 188,
     "glyph": "骨",
     "alternative": null,
-    "pinyin": "gu",
+    "pinyin": "gǔ",
     "translate": "кости",
-    "transcription": "гу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "гу"
   },
   {
     "index": 189,
     "glyph": "高",
     "alternative": "髙",
-    "pinyin": "gao",
+    "pinyin": "gāo",
     "translate": "высокий",
-    "transcription": "гао",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "гао"
   },
   {
     "index": 190,
     "glyph": "髟",
     "alternative": null,
-    "pinyin": "biao",
+    "pinyin": "biāo",
     "translate": "волосы",
-    "transcription": "бяо",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "бяо"
   },
   {
     "index": 191,
     "glyph": "斗",
     "alternative": "鬥",
-    "pinyin": "dou",
+    "pinyin": "dòu",
     "translate": "борьба",
-    "transcription": "доу",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "доу"
   },
   {
     "index": 192,
     "glyph": "鬯",
     "alternative": null,
-    "pinyin": "chang",
+    "pinyin": "chàng",
     "translate": "жертвенное вино",
-    "transcription": "чан",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "чан"
   },
   {
     "index": 193,
     "glyph": "鬲",
     "alternative": null,
-    "pinyin": "li",
+    "pinyin": "lì",
     "translate": "кувшин; трипод",
-    "transcription": "ли",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "ли"
   },
   {
     "index": 194,
     "glyph": "鬼",
     "alternative": null,
-    "pinyin": "gui",
+    "pinyin": "guǐ",
     "translate": "черт",
-    "transcription": "гуй",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "гуй"
   },
   {
     "index": 195,
     "glyph": "鱼",
     "alternative": "魚",
-    "pinyin": "yu",
+    "pinyin": "yú",
     "translate": "рыба",
-    "transcription": "ю",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ю"
   },
   {
     "index": 196,
     "glyph": "鸟",
     "alternative": "鳥",
-    "pinyin": "niao",
+    "pinyin": "niǎo",
     "translate": "птица",
-    "transcription": "няо",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "няо"
   },
   {
     "index": 197,
     "glyph": "卤",
     "alternative": "鹵",
-    "pinyin": "lu",
+    "pinyin": "lǔ",
     "translate": "соляная мель; солончак",
-    "transcription": "лу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "лу"
   },
   {
     "index": 198,
     "glyph": "鹿",
     "alternative": null,
-    "pinyin": "lu",
+    "pinyin": "lù",
     "translate": "олень",
-    "transcription": "лу",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "лу"
   },
   {
     "index": 199,
     "glyph": "麦",
     "alternative": "麥",
-    "pinyin": "mai",
+    "pinyin": "mài",
     "translate": "пшеница",
-    "transcription": "май",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "май"
   },
   {
     "index": 200,
     "glyph": "麻",
     "alternative": null,
-    "pinyin": "ma",
+    "pinyin": "má",
     "translate": "конопля",
-    "transcription": "ма",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ма"
   },
   {
     "index": 201,
     "glyph": "黃",
     "alternative": null,
-    "pinyin": "huang",
+    "pinyin": "huáng",
     "translate": "желтый",
-    "transcription": "хуан",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "хуан"
   },
   {
     "index": 202,
     "glyph": "黍",
     "alternative": null,
-    "pinyin": "shu",
+    "pinyin": "shǔ",
     "translate": "просо",
-    "transcription": "шу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "шу"
   },
   {
     "index": 203,
     "glyph": "黑",
     "alternative": null,
-    "pinyin": "hei",
+    "pinyin": "hēi",
     "translate": "черный",
-    "transcription": "хэй",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "хэй"
   },
   {
     "index": 204,
     "glyph": "黹",
     "alternative": null,
-    "pinyin": "zhi",
+    "pinyin": "zhǐ",
     "translate": "вышивка",
-    "transcription": "чжи",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "чжи"
   },
   {
     "index": 205,
     "glyph": "黾",
     "alternative": "黽",
-    "pinyin": "min",
+    "pinyin": "mǐn",
     "translate": "лягушка; жаба",
-    "transcription": "мин",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "мин"
   },
   {
     "index": 206,
     "glyph": "鼎",
     "alternative": null,
-    "pinyin": "ding",
+    "pinyin": "dǐng",
     "translate": "бронзовый треножник",
-    "transcription": "дин",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "дин"
   },
   {
     "index": 207,
     "glyph": "鼓",
     "alternative": null,
-    "pinyin": "gu",
+    "pinyin": "gǔ",
     "translate": "барабан",
-    "transcription": "гу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "гу"
   },
   {
     "index": 208,
     "glyph": "鼠",
     "alternative": null,
-    "pinyin": "shu",
+    "pinyin": "shǔ",
     "translate": "мышь",
-    "transcription": "шу",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "шу"
   },
   {
     "index": 209,
     "glyph": "鼻",
     "alternative": null,
-    "pinyin": "bi",
+    "pinyin": "bí",
     "translate": "нос",
-    "transcription": "би",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "би"
   },
   {
     "index": 210,
     "glyph": "齐",
     "alternative": "齊",
-    "pinyin": "qi",
+    "pinyin": "qí",
     "translate": "ровный; одинаковый",
-    "transcription": "ци",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "ци"
   },
   {
     "index": 211,
     "glyph": "齿",
     "alternative": "齒",
-    "pinyin": "chi",
+    "pinyin": "chǐ",
     "translate": "зубы",
-    "transcription": "чи",
-    "toneType": 3,
-    "toneIndex": 1
+    "transcription": "чи"
   },
   {
     "index": 212,
     "glyph": "龙",
     "alternative": "龍",
-    "pinyin": "long",
+    "pinyin": "lóng",
     "translate": "дракон",
-    "transcription": "лун",
-    "toneType": 2,
-    "toneIndex": 1
+    "transcription": "лун"
   },
   {
     "index": 213,
     "glyph": "龟",
     "alternative": "龜",
-    "pinyin": "gui",
+    "pinyin": "guī",
     "translate": "черепаха",
-    "transcription": "гуй",
-    "toneType": 1,
-    "toneIndex": 1
+    "transcription": "гуй"
   },
   {
     "index": 214,
     "glyph": "龠",
     "alternative": null,
-    "pinyin": "yue",
+    "pinyin": "yuè",
     "translate": "флейта",
-    "transcription": "юэ",
-    "toneType": 4,
-    "toneIndex": 1
+    "transcription": "юэ"
   }
 ]

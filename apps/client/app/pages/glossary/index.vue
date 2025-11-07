@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { topicList } from '~~/server/utils/mock/glossary'
 import { mockCms } from '~/../server/utils/mock/cms/description'
+import { topicList } from '~/../server/utils/mock/glossary/topic-list'
 import { PageLoader } from '~/components/02.shared/page-loader'
 import { JsonToDom } from '~/components/03.domain/json-to-dom'
 
@@ -51,7 +51,6 @@ definePageMeta({
         :key="section.title"
         class="topic-section"
       >
-        <!-- [ИЗМЕНЕНИЕ] Заголовок изменен на h2 для правильной семантики -->
         <h2 class="section-title">
           {{ section.title }}
         </h2>

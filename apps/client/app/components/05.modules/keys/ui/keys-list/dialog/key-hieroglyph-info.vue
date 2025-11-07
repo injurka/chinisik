@@ -4,6 +4,7 @@ import { PageLoader } from '~/components/02.shared/page-loader'
 import { HaoticLines } from '~/components/03.domain/haotic-lines'
 import { IframeViewer } from '~/components/03.domain/iframe-viewer'
 import { PinyinText } from '~/components/03.domain/pinyin-text'
+import { analyzePinyin } from '~/shared/lib'
 
 interface Props {
   hieroglyph?: HieroglyphKey
@@ -32,6 +33,15 @@ const isLoadingExample = computed(() => useRequestStatus([RequestKeys.KEY_HIEROG
 const isExampleHidden = computed<boolean>(() => !!example.value || isLoadingExample.value)
 const apiErrorExample = computed(() => useRequestError(RequestKeys.KEY_HIEROGLYPH))
 const abortController = ref<AbortController>(new AbortController())
+
+const pinyinData = computed(() => {
+  if (!props.hieroglyph?.pinyin)
+    return null
+
+  const analysis = analyzePinyin(props.hieroglyph.pinyin)
+
+  return analysis[0]
+})
 
 function generateExample() {
 //  TODO
@@ -69,12 +79,12 @@ function onOpenWiki() {
             :viewport-el="hieroglyphEl"
           />
           <div class="hieroglyph-item item">
-            <div class="item-pinyin">
+            <div v-if="pinyinData" class="item-pinyin">
               <PinyinText
-                :pinyin="data.hieroglyph.pinyin"
+                :pinyin="pinyinData.rawPinyin"
                 :tone="{
-                  index: data.hieroglyph.toneIndex,
-                  type: data.hieroglyph.toneType,
+                  index: pinyinData.position,
+                  type: pinyinData.toneNumber as ToneType,
                 }"
               />
               <div class="pinyin-tran">
@@ -82,7 +92,10 @@ function onOpenWiki() {
               </div>
             </div>
             <div class="item-hieroglyph">
-              {{ data.hieroglyph.glyph }}
+              <span class="main-glyph">{{ data.hieroglyph.glyph }}</span>
+              <span v-if="data.hieroglyph.alternative" class="alternative-glyph">
+                {{ data.hieroglyph.alternative }}
+              </span>
             </div>
             <div class="item-translate">
               {{ data.hieroglyph.translate }}
@@ -214,6 +227,20 @@ function onOpenWiki() {
             grid-area: hieroglyph;
             font-family: var(--font-family-cn);
             font-size: 4rem;
+            position: relative;
+
+            .alternative-glyph {
+              position: absolute;
+              top: 70%;
+              left: calc(50% + 60px);
+              transform: translateY(-50%);
+              font-size: 1.5rem;
+              color: var(--fg-secondary-color);
+              border-radius: 4px;
+              padding: 0 8px;
+              opacity: 0.8;
+              z-index: 1;
+            }
           }
 
           &-translate {

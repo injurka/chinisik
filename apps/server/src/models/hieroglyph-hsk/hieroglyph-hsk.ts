@@ -8,11 +8,7 @@ interface HieroglyphHsk {
     en: string
     ru: string
   }
-  pinyin: {
-    syllable: string
-    tone: number
-    position: number
-  }[]
+  pinyin: string
 }
 
 export type {

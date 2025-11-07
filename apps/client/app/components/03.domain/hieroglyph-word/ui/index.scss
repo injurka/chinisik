@@ -36,6 +36,7 @@
 
   .hw-pinyin {
     text-align: center;
+    justify-content: center;
     padding: 4px 12px;
     font-size: 1rem;
   }
@@ -106,11 +107,11 @@
 }
 .hw-pinyin {
   color: var(--fg-secondary-color);
-  font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.1rem;
   letter-spacing: 0.2px;
-  font-family: var(--font-family-cn);
+  font-family: 'Sofia Sans';
   font-weight: 500;
+  display: flex;
 }
 .hw-glyph {
   letter-spacing: 2px;
@@ -127,6 +128,7 @@
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0.2px;
+  font-family: 'Sofia Sans';
 }
 .hw-tooltip {
   .v-overlay__content {
@@ -148,7 +150,7 @@
   &-pinyin {
     color: var(--fg-secondary-color);
     font-weight: 1rem;
-    font-family: var(--font-family-cn);
+    font-family: 'Sofia Sans';
     font-weight: 500;
   }
   &-translate {

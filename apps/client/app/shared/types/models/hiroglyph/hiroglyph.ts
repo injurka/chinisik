@@ -3,11 +3,7 @@ interface HieroglyphStructure {
   glyph: string
   traditionalGlyph: string
   translation: string
-  pinyin: {
-    syllable: string
-    tone: 0 | 1 | 2 | 3 | 4
-    position: number
-  }[]
+  pinyin: string
 }
 
 export type {

@@ -16,19 +16,8 @@ const HieroglyphHskSchema = z.object({
   }).openapi({
     description: 'Translations of the hieroglyph',
   }),
-  pinyin: z.array(
-    z.object({
-      syllable: z.string().openapi({ description: 'Pinyin syllable' }),
-      tone: z.number().int().min(1).max(5).openapi({
-        description: 'Tone number (1-5)',
-        example: 3,
-      }),
-      position: z.number().int().openapi({
-        description: 'Position in the word/phrase',
-      }),
-    }).openapi({ description: 'Pinyin information' }),
-  ).openapi({
-    description: 'Array of pinyin readings',
+  pinyin: z.string().openapi({
+    description: 'Pinyin readings',
   }),
 }).openapi('HieroglyphHsk')
 

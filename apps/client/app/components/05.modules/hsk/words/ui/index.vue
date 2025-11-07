@@ -2,7 +2,8 @@
 import PageLoader from '~/components/02.shared/page-loader/ui/page-loader.vue'
 import { HieroglyphWord } from '~/components/03.domain/hieroglyph-word'
 import HskWordsControl from '~/components/05.modules/hsk/words/ui/hsk-words-control.vue'
-import { useHskControls, useHskWords, usePinyinFormatter } from '../composables'
+import { useTextToSpeechPopup } from '~/shared/composables'
+import { useHskControls, useHskWords } from '../composables'
 
 const {
   HSK_LEVELS,
@@ -18,8 +19,22 @@ const {
   error,
 } = await useHskWords()
 
-const { formatPinyinData } = usePinyinFormatter()
 const { controlMenu, controls, toggleControl } = useHskControls()
+
+const wordsListContainer = ref<HTMLElement | null>(null)
+const { popup, isSpeaking, handleVoiceButtonClick } = useTextToSpeechPopup(
+  wordsListContainer,
+  {
+    targetSelector: '.hw-glyph',
+    lang: 'zh-CN',
+    popupOffset: { top: 5 },
+  },
+)
+
+watch(page, () => {
+  if (typeof window !== 'undefined')
+    window.scrollTo({ top: 0, behavior: 'auto' })
+})
 </script>
 
 <template>
@@ -67,14 +82,27 @@ const { controlMenu, controls, toggleControl } = useHskControls()
 
     <PageLoader v-if="isLoading" class="loader" />
 
-    <div v-else-if="data?.data?.length && !error?.data" class="words-list">
+    <div
+      v-else-if="data?.data?.length && !error?.data"
+      ref="wordsListContainer"
+      class="words-list"
+    >
+      <v-btn
+        v-if="popup.show"
+        class="speech-popup"
+        :icon="isSpeaking ? 'mdi-stop' : 'mdi-volume-high'"
+        size="small"
+        :style="{ top: `${popup.top}px`, left: `${popup.left}px` }"
+        @click="handleVoiceButtonClick"
+      />
+
       <HieroglyphWord
         v-for="item in data.data"
         :key="item.id"
         :variant="controls.isFixedStyle ? 5 : undefined"
         :glyph="item.glyph"
         :translate="item.translation.ru"
-        :pinyin="formatPinyinData(item.pinyin)"
+        :pinyin="item.pinyin"
       />
 
       <v-pagination
@@ -135,6 +163,7 @@ const { controlMenu, controls, toggleControl } = useHskControls()
     }
   }
   .words-list {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -148,6 +177,7 @@ const { controlMenu, controls, toggleControl } = useHskControls()
           line-height: 32px;
           min-width: 32px;
           min-height: 32px;
+          user-select: text;
         }
         .hw-pinyin {
           font-size: 0.9rem;
@@ -158,6 +188,18 @@ const { controlMenu, controls, toggleControl } = useHskControls()
       }
     }
   }
+
+  // Стили для pop-up
+  .speech-popup {
+    position: absolute;
+    z-index: 10;
+    transform: translateX(-50%);
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-secondary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+
   .empty {
     flex-grow: 1;
     display: flex;

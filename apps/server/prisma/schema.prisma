@@ -63,15 +63,13 @@ model EmailVerificationCode {
 }
 
 model HieroglyphKey {
-  id            Int     @id @default(autoincrement())
-  index         Int
+  id            Int      @id @default(autoincrement())
+  index         Int      @unique
   glyph         String
   alternative   String?
   pinyin        String
   translate     String
   transcription String
-  toneType      Int
-  toneIndex     Int
 
   @@map(name: "hieroglyph_key")
 }
@@ -158,9 +156,9 @@ model HieroglyphHsk {
   glyph             String
   traditionalGlyph  String
   level             Int
+  pinyin            String
   
   translation       Json
-  pinyin            Json
 
   @@map(name: "hieroglyph_hsk")
 }
