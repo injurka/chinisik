@@ -1,4 +1,4 @@
-import type { IApiError as IApiErrorExternal } from '~/modules/1.api'
+import type { IApiError as IApiErrorExternal } from '../../../../modules/1.api'
 
 type IApiError = IApiErrorExternal
 

@@ -23,12 +23,12 @@ export default defineNuxtPlugin({
           const data = await api.auth.v1.refresh({ refreshToken: store.auth.tokenPair?.refresh })
 
           nuxtApp.runWithContext(() => {
-            store.auth.saveTokens({ access: data.token, refresh: data.refreshToken }, true)
+            store.auth.saveTokens({ access: data.token, refresh: data.refreshToken })
           })
         }
         catch {
           nuxtApp.runWithContext(() => {
-            store.auth.clearAuth(true)
+            store.auth.clearAuth()
           })
         }
       },

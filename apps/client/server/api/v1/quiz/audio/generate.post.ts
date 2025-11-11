@@ -53,5 +53,8 @@ export default defineEventHandler(async () => {
   const question = mockQuestions[questionIndex % mockQuestions.length]
   questionIndex++
 
-  return { ...question, id: `${question.id}_${Date.now()}` }
+  return {
+    ...question,
+    id: `${question?.id}_${Date.now()}`,
+  }
 })

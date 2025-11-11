@@ -27,7 +27,7 @@ onMounted(() => {
   if (sentinelEl.value) {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        isSticky.value = entry.isIntersecting
+        isSticky.value = entry!.isIntersecting
       },
       {
         root: null,

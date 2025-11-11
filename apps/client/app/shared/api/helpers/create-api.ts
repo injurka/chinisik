@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
-
 import type { FetchOption, IApi, IService } from '../types'
 import { createInstance } from '.'
 import {
   authService,
+  booksService,
   cmsService,
   hskService,
   keysService,
@@ -22,6 +21,7 @@ const services: IService[] = [
   llmService,
   pinyinService,
   quizService,
+  booksService,
 ]
 
 interface CreateApiParams {

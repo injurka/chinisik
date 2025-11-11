@@ -26,7 +26,7 @@ const pinyinData = computed(() => {
 
   return {
     value: pinyinSection.join(''),
-    index: pinyinSection[0].length,
+    index: pinyinSection[0]!.length,
   }
 })
 

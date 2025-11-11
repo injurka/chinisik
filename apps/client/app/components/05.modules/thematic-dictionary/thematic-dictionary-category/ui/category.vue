@@ -50,13 +50,13 @@ const breadcrumbs = computed(() => {
   if (props.section) {
     crumbs.push({
       title: props.section.name,
-      to: RoutePaths.ThematicDictionary.Categories(props.section.sysname),
+      to: () => RoutePaths.ThematicDictionary.Categories(props.section.sysname),
     })
   }
   if (props.section && props.category) {
     crumbs.push({
       title: props.category.name,
-      to: RoutePaths.ThematicDictionary.Category(props.section.sysname, props.category.sysname),
+      to: () => RoutePaths.ThematicDictionary.Category(props.section.sysname, props.category.sysname),
     })
   }
   return crumbs

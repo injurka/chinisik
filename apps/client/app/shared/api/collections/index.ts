@@ -1,4 +1,5 @@
 export * from './auth'
+export * from './books'
 export * from './cms'
 export * from './hsk'
 export * from './keys'

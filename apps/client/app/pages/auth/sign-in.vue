@@ -46,7 +46,7 @@ async function submitSignIn() {
   }
 
   try {
-    await store.auth.signIn({ email: email.value, password: password.value }, true)
+    await store.auth.signIn({ email: email.value, password: password.value })
 
     await navigateTo(RoutePaths.Keys.Tab('list'))
   }

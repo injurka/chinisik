@@ -6,6 +6,9 @@ export enum RouteNames {
   LinguisticAnalysisHistory = 'linguistic-analysis-history',
   HSK = 'hsk',
   ThematicDictionary = 'thematic-dictionary',
+  Books = 'books',
+  BookDetails = 'books-id',
+  BookReader = 'books-id-read',
 
   About = 'about',
 
@@ -33,13 +36,18 @@ export const RoutePaths = {
     History: () => '/linguistic-analysis/history',
   },
   HSK: {
-    Index: () => `/hsk`,
+    Index: () => '/hsk',
     Tab: (value: 'about' | 'words' | 'lab') => `/hsk?tab=${value}`,
   },
   ThematicDictionary: {
     Sections: () => '/thematic-dictionary',
     Categories: (section: string) => `/thematic-dictionary/${section}`,
     Category: (section: string, category: string) => `/thematic-dictionary/${section}/${category}`,
+  },
+  Books: {
+    Index: () => '/books',
+    Details: (id: string) => `/books/${id}`,
+    Read: (id: string) => `/books/${id}/read`,
   },
 
   About: () => '/about',

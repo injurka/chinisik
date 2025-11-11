@@ -422,12 +422,12 @@ export function useToonReader(
           canvasRef.value.height = 600
         }
       }
-      await drawImageOnCanvas(currentImageSrc.value)
+      await drawImageOnCanvas(currentImageSrc.value!)
     }
   }
 
   watch(currentImageSrc, async (newSrc) => {
-    await drawImageOnCanvas(newSrc)
+    await drawImageOnCanvas(newSrc!)
   })
 
   watch(initialImages, async () => {

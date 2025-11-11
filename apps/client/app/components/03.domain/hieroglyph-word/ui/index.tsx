@@ -127,6 +127,7 @@ const HieroglyphWordVarious = defineComponent({
     const tooltipText = (variant: 'full' | 'pinyin' | 'translate') => {
       // Используем finalPinyinProps для отображения
       const pinyinNode = finalPinyinProps.value && (
+        // @ts-expect-error неважно
         <div class="hw-tip-pinyin" onClick={copyPinyin}>
           <PinyinText
             {...finalPinyinProps.value}

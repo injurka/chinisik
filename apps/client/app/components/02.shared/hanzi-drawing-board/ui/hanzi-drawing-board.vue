@@ -96,8 +96,8 @@ function getEventCoordinates(event: MouseEvent | TouchEvent): { x: number, y: nu
     clientY = event.clientY
   }
   else if (event.touches && event.touches.length > 0) {
-    clientX = event.touches[0].clientX
-    clientY = event.touches[0].clientY
+    clientX = event.touches[0]!.clientX
+    clientY = event.touches[0]!.clientY
   }
   else { return null }
   return { x: clientX - rect.left, y: clientY - rect.top }

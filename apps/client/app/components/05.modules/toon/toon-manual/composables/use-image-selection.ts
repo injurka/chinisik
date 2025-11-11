@@ -1,10 +1,9 @@
-// composables/use-image-selection.ts
 import { storeToRefs } from 'pinia'
 import { useToonManuallyStore } from '../store'
 
-function useImageSelection() { // Убираем параметр image
+function useImageSelection() {
   const store = useToonManuallyStore()
-  const { selectedArea, isSelecting, uploadedImage } = storeToRefs(store) // Добавляем uploadedImage
+  const { selectedArea, isSelecting, uploadedImage } = storeToRefs(store)
 
   // --- State -------------------------------------------------------------------
   const canvasRef = ref<HTMLCanvasElement | null>(null)
@@ -300,7 +299,7 @@ function useImageSelection() { // Убираем параметр image
           canvasRef.value.height = 600
         }
       }
-      await drawImageOnCanvas() // Убираем параметр, будет использоваться uploadedImage из store
+      await drawImageOnCanvas()
     }
   }
 

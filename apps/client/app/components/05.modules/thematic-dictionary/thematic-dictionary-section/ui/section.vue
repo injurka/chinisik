@@ -23,7 +23,7 @@ const breadcrumbs = computed(() => {
   if (props.section) {
     crumbs.push({
       title: props.section.name,
-      to: RoutePaths.ThematicDictionary.Categories(props.section.sysname),
+      to: () => RoutePaths.ThematicDictionary.Categories(props.section.sysname),
     })
   }
 

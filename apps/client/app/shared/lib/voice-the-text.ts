@@ -24,7 +24,7 @@ export function initSpeechSynthesis(): void {
  * @param onStart - Callback-функция, вызываемая при начале озвучивания.
  * @param onEnd - Callback-функция, вызываемая при завершении или ошибке озвучивания.
  */
-export function voiceTheText(text: string, onStart: () => void, onEnd: () => void): void {
+export function voiceTheText(text: string, onStart: () => void, onEnd: () => void, _lang?: string): void {
   if (!text || !('speechSynthesis' in window)) {
     console.error('Web Speech API не поддерживается или текст пуст.')
     onEnd()

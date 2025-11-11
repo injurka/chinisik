@@ -51,9 +51,9 @@ function findBestClient(clients: WindowClient[]) {
 async function openUrl(url: string) {
   const clients = await self.clients.matchAll({ type: 'window' })
   // Chrome 42-48 does not support navigate
-  if (clients.length !== 0 && 'navigate' in clients[0]) {
+  if (clients.length !== 0 && 'navigate' in clients[0]!) {
     const client = findBestClient(clients as WindowClient[])
-    await client.navigate(url).then(client => client?.focus())
+    await client?.navigate(url).then(client => client?.focus())
   }
 
   await self.clients.openWindow(url)

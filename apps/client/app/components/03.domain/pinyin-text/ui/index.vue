@@ -18,7 +18,7 @@ const splitPinyin = computed(() => {
   tones.value.forEach((tone) => {
     parts.push(
       pinyin.slice(lastIndex, tone.index),
-      pinyin[tone.index],
+      pinyin[tone.index]!,
     )
     lastIndex = tone.index + 1
   })

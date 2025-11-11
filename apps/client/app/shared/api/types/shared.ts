@@ -7,4 +7,5 @@ export enum ApiNames {
   Auth = 'auth',
   LinguisticAnalysis = 'linguisticAnalysis',
   Quiz = 'quiz',
+  Books = 'books',
 }

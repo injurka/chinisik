@@ -30,7 +30,7 @@ const {
   handlePointerLeave,
   initCanvas,
   // redrawFullCanvas,
-} = useImageSelection(uploadedImage.value!)
+} = useImageSelection()
 
 watch(uploadedImage, (newImage) => {
   if (newImage) {

@@ -17,7 +17,7 @@ async function authorizationCallback() {
     })
   }
 
-  await store.auth.refresh(refreshToken, true)
+  await store.auth.refresh()
   await nextTick()
   validateUser()
 }

@@ -111,8 +111,8 @@ function createHaoticLines(el: HTMLElement) {
         function checkIntersection() {
           for (let i = 0; i < points.value.length; i++) {
             for (let j = i + 1; j < points.value.length; j++) {
-              if (dist(points.value[i].x, points.value[i].y, points.value[j].x, points.value[j].y) < 10) {
-                ellipse(points.value[i].x, points.value[i].y, 10, 10)
+              if (dist(points.value[i]!.x, points.value[i]!.y, points.value[j]!.x, points.value[j]!.y) < 10) {
+                ellipse(points.value[i]!.x, points.value[i]!.y, 10, 10)
               }
             }
           }

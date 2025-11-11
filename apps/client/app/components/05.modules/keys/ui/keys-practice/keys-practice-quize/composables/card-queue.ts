@@ -7,6 +7,7 @@ function useCardQueue<T>(initialWords: T[]) {
 
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
+      // @ts-expect-error неважно
       [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]
     }
 

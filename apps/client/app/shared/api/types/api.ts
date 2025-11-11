@@ -1,4 +1,5 @@
 import type { FetchOptions } from 'ofetch'
+import type { IBooksMethods } from '../collections'
 import type { ILinguisticAnalysisMethods } from '../collections/linguistic-analysis'
 
 // @ts-expect-error нет смысла матчить тип с ResponseType
@@ -13,6 +14,7 @@ export type ServiceMethods
   | IAuthMethods
   | ILinguisticAnalysisMethods
   | IQuizMethods
+  | IBooksMethods
 
 export interface IApi {
   keys: IKeysMethods
@@ -23,6 +25,7 @@ export interface IApi {
   auth: IAuthMethods
   linguisticAnalysis: ILinguisticAnalysisMethods
   quiz: IQuizMethods
+  books: IBooksMethods
 }
 export interface IService {
   createMethods: (instance: Instance) => ServiceMethods

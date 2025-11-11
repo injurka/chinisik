@@ -63,11 +63,11 @@ function useSwipeHandler({ onSwipeLeft, onSwipeRight }: SwipeCallbacks) {
   }
 
   function onTouchStart(e: TouchEvent) {
-    handleStart(e.touches[0].clientX)
+    handleStart(e.touches[0]!.clientX)
   }
 
   function onTouchMove(e: TouchEvent) {
-    handleMove(e.touches[0].clientX)
+    handleMove(e.touches[0]!.clientX)
   }
 
   function onMouseMove(e: MouseEvent) {
