@@ -16,6 +16,7 @@ interface ThematicDictionarySection {
   description: string
   name: string
   glyph: string
+  image?: string
   categories: ThematicDictionaryCategory[]
 }
 

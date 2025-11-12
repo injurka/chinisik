@@ -6,6 +6,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       id: 1,
       sysname: 'conversation',
       description: 'Раздел, посвященный различным аспектам общения.',
+      image: '/images/thematic-dictionary/conversation.png',
       name: 'Беседа',
       glyph: '语',
       categories: [
@@ -821,6 +822,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       sysname: 'travel',
       description: 'Раздел, посвященный словам и фразам, связанным с путешествиями.',
       name: 'Путешествия',
+      image: '/images/thematic-dictionary/travel.png',
       glyph: '旅',
       categories: [
         {
@@ -853,6 +855,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       description: 'Раздел, посвященный словам и фразам, связанным с едой и напитками.',
       name: 'Еда',
       glyph: '食',
+      image: '/images/thematic-dictionary/food.png',
       categories: [
         {
           id: 11,
@@ -893,6 +896,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       id: 4,
       sysname: 'color',
       description: 'Раздел, посвященный названиям цветов.',
+      image: '/images/thematic-dictionary/color.png',
       name: 'Цвет',
       glyph: '色',
       categories: [
@@ -1259,6 +1263,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       id: 5,
       sysname: 'numbers',
       description: 'Раздел, посвященный числам и счету.',
+      image: '/images/thematic-dictionary/numbers.png',
       name: 'Числа',
       glyph: '数',
       categories: [
@@ -1517,6 +1522,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       id: 5,
       sysname: 'time',
       description: 'Раздел, посвященный времени, датам и связанным с ними понятиям.',
+      image: '/images/thematic-dictionary/time.png',
       name: 'Время',
       glyph: '时',
       categories: [
@@ -1812,6 +1818,7 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
       sysname: 'family',
       description: 'Раздел, посвященный членам семьи и родственным связям.',
       name: 'Семья',
+      image: '/images/thematic-dictionary/family.png',
       glyph: '家',
       categories: [
         {
