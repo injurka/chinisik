@@ -2,6 +2,7 @@
 import type { Pronunciation } from '~/shared/types'
 import { PinyinText } from '~/components/03.domain/pinyin-text'
 import { processPinyinForRender } from '../lib/use-processed-pinyin'
+import { AddToDictionaryModal, LexicalAnalysisModal } from './dialogs'
 
 interface Props {
   word: string
@@ -16,6 +17,9 @@ const emit = defineEmits<{
   (e: 'addToDictionary', word: string): void
   (e: 'close'): void
 }>()
+
+const isAddToDictionaryModalOpen = ref(false)
+const isLexicalAnalysisModalOpen = ref(false)
 
 const pinyinProps = computed(() => processPinyinForRender(props.pronunciation.pinyin))
 </script>
@@ -41,17 +45,38 @@ const pinyinProps = computed(() => processPinyinForRender(props.pronunciation.pi
       </div>
     </div>
     <div class="tooltip-actions">
-      <VBtn variant="tonal" size="small" @click.stop="emit('addToDictionary', word)">
-        В мой словарь
+      <VBtn icon variant="tonal" size="small" @click.stop="isAddToDictionaryModalOpen = true">
+        <VTooltip activator="parent" location="top">
+          В мой словарь
+        </VTooltip>
+        <Icon name="mdi:book-plus-outline" />
       </VBtn>
-      <VSpacer />
+      <VBtn icon variant="tonal" size="small" @click.stop="isLexicalAnalysisModalOpen = true">
+        <VTooltip activator="parent" location="top">
+          Лексический анализ
+        </VTooltip>
+        <Icon name="mdi:text-box-search-outline" />
+      </VBtn>
+
       <VBtn icon variant="tonal" size="small" @click.stop="emit('speak', word)">
         <Icon name="mdi:volume-high" />
       </VBtn>
+
+      <VSpacer />
+
       <VBtn icon variant="text" size="small" @click.stop="emit('close')">
         <Icon name="mdi:close" />
       </VBtn>
     </div>
+
+    <AddToDictionaryModal
+      v-model="isAddToDictionaryModalOpen"
+      title="Добавить в словарь"
+    />
+    <LexicalAnalysisModal
+      v-model="isLexicalAnalysisModalOpen"
+      :text-to-analyze="word"
+    />
   </div>
 </template>
 

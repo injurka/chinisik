@@ -2,6 +2,7 @@
 import type { Sentence } from '~/shared/types'
 import { PinyinText } from '~/components/03.domain/pinyin-text'
 import { processPinyinForRender } from '../lib/use-processed-pinyin'
+import { AddToDictionaryModal, LexicalAnalysisModal } from './dialogs'
 
 interface Props {
   sentence: Sentence
@@ -13,6 +14,9 @@ const emit = defineEmits<{
   (e: 'bookmark', sentence: string): void
   (e: 'close'): void
 }>()
+
+const isAddToBookmarksModalOpen = ref(false)
+const isLexicalAnalysisModalOpen = ref(false)
 
 const fullPinyinLine = computed(() => {
   let result = ''
@@ -50,8 +54,17 @@ const pinyinProps = computed(() => processPinyinForRender(fullPinyinLine.value))
       </p>
     </div>
     <div class="tooltip-actions">
-      <VBtn variant="tonal" size="small" @click.stop="emit('bookmark', sentence.originalText)">
-        В закладки
+      <VBtn icon variant="tonal" size="small" @click.stop="isAddToBookmarksModalOpen = true">
+        <VTooltip activator="parent" location="top">
+          В закладки
+        </VTooltip>
+        <Icon name="mdi:bookmark-plus-outline" />
+      </VBtn>
+      <VBtn icon variant="tonal" size="small" @click.stop="isLexicalAnalysisModalOpen = true">
+        <VTooltip activator="parent" location="top">
+          Лексический анализ
+        </VTooltip>
+        <Icon name="mdi:text-box-search-outline" />
       </VBtn>
       <VBtn icon variant="tonal" size="small" @click.stop="emit('speak', sentence.originalText)">
         <Icon name="mdi:volume-high" />
@@ -61,6 +74,15 @@ const pinyinProps = computed(() => processPinyinForRender(fullPinyinLine.value))
         <Icon name="mdi:close" />
       </VBtn>
     </div>
+
+    <AddToDictionaryModal
+      v-model="isAddToBookmarksModalOpen"
+      title="Добавить в закладки"
+    />
+    <LexicalAnalysisModal
+      v-model="isLexicalAnalysisModalOpen"
+      :text-to-analyze="sentence.originalText"
+    />
   </div>
 </template>
 
@@ -93,6 +115,9 @@ const pinyinProps = computed(() => processPinyinForRender(fullPinyinLine.value))
     margin-bottom: 12px;
     line-height: 1.4;
     letter-spacing: 0.5px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    word-break: break-word;
   }
   .translated-sentence {
     font-size: 1rem;

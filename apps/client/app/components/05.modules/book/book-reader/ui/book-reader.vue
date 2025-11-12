@@ -175,14 +175,14 @@ onMounted(() => {
       </div>
 
       <div class="pagination">
-        <VBtn :disabled="currentPageIndex === 0" @click="prevPage">
+        <VBtn variant="text" :disabled="currentPageIndex === 0" @click="prevPage">
           <Icon name="mdi:arrow-left" />
           Предыдущая
         </VBtn>
         <span class="page-number">
           Страница {{ currentPage.pageNumber }} из {{ bookContent.length }}
         </span>
-        <VBtn :disabled="currentPageIndex >= bookContent.length - 1" @click="nextPage">
+        <VBtn variant="text" :disabled="currentPageIndex >= bookContent.length - 1" @click="nextPage">
           Следующая
           <Icon name="mdi:arrow-right" />
         </VBtn>
@@ -279,12 +279,27 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   user-select: none;
-  padding: 8px 0;
+  padding: 16px 0;
+  margin-top: 16px;
+  border-top: 1px solid var(--border-secondary-color);
+
   .page-number {
     color: var(--fg-secondary-color);
+    font-weight: 500;
+    background-color: var(--bg-tertiary-color);
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border-secondary-color);
   }
+
   .v-btn {
     text-transform: none;
+    color: var(--fg-action-color);
+    font-weight: 500;
+
+    &:hover:not(:disabled) {
+      background-color: var(--bg-hover-color);
+    }
   }
 }
 

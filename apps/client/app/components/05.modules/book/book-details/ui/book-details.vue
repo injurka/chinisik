@@ -10,14 +10,6 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
   `book-details-${bookId.value}`,
   () => api.books.v1.details({ id: bookId.value }),
 )
-
-const languageNames: Record<string, string> = {
-  en: 'Английский',
-  fr: 'Французский',
-  es: 'Испанский',
-  de: 'Немецкий',
-  jp: 'Японский',
-}
 </script>
 
 <template>
@@ -42,84 +34,96 @@ const languageNames: Record<string, string> = {
           format="webp"
           placeholder
         />
+        <VBtn
+          :to="RoutePaths.Books.Read(bookId)"
+          size="large"
+          block
+          class="read-button"
+          rounded
+          variant="tonal"
+        >
+          Начать читать
+        </VBtn>
       </div>
 
       <div class="info-section">
-        <h1 class="title">
-          {{ book.title }}
-        </h1>
-        <h2 class="author">
-          {{ book.author }}
-        </h2>
-        <p v-if="book.originalTitle !== book.title" class="original-title">
-          Оригинальное название: {{ book.originalTitle }}
-        </p>
+        <div class="info-header">
+          <h1 class="title">
+            {{ book.title }}
+          </h1>
+          <h2 class="author">
+            {{ book.author }}
+          </h2>
+          <p v-if="book.originalTitle !== book.title" class="original-title">
+            Оригинальное название: {{ book.originalTitle }}
+          </p>
+        </div>
 
-        <div class="summary">
+        <div class="summary card">
           <h3>Аннотация</h3>
           <p>{{ book.summary }}</p>
         </div>
 
-        <div class="language-info">
+        <div class="language-info card">
           <h3>Информация для изучающих язык</h3>
           <div class="stats-grid">
-            <VCard variant="tonal" class="stat-card">
-              <VCardTitle>Уровни сложности</VCardTitle>
-              <VCardText>
+            <div class="stat-card">
+              <h4>Уровень сложности</h4>
+              <div class="difficulty-chips">
                 <VChip
-                  v-for="(level, lang) in book.difficultyLevels"
-                  :key="lang"
                   class="ma-1"
                   color="primary"
                   label
                 >
-                  {{ languageNames[lang] }}: {{ level }}
+                  {{ book.difficultyGeneral }}
                 </VChip>
-              </VCardText>
-            </VCard>
+                <VChip
+                  class="ma-1"
+                  color="secondary"
+                  label
+                >
+                  {{ book.difficultyFormal }}
+                </VChip>
+              </div>
+            </div>
 
-            <VCard variant="tonal" class="stat-card">
-              <VCardTitle>Лексический профиль</VCardTitle>
-              <VCardText>
-                <div class="lexical-item">
-                  <strong>Уникальных слов:</strong> {{ book.lexicalProfile.uniqueWords.toLocaleString('ru-RU') }}
+            <div class="stat-card lexical-profile">
+              <h4>Лексический профиль</h4>
+              <div class="lexical-stat">
+                <span class="label">Уникальных слов</span>
+                <span class="value">{{ book.lexicalProfile.uniqueWords.toLocaleString('ru-RU') }}</span>
+              </div>
+              <div class="lexical-progress-item">
+                <div class="progress-label">
+                  <span>Базовая лексика</span>
                 </div>
-                <div class="lexical-item">
-                  <strong>Базовая лексика:</strong>
-                  <VProgressLinear
-                    :model-value="book.lexicalProfile.basicVocabularyPercentage"
-                    color="success"
-                    height="20"
-                    rounded
-                  >
-                    <strong>{{ book.lexicalProfile.basicVocabularyPercentage }}%</strong>
-                  </VProgressLinear>
+                <VProgressLinear
+                  :model-value="book.lexicalProfile.basicVocabularyPercentage"
+                  color="success"
+                  bg-color="var(--bg-tertiary-color)"
+                  height="22"
+                  rounded
+                >
+                  <strong>{{ book.lexicalProfile.basicVocabularyPercentage }}%</strong>
+                </VProgressLinear>
+              </div>
+              <div class="lexical-progress-item">
+                <div class="progress-label">
+                  <span>Продвинутая лексика</span>
                 </div>
-                <div class="lexical-item">
-                  <strong>Продвинутая лексика:</strong>
-                  <VProgressLinear
-                    :model-value="book.lexicalProfile.advancedVocabularyPercentage"
-                    color="warning"
-                    height="20"
-                    rounded
-                  >
-                    <strong>{{ book.lexicalProfile.advancedVocabularyPercentage }}%</strong>
-                  </VProgressLinear>
-                </div>
-              </VCardText>
-            </VCard>
+                <VProgressLinear
+                  :model-value="book.lexicalProfile.advancedVocabularyPercentage"
+                  color="warning"
+                  bg-color="var(--bg-tertiary-color)"
+                  height="22"
+                  rounded
+                >
+                  <strong>{{ book.lexicalProfile.advancedVocabularyPercentage }}%</strong>
+                </VProgressLinear>
+              </div>
+            </div>
           </div>
         </div>
-
-        <VBtn
-          :to="RoutePaths.Books.Read(bookId)"
-          color="primary"
-          size="x-large"
-          block
-          class="read-button"
-        >
-          Начать читать
-        </VBtn>
       </div>
     </div>
   </div>
@@ -132,26 +136,65 @@ const languageNames: Record<string, string> = {
 
 .details-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 320px 1fr;
   gap: 32px;
+  align-items: start;
 
-  @include mobile {
+  @media (max-width: 960px) {
     grid-template-columns: 1fr;
   }
 }
 
 .cover-section {
+  position: sticky;
+  top: #{$header-height + 24px};
+
   .cover-image {
     width: 100%;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    margin-bottom: 24px;
+  }
+
+  .read-button {
+    text-transform: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--fg-action-color);
+    background-color: var(--bg-accent-color);
+    border: 1px solid var(--border-button-secondary-color);
+  }
+
+  @media (max-width: 960px) {
+    position: static;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+    align-items: center;
+
+    .cover-image {
+      margin-bottom: 0;
+    }
+  }
+
+  @include mobile {
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
   }
 }
 
 .info-section {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+
+  .info-header {
+    padding: 16px;
+    background-color: var(--bg-secondary-color);
+    border-radius: 12px;
+  }
 
   .title {
     font-size: 2.2rem;
@@ -163,6 +206,7 @@ const languageNames: Record<string, string> = {
     font-size: 1.2rem;
     font-weight: 400;
     color: var(--fg-secondary-color);
+    margin-top: 4px;
     margin-bottom: 8px;
   }
 
@@ -172,40 +216,78 @@ const languageNames: Record<string, string> = {
     font-style: italic;
   }
 
+  .card {
+    background-color: var(--bg-secondary-color);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
   .summary,
   .language-info {
-    margin-top: 24px;
     h3 {
       font-size: 1.3rem;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--border-secondary-color);
+      margin-bottom: 16px;
       padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-secondary-color);
     }
   }
 
   .stats-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 24px;
   }
 
-  .lexical-item {
+  .stat-card {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    strong {
-      flex-shrink: 0;
-    }
-    .v-progress-linear {
-      flex-grow: 1;
+    flex-direction: column;
+    gap: 16px;
+
+    h4 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--fg-secondary-color);
     }
   }
 
-  .read-button {
-    margin-top: 32px;
-    text-transform: none;
-    font-size: 1.2rem;
+  .difficulty-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lexical-profile {
+    gap: 20px;
+  }
+
+  .lexical-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    background-color: var(--bg-tertiary-color);
+    border-radius: 8px;
+
+    .label {
+      color: var(--fg-primary-color);
+      font-weight: 500;
+    }
+    .value {
+      font-weight: 600;
+      color: var(--fg-accent-color);
+    }
+  }
+
+  .lexical-progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .progress-label {
+    font-size: 0.9rem;
+    color: var(--fg-secondary-color);
   }
 }
 
