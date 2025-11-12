@@ -3,7 +3,7 @@ import type { Book, BookDetails, BookPage } from '~/shared/types'
 // Response
 export type IGetBooksR = Book[]
 export type IGetBookDetailsR = BookDetails
-export type IGetBookContentR = BookPage[]
+export type IGetBookContentR = BookPage
 
 // Request
 export interface IGetBookDetailsP {
@@ -11,4 +11,5 @@ export interface IGetBookDetailsP {
 }
 export interface IGetBookContentP {
   id: string
+  page: number
 }

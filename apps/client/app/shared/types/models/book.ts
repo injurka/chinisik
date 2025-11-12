@@ -51,6 +51,18 @@ export interface Book {
 }
 
 /**
+ * Модель главы книги для оглавления.
+ */
+export interface Chapter {
+  /** Номер главы. */
+  number: number
+  /** Название главы. */
+  title: string
+  /** Номер страницы, с которой начинается глава. */
+  startPage: number
+}
+
+/**
  * Модель BookDetails: Полная информация для страницы с деталями о книге.
  * Расширяет базовую модель Book, добавляя подробные данные.
  */
@@ -69,6 +81,12 @@ export interface BookDetails extends Omit<Book, 'difficulty'> {
 
   /** Статистика по словарному составу книги. */
   lexicalProfile: LexicalProfile
+
+  /** Оглавление книги. */
+  chapters: Chapter[]
+
+  /** Общее количество страниц в книге. */
+  pageCount: number
 }
 
 // --- Модели для интерактивного ридера ---
@@ -141,6 +159,9 @@ export interface Sentence {
 export interface BookPage {
   /** Номер текущей страницы. */
   pageNumber: number
+
+  /** Название текущей главы. */
+  chapterTitle: string
 
   /** Содержимое страницы, разбитое на предложения. */
   content: Sentence[]

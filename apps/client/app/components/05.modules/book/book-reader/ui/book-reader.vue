@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { BookPage, Sentence, Word } from '~/shared/types'
+import type { BookDetails, BookPage, Sentence, Word } from '~/shared/types'
 import { PageLoader } from '~/components/02.shared/page-loader'
 import { cancelSpeech, initSpeechSynthesis, voiceTheText } from '~/shared/lib'
 import { useTooltipPositioning } from '../composables/use-tooltip-positioning'
@@ -17,15 +17,33 @@ interface ActiveSentence {
 }
 
 const route = useRoute()
+const router = useRouter()
 const { api } = useApi()
+const { isMobile } = useDevice()
 const bookId = computed(() => route.params.id as string)
 
-const { data: bookContent, pending, error } = await useAsyncData<BookPage[]>(
-  `book-content-${bookId.value}`,
-  () => api.books.v1.content({ id: bookId.value }),
+// Fetch book details (for chapters and total page count)
+const { data: bookDetails, pending: pendingDetails, error: errorDetails } = await useAsyncData<BookDetails>(
+  `book-details-${bookId.value}`,
+  () => api.books.v1.details({ id: bookId.value }),
 )
 
-const currentPageIndex = ref(0)
+const currentPageNumber = computed(() => {
+  const page = Number.parseInt(route.query.page as string, 10)
+  return Number.isNaN(page) || page < 1 ? 1 : page
+})
+
+// Fetch current page content based on currentPageNumber
+const { data: currentPage, pending: pendingContent, error: errorContent } = await useAsyncData<BookPage>(
+  `book-content-${bookId.value}-page-${currentPageNumber.value}`,
+  () => api.books.v1.content({ id: bookId.value, page: currentPageNumber.value }),
+  { watch: [currentPageNumber] }, // This will auto-refresh when currentPageNumber changes
+)
+
+const pending = computed(() => (pendingContent.value && !currentPage.value) || pendingDetails.value)
+const error = computed(() => errorContent.value || errorDetails.value)
+
+const isChaptersDialogVisible = ref(false)
 const isSpeaking = ref(false)
 const longPressTimer = ref<NodeJS.Timeout | null>(null)
 
@@ -38,11 +56,32 @@ const wordTooltipRef = ref<InstanceType<typeof WordTooltip> | null>(null)
 const sentenceTooltipRef = ref<InstanceType<typeof SentenceTooltip> | null>(null)
 const { tooltipStyle, calculatePosition, hide } = useTooltipPositioning()
 
-const currentPage = computed(() => {
-  if (!bookContent.value || !bookContent.value[currentPageIndex.value])
-    return null
-  return bookContent.value[currentPageIndex.value]
-})
+function updateRouteQuery(pageNumber: number) {
+  // The watcher on the query (via useAsyncData) will handle the data fetching
+  router.push({ query: { ...route.query, page: pageNumber.toString() } })
+}
+
+function navigateToPage(pageNumber: number) {
+  if (bookDetails.value && pageNumber > 0 && pageNumber <= bookDetails.value.pageCount) {
+    updateRouteQuery(pageNumber)
+    closeTooltips()
+  }
+}
+
+function nextPage() {
+  if (currentPageNumber.value < (bookDetails.value?.pageCount ?? 0))
+    navigateToPage(currentPageNumber.value + 1)
+}
+
+function prevPage() {
+  if (currentPageNumber.value > 1)
+    navigateToPage(currentPageNumber.value - 1)
+}
+
+function goToChapter(startPage: number) {
+  navigateToPage(startPage)
+  isChaptersDialogVisible.value = false
+}
 
 function renderSentence(sentence: Sentence) {
   const chunks = []
@@ -72,7 +111,6 @@ async function showSentenceTooltip(event: PointerEvent, sentence: Sentence) {
   if (sentenceEl) {
     activeSentence.value = { sentence, target: event.target }
     activeWord.value = null
-    // Ждем, пока тултип появится в DOM, чтобы получить его размеры
     await nextTick()
     calculatePosition(sentenceEl.getBoundingClientRect(), sentenceTooltipRef.value?.$el, readerContainer.value)
   }
@@ -82,7 +120,6 @@ async function showWordTooltip(event: PointerEvent, word: Word) {
   const targetEl = event.target as HTMLElement
   activeWord.value = { word, target: event.target }
   activeSentence.value = null
-  // Ждем, пока тултип появится в DOM, чтобы получить его размеры
   await nextTick()
   calculatePosition(targetEl.getBoundingClientRect(), wordTooltipRef.value?.$el, readerContainer.value)
 }
@@ -112,20 +149,6 @@ function handlePointerMove() {
   }
 }
 
-function nextPage() {
-  if (bookContent.value && currentPageIndex.value < bookContent.value.length - 1) {
-    currentPageIndex.value++
-    closeTooltips()
-  }
-}
-
-function prevPage() {
-  if (currentPageIndex.value > 0) {
-    currentPageIndex.value--
-    closeTooltips()
-  }
-}
-
 function handleSpeak(text: string) {
   if (isSpeaking.value)
     cancelSpeech(() => isSpeaking.value = false)
@@ -135,6 +158,10 @@ function handleSpeak(text: string) {
 
 onMounted(() => {
   initSpeechSynthesis()
+  // Set initial page from query or default to 1
+  const pageFromQuery = Number.parseInt(route.query.page as string, 10)
+  if (Number.isNaN(pageFromQuery) || pageFromQuery < 1)
+    updateRouteQuery(1)
 })
 </script>
 
@@ -144,7 +171,17 @@ onMounted(() => {
     <div v-else-if="error" class="error-state">
       <p>Не удалось загрузить контент книги.</p>
     </div>
-    <div v-else-if="currentPage" ref="readerContainer" class="reader-container">
+    <div v-else-if="currentPage && bookDetails" ref="readerContainer" class="reader-container">
+      <header class="reader-header">
+        <VBtn
+          icon="mdi-format-list-bulleted"
+          variant="text"
+          @click="isChaptersDialogVisible = true"
+        />
+        <h2>{{ currentPage.chapterTitle }}</h2>
+        <div class="header-spacer" />
+      </header>
+
       <div class="reader-viewport">
         <div class="page-content">
           <span
@@ -175,18 +212,45 @@ onMounted(() => {
       </div>
 
       <div class="pagination">
-        <VBtn variant="text" :disabled="currentPageIndex === 0" @click="prevPage">
+        <VBtn variant="text" :disabled="currentPageNumber <= 1" @click="prevPage">
           <Icon name="mdi:arrow-left" />
-          Предыдущая
+          <span v-if="!isMobile">Предыдущая</span>
         </VBtn>
         <span class="page-number">
-          Страница {{ currentPage.pageNumber }} из {{ bookContent.length }}
+          Страница {{ currentPage.pageNumber }} из {{ bookDetails.pageCount }}
         </span>
-        <VBtn variant="text" :disabled="currentPageIndex >= bookContent.length - 1" @click="nextPage">
-          Следующая
+        <VBtn variant="text" :disabled="currentPageNumber >= bookDetails.pageCount" @click="nextPage">
+          <span v-if="!isMobile">Следующая</span>
           <Icon name="mdi:arrow-right" />
         </VBtn>
       </div>
+
+      <VDialog v-model="isChaptersDialogVisible" scrollable max-width="500">
+        <VCard class="chapters-dialog-card">
+          <VCardTitle>Оглавление</VCardTitle>
+          <VCardText style="max-height: 400px;">
+            <VList density="compact">
+              <VListItem
+                v-for="(chapter, index) in bookDetails?.chapters"
+                :key="chapter.number"
+                :active="currentPage.pageNumber >= chapter.startPage && (!bookDetails.chapters[index + 1] || currentPage.pageNumber < bookDetails.chapters[index + 1].startPage)"
+                @click="goToChapter(chapter.startPage)"
+              >
+                <VListItemTitle>Глава {{ chapter.number }}: {{ chapter.title }}</VListItemTitle>
+                <template #append>
+                  <VListItemSubtitle>Стр. {{ chapter.startPage }}</VListItemSubtitle>
+                </template>
+              </VListItem>
+            </VList>
+          </VCardText>
+          <VCardActions>
+            <VSpacer />
+            <VBtn variant="tonal" @click="isChaptersDialogVisible = false">
+              Закрыть
+            </VBtn>
+          </VCardActions>
+        </VCard>
+      </VDialog>
 
       <Teleport to="body">
         <WordTooltip
@@ -227,6 +291,32 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.reader-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-secondary-color);
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--fg-secondary-color);
+    flex-grow: 1;
+    text-align: center;
+  }
+  .header-spacer {
+    width: 48px; // Same width as the button to ensure centering
+    flex-shrink: 0;
+  }
+  .v-btn {
+    width: 48px;
+    flex-shrink: 0;
+  }
 }
 
 .reader-viewport {
@@ -300,11 +390,79 @@ onMounted(() => {
     &:hover:not(:disabled) {
       background-color: var(--bg-hover-color);
     }
+
+    @include mobile {
+      min-width: 48px;
+      padding: 0 12px;
+    }
   }
 }
 
 .error-state {
   text-align: center;
   padding: 40px;
+}
+
+:deep(.v-dialog .v-overlay__content) {
+  .chapters-dialog-card {
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-primary-color);
+    border-radius: 16px !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+    .v-card-title {
+      color: var(--fg-primary-color);
+      font-size: 1.5rem;
+      font-weight: 500;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .v-card-text {
+      padding: 0 8px;
+    }
+
+    .v-list {
+      background: transparent;
+      padding: 0;
+    }
+
+    .v-list-item {
+      color: var(--fg-secondary-color);
+      border-radius: 8px;
+      margin: 4px 0;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+
+      &:hover {
+        background-color: var(--bg-tertiary-color);
+        color: var(--fg-primary-color);
+      }
+
+      &--active {
+        background-color: var(--bg-accent-color);
+        color: var(--fg-primary-color) !important;
+        font-weight: 500;
+
+        .v-list-item-subtitle {
+          color: var(--fg-primary-color);
+          opacity: 0.8;
+        }
+      }
+
+      .v-list-item-title {
+        font-size: 1rem;
+      }
+
+      .v-list-item-subtitle {
+        font-size: 0.85rem;
+      }
+    }
+
+    .v-card-actions {
+      padding: 16px;
+    }
+  }
 }
 </style>

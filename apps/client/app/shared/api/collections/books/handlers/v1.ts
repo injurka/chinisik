@@ -10,7 +10,10 @@ function method(instance: Instance) {
       return instance<DTO.IGetBookDetailsR>(`/v1/books/${payload.id}`, { method: 'GET' })
     },
     content(payload: DTO.IGetBookContentP) {
-      return instance<DTO.IGetBookContentR>(`/v1/books/${payload.id}/content`, { method: 'GET' })
+      return instance<DTO.IGetBookContentR>(`/v1/books/${payload.id}/content`, {
+        method: 'GET',
+        params: { page: payload.page },
+      })
     },
   }
 }
