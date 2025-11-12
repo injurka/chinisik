@@ -18,12 +18,12 @@ const categories = computed(() => (
 ))
 
 const breadcrumbs = computed(() => {
-  const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections }]
+  const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections() }]
 
   if (props.section) {
     crumbs.push({
       title: props.section.name,
-      to: () => RoutePaths.ThematicDictionary.Categories(props.section.sysname),
+      to: RoutePaths.ThematicDictionary.Categories(props.section.sysname),
     })
   }
 

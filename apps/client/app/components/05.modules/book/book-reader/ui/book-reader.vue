@@ -184,30 +184,36 @@ onMounted(() => {
 
       <div class="reader-viewport">
         <div class="page-content">
-          <span
-            v-for="sentence in currentPage.content"
-            :key="sentence.id"
-            class="sentence-block"
-            :class="{ highlighted: activeSentence?.sentence.id === sentence.id }"
+          <p
+            v-for="(paragraph, pIndex) in currentPage.content"
+            :key="`p-${pIndex}`"
+            class="paragraph-block"
           >
-            <template v-for="(chunk, index) in renderSentence(sentence)" :key="index">
-              <span
-                v-if="chunk.type === 'word'"
-                class="word-interactive"
-                :class="{ highlighted: activeWord?.word.id === chunk.content.id }"
-                @pointerdown.stop="handlePointerDown($event, sentence)"
-                @pointerup.stop="handlePointerUp($event, chunk.content)"
-                @pointermove.stop="handlePointerMove"
-                @contextmenu.prevent
-              >
-                {{ chunk.content.text }}
-              </span>
-              <template v-else>
-                {{ chunk.content }}
+            <span
+              v-for="sentence in paragraph"
+              :key="sentence.id"
+              class="sentence-block"
+              :class="{ highlighted: activeSentence?.sentence.id === sentence.id }"
+            >
+              <template v-for="(chunk, index) in renderSentence(sentence)" :key="index">
+                <span
+                  v-if="chunk.type === 'word'"
+                  class="word-interactive"
+                  :class="{ highlighted: activeWord?.word.id === chunk.content.id }"
+                  @pointerdown.stop="handlePointerDown($event, sentence)"
+                  @pointerup.stop="handlePointerUp($event, chunk.content)"
+                  @pointermove.stop="handlePointerMove"
+                  @contextmenu.prevent
+                >
+                  {{ chunk.content.text }}
+                </span>
+                <template v-else>
+                  {{ chunk.content }}
+                </template>
               </template>
-            </template>
-            {{ ' ' }}
-          </span>
+              {{ ' ' }}
+            </span>
+          </p>
         </div>
       </div>
 
@@ -322,7 +328,7 @@ onMounted(() => {
 .reader-viewport {
   flex-grow: 1;
   background-color: var(--bg-secondary-color);
-  padding: 32px 48px;
+  padding: 24px 32px;
   border-radius: 8px;
   border: 1px solid var(--border-secondary-color);
   margin-bottom: 24px;
@@ -334,11 +340,23 @@ onMounted(() => {
 }
 
 .page-content {
-  font-size: 1.6rem;
-  line-height: 2.5;
+  font-size: 1.5rem;
+  line-height: 3rem;
   color: var(--fg-primary-color);
   user-select: none;
   text-align: justify;
+
+  .paragraph-block {
+    margin-bottom: 8px;
+    text-indent: 2em;
+
+    &:first-child {
+      text-indent: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 
   .sentence-block,
   .word-interactive {

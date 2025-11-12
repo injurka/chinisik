@@ -1255,5 +1255,670 @@ export const thematicDictionaryDataMock: ThematicDictionaryData = {
         },
       ],
     },
+    {
+      id: 5,
+      sysname: 'numbers',
+      description: 'Раздел, посвященный числам и счету.',
+      name: 'Числа',
+      glyph: '数',
+      categories: [
+        {
+          id: 20,
+          sysname: 'from-0-to-10',
+          name: 'От 0 до 10',
+          drawAllowed: true,
+          glyph: '十',
+          description: 'Базовые цифры, основа китайской системы счета. Иероглифы от одного до трех — пиктограммы, изображающие соответствующее количество горизонтальных линий.',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '零',
+                  pinyin: { pinyin: 'ling', tone: [{ index: 2, type: 2 }] },
+                  translate: 'Ноль',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '一',
+                  pinyin: { pinyin: 'yi', tone: [{ index: 1, type: 1 }] },
+                  translate: 'Один',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '二',
+                  pinyin: { pinyin: 'er', tone: [{ index: 1, type: 4 }] },
+                  translate: 'Два',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '三',
+                  pinyin: { pinyin: 'san', tone: [{ index: 2, type: 1 }] },
+                  translate: 'Три',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '四',
+                  pinyin: { pinyin: 'si', tone: [{ index: 1, type: 4 }] },
+                  translate: 'Четыре',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '五',
+                  pinyin: { pinyin: 'wu', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Пять',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '六',
+                  pinyin: { pinyin: 'liu', tone: [{ index: 2, type: 4 }] },
+                  translate: 'Шесть',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '七',
+                  pinyin: { pinyin: 'qi', tone: [{ index: 1, type: 1 }] },
+                  translate: 'Семь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '八',
+                  pinyin: { pinyin: 'ba', tone: [{ index: 1, type: 1 }] },
+                  translate: 'Восемь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '九',
+                  pinyin: { pinyin: 'jiu', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Девять',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '十',
+                  pinyin: { pinyin: 'shi', tone: [{ index: 2, type: 2 }] },
+                  translate: 'Десять',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+        {
+          id: 21,
+          sysname: 'tens',
+          name: 'Десятки',
+          drawAllowed: true,
+          glyph: '拾',
+          description: 'Десятки образуются путем сочетания цифр от двух до девяти с иероглифом "десять" (十). Например, "двадцать" — это "два-десять" (二十).',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '二十',
+                  pinyin: { pinyin: 'er shi', tone: [{ index: 1, type: 4 }, { index: 4, type: 2 }] },
+                  translate: 'Двадцать',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '三十',
+                  pinyin: { pinyin: 'san shi', tone: [{ index: 2, type: 1 }, { index: 5, type: 2 }] },
+                  translate: 'Тридцать',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '四十',
+                  pinyin: { pinyin: 'si shi', tone: [{ index: 1, type: 4 }, { index: 4, type: 2 }] },
+                  translate: 'Сорок',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '五十',
+                  pinyin: { pinyin: 'wu shi', tone: [{ index: 1, type: 3 }, { index: 4, type: 2 }] },
+                  translate: 'Пятьдесят',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '六十',
+                  pinyin: { pinyin: 'liu shi', tone: [{ index: 2, type: 4 }, { index: 5, type: 2 }] },
+                  translate: 'Шестьдесят',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '七十',
+                  pinyin: { pinyin: 'qi shi', tone: [{ index: 1, type: 1 }, { index: 4, type: 2 }] },
+                  translate: 'Семьдесят',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '八十',
+                  pinyin: { pinyin: 'ba shi', tone: [{ index: 1, type: 1 }, { index: 4, type: 2 }] },
+                  translate: 'Восемьдесят',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '九十',
+                  pinyin: { pinyin: 'jiu shi', tone: [{ index: 1, type: 3 }, { index: 5, type: 2 }] },
+                  translate: 'Девяносто',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+        {
+          id: 22,
+          sysname: 'large-numbers',
+          name: 'Сотни, тысячи и т.д.',
+          drawAllowed: true,
+          glyph: '万',
+          description: 'Крупные разряды, такие как сто (百), тысяча (千) и десять тысяч (万). Китайский счет имеет разряд "десять тысяч" (wàn), что отличает его от западной системы, основанной на тысячах.',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '百',
+                  pinyin: { pinyin: 'bai', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Сто',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '千',
+                  pinyin: { pinyin: 'qian', tone: [{ index: 2, type: 1 }] },
+                  translate: 'Тысяча',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '万',
+                  pinyin: { pinyin: 'wan', tone: [{ index: 2, type: 4 }] },
+                  translate: 'Десять тысяч',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '亿',
+                  pinyin: { pinyin: 'yi', tone: [{ index: 1, type: 4 }] },
+                  translate: 'Сто миллионов',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+    {
+      id: 5,
+      sysname: 'time',
+      description: 'Раздел, посвященный времени, датам и связанным с ними понятиям.',
+      name: 'Время',
+      glyph: '时',
+      categories: [
+        {
+          id: 23,
+          sysname: 'days-of-the-week',
+          name: 'Дни недели',
+          drawAllowed: true,
+          glyph: '周',
+          description: 'Названия дней недели в китайском языке, которые образуются путем добавления номера дня к слову "неделя" (星期). Понедельник — первый день недели.',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '星期一',
+                  pinyin: { pinyin: 'xīng qī yī', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }, { index: 8, type: 1 }] },
+                  translate: 'Понедельник',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '星期二',
+                  pinyin: { pinyin: 'xīng qī èr', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }, { index: 8, type: 4 }] },
+                  translate: 'Вторник',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '星期三',
+                  pinyin: { pinyin: 'xīng qī sān', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }, { index: 9, type: 1 }] },
+                  translate: 'Среда',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '星期四',
+                  pinyin: { pinyin: 'xīng qī sì', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }, { index: 8, type: 4 }] },
+                  translate: 'Четверг',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '星期五',
+                  pinyin: { pinyin: 'xīng qī wǔ', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }, { index: 8, type: 3 }] },
+                  translate: 'Пятница',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '星期六',
+                  pinyin: { pinyin: 'xīng qī liù', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }, { index: 9, type: 4 }] },
+                  translate: 'Суббота',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '星期日',
+                  pinyin: { pinyin: 'xīng qī rì', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }, { index: 8, type: 4 }] },
+                  translate: 'Воскресенье',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+        {
+          id: 24,
+          sysname: 'months',
+          name: 'Месяцы',
+          drawAllowed: true,
+          glyph: '月',
+          description: 'Названия месяцев образуются по числовому принципу: номер месяца + слово "месяц" (月). Например, январь — это "первый месяц".',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '一月',
+                  pinyin: { pinyin: 'yī yuè', tone: [{ index: 1, type: 1 }, { index: 4, type: 4 }] },
+                  translate: 'Январь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '二月',
+                  pinyin: { pinyin: 'èr yuè', tone: [{ index: 1, type: 4 }, { index: 4, type: 4 }] },
+                  translate: 'Февраль',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '三月',
+                  pinyin: { pinyin: 'sān yuè', tone: [{ index: 2, type: 1 }, { index: 5, type: 4 }] },
+                  translate: 'Март',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '四月',
+                  pinyin: { pinyin: 'sì yuè', tone: [{ index: 1, type: 4 }, { index: 4, type: 4 }] },
+                  translate: 'Апрель',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '五月',
+                  pinyin: { pinyin: 'wǔ yuè', tone: [{ index: 1, type: 3 }, { index: 4, type: 4 }] },
+                  translate: 'Май',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '六月',
+                  pinyin: { pinyin: 'liù yuè', tone: [{ index: 2, type: 4 }, { index: 5, type: 4 }] },
+                  translate: 'Июнь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '七月',
+                  pinyin: { pinyin: 'qī yuè', tone: [{ index: 1, type: 1 }, { index: 4, type: 4 }] },
+                  translate: 'Июль',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '八月',
+                  pinyin: { pinyin: 'bā yuè', tone: [{ index: 1, type: 1 }, { index: 4, type: 4 }] },
+                  translate: 'Август',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '九月',
+                  pinyin: { pinyin: 'jiǔ yuè', tone: [{ index: 1, type: 3 }, { index: 5, type: 4 }] },
+                  translate: 'Сентябрь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '十月',
+                  pinyin: { pinyin: 'shí yuè', tone: [{ index: 2, type: 2 }, { index: 5, type: 4 }] },
+                  translate: 'Октябрь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '十一月',
+                  pinyin: { pinyin: 'shí yī yuè', tone: [{ index: 2, type: 2 }, { index: 5, type: 1 }, { index: 8, type: 4 }] },
+                  translate: 'Ноябрь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '十二月',
+                  pinyin: { pinyin: 'shí èr yuè', tone: [{ index: 2, type: 2 }, { index: 5, type: 4 }, { index: 8, type: 4 }] },
+                  translate: 'Декабрь',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+        {
+          id: 25,
+          sysname: 'time-of-day',
+          name: 'Время суток',
+          drawAllowed: false,
+          glyph: '候',
+          description: 'Слова для обозначения различных периодов дня и ночи, а также единиц времени.',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '早上',
+                  pinyin: { pinyin: 'zǎo shang', tone: [{ index: 1, type: 3 }, { index: 5, type: 5 }] },
+                  translate: 'Утро (раннее)',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '上午',
+                  pinyin: { pinyin: 'shàng wǔ', tone: [{ index: 2, type: 4 }, { index: 6, type: 3 }] },
+                  translate: 'Утро (до полудня)',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '中午',
+                  pinyin: { pinyin: 'zhōng wǔ', tone: [{ index: 2, type: 1 }, { index: 6, type: 3 }] },
+                  translate: 'Полдень',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '下午',
+                  pinyin: { pinyin: 'xià wǔ', tone: [{ index: 2, type: 4 }, { index: 5, type: 3 }] },
+                  translate: 'После полудня',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '晚上',
+                  pinyin: { pinyin: 'wǎn shang', tone: [{ index: 1, type: 3 }, { index: 5, type: 5 }] },
+                  translate: 'Вечер',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '小时',
+                  pinyin: { pinyin: 'xiǎo shí', tone: [{ index: 1, type: 3 }, { index: 5, type: 2 }] },
+                  translate: 'Час',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '分钟',
+                  pinyin: { pinyin: 'fēn zhōng', tone: [{ index: 1, type: 1 }, { index: 5, type: 1 }] },
+                  translate: 'Минута',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '秒',
+                  pinyin: { pinyin: 'miǎo', tone: [{ index: 1, type: 3 }] },
+                  translate: 'Секунда',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+    {
+      id: 6,
+      sysname: 'family',
+      description: 'Раздел, посвященный членам семьи и родственным связям.',
+      name: 'Семья',
+      glyph: '家',
+      categories: [
+        {
+          id: 26,
+          sysname: 'immediate-family',
+          name: 'Ближайшие родственники',
+          drawAllowed: true,
+          glyph: '亲',
+          description: 'Слова для обозначения самых близких членов семьи, таких как родители, братья, сестры и дети.',
+          content: {
+            tag: 'div',
+            class: 'list',
+            children: [
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '爸爸',
+                  pinyin: { pinyin: 'bà ba', tone: [{ index: 1, type: 4 }, { index: 4, type: 5 }] },
+                  translate: 'Папа',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '妈妈',
+                  pinyin: { pinyin: 'mā ma', tone: [{ index: 1, type: 1 }, { index: 4, type: 5 }] },
+                  translate: 'Мама',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '哥哥',
+                  pinyin: { pinyin: 'gē ge', tone: [{ index: 1, type: 1 }, { index: 4, type: 5 }] },
+                  translate: 'Старший брат',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '弟弟',
+                  pinyin: { pinyin: 'dì di', tone: [{ index: 1, type: 4 }, { index: 4, type: 5 }] },
+                  translate: 'Младший брат',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '姐姐',
+                  pinyin: { pinyin: 'jiě jie', tone: [{ index: 1, type: 3 }, { index: 5, type: 5 }] },
+                  translate: 'Старшая сестра',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '妹妹',
+                  pinyin: { pinyin: 'mèi mei', tone: [{ index: 1, type: 4 }, { index: 5, type: 5 }] },
+                  translate: 'Младшая сестра',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '儿子',
+                  pinyin: { pinyin: 'ér zi', tone: [{ index: 1, type: 2 }, { index: 4, type: 5 }] },
+                  translate: 'Сын',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '女儿',
+                  pinyin: { pinyin: 'nǚ ér', tone: [{ index: 1, type: 3 }, { index: 4, type: 2 }] },
+                  translate: 'Дочь',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '丈夫',
+                  pinyin: { pinyin: 'zhàng fu', tone: [{ index: 2, type: 4 }, { index: 6, type: 5 }] },
+                  translate: 'Муж',
+                  variant: 5,
+                },
+              },
+              {
+                tag: 'HieroglyphWord',
+                props: {
+                  glyph: '妻子',
+                  pinyin: { pinyin: 'qī zi', tone: [{ index: 1, type: 1 }, { index: 4, type: 5 }] },
+                  translate: 'Жена',
+                  variant: 5,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
   ],
 }

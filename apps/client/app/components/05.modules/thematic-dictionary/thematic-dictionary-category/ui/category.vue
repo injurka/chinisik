@@ -45,18 +45,18 @@ const isLongText = computed<boolean>(() => {
   return (lines?.length ?? 0) > maxLines
 })
 const breadcrumbs = computed(() => {
-  const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections }]
+  const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections() }]
 
   if (props.section) {
     crumbs.push({
       title: props.section.name,
-      to: () => RoutePaths.ThematicDictionary.Categories(props.section.sysname),
+      to: RoutePaths.ThematicDictionary.Categories(props.section.sysname),
     })
   }
   if (props.section && props.category) {
     crumbs.push({
       title: props.category.name,
-      to: () => RoutePaths.ThematicDictionary.Category(props.section.sysname, props.category.sysname),
+      to: RoutePaths.ThematicDictionary.Category(props.section.sysname, props.category.sysname),
     })
   }
   return crumbs
