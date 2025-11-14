@@ -2,10 +2,9 @@ import OpenAI from 'openai'
 
 // Chat Models
 const AI_HUBMIX_MODELS_CHAT = [
-  'gemini-flash-latest',
-  'gemini-flash-lite-latest',
-  'Qwen3-VL-235B-A22B-Instruct',
-  'Qwen3-Next-80B-A3B-Instruct',
+  'gemini-2.5-flash-lite',
+  'gemini-2.5-flash',
+  'gpt-5-mini',
 ] as const
 
 // TTS Models (OpenAI compatible)

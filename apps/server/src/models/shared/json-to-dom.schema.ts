@@ -4,7 +4,7 @@ const JsonToDomElementSchema = z.object({
   tag: z.string(),
   class: z.string().optional(),
   children: z.any().optional(),
-  props: z.record(z.unknown()).optional(),
+  props: z.record(z.any(), z.unknown()).optional(),
 })
 
 export {

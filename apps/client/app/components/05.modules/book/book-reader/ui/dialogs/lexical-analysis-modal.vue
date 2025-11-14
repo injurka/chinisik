@@ -14,11 +14,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const isDialog = defineModel<boolean>({ required: true })
-const selectedModel = ref('gemini-flash-lite-latest')
+const selectedModel = ref('gemini-2.5-flash-lite')
 // 'template' = JSON, 'canvas' = Markdown
 const analysisMode = ref<'template' | 'canvas'>('template')
 
-const llmModels = ['gemini-flash-lite-latest', 'gemini-flash-latest']
+const llmModels = ['gemini-2.5-flash-lite', 'gemini-2.5-flash']
 const { api } = useApi()
 
 const isLoading = ref(false)

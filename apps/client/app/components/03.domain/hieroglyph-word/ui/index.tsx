@@ -5,7 +5,7 @@ import { useDisplay } from 'vuetify'
 import { VSnackbar, VTooltip } from 'vuetify/components'
 import { useHieroglyphWordStore } from '~/components/03.domain/hieroglyph-word/store'
 import { PinyinText } from '~/components/03.domain/pinyin-text'
-import { analyzePinyin } from '~/shared/lib'
+import { analyzePinyin, cancelSpeech, initSpeechSynthesis, voiceTheText } from '~/shared/lib'
 
 import './index.scss'
 
@@ -32,6 +32,29 @@ const HieroglyphWordVarious = defineComponent({
     const snackbar = ref<boolean>(false)
     const snackbarText = ref<string>('')
     const { mobile } = useDisplay()
+    const isSpeaking = ref<boolean>(false)
+
+    function handleGlyphClick() {
+      if (isSpeaking.value) {
+        cancelSpeech(() => { isSpeaking.value = false })
+      }
+      else {
+        voiceTheText(
+          props.glyph,
+          () => { isSpeaking.value = true },
+          () => { isSpeaking.value = false },
+          'zh-CN',
+        )
+      }
+    }
+
+    onMounted(() => initSpeechSynthesis())
+
+    onUnmounted(() => {
+      if (isSpeaking.value) {
+        cancelSpeech(() => { isSpeaking.value = false })
+      }
+    })
 
     const finalPinyinProps = computed<PinyinTextProps | undefined>(() => {
       if (!props.pinyin) {
@@ -242,6 +265,7 @@ const HieroglyphWordVarious = defineComponent({
                   class="hw-glyph"
                   onMouseenter={handleActivatorMouseEnter}
                   onMouseleave={handleActivatorMouseLeave}
+                  onClick={handleGlyphClick}
                 >
                   <VTooltip class="hw-tooltip" {...tooltipProps} modelValue={isActive.value}>
                     {tooltipText('full')}
@@ -256,6 +280,7 @@ const HieroglyphWordVarious = defineComponent({
                     class="hw-glyph"
                     onMouseenter={handleActivatorMouseEnter}
                     onMouseleave={handleActivatorMouseLeave}
+                    onClick={handleGlyphClick}
                   >
                     <VTooltip {...tooltipProps} modelValue={isActive.value}>
                       {tooltipText('pinyin')}
@@ -273,6 +298,7 @@ const HieroglyphWordVarious = defineComponent({
                     class="hw-glyph"
                     onMouseenter={handleActivatorMouseEnter}
                     onMouseleave={handleActivatorMouseLeave}
+                    onClick={handleGlyphClick}
                   >
                     <VTooltip {...tooltipProps} modelValue={isActive.value}>
                       {tooltipText('translate')}
@@ -287,14 +313,14 @@ const HieroglyphWordVarious = defineComponent({
               return (
                 <>
                   {pinyinContent.value}
-                  <span class="hw-glyph">{graphContent.value}</span>
+                  <span class="hw-glyph" onClick={handleGlyphClick}>{graphContent.value}</span>
                   {translateContent.value}
                 </>
               )
             case 5:
               return (
                 <>
-                  <span class="hw-glyph">{graphContent.value}</span>
+                  <span class="hw-glyph" onClick={handleGlyphClick}>{graphContent.value}</span>
                   <div class="hw-pinyin-translate">
                     {pinyinContent.value}
                     {translateContent.value}

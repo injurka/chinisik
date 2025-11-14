@@ -4,7 +4,6 @@ import { HTTPException } from 'hono/http-exception'
 import AController from '~/api/interfaces/controller.abstract'
 import { jwtGuard } from '~/middleware'
 import { ImageTranslationResponseSchema, LlmLinguisticAnalysisSchema, ToneTypeSchema } from '~/models'
-import { HanziDrawingSchema } from '~/models/llm/hanzi-drawing.schema'
 import { ChatCompletionContentPartSchema } from '~/models/llm/open-ai.schema'
 import { PinyinHieroglyphsSchema } from '~/models/llm/pinyin-hieroglyphs.schema'
 import { LlmService } from '~/services'
@@ -12,6 +11,10 @@ import { AI_MODELS, AI_TTS_MODELS } from '~/utils/ai/request'
 import { validPinyinSyllables } from '~/utils/constant'
 
 const TAG = 'llm'
+
+const HandwritingPayloadSchema = z.object({
+  imageDataUrl: z.string().startsWith('data:image/png;base64,'),
+})
 
 class LlmController extends AController {
   private service = new LlmService()
@@ -22,10 +25,10 @@ class LlmController extends AController {
     this.pinyinHieroglyphs()
     this.linguisticAnalysis()
     this.linguisticAnalysisFlat()
-    this.hanziCheck()
     this.textToSpeech()
     this.imageToTextTranslate()
     this.raw()
+    this.handwritingRecognize()
   }
 
   private linguisticAnalysis = () => {
@@ -175,79 +178,6 @@ class LlmController extends AController {
     )
   }
 
-  private hanziCheck = () => {
-    const BodySchema = z.object({
-      userImage: z.string().openapi({
-        description: 'Base64 encoded Data URL of the user drawing (e.g., image/png)',
-        example: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
-      }),
-
-      targetImage: z.string().optional().openapi({
-        description: 'Base64 encoded Data URL of the target drawing (e.g., image/png)',
-        example: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
-      }),
-      targetWord: z.string().min(1).max(1).optional().openapi({
-        description: 'The target Chinese character the user was supposed to draw',
-        example: '水',
-      }),
-    })
-
-    const ResponseSchema = HanziDrawingSchema
-
-    const route = createRoute({
-      method: 'post',
-      path: `${this.path}/hanzi-check`,
-      tags: [TAG],
-      summary: 'Check Hanzi Drawing Similarity',
-      description: 'Analyzes a user\'s drawing of a Hanzi character against the target character using AI.',
-      request: {
-        body: {
-          content: {
-            'application/json': {
-              schema: BodySchema,
-            },
-          },
-          required: true,
-        },
-      },
-      responses: {
-        200: {
-          content: {
-            'application/json': {
-              schema: ResponseSchema,
-            },
-          },
-          description: 'Analysis result including similarity score and feedback.',
-        },
-      },
-    })
-
-    this.router.openapi(
-      route,
-      async (c) => {
-        const { userImage, targetWord, targetImage } = c.req.valid('json')
-
-        try {
-          const result = await this.service.checkDrawing({ userImage, targetWord, targetImage })
-          const validatedData = ResponseSchema.parse(result)
-
-          return c.json(validatedData, 200)
-        }
-        catch (error: any) {
-          console.error(`[HanziController] Error checking drawing for "${targetWord}":`, error)
-
-          if (error instanceof HTTPException) {
-            throw error
-          }
-
-          throw new HTTPException(500, {
-            message: `Failed to analyze the drawing. ${error.message || ''}`.trim(),
-          })
-        }
-      },
-    )
-  }
-
   private textToSpeech = () => {
     const TextToSpeechBodySchema = z.object({
       text: z.string().min(1).max(1000).openapi({
@@ -388,10 +318,8 @@ class LlmController extends AController {
           throw new HTTPException(400, { message: 'Image file is required in FormData under the key "image" and must be a file.' })
         }
 
-        // Теперь TypeScript знает, что imageEntry это File
         const imageFile = imageEntry as unknown as File
 
-        // Basic validation for image type
         if (!imageFile.type.startsWith('image/')) {
           throw new HTTPException(400, { message: 'Uploaded file is not a valid image type.' })
         }
@@ -494,12 +422,63 @@ class LlmController extends AController {
               code: issue.code,
               path: issue.path,
               message: issue.message,
-              ...(issue.unionErrors ? { unionErrors: issue.unionErrors.map((ue: any) => ue.issues) } : {}), // Раскрываем unionErrors
+              ...(issue.unionErrors ? { unionErrors: issue.unionErrors.map((ue: any) => ue.issues) } : {}),
             })),
           },
         }
 
         return c.json(responseBody, 400)
+      },
+    )
+  }
+
+  private handwritingRecognize = () => {
+    const route = createRoute({
+      method: 'post',
+      path: `${this.path}/handwriting-recognize`,
+      tags: [TAG],
+      summary: 'Recognize a handwritten character from an image data URL',
+      description: 'Takes a base64 encoded PNG image and returns a list of possible characters.',
+      security: [{ bearerAuth: [] }],
+      request: {
+        body: {
+          content: {
+            'application/json': {
+              schema: HandwritingPayloadSchema,
+            },
+          },
+        },
+      },
+      responses: {
+        200: {
+          content: {
+            'application/json': {
+              schema: z.object({
+                characters: z.array(z.string()),
+              }),
+            },
+          },
+          description: 'An array of recognized characters.',
+        },
+        400: { description: 'Bad Request (e.g., invalid image data)' },
+        500: { description: 'Internal Server Error (e.g., recognition engine error)' },
+      },
+    })
+
+    // this.router.use(route.path, jwtGuard)
+    this.router.openapi(
+      route,
+      async (c) => {
+        const body = c.req.valid('json')
+
+        try {
+          const result = await this.service.handwritingRecognize(body)
+          return c.json({ characters: result }, 200)
+        }
+        catch (error: any) {
+          console.error('[LlmController] Error in handwritingRecognize:', error)
+          throw new HTTPException(500, { message: `Failed to recognize handwriting: ${error.message || 'Unknown error'}` })
+        }
       },
     )
   }

@@ -1,6 +1,3 @@
-export * from './hanzi-drawing'
-export * from './hanzi-drawing.schema'
-
 export * from './image-translation.schema'
 
 export * from './linguistic-analysis'

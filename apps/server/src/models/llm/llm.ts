@@ -17,14 +17,6 @@ interface PinyinHieroglyphsPayload {
   count?: number
 }
 
-interface HanziCheckPayload {
-  userImage: string
-
-  // image or word
-  targetWord?: string
-  targetImage?: string
-}
-
 interface TextToSpeechPayload {
   text: string
   model?: AiTtsModel
@@ -44,7 +36,6 @@ interface ImageToTextTranslatePayload {
 }
 
 export type {
-  HanziCheckPayload,
   ImageToTextTranslatePayload,
   LinguisticAnalysisFlatPayload,
   LinguisticAnalysisPayload,

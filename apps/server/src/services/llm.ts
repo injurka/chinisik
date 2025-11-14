@@ -2,7 +2,6 @@ import type { InputJsonValue } from '@prisma/client/runtime/library'
 import type { ZodSchema } from 'zod'
 import type { User } from '~/models'
 import type {
-  HanziCheckPayload,
   ImageToTextTranslatePayload,
   LinguisticAnalysisFlatPayload,
   LinguisticAnalysisPayload,
@@ -11,13 +10,12 @@ import type {
   RawPayload,
   TextToSpeechPayload,
 } from '~/models/llm'
-import type { AiChatModel, AiRequestOptions, AiRequestPrompts } from '~/utils/ai/request'
+import type { AiChatModel } from '~/utils/ai/request'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { HTTPException } from 'hono/http-exception'
 import { z } from 'zod'
 import {
-  HanziDrawingSchema,
   ImageTranslationResponseSchema,
   LlmLinguisticAnalysisSchema,
   LlmLinguisticAnalysisSourceTypeSchema,
@@ -28,7 +26,6 @@ import { logger } from '~/server'
 import { createAiEmbeddingsRequest, loadOrCreateEmbeddings } from '~/utils/ai/embeddings'
 import { createAiChatRequest, createAiSpeechRequest } from '~/utils/ai/request'
 import { generateDeterministicFilename } from '~/utils/hash'
-import { getHanziDrawingAll, getHanziDrawingImageAndImage, getHanziDrawingImageAndText } from '~/utils/promt/hanzi-drawing'
 import { getOcrPrompt, getTranslatePrompt } from '~/utils/promt/image-to-text-translate'
 import {
   getLinguisticAnalysisMdPromt,
@@ -36,9 +33,14 @@ import {
   getLinguisticAnalysisTypePromt,
 } from '~/utils/promt/linguistic-analysis'
 import { getPrompt as getPinyinHieroglyphsPromt } from '~/utils/promt/pinyin-hieroglyphs'
+import { tesseractService } from '~/utils/tesseract'
 import { LinguisticAnalysisService } from './linguistic-analysis'
 
 const STATIC_TTS_PATH = path.join(process.cwd(), 'static', 'audio/cn')
+
+interface HandwritingPayload {
+  imageDataUrl: string
+}
 
 interface Item {
   glyph: string
@@ -77,7 +79,6 @@ class LlmService {
     isTextResponse: boolean = false,
   ): Promise<T> => {
     if (!rawData) {
-      // For OCR, an empty string might be a valid response if no text is found
       if (isTextResponse && rawData === '') {
         return '' as T
       }
@@ -124,10 +125,8 @@ class LlmService {
       )
       const glyphs = sourceType.cn.trim()
 
-      // Загрузка эмбеддингов
       const embeddings = await loadOrCreateEmbeddings()
 
-      // Получение эмбеддинга для входного текста
       const inputEmbedding = await createAiEmbeddingsRequest(glyphs)
 
       function cosineSimilarity(vecA: number[], vecB: number[]) {
@@ -181,18 +180,14 @@ class LlmService {
         })
       }
 
-      // Поиск похожих примеров
-      // Создание объединенного массива из hsk и keys для поиска
       const allItems = [...embeddings.hsk, ...embeddings.keys] as unknown as Item[]
 
       const similarities = calculateSimilarities(allItems, inputEmbedding)
 
-      // Получение топ-5 похожих примеров
       const topSimilar = similarities
         .sort((a, b) => b.similarity - a.similarity)
         .slice(0, 5)
 
-      // Формирование контекста для LLM на основе найденных похожих примеров
       const context = topSimilar.map(item => `
         Русский: "${item.ru}", 
         Китайский: "${item.cn}", 
@@ -201,7 +196,7 @@ class LlmService {
       ).join('\n')
 
       const systemPrompt = `
-      ПРИМЕРЫ ПОХОЖИХ ИЕРОГЛИФОВ (СЛОВ) ДЛЯ ТЕКУЩЕГО ЗАПРОСА:
+      ПРИМЕРЫ ПОХОЖИХ ИЕРОГЛИФОВ (СЛОВ) ДЛЯ ТЕКУЩЕГО ЗАПРОСA:
       ${context}
       `
 
@@ -314,64 +309,6 @@ class LlmService {
       content,
       PinyinHieroglyphsSchema,
     )
-  }
-
-  async checkDrawing(params: HanziCheckPayload) {
-    const { userImage, targetWord, targetImage } = params
-
-    // 1. Валидация
-    if (!userImage)
-      throw new Error('Missing required parameter: userImage.')
-    if (!targetWord && !targetImage)
-      throw new Error('Must provide targetWord or targetImage.')
-
-    // 2. Конфигурация для выбора payload getter'а
-    interface PayloadConfig {
-      condition: (p: HanziCheckPayload) => boolean
-      getPayload: (p: HanziCheckPayload) => AiRequestPrompts
-    }
-
-    const payloadConfigs: PayloadConfig[] = [
-      {
-        condition: p => !!p.targetWord && !!p.targetImage,
-        getPayload: p => getHanziDrawingAll({ user: { targetWord: p.targetWord!, targetImage: p.targetImage!, userImage: p.userImage } }),
-      },
-      {
-        condition: p => !!p.targetWord,
-        getPayload: p => getHanziDrawingImageAndText({ user: { targetWord: p.targetWord!, userImage: p.userImage } }),
-      },
-      {
-        condition: p => !!p.targetImage, // Эта ветка будет выбрана, если предыдущие не сработали
-        getPayload: p => getHanziDrawingImageAndImage({ user: { targetImage: p.targetImage!, userImage: p.userImage } }),
-      },
-    ]
-
-    // 3. Находим подходящую конфигурацию и генерируем payload
-    const config = payloadConfigs.find(c => c.condition(params))
-
-    if (!config) {
-      // Эта ситуация не должна возникнуть из-за валидации выше, но для полноты картины
-      throw new Error('Internal error: Could not determine AI payload configuration.')
-    }
-
-    const aiRequestPayload = config.getPayload(params)
-
-    // 4. Общий код для вызова AI и обработки ответа (как в Варианте 1)
-    const aiModelOptions = { model: 'gemini-flash-latest' } satisfies AiRequestOptions
-    const responseSchema = HanziDrawingSchema
-
-    const aiResponse = await createAiChatRequest(aiRequestPayload, aiModelOptions)
-
-    if (!aiResponse?.choices?.[0]?.message?.content) {
-      throw new Error('Invalid AI response structure received.')
-    }
-
-    const processedResponse = await this.processAiResponse(
-      aiResponse.choices[0].message.content,
-      responseSchema,
-    )
-
-    return processedResponse
   }
 
   async textToSpeech(params: TextToSpeechPayload) {
@@ -502,7 +439,7 @@ class LlmService {
     const { system = '', user = '' } = params
     const response = await createAiChatRequest(
       { system, user },
-      { model: 'gemini-flash-lite-latest', response_format: { type: params.responseType } },
+      { model: 'gemini-2.5-flash-lite', response_format: { type: params.responseType } },
     )
     const rawData = response.choices[0].message.content?.trim()
 
@@ -510,6 +447,23 @@ class LlmService {
       throw new Error('_', { cause: 'Failed to generate content.' })
 
     return rawData
+  }
+
+  async handwritingRecognize(payload: HandwritingPayload) {
+    const { imageDataUrl } = payload
+
+    // eslint-disable-next-line node/prefer-global/buffer
+    const imageBuffer = Buffer.from(imageDataUrl.split(',')[1], 'base64')
+
+    try {
+      const characters = await tesseractService.recognize(imageBuffer)
+      return characters
+    }
+    catch (error: any) {
+      console.error('Recognition service error:', error)
+      const errorMessage = error?.message || 'Unknown recognition error'
+      throw new Error(`Recognition engine failed: ${errorMessage}`)
+    }
   }
 }
 
