@@ -3,7 +3,7 @@
  */
 export interface PinyinAnalysis {
   toneMark: string
-  toneNumber: 1 | 2 | 3 | 4 | 5
+  toneNumber: ToneType
   position: number
   rawPinyin: string
   initial: string
@@ -496,8 +496,6 @@ function segmentPinyin(pinyin: string): string[] {
   return result
 }
 
-// --- КОНЕЦ НОВОГО БЛОКА ---
-
 /**
  * Анализирует строку пиньиня и возвращает детальную информацию по каждому слогу.
  * @param pinyin - Строка с пиньинем (например, "nǐ hǎo" или "Běijīng").
@@ -511,7 +509,7 @@ function analyzePinyin(pinyin: string): PinyinAnalysis[] {
   for (const syllable of syllables) {
     const normalizedSyllable = syllable.normalize('NFD')
     let toneMark: ToneCharacter | string = ''
-    let toneNumber: 1 | 2 | 3 | 4 | 5 = 5
+    let toneNumber: ToneType = 0
     let position = -1
     let rawPinyin = ''
 

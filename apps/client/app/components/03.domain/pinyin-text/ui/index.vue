@@ -48,14 +48,14 @@ function getTone(index: number) {
       :key="index"
       class="pinyin-part"
       :class="{ tone: isTone(index) }"
-      :style="{ color: isTone(index) ? color(getTone(index).type) : '' }"
+      :style="{ color: isTone(index) ? color(getTone(index)!.type) : '' }"
     >
       {{ part }}
       <span
         v-if="isTone(index)"
         class="pinyin-tone"
       >
-        {{ pinyinTone[getTone(index).type] }}
+        {{ pinyinTone[getTone(index)!.type] }}
       </span>
     </span>
   </span>

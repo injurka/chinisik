@@ -1,4 +1,5 @@
 export enum RouteNames {
+  Home = 'index',
   Keys = 'keys',
   Pinyin = 'pinyin',
   Glossary = 'glossary',
@@ -22,6 +23,7 @@ export enum RouteNames {
 }
 
 export const RoutePaths = {
+  Home: () => '/',
   Keys: {
     Index: () => '/keys',
     Tab: (value: 'list' | 'lab') => `/keys?tab=${value}`,

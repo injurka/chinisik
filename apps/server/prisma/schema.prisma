@@ -11,36 +11,36 @@ datasource db {
 //* ==== Models ==================================================================== *//
 
 model User {
-  id         Int      @id @unique @default(autoincrement())
-  email      String?  @unique
-  name       String?
-  password   String?
-  avatarUrl  String?
+  id        Int     @id @unique @default(autoincrement())
+  email     String? @unique
+  name      String?
+  password  String?
+  avatarUrl String?
 
-  githubId   String? @unique
-  googleId   String? @unique
+  githubId String? @unique
+  googleId String? @unique
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   UserPermission UserPermission[]
 
-  @@map(name: "user")
-
-  refreshTokens RefreshToken[]
-  LinguisticAnalysisBase LinguisticAnalysisBase[]
+  refreshTokens           RefreshToken[]
+  LinguisticAnalysisBase  LinguisticAnalysisBase[]
   LinguisticAnalysisError LinguisticAnalysisError[]
+
+  @@map(name: "user")
 }
 
 model RefreshToken {
-  id           Int      @id @unique @default(autoincrement())
-  token        String   @unique
-  userId       Int
-  expiresAt    DateTime
-  createdAt    DateTime @default(now())
-  
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  id        Int      @id @unique @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
   @@map(name: "refresh_tokens")
 }
@@ -63,8 +63,8 @@ model EmailVerificationCode {
 }
 
 model HieroglyphKey {
-  id            Int      @id @default(autoincrement())
-  index         Int      @unique
+  id            Int     @id @default(autoincrement())
+  index         Int     @unique
   glyph         String
   alternative   String?
   pinyin        String
@@ -88,7 +88,7 @@ model Cms {
 //* ==== LinguisticAnalysis ======================================================== *//
 
 model LinguisticAnalysisBase {
-  id                 Int    @id @unique @default(autoincrement())
+  id                 Int                        @id @unique @default(autoincrement())
   type               String
   userId             Int
   model              String
@@ -97,7 +97,7 @@ model LinguisticAnalysisBase {
   totalTokens        Int
   generationDuration Int
   dataType           LinguisticAnalysisDataType
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
@@ -111,19 +111,19 @@ model LinguisticAnalysisBase {
 }
 
 model LinguisticAnalysisJson {
-  id                 Int    @id @unique
-  data               Json
+  id   Int  @id @unique
+  data Json
 
-  base               LinguisticAnalysisBase @relation(fields: [id], references: [id], onDelete: Cascade)
+  base LinguisticAnalysisBase @relation(fields: [id], references: [id], onDelete: Cascade)
 
   @@map(name: "linguistic_analysis_json")
 }
 
 model LinguisticAnalysisMarkdown {
-  id                 Int    @id @unique
-  data               String
+  id   Int    @id @unique
+  data String
 
-  base               LinguisticAnalysisBase @relation(fields: [id], references: [id], onDelete: Cascade)
+  base LinguisticAnalysisBase @relation(fields: [id], references: [id], onDelete: Cascade)
 
   @@map(name: "linguistic_analysis_markdown")
 }
@@ -134,11 +134,11 @@ enum LinguisticAnalysisDataType {
 }
 
 model LinguisticAnalysisError {
-  id             Int    @id @unique @default(autoincrement())
-  userId         Int
-  model          String
-  sourceValue    String
-  error          String
+  id          Int    @id @unique @default(autoincrement())
+  userId      Int
+  model       String
+  sourceValue String
+  error       String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -152,13 +152,13 @@ model LinguisticAnalysisError {
 //* ==== HSK ======================================================================= *//
 
 model HieroglyphHsk {
-  id                Int     @id @default(autoincrement())
-  glyph             String
-  traditionalGlyph  String
-  level             Int
-  pinyin            String
-  
-  translation       Json
+  id               Int    @id @default(autoincrement())
+  glyph            String
+  traditionalGlyph String
+  level            Int
+  pinyin           String
+
+  translation Json
 
   @@map(name: "hieroglyph_hsk")
 }
@@ -181,7 +181,7 @@ model PinyinInitial {
   pos  Int
 
   initialsFinals PinyinInitialsFinals[]
-  
+
   @@map(name: "pinyin_initial")
 }
 
@@ -211,6 +211,13 @@ model PinyinInitialsFinals {
   @@map(name: "pinyin_initial_finals")
 }
 
+model DayMaterial {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @unique @db.Date
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 //* ==== Enums ==================================================================== *//
 

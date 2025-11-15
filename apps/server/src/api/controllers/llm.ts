@@ -8,7 +8,7 @@ import { ChatCompletionContentPartSchema } from '~/models/llm/open-ai.schema'
 import { PinyinHieroglyphsSchema } from '~/models/llm/pinyin-hieroglyphs.schema'
 import { LlmService } from '~/services'
 import { AI_MODELS, AI_TTS_MODELS } from '~/utils/ai/request'
-import { validPinyinSyllables } from '~/utils/constant'
+import { DEFAULT_LLM_MODEL, validPinyinSyllables } from '~/utils/constant'
 
 const TAG = 'llm'
 
@@ -34,7 +34,7 @@ class LlmController extends AController {
   private linguisticAnalysis = () => {
     const BodySchema = z.object({
       value: z.string().max(100).default('打电话'),
-      model: z.enum(AI_MODELS).default('gemini-flash-latest'),
+      model: z.enum(AI_MODELS).default(DEFAULT_LLM_MODEL),
     })
 
     const route = createRoute({
@@ -82,7 +82,7 @@ class LlmController extends AController {
   private linguisticAnalysisFlat = () => {
     const BodySchema = z.object({
       value: z.string().max(100).default('打电话'),
-      model: z.enum(AI_MODELS).default('gemini-flash-latest'),
+      model: z.enum(AI_MODELS).default(DEFAULT_LLM_MODEL),
     })
 
     const route = createRoute({

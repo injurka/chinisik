@@ -3,8 +3,7 @@ import { DialogWithClose } from '~/components/02.shared/dialog-with-close'
 import { PageLoader } from '~/components/02.shared/page-loader'
 import { HaoticLines } from '~/components/03.domain/haotic-lines'
 import { IframeViewer } from '~/components/03.domain/iframe-viewer'
-import { PinyinText } from '~/components/03.domain/pinyin-text'
-import { analyzePinyin } from '~/shared/lib'
+import { PinyinTextRaw } from '~/components/03.domain/pinyin-text'
 
 interface Props {
   hieroglyph?: HieroglyphKey
@@ -33,15 +32,6 @@ const isLoadingExample = computed(() => useRequestStatus([RequestKeys.KEY_HIEROG
 const isExampleHidden = computed<boolean>(() => !!example.value || isLoadingExample.value)
 const apiErrorExample = computed(() => useRequestError(RequestKeys.KEY_HIEROGLYPH))
 const abortController = ref<AbortController>(new AbortController())
-
-const pinyinData = computed(() => {
-  if (!props.hieroglyph?.pinyin)
-    return null
-
-  const analysis = analyzePinyin(props.hieroglyph.pinyin)
-
-  return analysis[0]
-})
 
 function generateExample() {
 //  TODO
@@ -79,14 +69,8 @@ function onOpenWiki() {
             :viewport-el="hieroglyphEl"
           />
           <div class="hieroglyph-item item">
-            <div v-if="pinyinData" class="item-pinyin">
-              <PinyinText
-                :pinyin="pinyinData.rawPinyin"
-                :tone="{
-                  index: pinyinData.position,
-                  type: pinyinData.toneNumber as ToneType,
-                }"
-              />
+            <div v-if="hieroglyph?.pinyin" class="item-pinyin">
+              <PinyinTextRaw :pinyin="hieroglyph.pinyin" />
               <div class="pinyin-tran">
                 {{ data.hieroglyph.transcription }}
               </div>

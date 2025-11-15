@@ -1,4 +1,5 @@
 import OpenAI from 'openai'
+import { DEFAULT_LLM_MODEL } from '../constant'
 
 // Chat Models
 const AI_HUBMIX_MODELS_CHAT = [
@@ -91,7 +92,7 @@ export async function createAiChatRequest(
   options?: AiRequestOptions,
 ) {
   const mergedOptions = {
-    model: 'gemini-flash-latest' satisfies AiChatModel,
+    model: DEFAULT_LLM_MODEL satisfies AiChatModel,
     response_format: { type: 'json_object' as 'json_object' | 'text' },
     temperature: 0.4,
     ...options,
@@ -119,16 +120,16 @@ export async function createAiChatRequest(
     stream: false,
     web_search_options: mergedOptions.model.includes('search')
       ? {
-          user_location: {
-            approximate: {
-              city: '北京',
-              country: '中国',
-              region: '北京',
-              timezone: 'Asia/Shanghai',
-            },
-            type: 'approximate',
+        user_location: {
+          approximate: {
+            city: '北京',
+            country: '中国',
+            region: '北京',
+            timezone: 'Asia/Shanghai',
           },
-        }
+          type: 'approximate',
+        },
+      }
       : undefined,
   })
 }

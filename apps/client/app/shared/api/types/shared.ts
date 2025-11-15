@@ -8,4 +8,5 @@ export enum ApiNames {
   LinguisticAnalysis = 'linguisticAnalysis',
   Quiz = 'quiz',
   Books = 'books',
+  DayMaterial = 'dayMaterial',
 }

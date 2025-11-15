@@ -25,13 +25,18 @@ const contentType = defineModel<string>('contentType', { default: 'sections' })
 
 const navGroups: NavGroup[] = [
   {
+    title: 'Навигация',
+    items: [
+      { name: 'Главная', icon: 'mdi:home-outline', routeName: RouteNames.Home, routePath: RoutePaths.Home() },
+    ],
+  },
+  {
     title: 'Обучение',
     items: [
       { name: 'Ключи', icon: 'mdi:key', routeName: RouteNames.Keys, routePath: RoutePaths.Keys.Tab('list') },
       { name: 'Пиньин', icon: 'mdi:translate', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin() },
       { name: 'HSK словарь', icon: 'mdi:trophy-broken', routeName: RouteNames.HSK, routePath: RoutePaths.HSK.Tab('about') },
       { name: 'Книги', icon: 'mdi:book-open-page-variant', routeName: RouteNames.Books, routePath: RoutePaths.Books.Index() },
-      // { name: 'Аудио Квиз', icon: 'mdi:headphones', routeName: RouteNames.QuizAudio, routePath: RoutePaths.Quiz.Audio() },
       { name: 'Тематический словарь', icon: 'mdi:book-open-variant', routeName: RouteNames.ThematicDictionary, routePath: RoutePaths.ThematicDictionary.Sections() },
       { name: 'Глоссарий', icon: 'mdi:book-alphabet', routeName: RouteNames.Glossary, routePath: RoutePaths.Glossary.Index() },
     ],
@@ -67,13 +72,31 @@ function navigateTo(path: string) {
     mobile-breakpoint="xl"
   >
     <header class="header">
-      <div v-if="contentType === 'sections'" class="header-title">
-        Разделы
+      <div class="header-left">
+        <Transition name="smooth-appear" mode="out-in">
+          <button v-if="contentType === 'slot' && canGoBack" class="header-back" @click="contentType = 'sections'">
+            <Icon name="mdi:arrow-left" size="22" />
+            <span v-if="!isMobile">Назад</span>
+          </button>
+        </Transition>
       </div>
-      <button v-else-if="contentType === 'slot' && canGoBack" class="header-back" @click="contentType = 'sections'">
-        <Icon name="mdi:arrow-left" size="20" />
-        <span>Вернуться к разделам</span>
-      </button>
+
+      <div class="header-title">
+        <Transition name="smooth-appear" mode="out-in">
+          <span :key="contentType">{{ contentType === 'sections' ? 'Разделы' : 'Меню' }}</span>
+        </Transition>
+      </div>
+
+      <div class="header-right">
+        <button
+          class="header-home"
+          :class="{ 'is-active': $route.name === RouteNames.Home }"
+          title="На главную"
+          @click="navigateTo(RoutePaths.Home())"
+        >
+          <Icon name="mdi:home-outline" size="24" />
+        </button>
+      </div>
     </header>
 
     <main class="main-content">
@@ -146,31 +169,54 @@ function navigateTo(path: string) {
   }
 
   .header {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: center;
     height: 56px;
-    padding: 0 16px;
+    padding: 0 12px;
     border-bottom: 1px solid var(--border-primary-color);
     flex-shrink: 0;
-    color: var(--fg-secondary-color);
+
+    &-left {
+      justify-self: start;
+    }
+
+    &-right {
+      justify-self: end;
+    }
 
     &-title {
       font-size: 1.25rem;
       font-weight: 600;
+      color: var(--fg-secondary-color);
     }
 
-    &-back {
+    &-back,
+    &-home {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 500;
       color: var(--fg-primary-color);
-      transition: color 0.2s ease;
+      transition: all 0.2s ease;
+      padding: 8px 12px;
+      border-radius: 22px;
+
       &:hover {
         color: var(--fg-action-color);
+        background-color: var(--bg-tertiary-color);
+      }
+    }
+
+    &-home {
+      padding: 8px; // make it round
+      border-radius: 50%;
+
+      &.is-active {
+        color: var(--fg-accent-color);
+        background-color: rgba(var(--bg-accent-color-rgb), 0.1);
       }
     }
   }
@@ -193,6 +239,8 @@ function navigateTo(path: string) {
     font-size: 0.8rem;
     font-weight: 500;
     color: var(--fg-secondary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .group-items {
@@ -254,4 +302,4 @@ function navigateTo(path: string) {
     }
   }
 }
-</style>
+</style>```

@@ -58,7 +58,7 @@ onMounted(() => {
 
     <div class="header-content">
       <div class="header-nav">
-        <div class="logo">
+        <div v-ripple class="logo" @click="navigateTo(RoutePaths.Home())">
           <Icon class="logo-icon" name="game-icons:sea-dragon" size="24" />
         </div>
         <VBtn
@@ -161,7 +161,17 @@ onMounted(() => {
   &-nav {
     .logo {
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
       margin: 0 8px;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: var(--bg-tertiary-color);
+      }
 
       &-title {
         margin-left: 8px;

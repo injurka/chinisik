@@ -1,5 +1,6 @@
 export * from './auth'
 export * from './content'
+export * from './day-material'
 export * from './hieroglyph-hsk'
 export * from './hieroglyph-key'
 export * from './linguistic-analysis'

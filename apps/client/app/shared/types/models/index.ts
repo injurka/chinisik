@@ -1,5 +1,6 @@
 export * from './auth'
 export * from './book'
+export * from './day-material'
 export * from './hiroglyph'
 export * from './linguistic-analysis'
 export * from './llm'

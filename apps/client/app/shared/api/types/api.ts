@@ -15,6 +15,7 @@ export type ServiceMethods
   | ILinguisticAnalysisMethods
   | IQuizMethods
   | IBooksMethods
+  | IDayMaterialMethods
 
 export interface IApi {
   keys: IKeysMethods
@@ -26,6 +27,7 @@ export interface IApi {
   linguisticAnalysis: ILinguisticAnalysisMethods
   quiz: IQuizMethods
   books: IBooksMethods
+  dayMaterial: IDayMaterialMethods
 }
 export interface IService {
   createMethods: (instance: Instance) => ServiceMethods

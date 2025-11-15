@@ -1,3 +1,4 @@
+import { Scheduler } from '~/utils/scheduler'
 import { tesseractService } from '~/utils/tesseract'
 import Server, { logger } from './server'
 
@@ -11,6 +12,8 @@ async function bootstrap() {
   }
 
   const app = Server.getServer()
+
+  Scheduler.getInstance()
 
   return {
     port: process.env.PORT || 8080,

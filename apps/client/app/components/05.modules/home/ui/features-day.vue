@@ -1,67 +1,27 @@
 <script setup lang="ts">
 import type { HieroglyphWordVariant } from '~/components/03.domain/hieroglyph-word'
+import { PageLoader } from '~/components/02.shared/page-loader'
 import { StyleSwitcher } from '~/components/02.shared/style-switcher'
 import { HieroglyphWord } from '~/components/03.domain/hieroglyph-word'
 import { VOCABULARY_STYLE_VARIANT } from '~/shared/constant'
+import { useNextDayCountdown } from '../composables'
 import FeaturesDayQuiz from './features-day-quiz.vue'
 
-// Tabs
-const activeTab = ref('info')
+// API Fetching
+const { api } = useApi()
+const { data: dayFeatures, pending, error } = await useAsyncData(
+  'day-material',
+  () => api.dayMaterial.v1.getToday(),
+)
 
-// Timer
-const timeLeft = ref(0)
+// Timer Logic
+const { hours, minutes, seconds } = useNextDayCountdown()
 
-const hours = computed(() => Math.floor(timeLeft.value / (1000 * 60 * 60)).toString().padStart(2, '0'))
-const minutes = computed(() => Math.floor((timeLeft.value % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0'))
-const seconds = computed(() => Math.floor((timeLeft.value % (1000 * 60)) / 1000).toString().padStart(2, '0'))
-
-let timerInterval: NodeJS.Timeout | null = null
-
-function updateTimer() {
-  const now = new Date()
-  const tomorrow = new Date(now)
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  tomorrow.setHours(0, 0, 0, 0)
-  timeLeft.value = tomorrow.getTime() - now.getTime()
-}
-
-onMounted(() => {
-  updateTimer()
-  timerInterval = setInterval(updateTimer, 1000)
-})
-
-onUnmounted(() => {
-  if (timerInterval) {
-    clearInterval(timerInterval)
-  }
-})
-
-// Existing script
+// Component state
 const dayFeatureMenu = ref(false)
+const activeTab = ref('info')
 const localVariant = useCookie<HieroglyphWordVariant | 'global'>(VOCABULARY_STYLE_VARIANT, { default: () => 5 })
 const displayVariant = computed(() => (localVariant.value === 'global' ? undefined : localVariant.value))
-const dayFeatures = {
-  vocabulary: {
-    theme: 'Офис',
-    items: [
-      { chinese: '办公室', pinyin: 'bàn gōng shì', translation: 'Офис' },
-      { chinese: '电脑', pinyin: 'diàn nǎo', translation: 'Компьютер' },
-      { chinese: '会议', pinyin: 'huì yì', translation: 'Собрание, конференция' },
-      { chinese: '打印机', pinyin: 'dǎ yìn jī', translation: 'Принтер' },
-    ],
-    description: 'Пополните свой словарный запас словами, которые пригодятся в рабочей обстановке.',
-  },
-  grammar: {
-    title: 'Структура предложения',
-    rule: 'Базовый порядок слов в китайском предложении — Подлежащее-Сказуемое-Дополнение (SVO), как и в русском. Это основа, которую легко запомнить.',
-    example: {
-      chinese: '我爱你',
-      pinyin: 'wǒ ài nǐ',
-      translation: 'Я люблю тебя',
-    },
-    description: 'Освойте это правило, чтобы строить простые и понятные предложения.',
-  },
-}
 </script>
 
 <template>
@@ -93,10 +53,19 @@ const dayFeatures = {
       </v-btn-toggle>
     </div>
 
-    <VWindow v-model="activeTab" class="mt-2">
+    <div v-if="pending" class="loader-container">
+      <PageLoader />
+      <p>Загружаем материалы дня...</p>
+    </div>
+    <div v-else-if="error" class="error-container">
+      <h3>Ошибка!</h3>
+      <p>Не удалось загрузить материалы дня. Попробуйте обновить страницу.</p>
+      <pre>{{ error.message }}</pre>
+    </div>
+    <VWindow v-else-if="dayFeatures" v-model="activeTab" class="mt-2">
       <VWindowItem value="info">
         <div class="day-feature-grid">
-          <!-- Блок "Тема дня" -->
+          <!-- Vocabulary Block -->
           <div class="feature-block vocabulary">
             <div class="feature-title-container">
               <h3 class="feature-title">
@@ -115,8 +84,8 @@ const dayFeatures = {
             <div class="vocabulary-list">
               <HieroglyphWord
                 v-for="item in dayFeatures.vocabulary.items"
-                :key="item.chinese"
-                :glyph="item.chinese"
+                :key="item.glyph"
+                :glyph="item.glyph"
                 :pinyin="item.pinyin"
                 :translate="item.translation"
                 :variant="displayVariant"
@@ -127,7 +96,7 @@ const dayFeatures = {
             </p>
           </div>
 
-          <!-- Блок "Грамматика дня" -->
+          <!-- Grammar Block -->
           <div class="feature-block grammar">
             <div class="feature-title-container">
               <h3 class="feature-title">
@@ -140,14 +109,34 @@ const dayFeatures = {
             </p>
             <div class="grammar-example">
               <HieroglyphWord
-                :glyph="dayFeatures.grammar.example.chinese"
+                :glyph="dayFeatures.grammar.example.glyph"
                 :pinyin="dayFeatures.grammar.example.pinyin"
                 :translate="dayFeatures.grammar.example.translation"
-                :variant="5"
+                :variant="dayFeatures.grammar.example.glyph.length > 5 ? 4 : 5"
               />
             </div>
             <p class="feature-description">
               {{ dayFeatures.grammar.description }}
+            </p>
+          </div>
+
+          <!-- Proverb Block -->
+          <div class="feature-block proverb-block">
+            <div class="feature-title-container">
+              <h3 class="feature-title">
+                <span>{{ dayFeatures.proverb.title }}</span>
+              </h3>
+            </div>
+            <div class="proverb-content">
+              <HieroglyphWord
+                :glyph="dayFeatures.proverb.glyph"
+                :pinyin="dayFeatures.proverb.pinyin"
+                :translate="dayFeatures.proverb.translation"
+                :variant="4"
+              />
+            </div>
+            <p class="feature-description">
+              {{ dayFeatures.proverb.description }}
             </p>
           </div>
         </div>
@@ -160,6 +149,36 @@ const dayFeatures = {
 </template>
 
 <style scoped lang="scss">
+.loader-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  background-color: var(--bg-secondary-color);
+  border-radius: 12px;
+  padding: 2rem;
+  color: var(--fg-secondary-color);
+}
+
+.error-container {
+  h3 {
+    color: var(--fg-error-color);
+  }
+  pre {
+    margin-top: 1rem;
+    background-color: var(--bg-tertiary-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--fg-tertiary-color);
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
 .section-title-container {
   text-align: center;
   margin-bottom: 2rem;
@@ -211,10 +230,14 @@ const dayFeatures = {
 
 .day-feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .feature-block {
@@ -256,6 +279,7 @@ const dayFeatures = {
   color: var(--fg-tertiary-color);
   margin-top: auto;
   padding-top: 1rem;
+  border-top: 1px dashed var(--border-secondary-color);
 }
 
 .vocabulary-list {
@@ -263,6 +287,10 @@ const dayFeatures = {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  .hw-word {
+    margin: 0;
+  }
 }
 
 .grammar-rule {
@@ -271,8 +299,6 @@ const dayFeatures = {
 }
 
 .grammar-example {
-  background: var(--bg-tertiary-color);
-  padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
   font-size: 1.1rem;
@@ -286,9 +312,64 @@ const dayFeatures = {
       .hw-pinyin-translate {
         width: 100%;
       }
-      .hw-translate {
-        border-top: 2px dashed var(--border-primary-color);
+
+      &.variant-5 {
+        .hw-translate {
+          border-top: 2px dashed var(--border-primary-color);
+        }
       }
+
+      &.variant-4 {
+        border: 0;
+        width: 100%;
+        border: none;
+        flex-grow: 1;
+
+        .hw-pinyin-translate {
+          width: 100%;
+        }
+        .hw-glyph {
+          border-radius: 8px;
+          border: 1px solid var(--border-accent-color);
+        }
+      }
+    }
+  }
+}
+
+.proverb-block {
+  grid-column: 1 / -1;
+  .feature-title-container {
+    justify-content: center;
+  }
+  .feature-description {
+    text-align: center;
+  }
+}
+.proverb-content {
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  :deep(.hw-word) {
+    margin: 0;
+    border: none;
+
+    .variant-4 {
+      border: 0;
+    }
+
+    .hw-pinyin-translate {
+      width: 100%;
+    }
+    .hw-glyph {
+      border-radius: 8px;
+      border: 1px solid var(--border-accent-color);
     }
   }
 }

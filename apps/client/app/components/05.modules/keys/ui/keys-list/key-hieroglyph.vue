@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { ControlHieroglyphKey } from '../../store/keys.store'
 import { useElementVisibility } from '@vueuse/core'
-import { PinyinText } from '~/components/03.domain/pinyin-text'
-import { analyzePinyin, cancelSpeech, initSpeechSynthesis, voiceTheText } from '~/shared/lib'
+import { PinyinTextRaw } from '~/components/03.domain/pinyin-text'
+import { cancelSpeech, initSpeechSynthesis, voiceTheText } from '~/shared/lib'
 
 interface Props {
   control: ControlHieroglyphKey
@@ -20,15 +20,6 @@ const isSpeaking = ref<boolean>(false)
 
 const shouldShowPinyin = computed<boolean>(() => props.control.isPinyin || isFullyShowed.value)
 const shouldShowTranslate = computed<boolean>(() => props.control.isTranslate || isFullyShowed.value)
-
-const pinyinData = computed(() => {
-  if (!props.hieroglyph.pinyin)
-    return null
-
-  const analysis = analyzePinyin(props.hieroglyph.pinyin)
-
-  return analysis[0]
-})
 
 function handleVoiceClick() {
   isSpeaking.value
@@ -64,14 +55,8 @@ onUnmounted(() => {
       </div>
 
       <Transition name="slide-up">
-        <div v-if="shouldShowPinyin && isElementVisible && pinyinData" class="item-pinyin">
-          <PinyinText
-            :pinyin="pinyinData.rawPinyin"
-            :tone="{
-              index: pinyinData.position,
-              type: pinyinData.toneNumber as ToneType,
-            }"
-          />
+        <div v-if="shouldShowPinyin && isElementVisible && hieroglyph.pinyin" class="item-pinyin">
+          <PinyinTextRaw :pinyin="hieroglyph.pinyin" />
           <div
             v-show="control.isTranscription && hieroglyph.transcription"
             class="pinyin-tran"

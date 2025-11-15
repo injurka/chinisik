@@ -4,6 +4,7 @@ import {
   authService,
   booksService,
   cmsService,
+  dayMaterialService,
   hskService,
   keysService,
   linguisticAnalysisService,
@@ -22,6 +23,7 @@ const services: IService[] = [
   pinyinService,
   quizService,
   booksService,
+  dayMaterialService,
 ]
 
 interface CreateApiParams {
@@ -38,6 +40,7 @@ function createApi(params: Partial<CreateApiParams>) {
     baseUrl = '',
   } = params
 
+  // eslint-disable-next-line no-console
   console.log(`💫 %c[API]`, 'color: #9400D3; font-weight: bold;', 'baseUrl:', baseUrl)
 
   const api = {} as IApi

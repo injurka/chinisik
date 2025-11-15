@@ -1,9 +1,12 @@
 <script lang="ts" setup>
+import type { HieroglyphWordVariant } from '~/components/03.domain/hieroglyph-word'
 import PageLoader from '~/components/02.shared/page-loader/ui/page-loader.vue'
 import { HieroglyphWord } from '~/components/03.domain/hieroglyph-word'
 import HskWordsControl from '~/components/05.modules/hsk/words/ui/hsk-words-control.vue'
 import { useTextToSpeechPopup } from '~/shared/composables'
-import { useHskControls, useHskWords } from '../composables'
+import { useHskWords } from '../composables'
+
+const HSK_WORDS_STYLE_VARIANT = 'hsk_words_style_variant'
 
 const {
   HSK_LEVELS,
@@ -19,7 +22,8 @@ const {
   error,
 } = await useHskWords()
 
-const { controlMenu, controls, toggleControl } = useHskControls()
+const listVariant = useCookie<HieroglyphWordVariant | 'global'>(HSK_WORDS_STYLE_VARIANT, { default: () => 5 })
+const controlMenu = ref(false)
 
 const wordsListContainer = ref<HTMLElement | null>(null)
 const { popup, isSpeaking, handleVoiceButtonClick } = useTextToSpeechPopup(
@@ -76,7 +80,7 @@ watch(page, () => {
           </v-btn>
         </template>
 
-        <HskWordsControl v-model="controls" @toggle-control="toggleControl" />
+        <HskWordsControl v-model="listVariant" />
       </v-menu>
     </div>
 
@@ -99,7 +103,7 @@ watch(page, () => {
       <HieroglyphWord
         v-for="item in data.data"
         :key="item.id"
-        :variant="controls.isFixedStyle ? 5 : undefined"
+        :variant="listVariant === 'global' ? undefined : listVariant"
         :glyph="item.glyph"
         :translate="item.translation.ru"
         :pinyin="item.pinyin"

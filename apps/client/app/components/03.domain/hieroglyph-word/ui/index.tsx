@@ -40,7 +40,7 @@ const HieroglyphWordVarious = defineComponent({
       }
       else {
         voiceTheText(
-          props.glyph,
+          props.glyph!,
           () => { isSpeaking.value = true },
           () => { isSpeaking.value = false },
           'zh-CN',

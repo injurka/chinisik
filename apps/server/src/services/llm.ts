@@ -25,6 +25,7 @@ import { prisma } from '~/prisma'
 import { logger } from '~/server'
 import { createAiEmbeddingsRequest, loadOrCreateEmbeddings } from '~/utils/ai/embeddings'
 import { createAiChatRequest, createAiSpeechRequest } from '~/utils/ai/request'
+import { DEFAULT_LLM_MODEL } from '~/utils/constant'
 import { generateDeterministicFilename } from '~/utils/hash'
 import { getOcrPrompt, getTranslatePrompt } from '~/utils/promt/image-to-text-translate'
 import {
@@ -383,7 +384,7 @@ class LlmService {
 
     const imageB64 = await fileToDataUrl(image)
 
-    const visionModel: AiChatModel = 'gemini-flash-latest'
+    const visionModel: AiChatModel = DEFAULT_LLM_MODEL
 
     // Step 1: OCR - Extract Chinese text from image
     const ocrPrompt = getOcrPrompt({ user: { imageB64 } })
@@ -410,7 +411,7 @@ class LlmService {
     }
 
     const translatePinyinPrompt = getTranslatePrompt({ user: { value: sourceText } })
-    const translationModel: AiChatModel = 'gemini-flash-latest'
+    const translationModel: AiChatModel = DEFAULT_LLM_MODEL
     try {
       const translatePinyinResponse = await createAiChatRequest(translatePinyinPrompt, {
         model: translationModel,

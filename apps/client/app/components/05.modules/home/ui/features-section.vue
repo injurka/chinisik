@@ -5,6 +5,7 @@ const features = [
   { name: 'HSK Словарь', icon: 'mdi:trophy-outline', path: RoutePaths.HSK.Tab('about') },
   { name: 'Книги', icon: 'mdi:book-open-page-variant-outline', path: RoutePaths.Books.Index() },
   { name: 'Тематический словарь', icon: 'mdi:book-open-variant', path: RoutePaths.ThematicDictionary.Sections() },
+  { name: 'Глоссарий', icon: 'mdi:book-alphabet', path: RoutePaths.Glossary.Index() },
   { name: 'Лингв. анализ', icon: 'mdi:layers-search-outline', path: RoutePaths.LinguisticAnalysis.Index() },
 ]
 </script>
