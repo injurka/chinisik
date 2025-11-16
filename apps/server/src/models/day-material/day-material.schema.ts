@@ -13,17 +13,19 @@ const VocabularySchema = z.object({
   description: z.string(),
 })
 
-const GrammarExampleSchema = z.object({
-  glyph: z.string(),
-  pinyin: z.string(),
-  translation: z.string(),
-  sound: z.string().nullable(),
-})
+const GrammarExampleSchema = z.array(
+  z.object({
+    glyph: z.string(),
+    pinyin: z.string(),
+    translation: z.string(),
+    sound: z.string().nullable(),
+  }),
+)
 
 const GrammarSchema = z.object({
   title: z.string(),
   rule: z.string(),
-  example: GrammarExampleSchema,
+  examples: GrammarExampleSchema,
   description: z.string(),
 })
 

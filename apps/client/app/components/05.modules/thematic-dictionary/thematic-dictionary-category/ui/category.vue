@@ -20,8 +20,6 @@ const { controlMenu, controls, toggleControl } = useThematicDictionaryCategoryCo
 
 const maxLines = 5
 
-console.log('content', props.category.content)
-
 const content = computed<JsonToDomChildren>(() => {
   const content = toRaw(props.category.content)
   const isFixedStyle = controls.value.isFixedStyle

@@ -2,6 +2,7 @@ import type { OpenAPIHono as Hono } from '@hono/zod-openapi'
 
 import {
   AuthController,
+  BookController,
   CmsController,
   DayMaterialController,
   HieroglyphHskController,
@@ -24,6 +25,7 @@ const COMBINE_V1 = {
     new PinyinController(),
     new LinguisticAnalysisController(),
     new DayMaterialController(),
+    new BookController(),
   ],
 }
 

@@ -1,4 +1,5 @@
 export * from './auth'
+export * from './book'
 export * from './content'
 export * from './day-material'
 export * from './hieroglyph-hsk'

@@ -2,18 +2,23 @@ import type { Log } from '~/utils/logger'
 import { PrismaClient } from '@prisma/client'
 import { Logger, LogType } from '~/utils/logger'
 
+import { mockBook } from './data/book'
 import { mockCms } from './data/cms'
+import { mockDayMaterial } from './data/day-material'
 import { mockHieroglyphKeys } from './data/hieroglyph-key'
 import { mockHsk } from './data/hsk'
 import { mockFinals, mockFinalsTone, mockInitials, mockInitialsFinals } from './data/pinyin'
 import { mockUser } from './data/user'
 import { mockUserPermission } from './data/user-permission'
+import { mockBookContent } from './data/book/book-content'
 
 const seeds = [
   // Keys
   { name: 'hieroglyphKey', data: [mockHieroglyphKeys] },
   // Content
   { name: 'cms', data: [mockCms] },
+  // Day Material
+  { name: 'dayMaterial', data: [mockDayMaterial] },
   // User
   { name: 'user', data: [mockUser] },
   { name: 'userPermission', data: [mockUserPermission] },
@@ -24,6 +29,9 @@ const seeds = [
   { name: 'pinyinInitialsFinals', data: [mockInitialsFinals] },
   // Hsk
   { name: 'hieroglyphHsk', data: [mockHsk] },
+  // Book
+  { name: 'book', data: [mockBook] },
+  { name: 'bookContent', data: [mockBookContent] },
 ]
 
 const prisma = new PrismaClient()
@@ -36,6 +44,8 @@ async function run() {
   logger.info('✨ Run seeds')
 
   for (const seed of seeds) {
+    let count = 0
+    logger.info(`- Seeding ${seed.name}...`)
     try {
       for (const rawData of seed.data) {
         const transformedData = [...await rawData()]
@@ -45,16 +55,18 @@ async function run() {
           await prisma[seed.name].create({
             data,
           })
+          count++
         }
       }
-      seedsStatus.push({ type: LogType.Success, message: seed.name })
+      seedsStatus.push({ type: LogType.Success, message: `Successfully seeded ${seed.name} (${count} records)` })
     }
     catch (e) {
-      seedsStatus.push({ type: LogType.Error, message: `${seed.name} | ${e}` })
+      seedsStatus.push({ type: LogType.Error, message: `Error seeding ${seed.name} | ${e} ` })
     }
   }
 
   logger.info('✨ All seeds finished')
+  logger.info('📊 Seeding Summary:')
 
   seedsStatus.forEach(({ type, message }) => logger[type](message))
 
@@ -62,6 +74,6 @@ async function run() {
 }
 
 run().catch((e) => {
-  logger.error('❌ Seed', e)
+  logger.error('❌ Seed failed with an unexpected error', e)
   process.exit(1)
 })

@@ -21,12 +21,11 @@ export interface DayMaterialGrammarExample {
 export interface DayMaterialGrammar {
   title: string
   rule: string
-  example: DayMaterialGrammarExample
+  examples: DayMaterialGrammarExample[]
   description: string
 }
 
 export interface DayMaterialProverb {
-  title: string
   glyph: string
   pinyin: string
   translation: string

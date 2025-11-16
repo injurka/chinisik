@@ -81,6 +81,7 @@ export class Scheduler {
   private async runGenerationJob() {
     this.isJobRunning = true
     logger.info('Starting daily material generation job...')
+
     try {
       await this.dayMaterialService.generateAndSaveNextDayMaterial()
     }

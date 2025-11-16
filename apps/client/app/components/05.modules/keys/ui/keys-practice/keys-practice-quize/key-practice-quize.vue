@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { HaoticLines } from '~/components/03.domain/haotic-lines'
-import { PinyinText } from '~/components/03.domain/pinyin-text'
+import { PinyinTextRaw } from '~/components/03.domain/pinyin-text'
 import { useCardQueue, useSwipeHandler } from './composables'
 
 interface Props {
@@ -107,13 +107,7 @@ const cardClass = computed(() => ({
           </h2>
 
           <div class="card-details-pinyin">
-            <PinyinText
-              :pinyin="currentCard.pinyin"
-              :tone="{
-                index: currentCard.toneIndex,
-                type: currentCard.toneType as ToneType,
-              }"
-            />
+            <PinyinTextRaw :pinyin="currentCard!.pinyin" />
           </div>
           <div class="card-details-translation">
             <p>{{ currentCard?.transcription }}</p>

@@ -18,6 +18,14 @@ const LLMs = [
 ]
 
 const formattedLLMs = ref(formatItems(LLMs))
+const errors = ref<string[]>([])
+const isError = ref<boolean>(false)
+
+const btnToggleValue = computed(() => {
+  return Object
+    .entries(typeSplitMapping)
+    .find(([_, value]) => value === control.value.dataType)?.[0]
+})
 
 function formatItems(items: any[]) {
   const result = []
@@ -36,14 +44,6 @@ function formatItems(items: any[]) {
   }
   return result
 }
-const errors = ref<string[]>([])
-const isError = ref<boolean>(false)
-
-const btnToggleValue = computed(() => {
-  return Object
-    .entries(typeSplitMapping)
-    .find(([_, value]) => value === control.value.dataType)?.[0]
-})
 
 function handleClickSubmit() {
   errors.value = []
@@ -88,76 +88,67 @@ function handleKeyDown(event: KeyboardEvent) {
         <v-btn
           variant="plain"
           icon="mdi-cube-send"
-          color="primary"
+          color="var(--fg-accent-color)"
           @click="handleClickSubmit"
         />
       </template>
     </v-text-field>
 
-    <v-select
-      v-model="control.model"
-      class="control-model"
-      :disabled="disabled"
-      density="compact"
-      hide-details
-      label="LLM модель"
-      :items="formattedLLMs"
-      item-title="title"
-      item-value="value"
-      variant="filled"
-    >
-      <template #selection="{ item }">
-        {{ item.title }}
-      </template>
+    <!-- Новая панель управления -->
+    <div class="control-toolbar">
+      <v-select
+        v-model="control.model"
+        class="control-model"
+        :disabled="disabled"
+        density="compact"
+        hide-details
+        label="LLM модель"
+        :items="formattedLLMs"
+        item-title="title"
+        item-value="value"
+        variant="solo"
+        flat
+      >
+        <template #item="{ item, props }">
+          <v-list-item
+            v-if="item.raw.header"
+            density="compact"
+            :title="item.raw.title"
+            :disabled="true"
+            class="group-header"
+          />
+          <v-list-item
+            v-else
+            density="compact"
+            v-bind="props"
+            :title="item.raw.title"
+          />
+        </template>
+      </v-select>
 
-      <template #item="{ item, props }">
-        <v-list-item
-          v-if="item.raw.header"
-          density="compact"
-          :title="item.raw.title"
-          :disabled="true"
-          class="group-header"
-        />
-        <v-list-item
-          v-else
-          density="compact"
-          v-bind="props"
-          :title="item.raw.title"
-        />
-      </template>
-    </v-select>
+      <v-divider vertical class="mx-2" />
 
-    <div class="control-additional">
-      <span>Выберите формат вывода для анализа.</span>
       <v-btn-toggle
         :disabled="disabled"
-        divided
-        variant="outlined"
+        variant="text"
         class="control-types"
         :model-value="btnToggleValue"
         @update:model-value="updateBtnToggleValue"
       >
-        <v-btn v-for="type in typeCopmonentMappingForControl" :key="type">
+        <v-btn
+          v-for="(type, key) in typeCopmonentMappingForControl"
+          :key="type"
+          :class="{ active: key.toLowerCase() === control.dataType }"
+        >
           {{ type }}
         </v-btn>
       </v-btn-toggle>
     </div>
-
-    <!-- <v-switch
-      v-model="isMarkdown"
-      :disabled="disabled"
-      class="control-md"
-      density="compact"
-      label="Вывод в Markdown"
-      color="var(--fg-accent-color)"
-      hide-details
-      append-icon="mdi-language-markdown"
-    /> -->
   </div>
   <v-snackbar
     v-model="isError"
     :timeout="2000"
-    color="red"
+    color="error"
   >
     <div v-for="error in errors" :key="error">
       {{ error }}
@@ -176,63 +167,61 @@ function handleKeyDown(event: KeyboardEvent) {
     border: none;
     padding: 0;
   }
+}
 
-  &-model {
-    margin-top: 8px;
-    color: var(--fg-secondary-color);
-    &:deep(.v-field) {
-      border-radius: 4px;
-    }
-    &:deep(.v-field__outline) {
-      display: none;
-    }
-  }
+.control-toolbar {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-secondary-color);
+  border-radius: 6px;
+  padding: 4px 8px;
 
-  > input {
-    font-weight: 500;
-  }
-
-  &-md {
-    margin-top: 8px;
-    margin-left: 8px;
-    color: var(--fg-secondary-color);
-  }
-
-  &-additional {
-    margin-top: 8px;
-    display: flex;
+  @include mobile() {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    > span {
-      color: var(--fg-tertiary-color);
-      font-size: 0.9rem;
-    }
-    > div {
-      margin-top: 4px;
-    }
+    align-items: stretch;
+    padding: 8px;
+    gap: 8px;
   }
 
-  &-types {
-    margin: 8px 0;
-    width: 100%;
-    :deep(.v-btn) {
-      flex-grow: 1;
-      color: var(--fg-primary-color);
-      font-size: 0.8rem !important;
+  .v-divider {
+    border-color: var(--border-secondary-color);
+    opacity: 1;
+    margin: 4px;
+  }
+}
 
-      @include mobile() {
-        font-size: 0.7rem !important;
-      }
+.control-model {
+  flex-grow: 1;
+
+  &:deep(.v-field) {
+    background-color: transparent !important;
+    box-shadow: none;
+  }
+}
+
+.control-types {
+  :deep(.v-btn) {
+    color: var(--fg-secondary-color);
+    font-size: 0.85rem !important;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
+    border-radius: 4px;
+    white-space: nowrap; // Предотвращаем перенос текста в кнопках
+
+    &.active {
+      background-color: var(--bg-primary-color);
+      color: var(--fg-accent-color);
+      font-weight: 700; // Выделяем активную кнопку жирным
     }
   }
 }
 
 .group-header {
   font-weight: bold;
-  color: var(--fg-tertiary-color); /* Adjust color as needed */
-  cursor: default; /* No pointer on hover */
-  user-select: none; /* Prevent text selection */
+  color: var(--fg-tertiary-color);
+  cursor: default;
+  user-select: none;
 }
 </style>

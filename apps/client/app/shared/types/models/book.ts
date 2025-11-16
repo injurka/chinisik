@@ -13,20 +13,6 @@ export type BookGeneralDifficulty = 'Начинающий' | 'Средний' | 
 // --- Модели для каталога и детальной страницы книги ---
 
 /**
- * Лексическая статистика по книге.
- */
-export interface LexicalProfile {
-  /** Общее количество уникальных слов в тексте. */
-  uniqueWords: number
-
-  /** Процент слов, относящихся к базовой лексике. */
-  basicVocabularyPercentage: number
-
-  /** Процент слов, относящихся к продвинутой лексике. */
-  advancedVocabularyPercentage: number
-}
-
-/**
  * Модель Book: Краткая информация для карточки в каталоге.
  * Содержит только необходимые данные для отображения на витрине.
  */
@@ -48,6 +34,9 @@ export interface Book {
 
   /** Общий уровень сложности. */
   difficulty: BookGeneralDifficulty
+
+  /** Общее количество уникальных слов в тексте. */
+  uniqueWords: number
 }
 
 /**

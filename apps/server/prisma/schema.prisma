@@ -211,12 +211,52 @@ model PinyinInitialsFinals {
   @@map(name: "pinyin_initial_finals")
 }
 
+//* ==== DayMaterial ======================================================== *//
+
 model DayMaterial {
-  id        Int      @id @default(autoincrement())
-  date      DateTime @unique @db.Date
-  content   Json
+  id Int @id @default(autoincrement())
+
+  date    DateTime @unique @db.Date
+  content Json
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+//* ==== Books ======================================================== *//
+
+model Book {
+  id                String  @id
+  title             String
+  author            String
+  originalTitle     String?
+  coverUrl          String
+  genre             String
+  summary           String
+  difficultyGeneral String
+  difficultyFormal  String
+  uniqueWords       Int
+
+  content BookContent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BookContent {
+  id           Int    @id @default(autoincrement())
+  bookId       String
+  pageNumber   Int
+  chapterTitle String
+
+  content Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([bookId, pageNumber])
 }
 
 //* ==== Enums ==================================================================== *//

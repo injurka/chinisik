@@ -109,10 +109,12 @@ const displayVariant = computed(() => (localVariant.value === 'global' ? undefin
             </p>
             <div class="grammar-example">
               <HieroglyphWord
-                :glyph="dayFeatures.grammar.example.glyph"
-                :pinyin="dayFeatures.grammar.example.pinyin"
-                :translate="dayFeatures.grammar.example.translation"
-                :variant="dayFeatures.grammar.example.glyph.length > 5 ? 4 : 5"
+                v-for="(example, index) in dayFeatures.grammar.examples"
+                :key="index"
+                :glyph="example.glyph"
+                :pinyin="example.pinyin"
+                :translate="example.translation"
+                :variant="example.glyph.length > 5 ? 4 : 5"
               />
             </div>
             <p class="feature-description">
@@ -124,7 +126,7 @@ const displayVariant = computed(() => (localVariant.value === 'global' ? undefin
           <div class="feature-block proverb-block">
             <div class="feature-title-container">
               <h3 class="feature-title">
-                <span>{{ dayFeatures.proverb.title }}</span>
+                <span>Поговорка:</span>
               </h3>
             </div>
             <div class="proverb-content">
@@ -339,9 +341,7 @@ const displayVariant = computed(() => (localVariant.value === 'global' ? undefin
 
 .proverb-block {
   grid-column: 1 / -1;
-  .feature-title-container {
-    justify-content: center;
-  }
+
   .feature-description {
     text-align: center;
   }

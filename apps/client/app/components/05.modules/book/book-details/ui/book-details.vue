@@ -26,14 +26,20 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
 
     <div v-else-if="book" class="details-layout">
       <div class="cover-section">
-        <NuxtImg
+        <img
+          :src="book.coverUrl"
+          :alt="`Обложка ${book.title}`"
+          class="cover-image"
+        >
+
+        <!-- <NuxtImg
           :src="book.coverUrl"
           :alt="`Обложка ${book.title}`"
           class="cover-image"
           provider="ipx"
           format="webp"
           placeholder
-        />
+        /> -->
         <VBtn
           :to="RoutePaths.Books.Read(bookId)"
           size="large"
@@ -92,34 +98,6 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
               <div class="lexical-stat">
                 <span class="label">Уникальных слов</span>
                 <span class="value">{{ book.lexicalProfile.uniqueWords.toLocaleString('ru-RU') }}</span>
-              </div>
-              <div class="lexical-progress-item">
-                <div class="progress-label">
-                  <span>Базовая лексика</span>
-                </div>
-                <VProgressLinear
-                  :model-value="book.lexicalProfile.basicVocabularyPercentage"
-                  color="success"
-                  bg-color="var(--bg-tertiary-color)"
-                  height="22"
-                  rounded
-                >
-                  <strong>{{ book.lexicalProfile.basicVocabularyPercentage }}%</strong>
-                </VProgressLinear>
-              </div>
-              <div class="lexical-progress-item">
-                <div class="progress-label">
-                  <span>Продвинутая лексика</span>
-                </div>
-                <VProgressLinear
-                  :model-value="book.lexicalProfile.advancedVocabularyPercentage"
-                  color="warning"
-                  bg-color="var(--bg-tertiary-color)"
-                  height="22"
-                  rounded
-                >
-                  <strong>{{ book.lexicalProfile.advancedVocabularyPercentage }}%</strong>
-                </VProgressLinear>
               </div>
             </div>
           </div>
@@ -277,17 +255,6 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
       font-weight: 600;
       color: var(--fg-accent-color);
     }
-  }
-
-  .lexical-progress-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .progress-label {
-    font-size: 0.9rem;
-    color: var(--fg-secondary-color);
   }
 }
 

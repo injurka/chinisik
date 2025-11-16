@@ -1,7 +1,4 @@
-import type { BookDetails } from '~/shared/types'
-import { mockBookContent } from './book-content'
-
-export const mockBookDetails: BookDetails[] = [
+export const mockBooks = [
   {
     id: 'le-petit-prince',
     title: '小王子 (Маленький принц)',
@@ -13,10 +10,5 @@ export const mockBookDetails: BookDetails[] = [
     difficultyGeneral: 'Начинающий',
     difficultyFormal: 'HSK 2',
     uniqueWords: 1800,
-    chapters: [
-      { number: 1, title: 'Глава I: О шляпах и удавах', startPage: 1 },
-      { number: 2, title: 'Глава II: Новый рисунок', startPage: 2 },
-    ],
-    pageCount: mockBookContent['le-petit-prince']?.length || 0,
   },
 ]

@@ -1,17 +1,37 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
+    "target": "ESNext",
+    "jsx": "preserve",
     "lib": [
       "ESNext",
-      "WebWorker",
+      "DOM",
       "DOM.Iterable"
     ],
+    "useDefineForClassFields": true,
+    "experimentalDecorators": true,
+    "module": "ESNext",
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "types": [
-      "vite/client"
-    ]
+      "vite/client",
+      "vite-plugin-pwa/vue"
+    ],
+    "allowImportingTsExtensions": true,
+    /* Linting */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
   },
   "include": [
-    "./"
-  ],
-  "exclude": []
+    "lib/**/*.ts",
+    "model/**/*.ts",
+    "cache-manager.ts",
+    "sw.ts"
+  ]
 }
