@@ -1,0 +1,44 @@
+services:
+  client:
+    image: chinisik-client:${V_CLIENT:-latest}
+    container_name: chinisik-client
+    ports:
+      - "1420:1420"
+    restart: always
+
+  server:
+    image: chinisik-server:${V_SERVER:-latest}
+    container_name: chinisik-server
+    ports:
+      - "8080:8080"
+    networks:
+      - chinisik-net
+    env_file:
+      - ../apps/server/.env
+    volumes:
+      - "$HOME/static-data:/usr/src/app/static"
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    container_name: chinisik-db
+    networks:
+      - chinisik-net
+    environment:
+      POSTGRES_USER: chinisik
+      POSTGRES_PASSWORD: chinisik
+      POSTGRES_DB: chinisik_prod
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+networks:
+  chinisik-net:
+    driver: bridge
+
+volumes:
+  pgdata:
+  prometheus-data:
+  grafana-data:

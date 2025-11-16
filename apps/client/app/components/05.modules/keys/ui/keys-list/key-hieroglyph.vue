@@ -23,7 +23,9 @@ const shouldShowTranslate = computed<boolean>(() => props.control.isTranslate ||
 
 function handleVoiceClick() {
   isSpeaking.value
-    ? cancelSpeech(() => { isSpeaking.value = false })
+    ? cancelSpeech(() => {
+        isSpeaking.value = false
+      })
     : voiceTheText(
         props.hieroglyph.glyph,
         () => { isSpeaking.value = true },
@@ -42,7 +44,9 @@ onMounted(() => initSpeechSynthesis())
 
 onUnmounted(() => {
   if (isSpeaking.value) {
-    cancelSpeech(() => { isSpeaking.value = false })
+    cancelSpeech(() => {
+      isSpeaking.value = false
+    })
   }
 })
 </script>

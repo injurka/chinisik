@@ -120,16 +120,16 @@ export async function createAiChatRequest(
     stream: false,
     web_search_options: mergedOptions.model.includes('search')
       ? {
-        user_location: {
-          approximate: {
-            city: '北京',
-            country: '中国',
-            region: '北京',
-            timezone: 'Asia/Shanghai',
+          user_location: {
+            approximate: {
+              city: '北京',
+              country: '中国',
+              region: '北京',
+              timezone: 'Asia/Shanghai',
+            },
+            type: 'approximate',
           },
-          type: 'approximate',
-        },
-      }
+        }
       : undefined,
   })
 }

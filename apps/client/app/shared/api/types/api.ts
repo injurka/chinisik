@@ -7,15 +7,15 @@ export type FetchOption<R> = FetchOptions<R>
 export type Instance = <R>(url: string, options: FetchOption<R>) => Promise<R>
 export type ServiceMethods
   = IKeysMethods
-  | IPinyinMethods
-  | ILlmMethods
-  | ICmsMethods
-  | IHskMethods
-  | IAuthMethods
-  | ILinguisticAnalysisMethods
-  | IQuizMethods
-  | IBooksMethods
-  | IDayMaterialMethods
+    | IPinyinMethods
+    | ILlmMethods
+    | ICmsMethods
+    | IHskMethods
+    | IAuthMethods
+    | ILinguisticAnalysisMethods
+    | IQuizMethods
+    | IBooksMethods
+    | IDayMaterialMethods
 
 export interface IApi {
   keys: IKeysMethods

@@ -9,10 +9,10 @@ interface JsonToDomElement<T = AllJsonToDomElementProps> {
   props?: T
 }
 
-type JsonToDomChildren<T = AllJsonToDomElementProps> =
-  string
-  | JsonToDomElement<T>
-  | JsonToDomElement<T>[]
+type JsonToDomChildren<T = AllJsonToDomElementProps>
+  = string
+    | JsonToDomElement<T>
+    | JsonToDomElement<T>[]
 
 export type {
   AllJsonToDomElementProps,

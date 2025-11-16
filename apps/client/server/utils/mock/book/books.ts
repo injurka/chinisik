@@ -8,5 +8,6 @@ export const mockBooks: Book[] = [
     coverUrl: '/images/books/le-petit-prince.png',
     genre: 'Философская сказка',
     difficulty: 'Начинающий',
+    uniqueWords: 1800,
   },
 ]

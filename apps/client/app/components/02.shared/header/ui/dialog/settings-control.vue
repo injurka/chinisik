@@ -12,7 +12,7 @@ const { setTheme, theme } = useChangeTheme()
 
 // Controllers
 const controlledTheme = computed({
-  get: () => theme.value,
+  get: () => theme.preference,
   set: (value: ThemesVariant) => setTheme(value),
 })
 
@@ -91,8 +91,8 @@ const previewProps = computed(() => ({
             <v-btn value="dark" class="group-item">
               <Icon size="20" name="line-md:moon-alt-loop" />
             </v-btn>
-            <v-btn value="rainy" class="group-item">
-              <Icon size="20" name="line-md:cloud-twotone" />
+            <v-btn value="system" class="group-item">
+              <Icon size="20" name="mdi:theme-light-dark" />
             </v-btn>
           </v-btn-toggle>
         </div>

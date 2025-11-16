@@ -97,7 +97,7 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
               <h4>Лексический профиль</h4>
               <div class="lexical-stat">
                 <span class="label">Уникальных слов</span>
-                <span class="value">{{ book.lexicalProfile.uniqueWords.toLocaleString('ru-RU') }}</span>
+                <span class="value">{{ book.uniqueWords.toLocaleString('ru-RU') }}</span>
               </div>
             </div>
           </div>

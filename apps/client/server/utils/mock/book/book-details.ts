@@ -12,11 +12,7 @@ export const mockBookDetails: BookDetails[] = [
     summary: 'Аллегорическая повесть-сказка, наиболее известное произведение Антуана де Сент-Экзюпери. История о маленьком мальчике, который путешествует с планеты на планету, встречая разных взрослых и познавая мир.',
     difficultyGeneral: 'Начинающий',
     difficultyFormal: 'HSK 2',
-    uniqueWords: 1800,
-    chapters: [
-      { number: 1, title: 'Глава I: О шляпах и удавах', startPage: 1 },
-      { number: 2, title: 'Глава II: Новый рисунок', startPage: 2 },
-    ],
     pageCount: mockBookContent['le-petit-prince']?.length || 0,
+    uniqueWords: 1800,
   },
 ]

@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import path from 'node:path'
 import Tesseract, { createScheduler, PSM } from 'tesseract.js'
 
 class TesseractService {

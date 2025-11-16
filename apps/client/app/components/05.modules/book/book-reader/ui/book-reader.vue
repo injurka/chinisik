@@ -6,6 +6,18 @@ import { useTooltipPositioning } from '../composables/use-tooltip-positioning'
 import SentenceTooltip from './sentence-tooltip.vue'
 import WordTooltip from './word-tooltip.vue'
 
+interface TextChunk {
+  type: 'text'
+  content: string
+}
+
+interface WordChunk {
+  type: 'word'
+  content: Word
+}
+
+type SentenceChunk = TextChunk | WordChunk
+
 interface ActiveWord {
   word: Word
   target: EventTarget | null
@@ -22,7 +34,6 @@ const { api } = useApi()
 const { isMobile } = useDevice()
 const bookId = computed(() => route.params.id as string)
 
-// Fetch book details (for chapters and total page count)
 const { data: bookDetails, pending: pendingDetails, error: errorDetails } = await useAsyncData<BookDetails>(
   `book-details-${bookId.value}`,
   () => api.books.v1.details({ id: bookId.value }),
@@ -33,11 +44,10 @@ const currentPageNumber = computed(() => {
   return Number.isNaN(page) || page < 1 ? 1 : page
 })
 
-// Fetch current page content based on currentPageNumber
 const { data: currentPage, pending: pendingContent, error: errorContent } = await useAsyncData<BookPage>(
   `book-content-${bookId.value}-page-${currentPageNumber.value}`,
   () => api.books.v1.content({ id: bookId.value, page: currentPageNumber.value }),
-  { watch: [currentPageNumber] }, // This will auto-refresh when currentPageNumber changes
+  { watch: [currentPageNumber] },
 )
 
 const pending = computed(() => (pendingContent.value && !currentPage.value) || pendingDetails.value)
@@ -50,14 +60,12 @@ const longPressTimer = ref<NodeJS.Timeout | null>(null)
 const activeWord = ref<ActiveWord | null>(null)
 const activeSentence = ref<ActiveSentence | null>(null)
 
-// --- Tooltip positioning logic ---
 const readerContainer = ref<HTMLElement | null>(null)
 const wordTooltipRef = ref<InstanceType<typeof WordTooltip> | null>(null)
 const sentenceTooltipRef = ref<InstanceType<typeof SentenceTooltip> | null>(null)
 const { tooltipStyle, calculatePosition, hide } = useTooltipPositioning()
 
 function updateRouteQuery(pageNumber: number) {
-  // The watcher on the query (via useAsyncData) will handle the data fetching
   router.push({ query: { ...route.query, page: pageNumber.toString() } })
 }
 
@@ -78,13 +86,8 @@ function prevPage() {
     navigateToPage(currentPageNumber.value - 1)
 }
 
-function goToChapter(startPage: number) {
-  navigateToPage(startPage)
-  isChaptersDialogVisible.value = false
-}
-
-function renderSentence(sentence: Sentence) {
-  const chunks = []
+function renderSentence(sentence: Sentence): SentenceChunk[] {
+  const chunks: SentenceChunk[] = []
   let lastIndex = 0
   sentence.words.forEach((word) => {
     const [start, end] = word.indices
@@ -158,7 +161,6 @@ function handleSpeak(text: string) {
 
 onMounted(() => {
   initSpeechSynthesis()
-  // Set initial page from query or default to 1
   const pageFromQuery = Number.parseInt(route.query.page as string, 10)
   if (Number.isNaN(pageFromQuery) || pageFromQuery < 1)
     updateRouteQuery(1)
@@ -230,33 +232,6 @@ onMounted(() => {
           <Icon name="mdi:arrow-right" />
         </VBtn>
       </div>
-
-      <VDialog v-model="isChaptersDialogVisible" scrollable max-width="500">
-        <VCard class="chapters-dialog-card">
-          <VCardTitle>Оглавление</VCardTitle>
-          <VCardText style="max-height: 400px;">
-            <VList density="compact">
-              <VListItem
-                v-for="(chapter, index) in bookDetails?.chapters"
-                :key="chapter.number"
-                :active="currentPage.pageNumber >= chapter.startPage && (!bookDetails.chapters[index + 1] || currentPage.pageNumber < bookDetails.chapters[index + 1].startPage)"
-                @click="goToChapter(chapter.startPage)"
-              >
-                <VListItemTitle>Глава {{ chapter.number }}: {{ chapter.title }}</VListItemTitle>
-                <template #append>
-                  <VListItemSubtitle>Стр. {{ chapter.startPage }}</VListItemSubtitle>
-                </template>
-              </VListItem>
-            </VList>
-          </VCardText>
-          <VCardActions>
-            <VSpacer />
-            <VBtn variant="tonal" @click="isChaptersDialogVisible = false">
-              Закрыть
-            </VBtn>
-          </VCardActions>
-        </VCard>
-      </VDialog>
 
       <Teleport to="body">
         <WordTooltip

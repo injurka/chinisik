@@ -15,36 +15,36 @@ cleanupOutdatedCaches()
 
 precacheAndRoute(self.__WB_MANIFEST || [])
 
-if (import.meta.env.PROD) {
-  // WEB APP MANIFEST
-  registerRoute(
-    ({ request, sameOrigin }) => sameOrigin && request.destination === 'manifest',
-    CacheStrategyFactory.createNetworkFirst(
-      CACHE_CONFIG.names.webmanifest,
-      {
-        maxEntries: CACHE_CONFIG.limits.manifests,
-        maxAgeSeconds: CACHE_CONFIG.durations.manifests,
-      },
-    ),
-  )
+// --- PWA & Core Assets Caching ---
 
-  // FONTS
-  registerRoute(
-    ({ request }) => request.destination === 'font',
-    CacheStrategyFactory.createCacheFirst(
-      CACHE_CONFIG.names.fonts,
-      {
-        maxEntries: CACHE_CONFIG.limits.fonts,
-        maxAgeSeconds: CACHE_CONFIG.durations.fonts,
-        statuses: [0, 200],
-      },
-    ),
-  )
-}
+// WEB APP MANIFEST
+registerRoute(
+  ({ request, sameOrigin }) => sameOrigin && request.destination === 'manifest',
+  CacheStrategyFactory.createNetworkFirst(
+    CACHE_CONFIG.names.webmanifest,
+    {
+      maxEntries: CACHE_CONFIG.limits.manifests,
+      maxAgeSeconds: CACHE_CONFIG.durations.manifests,
+    },
+  ),
+)
 
+// FONTS (local and from Google Fonts)
+registerRoute(
+  ({ request }) => request.destination === 'font',
+  CacheStrategyFactory.createCacheFirst(
+    CACHE_CONFIG.names.fonts,
+    {
+      maxEntries: CACHE_CONFIG.limits.fonts,
+      maxAgeSeconds: CACHE_CONFIG.durations.fonts,
+    },
+  ),
+)
+
+// ICONS from Iconify
 registerRoute(
   ({ url }) => url.hostname === 'api.iconify.design',
-  CacheStrategyFactory.createStaleWhileRevalidate(
+  CacheStrategyFactory.createCacheFirst(
     CACHE_CONFIG.names.icons,
     {
       maxEntries: CACHE_CONFIG.limits.icons,
@@ -53,6 +53,19 @@ registerRoute(
   ),
 )
 
+// IMAGES
+registerRoute(
+  ({ request }) => request.destination === 'image',
+  CacheStrategyFactory.createStaleWhileRevalidate(
+    CACHE_CONFIG.names.images,
+    {
+      maxEntries: CACHE_CONFIG.limits.images,
+      maxAgeSeconds: CACHE_CONFIG.durations.images,
+    },
+  ),
+)
+
+// --- Static JS/CSS Assets Caching ---
 const hashedAssetsStrategy = CacheStrategyFactory.createCacheFirst(
   CACHE_CONFIG.names.hashedAssets,
   {
@@ -66,7 +79,6 @@ const vendorAssetsStrategy = CacheStrategyFactory.createCacheFirst(
   {
     maxEntries: CACHE_CONFIG.limits.vendorAssets,
     maxAgeSeconds: CACHE_CONFIG.durations.static.vendor,
-    statuses: [0, 200],
   },
 )
 
@@ -101,7 +113,8 @@ registerRoute(
   regularAssetsStrategy,
 )
 
-// API
+// --- API Caching ---
+
 API_CACHE_RULES.forEach((rule) => {
   let strategy
 
@@ -112,7 +125,7 @@ API_CACHE_RULES.forEach((rule) => {
 
   switch (rule.strategy) {
     case 'CacheFirst':
-      strategy = CacheStrategyFactory.createCacheFirst(rule.cacheName, { ...options, statuses: [200] })
+      strategy = CacheStrategyFactory.createCacheFirst(rule.cacheName, options)
       break
     case 'NetworkFirst':
       strategy = CacheStrategyFactory.createNetworkFirst(rule.cacheName, options)
@@ -121,41 +134,42 @@ API_CACHE_RULES.forEach((rule) => {
       strategy = CacheStrategyFactory.createStaleWhileRevalidate(rule.cacheName, options)
       break
     default:
-      throw new Error(`Unknown cache strategy: ${rule.strategy}`)
+      // This should not happen with TypeScript, but it's a good safeguard
+      console.error(`Unknown cache strategy: ${rule.strategy}`)
+      return
   }
 
   registerRoute(
     ({ request, url }) =>
       request.method === 'GET'
-      && url.pathname.includes(rule.path),
+      // Ensure the request URL starts with the API path to avoid false positives
+      && url.pathname.startsWith(rule.path),
     strategy,
   )
 })
 
-let allowlist: undefined | RegExp[]
-if (import.meta.env.DEV)
-  allowlist = [/^\/$/]
+// --- Navigation Fallback ---
 
-let denylist: undefined | RegExp[]
-if (import.meta.env.PROD) {
-  denylist = [
-    /^\/api\//,
-    /^\/sw.js$/,
-    /^\/manifest-(.*).webmanifest$/,
-    /^\/workbox-.*\.js$/,
-  ]
-}
-
+// This ensures that all navigations fall back to the main app shell,
+// allowing the client-side router to handle the page.
 registerRoute(new NavigationRoute(
   createHandlerBoundToURL('/'),
   {
-    allowlist,
-    denylist,
+    // Denylist API calls and service worker-related files to prevent them from being served the index.html
+    denylist: [
+      /^\/api\//,
+      /^\/sw.js$/,
+      /^\/manifest(.*).webmanifest$/,
+      /^\/workbox-.*\.js$/,
+    ],
   },
 ))
 
+// --- Message Handling ---
+
 self.addEventListener('message', async (event) => {
   const { type, payload } = event.data as ServiceWorkerMessage
+  // A port is passed for two-way communication
   const port = event.ports[0]
 
   if (!port)
@@ -167,29 +181,30 @@ self.addEventListener('message', async (event) => {
       await handler(port, payload)
     }
     catch (error) {
-      console.error(`Ошибка при обработке сообщения "${type}":`, error)
+      console.error(`Error processing message "${type}":`, error)
       port.postMessage({
         type: 'ERROR',
-        payload: { message: `Внутренняя ошибка при обработке: ${type}` },
+        payload: { message: `Internal error handling: ${type}` },
       })
     }
   }
   else {
     port.postMessage({
       type: 'ERROR',
-      payload: { message: `Неизвестный тип сообщения: ${type}` },
+      payload: { message: `Unknown message type: ${type}` },
     })
   }
 })
 
+// --- Dev Logging ---
+
 if (import.meta.env.DEV) {
-  console.log('🔧 Service Worker в режиме разработки')
+  console.log('🔧 Service Worker in development mode')
 
   self.addEventListener('fetch', (event) => {
-    if (event.request.method === 'GET') {
+    if (event.request.method === 'GET' && event.request.destination) {
       const assetType = AssetAnalyzer.getAssetType(event.request.url)
-
-      console.log(`📥 ${assetType}: ${event.request.url}`)
+      console.log(`📥 [${event.request.destination}/${assetType}] ${event.request.url}`)
     }
   })
 }

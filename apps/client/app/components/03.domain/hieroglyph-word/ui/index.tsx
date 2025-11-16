@@ -36,7 +36,9 @@ const HieroglyphWordVarious = defineComponent({
 
     function handleGlyphClick() {
       if (isSpeaking.value) {
-        cancelSpeech(() => { isSpeaking.value = false })
+        cancelSpeech(() => {
+          isSpeaking.value = false
+        })
       }
       else {
         voiceTheText(
@@ -52,7 +54,9 @@ const HieroglyphWordVarious = defineComponent({
 
     onUnmounted(() => {
       if (isSpeaking.value) {
-        cancelSpeech(() => { isSpeaking.value = false })
+        cancelSpeech(() => {
+          isSpeaking.value = false
+        })
       }
     })
 
@@ -150,7 +154,6 @@ const HieroglyphWordVarious = defineComponent({
     const tooltipText = (variant: 'full' | 'pinyin' | 'translate') => {
       // Используем finalPinyinProps для отображения
       const pinyinNode = finalPinyinProps.value && (
-        // @ts-expect-error неважно
         <div class="hw-tip-pinyin" onClick={copyPinyin}>
           <PinyinText
             {...finalPinyinProps.value}
@@ -224,12 +227,10 @@ const HieroglyphWordVarious = defineComponent({
         />
       )
 
-      if (props.variant === 2) {
+      if (props.variant === 2 && el) {
         return (
           <span class="hw-pinyin">
-            (
             {el}
-            )
           </span>
         )
       }

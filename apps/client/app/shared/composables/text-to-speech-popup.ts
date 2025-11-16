@@ -78,7 +78,9 @@ export function useTextToSpeechPopup(
     if (selectedText.length === 0) {
       popup.show = false
       if (isSpeaking.value) {
-        cancelSpeechHelper(() => { isSpeaking.value = false })
+        cancelSpeechHelper(() => {
+          isSpeaking.value = false
+        })
       }
     }
   }
@@ -93,7 +95,9 @@ export function useTextToSpeechPopup(
     }
     popup.show = false
     if (isSpeaking.value) {
-      cancelSpeechHelper(() => { isSpeaking.value = false })
+      cancelSpeechHelper(() => {
+        isSpeaking.value = false
+      })
     }
   }
 
@@ -102,7 +106,9 @@ export function useTextToSpeechPopup(
    */
   function handleVoiceButtonClick() {
     if (isSpeaking.value) {
-      cancelSpeechHelper(() => { isSpeaking.value = false })
+      cancelSpeechHelper(() => {
+        isSpeaking.value = false
+      })
     }
     else {
       voiceTextHelper(
@@ -112,13 +118,13 @@ export function useTextToSpeechPopup(
           isSpeaking.value = false
           popup.show = false
         },
-        lang, // Передаем язык
+        lang,
       )
     }
   }
 
   onMounted(() => {
-    initSpeechSynthesis() // Инициализируем голоса
+    initSpeechSynthesis()
 
     document.addEventListener('mousedown', handleClickOutside)
     document.addEventListener('touchstart', handleClickOutside, { passive: true })
@@ -133,7 +139,9 @@ export function useTextToSpeechPopup(
     document.removeEventListener('touchend', handleSelectionEnd)
 
     if (isSpeaking.value) {
-      cancelSpeechHelper(() => { isSpeaking.value = false })
+      cancelSpeechHelper(() => {
+        isSpeaking.value = false
+      })
     }
   })
 

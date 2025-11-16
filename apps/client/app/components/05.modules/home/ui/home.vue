@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import FeaturesDay from './features-day.vue'
 import FeaturesSection from './features-section.vue'
-
 </script>
 
 <template>

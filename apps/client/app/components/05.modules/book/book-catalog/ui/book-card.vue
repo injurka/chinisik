@@ -19,7 +19,7 @@ defineProps<Props>()
       :alt="`Обложка книги ${book.title}`"
       class="book-card-cover"
       height="300"
-    />
+    >
     <!-- <NuxtImg
       :src="book.coverUrl"
       :alt="`Обложка книги ${book.title}`"

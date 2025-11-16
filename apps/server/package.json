@@ -23,7 +23,7 @@
   "scripts": {
     "dev": "bun --hot src/main.ts",
     "-----------------------------------------------------------------------------------------------------------": "",
-    "build": "bunx --bun tsup --config build/build-server.ts",
+    "build": "tsup --config build/build-server.ts",
     "start": "bun --bun run dist/main.js",
     "------------------------------------------------------------------------------------------------------------": "",
     "lint": "eslint .",
@@ -44,8 +44,8 @@
     "@hono/swagger-ui": "^0.5.2",
     "@hono/zod-openapi": "^1.1.4",
     "@prisma/client": "^6.19.0",
-    "hono": "^4.10.5",
-    "openai": "^6.8.1",
+    "hono": "^4.10.6",
+    "openai": "^6.9.0",
     "prisma": "^6.19.0",
     "prom-client": "^15.1.3",
     "resend": "^6.4.2",
@@ -56,7 +56,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
     "@types/bun": "latest",
-    "bun": "^1.1.42",
+    "bun": "^1.3.2",
     "eslint": "^9.39.1",
     "eslint-plugin-format": "^1.0.2",
     "jiti": "^2.6.1",

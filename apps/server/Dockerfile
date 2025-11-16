@@ -26,6 +26,8 @@ WORKDIR /opt/app
 COPY --from=node_modules /opt/app/node_modules node_modules
 COPY                     .                     .
 
+RUN apt-get update && apt-get install -y openssl
+
 RUN bun run lint
 RUN bun run build
 
@@ -39,9 +41,9 @@ WORKDIR /opt/app
 COPY --from=node_modules_prod /opt/app/node_modules node_modules
 COPY --from=dist              /opt/app/dist         dist
 COPY                          data                  data
+COPY                          chi_sim.traineddata   .
 # Подключается через `-v /путь/к/вашей/static/папке:/opt/app/static`
 # COPY ./static                 static
 
-ENV CI_COMMIT_TAG=$CI_COMMIT_TAG
 ENV HOST=0.0.0.0
 CMD ["dist/main.js"]

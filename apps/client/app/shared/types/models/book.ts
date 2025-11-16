@@ -68,12 +68,6 @@ export interface BookDetails extends Omit<Book, 'difficulty'> {
   /** Формальный уровень сложности по китайской системе (например, "HSK 2"). */
   difficultyFormal: string
 
-  /** Статистика по словарному составу книги. */
-  lexicalProfile: LexicalProfile
-
-  /** Оглавление книги. */
-  chapters: Chapter[]
-
   /** Общее количество страниц в книге. */
   pageCount: number
 }

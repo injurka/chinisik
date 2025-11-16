@@ -9,7 +9,7 @@ html {
   border: none;
   font-size: #{$font-size-base};
 
-  @include mobile(){
+  @include mobile() {
     font-size: #{$font-size-small};
   }
 }

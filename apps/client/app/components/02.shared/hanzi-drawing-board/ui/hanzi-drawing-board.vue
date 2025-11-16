@@ -42,6 +42,7 @@ const computedStyles = computed(() => {
   return null
 })
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const targetCharacterStyle = computed(() => ({
   color: computedStyles.value?.getPropertyValue('--fg-accent-color').trim() || DEFAULT_TARGET_COLOR,
   fontFamily: computedStyles.value?.getPropertyValue('--font-family-cn').trim() || DEFAULT_TARGET_FONT_FAMILY,
@@ -65,11 +66,19 @@ function drawGridOnContext(ctx: CanvasRenderingContext2D, w: number, h: number) 
   ctx.strokeStyle = GRID_COLOR
   ctx.lineWidth = GRID_LINE_WIDTH
   ctx.beginPath()
-  ctx.moveTo(1, 1); ctx.lineTo(w - 1, 1); ctx.lineTo(w - 1, h - 1); ctx.lineTo(1, h - 1); ctx.closePath()
-  ctx.moveTo(w / 2, 1); ctx.lineTo(w / 2, h - 1)
-  ctx.moveTo(1, h / 2); ctx.lineTo(w - 1, h / 2)
-  ctx.moveTo(1, 1); ctx.lineTo(w - 1, h - 1)
-  ctx.moveTo(w - 1, 1); ctx.lineTo(1, h - 1)
+  ctx.moveTo(1, 1)
+  ctx.lineTo(w - 1, 1)
+  ctx.lineTo(w - 1, h - 1)
+  ctx.lineTo(1, h - 1)
+  ctx.closePath()
+  ctx.moveTo(w / 2, 1)
+  ctx.lineTo(w / 2, h - 1)
+  ctx.moveTo(1, h / 2)
+  ctx.lineTo(w - 1, h / 2)
+  ctx.moveTo(1, 1)
+  ctx.lineTo(w - 1, h - 1)
+  ctx.moveTo(w - 1, 1)
+  ctx.lineTo(1, h - 1)
   ctx.stroke()
   ctx.restore()
 }
@@ -78,6 +87,7 @@ function drawGridOnContext(ctx: CanvasRenderingContext2D, w: number, h: number) 
 function getEventCoordinates(event: MouseEvent | TouchEvent): { x: number, y: number } | null {
   if (!canvasRef.value)
     return null
+
   const canvas = canvasRef.value
   const rect = canvas.getBoundingClientRect()
   let clientX: number, clientY: number
@@ -90,7 +100,9 @@ function getEventCoordinates(event: MouseEvent | TouchEvent): { x: number, y: nu
     clientX = event.touches[0]!.clientX
     clientY = event.touches[0]!.clientY
   }
-  else { return null }
+  else {
+    return null
+  }
 
   return { x: clientX - rect.left, y: clientY - rect.top }
 }
@@ -99,6 +111,7 @@ function getEventCoordinates(event: MouseEvent | TouchEvent): { x: number, y: nu
 function saveState() {
   if (!ctxRef.value || !canvasRef.value)
     return
+
   const imageData = ctxRef.value.getImageData(0, 0, canvasRef.value.width, canvasRef.value.height)
   strokesHistory.value.push(imageData)
 }
@@ -156,6 +169,7 @@ function draw(event: MouseEvent | TouchEvent) {
 function stopDrawing() {
   if (!isDrawing.value || !ctxRef.value)
     return
+
   isDrawing.value = false
   ctxRef.value.beginPath()
 }
@@ -222,7 +236,10 @@ function getImageDataURL(): string | null {
   // 1. Находим границы рисунка (bounding box)
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
   const data = imageData.data
-  let minX = canvas.width; let minY = canvas.height; let maxX = 0; let maxY = 0
+  let minX = canvas.width
+  let minY = canvas.height
+  let maxX = 0
+  let maxY = 0
   let foundPixel = false
 
   for (let y = 0; y < canvas.height; y++) {

@@ -31,13 +31,13 @@ export function useTooltipPositioning() {
     const containerRect = containerEl
       ? containerEl.getBoundingClientRect()
       : {
-        top: 0,
-        bottom: window.innerHeight,
-        left: 0,
-        right: window.innerWidth,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      }
+          top: 0,
+          bottom: window.innerHeight,
+          left: 0,
+          right: window.innerWidth,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }
 
     // Позиционирование по вертикали
     const spaceBelow = containerRect.bottom - targetRect.bottom

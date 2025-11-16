@@ -15,35 +15,54 @@ interface CacheInfo {
   name: string
   size: number
   urls: string[]
-  totalSize?: number
 }
 
 const CACHE_CONFIG = {
   names: {
+    // PWA & Core Assets
     webmanifest: 'chinisik-pwa-webmanifest',
     fonts: 'chinisik-fonts',
     icons: 'chinisik-icons',
+    images: 'chinisik-images', // For general images
+    // Static JS/CSS Assets
     hashedAssets: 'chinisik-hashed-assets',
     vendorAssets: 'chinisik-vendor-assets',
     regularAssets: 'chinisik-regular-assets',
+    // API Caches
+    apiStatic: 'chinisik-api-static', // For immutable API data
+    apiDynamic: 'chinisik-api-dynamic', // For frequently updated API data
+    apiDaily: 'chinisik-api-daily', // For data that updates daily
   },
   durations: {
-    fonts: 365 * 24 * 60 * 60,
-    icons: 30 * 24 * 60 * 60,
+    // PWA & Core Assets
+    fonts: 365 * 24 * 60 * 60, // 1 year
+    icons: 30 * 24 * 60 * 60, // 30 days
+    images: 7 * 24 * 60 * 60, // 7 days
+    manifests: 7 * 24 * 60 * 60, // 7 days
+    // Static JS/CSS Assets
     static: {
-      hashed: 365 * 24 * 60 * 60,
-      vendor: 30 * 24 * 60 * 60,
-      regular: 2 * 60 * 60,
+      hashed: 365 * 24 * 60 * 60, // 1 year
+      vendor: 30 * 24 * 60 * 60, // 30 days
+      regular: 1 * 24 * 60 * 60, // 1 day
     },
-    manifests: 7 * 24 * 60 * 60,
+    // API Caches
+    api: {
+      static: 30 * 24 * 60 * 60, // 30 days
+      dynamic: 1 * 24 * 60 * 60, // 1 day
+      daily: 1 * 24 * 60 * 60, // 1 day
+    },
   },
   limits: {
     fonts: 30,
-    icons: 500,
+    icons: 100, // Reduced from 500 to be more reasonable
+    images: 100, // NEW
     hashedAssets: 200,
     vendorAssets: 100,
     regularAssets: 50,
-    manifests: 100,
+    manifests: 5, // Reduced from 100
+    apiStatic: 50,
+    apiDynamic: 100,
+    apiDaily: 5,
   },
 } as const
 
@@ -55,15 +74,51 @@ interface ApiCacheRule {
   maxEntries: number
 }
 
+// Populated API rules
 const API_CACHE_RULES: ApiCacheRule[] = [
-  //  TODO
+  {
+    path: '/api/v1/keys',
+    cacheName: CACHE_CONFIG.names.apiStatic,
+    strategy: 'CacheFirst',
+    maxAgeSeconds: CACHE_CONFIG.durations.api.static,
+    maxEntries: CACHE_CONFIG.limits.apiStatic,
+  },
+  {
+    path: '/api/v1/pinyin',
+    cacheName: CACHE_CONFIG.names.apiStatic,
+    strategy: 'CacheFirst',
+    maxAgeSeconds: CACHE_CONFIG.durations.api.static,
+    maxEntries: CACHE_CONFIG.limits.apiStatic,
+  },
+  {
+    path: '/api/v1/hsk/hieroglyphs/',
+    cacheName: CACHE_CONFIG.names.apiStatic,
+    strategy: 'CacheFirst',
+    maxAgeSeconds: CACHE_CONFIG.durations.api.static,
+    maxEntries: CACHE_CONFIG.limits.apiStatic,
+  },
+  {
+    path: '/api/v1/cms/description/',
+    cacheName: CACHE_CONFIG.names.apiStatic,
+    strategy: 'CacheFirst',
+    maxAgeSeconds: CACHE_CONFIG.durations.api.static,
+    maxEntries: CACHE_CONFIG.limits.apiStatic,
+  },
+  {
+    path: '/api/v1/books',
+    cacheName: CACHE_CONFIG.names.apiDynamic,
+    strategy: 'StaleWhileRevalidate',
+    maxAgeSeconds: CACHE_CONFIG.durations.api.dynamic,
+    maxEntries: CACHE_CONFIG.limits.apiDynamic,
+  },
+  {
+    path: '/api/v1/day-material/today',
+    cacheName: CACHE_CONFIG.names.apiDaily,
+    strategy: 'NetworkFirst',
+    maxAgeSeconds: CACHE_CONFIG.durations.api.daily,
+    maxEntries: CACHE_CONFIG.limits.apiDaily,
+  },
 ]
-
-interface MessageHandlers {
-  SKIP_WAITING: () => Promise<void>
-  GET_CACHE_INFO: (port: MessagePort) => Promise<void>
-  CLEAR_CACHE: (port: MessagePort, payload?: { cacheName?: string }) => Promise<void>
-}
 
 interface MessageHandlers {
   SKIP_WAITING: () => Promise<void>

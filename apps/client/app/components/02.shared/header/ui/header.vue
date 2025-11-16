@@ -99,7 +99,7 @@ onMounted(() => {
           />
           <div v-else class="profile-img">
             <Icon
-              size="28"
+              size="38"
               name="mdi:face-man-profile"
             />
           </div>
