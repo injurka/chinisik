@@ -5,7 +5,7 @@ WORKDIR /opt/app
 
 COPY . .
 
-# RUN apt-get update && apt-get install -y ca-certificates
+RUN apt-get update && apt-get install -y ca-certificates
 
 RUN npm install -g bun
 RUN bun install --ignore-scripts --frozen-lockfile
