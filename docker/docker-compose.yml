@@ -2,8 +2,10 @@ services:
   client:
     image: chinisik-client:${V_CLIENT:-latest}
     container_name: chinisik-client
+    env_file:
+      - ../apps/client/.env
     ports:
-      - "1420:1420"
+      - "3000:3000"
     restart: always
 
   server:
