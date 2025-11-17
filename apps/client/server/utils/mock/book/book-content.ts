@@ -8,7 +8,6 @@ export const mockBookContent: Record<string, BookContent> = {
     // --- СТРАНИЦА 1 ---
     {
       pageNumber: 1,
-      chapterTitle: 'Глава I: О шляпах и удавах',
       content: [
         [
           {
@@ -572,7 +571,6 @@ export const mockBookContent: Record<string, BookContent> = {
 
     {
       pageNumber: 2,
-      chapterTitle: 'Глава I: О шляпах и удавах',
       content: [
         [
           {

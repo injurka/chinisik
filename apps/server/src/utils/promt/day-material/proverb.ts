@@ -1,6 +1,6 @@
 import { commonSystemPrompt } from './common'
 
-export function getProverbPrompt(theme: string) {
+export function getProverbPrompt(theme: string, usedProverbs: string[]) {
   const system = `${commonSystemPrompt.replace('{THEME}', theme)}
     GENERATE CONTENT FOR THE "PROVERB" SECTION.
 
@@ -10,6 +10,8 @@ export function getProverbPrompt(theme: string) {
     3.  Provide the 'pinyin' (with numbers for tones).
     4.  Provide a literal 'translation' into Russian.
     5.  Write an engaging 'description' that explains the meaning, cultural context, and how it can be applied in life or language learning.
+
+    IMPORTANT: Do not select a proverb from this list of recently used ones: [${usedProverbs.join(', ')}].
 
     RESPONSE JSON SCHEMA:
     {

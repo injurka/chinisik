@@ -237,26 +237,37 @@ model Book {
   difficultyFormal  String
   uniqueWords       Int
 
-  content BookContent[]
+  content  BookContent[]
+  chapters BookChapter[] // Relation to chapters
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model BookContent {
-  id           Int    @id @default(autoincrement())
-  bookId       String
-  pageNumber   Int
-  chapterTitle String
+  id         Int    @id @default(autoincrement())
+  bookId     String
+  pageNumber Int
 
   content Json
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   book Book @relation(fields: [bookId], references: [id])
 
   @@unique([bookId, pageNumber])
+}
+
+model BookChapter {
+  id        Int    @id @default(autoincrement())
+  bookId    String
+  title     String
+  startPage Int
+
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([bookId, startPage])
 }
 
 //* ==== Enums ==================================================================== *//

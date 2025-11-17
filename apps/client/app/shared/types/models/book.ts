@@ -43,8 +43,8 @@ export interface Book {
  * Модель главы книги для оглавления.
  */
 export interface Chapter {
-  /** Номер главы. */
-  number: number
+  /** Уникальный ID главы. */
+  id: number
   /** Название главы. */
   title: string
   /** Номер страницы, с которой начинается глава. */
@@ -70,6 +70,9 @@ export interface BookDetails extends Omit<Book, 'difficulty'> {
 
   /** Общее количество страниц в книге. */
   pageCount: number
+
+  /** Массив глав книги. */
+  chapters: Chapter[]
 }
 
 // --- Модели для интерактивного ридера ---

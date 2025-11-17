@@ -14,21 +14,14 @@ defineProps<Props>()
     :to="RoutePaths.Books.Details(book.id)"
     hover
   >
-    <img
+    <NuxtImg
       :src="book.coverUrl"
       :alt="`Обложка книги ${book.title}`"
       class="book-card-cover"
-      height="300"
-    >
-    <!-- <NuxtImg
-      :src="book.coverUrl"
-      :alt="`Обложка книги ${book.title}`"
-      class="book-card-cover"
-      height="300"
       provider="ipx"
       format="webp"
       placeholder
-    /> -->
+    />
     <VCardTitle class="book-card-title">
       {{ book.title }}
     </VCardTitle>
@@ -46,8 +39,8 @@ defineProps<Props>()
 
   &-cover {
     width: 100%;
-    height: 300px;
     object-fit: cover;
+    aspect-ratio: 3 / 4;
   }
 
   &-title {

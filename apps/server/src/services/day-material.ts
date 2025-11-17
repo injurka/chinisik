@@ -4,11 +4,9 @@ import { prisma } from '~/prisma'
 import { logger } from '~/server'
 import { getGrammarPrompt } from '~/utils/promt/day-material/grammar'
 import { getProverbPrompt } from '~/utils/promt/day-material/proverb'
+import { getThemePrompt } from '~/utils/promt/day-material/theme'
 import { getVocabularyPrompt } from '~/utils/promt/day-material/vocabulary'
 import { LlmService } from './llm'
-
-// Список всех возможных тем
-const ALL_MATERIAL_THEMES = ['Путешествия', 'Еда', 'Работа', 'Семья', 'Хобби', 'Покупки', 'Здоровье', 'Погода', 'Природа', 'Технологии', 'Искусство']
 
 export class DayMaterialService {
   private llmService = new LlmService()
@@ -62,7 +60,7 @@ export class DayMaterialService {
     logger.info(`Generating material for date: ${date.toISOString().split('T')[0]}`)
 
     const recentMaterials = await prisma.dayMaterial.findMany({
-      take: ALL_MATERIAL_THEMES.length - 1,
+      take: 30, // Получаем историю за последние 30 дней для контекста
       orderBy: {
         date: 'desc',
       },
@@ -71,25 +69,25 @@ export class DayMaterialService {
       },
     })
 
-    const recentThemes = new Set(
-      recentMaterials.map(material => (material.content as any)?.vocabulary?.theme).filter(Boolean),
-    )
+    const usedThemes = recentMaterials.map(m => (m.content as any)?.vocabulary?.theme).filter(Boolean)
+    const usedGrammars = recentMaterials.map(m => (m.content as any)?.grammar?.title).filter(Boolean)
+    const usedProverbs = recentMaterials.map(m => (m.content as any)?.proverb?.glyph).filter(Boolean)
 
-    let availableThemes = ALL_MATERIAL_THEMES.filter(theme => !recentThemes.has(theme))
-
-    if (availableThemes.length === 0) {
-      logger.info('All themes have been used. Resetting the cycle.')
-      availableThemes = ALL_MATERIAL_THEMES
-    }
-
-    const theme = availableThemes[Math.floor(Math.random() * availableThemes.length)]!
-    logger.info(`Available themes: [${availableThemes.join(', ')}]. Selected theme: ${theme}`)
+    logger.info(`Used themes context: [${usedThemes.join(', ')}]`)
+    logger.info(`Used grammar context: [${usedGrammars.join(', ')}]`)
+    logger.info(`Used proverb context: [${usedProverbs.join(', ')}]`)
 
     try {
+      // 1. Генерируем новую тему с учетом контекста
+      const themeResponse = await this.llmService.raw({ ...getThemePrompt(usedThemes), responseType: 'json_object' })
+      const { theme } = JSON.parse(themeResponse) as { theme: string }
+      logger.info(`Generated new theme: ${theme}`)
+
+      // 2. Параллельно генерируем остальной контент, передавая новую тему и контекст
       const [vocabulary, grammar, proverb] = await Promise.all([
         this.llmService.raw({ ...getVocabularyPrompt(theme), responseType: 'json_object' }),
-        this.llmService.raw({ ...getGrammarPrompt(theme), responseType: 'json_object' }),
-        this.llmService.raw({ ...getProverbPrompt(theme), responseType: 'json_object' }),
+        this.llmService.raw({ ...getGrammarPrompt(theme, usedGrammars), responseType: 'json_object' }),
+        this.llmService.raw({ ...getProverbPrompt(theme, usedProverbs), responseType: 'json_object' }),
       ])
 
       const content = {

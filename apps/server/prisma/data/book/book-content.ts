@@ -2,7 +2,6 @@ export const mockBookContent = () => [
   {
     bookId: 'le-petit-prince',
     pageNumber: 1,
-    chapterTitle: 'Глава I: О шляпах и удавах',
     content: [
       [
         {
@@ -567,7 +566,6 @@ export const mockBookContent = () => [
   {
     bookId: 'le-petit-prince',
     pageNumber: 2,
-    chapterTitle: 'Глава I: О шляпах и удавах',
     content: [
       [
         {

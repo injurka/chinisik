@@ -26,7 +26,6 @@ const model = defineModel<Filters>({ required: true })
         variant="solo"
         density="comfortable"
         hide-details
-        prepend-inner-icon="mdi-magnify"
         clearable
         class="main-search-input"
         autofocus
@@ -38,7 +37,7 @@ const model = defineModel<Filters>({ required: true })
         variant="tonal"
         elevation="0"
       >
-        Поиск
+        <Icon size="20" name="mdi:magnify" />
       </VBtn>
     </div>
 
@@ -92,13 +91,14 @@ const model = defineModel<Filters>({ required: true })
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    height: 48px;
   }
 }
 
 .search-button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  height: 50px !important;
+  height: 49px !important;
   text-transform: none;
   background-color: var(--bg-accent-color) !important;
   border: 1px solid var(--border-button-secondary-color) !important;
@@ -127,6 +127,10 @@ const model = defineModel<Filters>({ required: true })
 .filter-select {
   flex: 1;
   max-width: 280px;
+
+  @include mobile {
+    max-width: 100%;
+  }
 
   :deep(.v-field) {
     border-radius: 8px;

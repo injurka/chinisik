@@ -11,6 +11,7 @@ import { mockFinals, mockFinalsTone, mockInitials, mockInitialsFinals } from './
 import { mockUser } from './data/user'
 import { mockUserPermission } from './data/user-permission'
 import { mockBookContent } from './data/book/book-content'
+import { mockBookChapter } from './data/book/book-chapter'
 
 const seeds = [
   // Keys
@@ -32,6 +33,7 @@ const seeds = [
   // Book
   { name: 'book', data: [mockBook] },
   { name: 'bookContent', data: [mockBookContent] },
+  { name: 'bookChapter', data: [mockBookChapter] },
 ]
 
 const prisma = new PrismaClient()

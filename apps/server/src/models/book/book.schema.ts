@@ -7,7 +7,14 @@ export const BookSchema = z.object({
   coverUrl: z.string().openapi({ example: '/images/books/placeholder.png' }),
   genre: z.string().openapi({ example: 'Философская сказка' }),
   difficulty: z.string().openapi({ example: 'Начинающий' }),
+  uniqueWords: z.number().int(),
 }).openapi('Book')
+
+export const BookChapterSchema = z.object({
+  id: z.number().int(),
+  title: z.string().openapi({ example: 'Глава 1: Таинственный астероид' }),
+  startPage: z.number().int().openapi({ example: 1 }),
+}).openapi('BookChapter')
 
 export const BookDetailsSchema = z.object({
   id: z.string().openapi({ example: 'le-petit-prince' }),
@@ -20,6 +27,8 @@ export const BookDetailsSchema = z.object({
   difficultyGeneral: z.string().openapi({ example: 'Начинающий' }),
   difficultyFormal: z.string().openapi({ example: 'HSK 2' }),
   uniqueWords: z.number().int(),
+  pageCount: z.number().int().openapi({ example: 125 }),
+  chapters: z.array(BookChapterSchema).openapi('Chapters'),
 }).openapi('BookDetails')
 
 export const PronunciationSchema = z.object({
@@ -47,5 +56,5 @@ export const SentenceSchema = z.object({
 
 export const BookPageSchema = z.object({
   pageNumber: z.number().int(),
-  content: z.array(SentenceSchema),
+  content: z.array(z.array(SentenceSchema)),
 }).openapi('BookPage')

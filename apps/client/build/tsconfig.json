@@ -1,0 +1,13 @@
+{
+  "extends": "../.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "./generate-favicons.ts"
+  ]
+}

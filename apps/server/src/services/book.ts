@@ -11,6 +11,7 @@ class BookService {
         coverUrl: true,
         genre: true,
         difficultyGeneral: true,
+        uniqueWords: true,
       },
     })
 
@@ -21,15 +22,26 @@ class BookService {
   }
 
   getBookDetailsById = async (id: string) => {
-    const details = await prisma.book.findUnique({
+    const book = await prisma.book.findUnique({
       where: { id },
+      include: {
+        chapters: {
+          orderBy: {
+            startPage: 'asc',
+          },
+        },
+      },
     })
 
-    if (!details) {
+    if (!book) {
       throw new HTTPException(404, { message: `Book with id ${id} not found` })
     }
 
-    return details
+    const pageCount = await prisma.bookContent.count({
+      where: { bookId: id },
+    })
+
+    return { ...book, pageCount }
   }
 
   getBookContentPage = async (id: string, page: number) => {
@@ -47,7 +59,22 @@ class BookService {
     if (!contentPage)
       throw new HTTPException(404, { message: `Page ${page} for book with id ${id} not found` })
 
-    return contentPage
+    const chapter = await prisma.bookChapter.findFirst({
+      where: {
+        bookId: id,
+        startPage: {
+          lte: page,
+        },
+      },
+      orderBy: {
+        startPage: 'desc',
+      },
+    })
+
+    return {
+      ...contentPage,
+      chapterTitle: chapter?.title ?? '',
+    }
   }
 }
 

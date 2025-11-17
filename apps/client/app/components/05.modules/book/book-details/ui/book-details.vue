@@ -124,9 +124,6 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
 }
 
 .cover-section {
-  position: sticky;
-  top: #{$header-height + 24px};
-
   .cover-image {
     width: 100%;
     height: auto;

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LogoSVG from '~/assets/svg/logo.svg?raw'
 import { HaoticLines } from '~/components/03.domain/haotic-lines'
 import { OAuthErrors, OAuthProviders } from '~/shared/types/models'
 
@@ -62,12 +61,6 @@ async function submitSignIn() {
   }
 }
 
-function customizeSvgColors(content: string) {
-  return content
-    .replaceAll('#bbcef8', 'var(--fg-accent-color)')
-    .replaceAll('#424c86', 'var(--border-accent-color)')
-}
-
 async function handleOAuth(provider: OAuthProviders) {
   const { apiBaseUrl } = useRuntimeConfig().public
 
@@ -128,7 +121,9 @@ onMounted(() => {
       />
 
       <div class="logo">
-        <span v-html="customizeSvgColors(LogoSVG)" />
+        <h1>
+          Авторизация
+        </h1>
       </div>
 
       <v-form :disabled="isLoading" class="form" @submit.prevent="submitSignIn">
@@ -159,9 +154,16 @@ onMounted(() => {
           v-model="terms"
           color="primary"
           class="legal"
-          label="Я подтверждаю, что прочитал, согласен и принимаю Chinisik's Условия использования и Политику конфиденциальности."
           required
-        />
+        >
+          <template #label>
+            <div>
+              Я подтверждаю, что прочитал и принимаю
+              <a href="#" @click.prevent>Условия использования</a> и
+              <a href="#" @click.prevent>Политику конфиденциальности</a>.
+            </div>
+          </template>
+        </v-checkbox>
 
         <v-btn
           type="submit"
@@ -316,22 +318,29 @@ onMounted(() => {
 }
 
 .logo {
-  margin: 16px;
-  margin-top: 8px;
-  margin-bottom: 32px;
-  gap: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+  margin-bottom: 2rem;
 
-  &-icon {
-    color: var(--border-accent-color);
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--fg-primary-color);
   }
 }
 
 .legal {
   &:deep(.v-label) {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+  a {
+    color: var(--fg-accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 

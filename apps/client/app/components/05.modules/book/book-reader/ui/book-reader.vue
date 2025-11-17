@@ -3,6 +3,7 @@ import type { BookDetails, BookPage, Sentence, Word } from '~/shared/types'
 import { PageLoader } from '~/components/02.shared/page-loader'
 import { cancelSpeech, initSpeechSynthesis, voiceTheText } from '~/shared/lib'
 import { useTooltipPositioning } from '../composables/use-tooltip-positioning'
+import { ChaptersDialog } from './dialogs'
 import SentenceTooltip from './sentence-tooltip.vue'
 import WordTooltip from './word-tooltip.vue'
 
@@ -65,6 +66,10 @@ const wordTooltipRef = ref<InstanceType<typeof WordTooltip> | null>(null)
 const sentenceTooltipRef = ref<InstanceType<typeof SentenceTooltip> | null>(null)
 const { tooltipStyle, calculatePosition, hide } = useTooltipPositioning()
 
+const currentChapterId = computed(() => {
+  return bookDetails.value?.chapters.find(chapter => chapter.title === currentPage.value?.chapterTitle)?.id
+})
+
 function updateRouteQuery(pageNumber: number) {
   router.push({ query: { ...route.query, page: pageNumber.toString() } })
 }
@@ -74,6 +79,10 @@ function navigateToPage(pageNumber: number) {
     updateRouteQuery(pageNumber)
     closeTooltips()
   }
+}
+
+function navigateToChapter(page: number) {
+  navigateToPage(page)
 }
 
 function nextPage() {
@@ -176,12 +185,16 @@ onMounted(() => {
     <div v-else-if="currentPage && bookDetails" ref="readerContainer" class="reader-container">
       <header class="reader-header">
         <VBtn
-          icon="mdi-format-list-bulleted"
+          icon="mdi-arrow-left"
           variant="text"
-          @click="isChaptersDialogVisible = true"
+          :to="RoutePaths.Books.Details(bookId)"
         />
         <h2>{{ currentPage.chapterTitle }}</h2>
-        <div class="header-spacer" />
+        <VBtn
+          icon="mdi-format-list-bulleted"
+          variant="text"
+          @click.stop="isChaptersDialogVisible = true"
+        />
       </header>
 
       <div class="reader-viewport">
@@ -256,6 +269,13 @@ onMounted(() => {
           @bookmark="(sentence: string) => console.log('Bookmark:', sentence)"
         />
       </Teleport>
+
+      <ChaptersDialog
+        v-model="isChaptersDialogVisible"
+        :chapters="bookDetails.chapters"
+        :current-chapter-id="currentChapterId"
+        @select-chapter="navigateToChapter"
+      />
     </div>
   </div>
 </template>
@@ -289,10 +309,9 @@ onMounted(() => {
     color: var(--fg-secondary-color);
     flex-grow: 1;
     text-align: center;
-  }
-  .header-spacer {
-    width: 48px; // Same width as the button to ensure centering
-    flex-shrink: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .v-btn {
     width: 48px;
@@ -394,68 +413,5 @@ onMounted(() => {
 .error-state {
   text-align: center;
   padding: 40px;
-}
-
-:deep(.v-dialog .v-overlay__content) {
-  .chapters-dialog-card {
-    background-color: var(--bg-secondary-color);
-    border: 1px solid var(--border-primary-color);
-    border-radius: 16px !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-
-    .v-card-title {
-      color: var(--fg-primary-color);
-      font-size: 1.5rem;
-      font-weight: 500;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .v-card-text {
-      padding: 0 8px;
-    }
-
-    .v-list {
-      background: transparent;
-      padding: 0;
-    }
-
-    .v-list-item {
-      color: var(--fg-secondary-color);
-      border-radius: 8px;
-      margin: 4px 0;
-      transition:
-        background-color 0.2s ease,
-        color 0.2s ease;
-
-      &:hover {
-        background-color: var(--bg-tertiary-color);
-        color: var(--fg-primary-color);
-      }
-
-      &--active {
-        background-color: var(--bg-accent-color);
-        color: var(--fg-primary-color) !important;
-        font-weight: 500;
-
-        .v-list-item-subtitle {
-          color: var(--fg-primary-color);
-          opacity: 0.8;
-        }
-      }
-
-      .v-list-item-title {
-        font-size: 1rem;
-      }
-
-      .v-list-item-subtitle {
-        font-size: 0.85rem;
-      }
-    }
-
-    .v-card-actions {
-      padding: 16px;
-    }
-  }
 }
 </style>
