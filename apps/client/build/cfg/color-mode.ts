@@ -5,7 +5,6 @@ export const colorModeCfg: Record<InputConfig, NuxtConfig['colorMode']> = {
   development: {
     preference: 'light',
     fallback: 'light',
-    hid: 'nuxt-color-mode-script',
     globalName: '__NUXT_COLOR_MODE__',
     componentName: 'ColorScheme',
     classPrefix: '',
@@ -16,7 +15,6 @@ export const colorModeCfg: Record<InputConfig, NuxtConfig['colorMode']> = {
   production: {
     preference: 'light',
     fallback: 'light',
-    hid: 'nuxt-color-mode-script',
     globalName: '__NUXT_COLOR_MODE__',
     componentName: 'ColorScheme',
     classPrefix: '',

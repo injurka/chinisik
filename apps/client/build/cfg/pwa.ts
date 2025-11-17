@@ -5,8 +5,8 @@ const sharedConf: NuxtConfig['pwa'] = {
   strategies: 'injectManifest',
   srcDir: 'service-worker',
   filename: 'sw.ts',
+  registerType: 'prompt',
   base: '/',
-  registerType: 'autoUpdate',
   scope: '/',
   includeAssets: ['favicon.ico'],
   manifest: {
@@ -48,8 +48,14 @@ const sharedConf: NuxtConfig['pwa'] = {
     }],
   },
   injectManifest: {
-    globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
-    globIgnores: ['emojis/**', 'manifest**.webmanifest'],
+    globPatterns: [
+      '**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}',
+    ],
+    globIgnores: [
+      'emojis/**',
+      'manifest**.webmanifest',
+      '**/_payload.json',
+    ],
     maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
     dontCacheBustURLsMatching: /\.\w{8}\./,
     additionalManifestEntries: [{

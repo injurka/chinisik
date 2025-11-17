@@ -8,7 +8,7 @@ import {
 } from './build'
 
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: true,
 
   ...baseCfg,
 

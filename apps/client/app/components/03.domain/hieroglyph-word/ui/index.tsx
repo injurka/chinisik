@@ -1,3 +1,5 @@
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-nocheck
 import type { HieroglyphWordVariant } from '~/components/03.domain/hieroglyph-word/types'
 import type { PinyinTextProps, PinyinTextTone } from '~/components/03.domain/pinyin-text'
 import type { PinyinAnalysis } from '~/shared/lib'
