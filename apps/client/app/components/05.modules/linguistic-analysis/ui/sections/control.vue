@@ -197,6 +197,7 @@ function handleKeyDown(event: KeyboardEvent) {
   &:deep(.v-field) {
     background-color: transparent !important;
     box-shadow: none;
+    color: var(--fg-secondary-color);
   }
 }
 
@@ -208,12 +209,12 @@ function handleKeyDown(event: KeyboardEvent) {
     text-transform: none;
     letter-spacing: normal;
     border-radius: 4px;
-    white-space: nowrap; // Предотвращаем перенос текста в кнопках
+    white-space: nowrap;
 
     &.active {
       background-color: var(--bg-primary-color);
       color: var(--fg-accent-color);
-      font-weight: 700; // Выделяем активную кнопку жирным
+      font-weight: 700;
     }
   }
 }

@@ -70,6 +70,7 @@ function navigateTo(path: string) {
     :width="isMobile ? 320 : 380"
     class="drawer"
     mobile-breakpoint="xl"
+    temporary
   >
     <header class="header">
       <div class="header-left">

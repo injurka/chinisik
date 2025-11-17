@@ -1,5 +1,6 @@
 .content-wrapper {
   @include default-font();
+  
   position: relative;
   display: flex;
   flex-direction: column;
@@ -9,6 +10,7 @@
   width: 100%;
   background-color: var(--bg-primary-color);
   margin: 0 auto;
+  overflow: hidden;
 
   @include mobile {
     padding: 4px;

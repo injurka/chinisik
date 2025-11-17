@@ -118,7 +118,7 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
   gap: 32px;
   align-items: start;
 
-  @media (max-width: 960px) {
+  @include mobile {
     grid-template-columns: 1fr;
   }
 }
@@ -145,21 +145,15 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
     border: 1px solid var(--border-button-secondary-color);
   }
 
-  @media (max-width: 960px) {
+  @include mobile {
     position: static;
     display: grid;
-    grid-template-columns: 180px 1fr;
     gap: 24px;
     align-items: center;
 
     .cover-image {
       margin-bottom: 0;
     }
-  }
-
-  @include mobile {
-    grid-template-columns: 120px 1fr;
-    gap: 16px;
   }
 }
 

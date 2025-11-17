@@ -63,6 +63,7 @@ defineProps<Props>()
     font-size: 0.85rem;
     background-color: var(--bg-secondary-color);
     color: var(--fg-primary-color);
+    opacity: 0.95;
   }
 }
 </style>

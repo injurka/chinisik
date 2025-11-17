@@ -26,7 +26,8 @@ WORKDIR /opt/app
 COPY --from=node_modules /opt/app/node_modules node_modules
 COPY                     .                     .
 
-RUN apt-get update && apt-get install -y openssl
+# Install Tesseract and OpenSSL runtime dependencies
+RUN apt-get update && apt-get install -y tesseract-ocr openssl && rm -rf /var/lib/apt/lists/*
 
 RUN bun run lint
 RUN bun run build
@@ -40,7 +41,6 @@ WORKDIR /opt/app
 
 COPY --from=node_modules_prod /opt/app/node_modules node_modules
 COPY --from=dist              /opt/app/dist         dist
-COPY                          data                  data
 COPY                          chi_sim.traineddata   .
 # Подключается через `-v /путь/к/вашей/static/папке:/opt/app/static`
 # COPY ./static                 static
