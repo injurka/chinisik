@@ -6,9 +6,9 @@
   "engines": {
     "bun": ">=1.1.30"
   },
-  // "workspaces": [
-  //   "apps/*"
-  // ],
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "--------------------------------<      DEV       >--------------------------------": "",
     "dev:client": "bun --parallel run --filter='./apps/client' dev:web",
