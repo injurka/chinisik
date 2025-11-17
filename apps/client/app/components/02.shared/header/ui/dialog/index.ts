@@ -1,5 +1,7 @@
-import AddToDictionaryModal from './add-to-dictionary-modal.vue'
-import ChaptersDialog from '../../../../05.modules/book/book-reader/ui/dialogs/chapters-dialog.vue'
-import LexicalAnalysisModal from './lexical-analysis-modal.vue'
+import DrawingControl from './drawing-control.vue'
+import SettingsControl from './settings-control.vue'
 
-export { AddToDictionaryModal, ChaptersDialog, LexicalAnalysisModal }
+export {
+  DrawingControl,
+  SettingsControl,
+}

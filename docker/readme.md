@@ -13,4 +13,4 @@ docker push injurka/chinisik-server:v3
 
 docker compose down
 
-V_CLIENT=v2 V_SERVER=v2 docker compose up -d
+V_CLIENT=v3 V_SERVER=v3 docker compose up -d

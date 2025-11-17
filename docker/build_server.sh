@@ -15,6 +15,6 @@ echo "--- Сборка образа сервера с тегом: chinisik-serve
 cd ./apps/server
 
 # Собираем образ
-docker build -t chinisik-server:$VERSION .
+docker build --no-cache -t chinisik-server:$VERSION .
 
 echo "--- Сборка образа сервера chinisik-server:$VERSION завершена успешно! ---"

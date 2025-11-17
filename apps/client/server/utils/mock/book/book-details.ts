@@ -14,5 +14,6 @@ export const mockBookDetails: BookDetails[] = [
     difficultyFormal: 'HSK 2',
     pageCount: mockBookContent['le-petit-prince']?.length || 0,
     uniqueWords: 1800,
+    chapters: [],
   },
 ]

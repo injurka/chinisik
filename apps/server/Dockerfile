@@ -1,43 +1,36 @@
-# ---- Node modules ----- #
-FROM oven/bun AS node_modules
-
-WORKDIR /opt/app
-
-COPY ./package*.json ./bun* ./
-
-RUN bun install --ignore-scripts
-
 # ---- Node modules production ----- #
-FROM oven/bun AS node_modules_prod
+FROM oven/bun:1.3.2-slim AS node_modules_prod
 
 WORKDIR /opt/app
 
 COPY ./package*.json ./bun* ./
-COPY ./prisma        prisma
 
-RUN bun install --production --ignore-scripts
-RUN bun run prisma:generate
+RUN bun install --production --ignore-scripts --frozen-lockfile
 
 # ---- Build ------------ #
-FROM oven/bun AS dist
+FROM oven/bun:1.3.2 AS dist
 
 WORKDIR /opt/app
 
-COPY --from=node_modules /opt/app/node_modules node_modules
-COPY                     .                     .
+COPY . .
 
 # Install Tesseract and OpenSSL runtime dependencies
 RUN apt-get update && apt-get install -y tesseract-ocr openssl && rm -rf /var/lib/apt/lists/*
 
+RUN bun install --ignore-scripts
 RUN bun run lint
 RUN bun run build
 
 # ---- Release ---------- #
-FROM oven/bun:slim
+FROM oven/bun:1.3.2-slim
 
 ARG CI_COMMIT_TAG
 
 WORKDIR /opt/app
+
+COPY ./package*.json ./bun* ./
+
+RUN bun install --production --ignore-scripts --frozen-lockfile
 
 COPY --from=node_modules_prod /opt/app/node_modules node_modules
 COPY --from=dist              /opt/app/dist         dist
