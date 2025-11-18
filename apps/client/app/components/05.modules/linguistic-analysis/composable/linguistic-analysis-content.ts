@@ -17,7 +17,7 @@ function useLinguisticAnalysisContent() {
   const control = ref<LinguisticAnalysisContentControl>({
     value: '',
     model: 'gemini-2.5-flash-lite',
-    dataType: 'json',
+    dataType: 'markdown',
   })
   const abortController = ref<AbortController>(new AbortController())
 

@@ -449,7 +449,7 @@ onUnmounted(() => {
 }
 .hw-pinyin {
   color: var(--fg-secondary-color);
-  font-size: 1.1rem;
+  font-size: 1rem;
   letter-spacing: 0.2px;
   font-family: 'Sofia Sans';
   font-weight: 500;

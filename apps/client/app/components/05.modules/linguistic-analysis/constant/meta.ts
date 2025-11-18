@@ -1,11 +1,11 @@
 const typeCopmonentMappingForControl = {
-  Json: 'Шаблонный',
   Markdown: 'Полотно',
+  Json: 'Шаблонный',
 }
 
 const typeSplitMapping = {
-  0: 'json',
-  1: 'markdown',
+  0: 'markdown',
+  1: 'json',
 }
 
 export {

@@ -211,6 +211,10 @@ function handleKeyDown(event: KeyboardEvent) {
     border-radius: 4px;
     white-space: nowrap;
 
+    @include mobile() {
+      flex-grow: 1 !important;
+    }
+
     &.active {
       background-color: var(--bg-primary-color);
       color: var(--fg-accent-color);
