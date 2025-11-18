@@ -31,15 +31,6 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
           :alt="`Обложка ${book.title}`"
           class="cover-image"
         >
-
-        <!-- <NuxtImg
-          :src="book.coverUrl"
-          :alt="`Обложка ${book.title}`"
-          class="cover-image"
-          provider="ipx"
-          format="webp"
-          placeholder
-        /> -->
         <VBtn
           :to="RoutePaths.Books.Read(bookId)"
           size="large"

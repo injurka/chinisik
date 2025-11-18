@@ -18,8 +18,6 @@ defineProps<Props>()
       :src="book.coverUrl"
       :alt="`Обложка книги ${book.title}`"
       class="book-card-cover"
-      provider="ipx"
-      format="webp"
       placeholder
     />
     <VCardTitle class="book-card-title">

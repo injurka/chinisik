@@ -16,8 +16,8 @@ class OAuthService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        client_id: import.meta.env.GITHUB_CLIENT_ID,
+        client_secret: import.meta.env.GITHUB_CLIENT_SECRET,
         code,
         state,
       }),
@@ -119,9 +119,9 @@ class OAuthService {
       },
       body: new URLSearchParams({
         code,
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-        redirect_uri: process.env.GOOGLE_CALLBACK!,
+        client_id: import.meta.env.GOOGLE_CLIENT_ID!,
+        client_secret: import.meta.env.GOOGLE_CLIENT_SECRET!,
+        redirect_uri: import.meta.env.GOOGLE_CALLBACK!,
         grant_type: 'authorization_code',
       }),
     })

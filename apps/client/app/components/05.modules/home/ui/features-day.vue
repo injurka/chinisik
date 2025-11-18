@@ -220,13 +220,21 @@ const displayVariant = computed(() => (localVariant.value === 'global' ? undefin
   display: flex;
   justify-content: center;
   margin-bottom: 1.5rem;
-}
 
-.v-btn-toggle {
-  .v-btn {
-    width: 160px;
-    text-transform: none;
-    letter-spacing: 0.5px;
+  :deep(.v-btn-toggle) {
+    border-color: var(--border-primary-color);
+    height: 41px;
+
+    .v-btn {
+      color: var(--fg-secondary-color);
+      width: 160px;
+      text-transform: none;
+      letter-spacing: 0.5px;
+
+      &:hover {
+        background-color: var(--bg-hover-color);
+      }
+    }
   }
 }
 

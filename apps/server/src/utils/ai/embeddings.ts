@@ -25,8 +25,8 @@ async function createAiEmbeddingsRequest(input: string) {
   }
 
   const openai = new OpenAI({
-    apiKey: process.env.AI_HUBMIX_KEY,
-    baseURL: process.env.AI_HUBMIX_API_URL,
+    apiKey: import.meta.env.AI_HUBMIX_KEY,
+    baseURL: import.meta.env.AI_HUBMIX_API_URL,
   })
 
   try {

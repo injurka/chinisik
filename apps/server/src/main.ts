@@ -16,7 +16,7 @@ async function bootstrap() {
   Scheduler.getInstance()
 
   return {
-    port: process.env.PORT || 8080,
+    port: import.meta.env.PORT || 8080,
     fetch: app.fetch,
     idleTimeout: 120,
   }

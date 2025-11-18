@@ -96,7 +96,7 @@ class AuthController extends AController {
         // Устанавливаем cookie для refresh token с правильными параметрами
         setCookie(c, 'refreshToken', data.refreshToken, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: import.meta.env.NODE_ENV === 'production',
           path: '/',
           sameSite: 'Lax',
           maxAge: 30 * 24 * 60 * 60, // 30 дней
@@ -289,8 +289,8 @@ class AuthController extends AController {
         const state = Bun.randomUUIDv7()
         const url = new URL('https://github.com/login/oauth/authorize')
 
-        url.searchParams.set('client_id', process.env.GITHUB_CLIENT_ID!)
-        url.searchParams.set('redirect_uri', process.env.GITHUB_CALLBACK!)
+        url.searchParams.set('client_id', import.meta.env.GITHUB_CLIENT_ID!)
+        url.searchParams.set('redirect_uri', import.meta.env.GITHUB_CALLBACK!)
         url.searchParams.set('state', state)
         url.searchParams.set('scope', 'user:email')
 
@@ -337,7 +337,7 @@ class AuthController extends AController {
         const { token, refreshToken } = await this.oauthService.github(code, state)
         setCookie(c, 'oauth_state', '', { expires: new Date(0), path: '/' })
 
-        return c.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}&refreshToken=${refreshToken}`)
+        return c.redirect(`${import.meta.env.FRONTEND_URL}/auth/callback?token=${token}&refreshToken=${refreshToken}`)
       },
     )
   }
@@ -367,8 +367,8 @@ class AuthController extends AController {
         const state = Bun.randomUUIDv7()
         const url = new URL('https://accounts.google.com/o/oauth2/v2/auth')
 
-        url.searchParams.set('client_id', process.env.GOOGLE_CLIENT_ID!)
-        url.searchParams.set('redirect_uri', process.env.GOOGLE_CALLBACK!)
+        url.searchParams.set('client_id', import.meta.env.GOOGLE_CLIENT_ID!)
+        url.searchParams.set('redirect_uri', import.meta.env.GOOGLE_CALLBACK!)
         url.searchParams.set('response_type', 'code')
         url.searchParams.set('state', state)
         url.searchParams.set('scope', 'openid email profile')
@@ -418,7 +418,7 @@ class AuthController extends AController {
         const { token, refreshToken } = await this.oauthService.google(code, state)
         setCookie(c, 'oauth_state', '', { expires: new Date(0), path: '/' })
 
-        return c.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}&refreshToken=${refreshToken}`)
+        return c.redirect(`${import.meta.env.FRONTEND_URL}/auth/callback?token=${token}&refreshToken=${refreshToken}`)
       },
     )
   }

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { Pronunciation } from '~/shared/types'
+import { LexicalAnalysisModal } from '~/components/02.shared/lexical-analysis-modal'
 import { PinyinText } from '~/components/03.domain/pinyin-text'
 import { processPinyinForRender } from '../lib/use-processed-pinyin'
-import { AddToDictionaryModal, LexicalAnalysisModal } from './dialogs'
+import { AddToDictionaryModal } from './dialogs'
 
 interface Props {
   word: string

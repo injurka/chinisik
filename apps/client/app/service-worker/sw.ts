@@ -55,12 +55,26 @@ registerRoute(
 
 // IMAGES
 registerRoute(
-  ({ request }) => request.destination === 'image',
+  ({ request, url }) =>
+    request.destination === 'image'
+    || /\.(?:png|gif|jpg|jpeg|svg|webp)$/i.test(url.pathname),
   CacheStrategyFactory.createStaleWhileRevalidate(
     CACHE_CONFIG.names.images,
     {
       maxEntries: CACHE_CONFIG.limits.images,
       maxAgeSeconds: CACHE_CONFIG.durations.images,
+    },
+  ),
+)
+
+// AUDIO
+registerRoute(
+  ({ request }) => request.destination === 'audio',
+  CacheStrategyFactory.createCacheFirst(
+    CACHE_CONFIG.names.audio,
+    {
+      maxEntries: CACHE_CONFIG.limits.audio,
+      maxAgeSeconds: CACHE_CONFIG.durations.audio,
     },
   ),
 )

@@ -157,7 +157,7 @@ watch(isDialog, (newVal) => {
 
         <VBtn
           block
-          color="primary"
+          rounded
           variant="tonal"
           class="start-button"
           @click="startAnalysis"
@@ -228,10 +228,10 @@ watch(isDialog, (newVal) => {
 
 .analysis-text {
   font-family: var(--font-family-cn);
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 500;
   text-align: center;
-  padding: 12px 16px;
+  padding: 8px 16px;
   background-color: var(--bg-tertiary-color);
   border-radius: 8px;
   border-left: 4px solid var(--border-accent-color);
@@ -259,6 +259,7 @@ watch(isDialog, (newVal) => {
 
     .v-btn {
       color: var(--fg-secondary-color);
+
       &:hover {
         background-color: var(--bg-hover-color);
       }
@@ -267,10 +268,21 @@ watch(isDialog, (newVal) => {
 }
 
 .start-button {
-  margin-top: 12px;
-  font-weight: 600;
   text-transform: none;
-  letter-spacing: 0.5px;
+  text-decoration: none;
+  letter-spacing: 1px;
+  color: var(--fg-action-color);
+  width: auto;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  .hw-word {
+    margin-left: 8px;
+  }
+
+  @include mobile {
+    font-size: 0.75rem;
+  }
 }
 
 .text-error {

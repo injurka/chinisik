@@ -24,6 +24,7 @@ const CACHE_CONFIG = {
     fonts: 'chinisik-fonts',
     icons: 'chinisik-icons',
     images: 'chinisik-images', // For general images
+    audio: 'chinisik-audio',
     // Static JS/CSS Assets
     hashedAssets: 'chinisik-hashed-assets',
     vendorAssets: 'chinisik-vendor-assets',
@@ -31,13 +32,13 @@ const CACHE_CONFIG = {
     // API Caches
     apiStatic: 'chinisik-api-static', // For immutable API data
     apiDynamic: 'chinisik-api-dynamic', // For frequently updated API data
-    apiDaily: 'chinisik-api-daily', // For data that updates daily
   },
   durations: {
     // PWA & Core Assets
     fonts: 365 * 24 * 60 * 60, // 1 year
     icons: 30 * 24 * 60 * 60, // 30 days
     images: 7 * 24 * 60 * 60, // 7 days
+    audio: 30 * 24 * 60 * 60, // 30 days
     manifests: 7 * 24 * 60 * 60, // 7 days
     // Static JS/CSS Assets
     static: {
@@ -56,6 +57,7 @@ const CACHE_CONFIG = {
     fonts: 30,
     icons: 100, // Reduced from 500 to be more reasonable
     images: 100, // NEW
+    audio: 50,
     hashedAssets: 200,
     vendorAssets: 100,
     regularAssets: 50,
@@ -110,13 +112,6 @@ const API_CACHE_RULES: ApiCacheRule[] = [
     strategy: 'StaleWhileRevalidate',
     maxAgeSeconds: CACHE_CONFIG.durations.api.dynamic,
     maxEntries: CACHE_CONFIG.limits.apiDynamic,
-  },
-  {
-    path: '/api/v1/day-material/today',
-    cacheName: CACHE_CONFIG.names.apiDaily,
-    strategy: 'NetworkFirst',
-    maxAgeSeconds: CACHE_CONFIG.durations.api.daily,
-    maxEntries: CACHE_CONFIG.limits.apiDaily,
   },
 ]
 

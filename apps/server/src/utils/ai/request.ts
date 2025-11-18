@@ -63,8 +63,8 @@ function getProviderConfig(modelName: AiModel): ProviderConfig {
 
   if (isHubMixModel) { // Prioritize HubMix if a model name could be in both (unlikely but for safety)
     return {
-      apiKey: process.env.AI_HUBMIX_KEY,
-      baseURL: process.env.AI_HUBMIX_API_URL,
+      apiKey: import.meta.env.AI_HUBMIX_KEY,
+      baseURL: import.meta.env.AI_HUBMIX_API_URL,
     }
   }
 
@@ -74,8 +74,8 @@ function getProviderConfig(modelName: AiModel): ProviderConfig {
   // so whichever provider (HubMix/OpenRouter) proxies to OpenAI speech endpoint.
   console.warn(`Provider config not clearly defined for model: ${modelName}. Falling back to HubMix.`)
   return {
-    apiKey: process.env.AI_HUBMIX_KEY,
-    baseURL: process.env.AI_HUBMIX_API_URL,
+    apiKey: import.meta.env.AI_HUBMIX_KEY,
+    baseURL: import.meta.env.AI_HUBMIX_API_URL,
   }
 }
 
@@ -120,16 +120,16 @@ export async function createAiChatRequest(
     stream: false,
     web_search_options: mergedOptions.model.includes('search')
       ? {
-          user_location: {
-            approximate: {
-              city: '北京',
-              country: '中国',
-              region: '北京',
-              timezone: 'Asia/Shanghai',
-            },
-            type: 'approximate',
+        user_location: {
+          approximate: {
+            city: '北京',
+            country: '中国',
+            region: '北京',
+            timezone: 'Asia/Shanghai',
           },
-        }
+          type: 'approximate',
+        },
+      }
       : undefined,
   })
 }
