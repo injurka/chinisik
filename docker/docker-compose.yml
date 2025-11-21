@@ -28,10 +28,8 @@ services:
     container_name: chinisik-db
     networks:
       - chinisik-net
-    environment:
-      POSTGRES_USER: chinisik
-      POSTGRES_PASSWORD: chinisik
-      POSTGRES_DB: chinisik_prod
+    env_file:
+      - ../apps/server/.env.db
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always
