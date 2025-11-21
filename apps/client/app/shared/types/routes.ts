@@ -17,8 +17,6 @@ export enum RouteNames {
   AuthSignUp = 'auth-sign-up',
   AuthForgotPassword = 'auth-forgot-password',
 
-  ToonManually = 'toon-manually',
-
   QuizAudio = 'quiz-audio',
 }
 
@@ -58,11 +56,6 @@ export const RoutePaths = {
     SignIn: () => '/auth/sign-in',
     SignUp: () => '/auth/sign-up',
     ForgotPassword: () => '/auth/forgot-password',
-  },
-
-  Toon: {
-    List: () => '/toon/list',
-    Manually: () => '/toon/manually',
   },
 
   Quiz: {

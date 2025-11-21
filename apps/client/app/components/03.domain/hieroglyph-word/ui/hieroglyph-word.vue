@@ -370,6 +370,7 @@ onUnmounted(() => {
   padding-left: 0px !important;
   border: 1px solid var(--border-accent-color);
   gap: 0px;
+  max-width: 100%;
 
   &.hw-none-pinyin,
   &.hw-none-translate {
@@ -381,6 +382,11 @@ onUnmounted(() => {
     justify-content: center;
     padding: 4px 12px;
     font-size: 1rem;
+    white-space: normal;
+
+    :deep(.pinyin) {
+      flex-wrap: wrap;
+    }
   }
 
   .hw-glyph {
@@ -391,6 +397,8 @@ onUnmounted(() => {
     border-top: 1px solid var(--border-accent-color);
     border-bottom: 1px solid var(--border-accent-color);
     box-shadow: none;
+    white-space: normal;
+    word-break: break-all;
   }
 
   .hw-translate {
@@ -398,6 +406,8 @@ onUnmounted(() => {
     padding: 4px 12px;
     line-height: 30px;
     font-size: 0.9rem;
+    white-space: normal;
+    word-break: break-word;
   }
 }
 .variant-5 {

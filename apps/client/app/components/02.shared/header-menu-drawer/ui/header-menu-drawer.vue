@@ -45,7 +45,6 @@ const navGroups: NavGroup[] = [
     title: 'Инструменты',
     items: [
       { name: 'Лексический анализ', icon: 'mdi:layers-search', routeName: RouteNames.LinguisticAnalysis, routePath: RoutePaths.LinguisticAnalysis.Index() },
-      { name: 'Перевод комиксов', icon: 'mdi:panorama-variant-outline', routeName: RouteNames.ToonManually, routePath: RoutePaths.Toon.Manually() },
     ],
   },
 ]
