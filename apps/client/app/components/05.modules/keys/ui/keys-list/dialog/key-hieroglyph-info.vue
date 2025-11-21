@@ -108,7 +108,7 @@ function onOpenWiki() {
             variant="tonal"
             @click="generateExample"
           >
-            Сгенерировать примеры иероглифов
+            Показать примеры использования
           </VBtn>
 
           <PageLoader v-else-if="isLoadingExample" />
