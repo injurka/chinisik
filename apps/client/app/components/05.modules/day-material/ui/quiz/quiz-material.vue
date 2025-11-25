@@ -2,6 +2,8 @@
 import type { QuizCharItem } from '../../composables/quiz/use-quiz-construction'
 import type { DayMaterialQuiz } from '~/shared/types'
 import { useFullscreen } from '@vueuse/core'
+import { PageLoader } from '~/components/02.shared/page-loader'
+import { cancelSpeech, voiceTheText } from '~/shared/lib'
 import {
   QUIZ_STAGES,
   useDayMaterialQuiz,
@@ -26,6 +28,23 @@ const quizEl = ref<HTMLElement | null>(null)
 // Fullscreen logic
 const { isFullscreen, toggle: toggleFullscreen } = useFullscreen(quizEl)
 
+// Sound logic
+const isMuted = ref(false)
+
+function toggleMute() {
+  isMuted.value = !isMuted.value
+  if (isMuted.value) {
+    cancelSpeech(() => {})
+  }
+}
+
+function speak(text: string, lang: 'zh-CN' | 'ru-RU' = 'zh-CN') {
+  if (isMuted.value)
+    return
+  cancelSpeech(() => {})
+  voiceTheText(text, () => {}, () => {}, lang)
+}
+
 // 1. Main Logic
 const {
   currentStage,
@@ -34,6 +53,8 @@ const {
   score,
   mistakes,
   quizHistory,
+  isHistoryLoading,
+  hasPerfectScore,
   startQuiz,
   finishQuiz,
   setStage,
@@ -43,7 +64,6 @@ const {
   incrementProgress,
 } = useDayMaterialQuiz(quizDataRef)
 
-// Общая функция обработки ответа для инкремента прогресса
 function handleAnswerResult(isCorrect: boolean) {
   if (isCorrect)
     addScore()
@@ -60,7 +80,7 @@ const {
   currentQuestion: vocabQuestion,
   currentOptions: vocabOptions,
   selectedOption: vocabSelected,
-  handleAnswer: vocabAnswer,
+  handleAnswer: vocabAnswerLogic,
   resetStage: resetVocab,
 } = useQuizVocabulary({
   data: vocabData,
@@ -73,18 +93,37 @@ const {
   },
 })
 
+function vocabAnswer(option: string) {
+  vocabAnswerLogic(option)
+
+  // Озвучиваем правильный иероглиф
+  if (vocabQuestion.value) {
+    // Если вопрос на китайском - озвучиваем вопрос
+    // Если вопрос на русском - озвучиваем правильный ответ (который на китайском)
+    // У нас questionLang: 'ru' | 'cn'
+    const textToSpeak = vocabQuestion.value.questionLang === 'cn'
+      ? vocabQuestion.value.question
+      : vocabQuestion.value.correctAnswer
+
+    speak(textToSpeak)
+  }
+}
+
 // 3. Stage 2: Construction Logic (Grammar)
 const constructionItems = computed(() => props.quizData.stage2 || [])
 
 const {
   questionText: constrQuestion,
+  correctSentence: constrCorrectSentence,
   selectedChars: constrSelected,
   availableChars: constrAvailable,
   isErrorShake: constrError,
   isFailed: constrFailed,
+  isChecked: constrIsChecked,
   selectChar: constrSelectLogic,
   unselectChar: constrUnselectLogic,
-  checkAnswer: constrCheck,
+  checkAnswer: constrCheckLogic,
+  nextTask: constrNext,
   resetStage: resetConstruction,
   initTask: initConstructionTask,
 } = useQuizConstruction({
@@ -98,18 +137,26 @@ const {
   },
 })
 
+function constrCheck() {
+  constrCheckLogic()
+  speak(constrCorrectSentence.value)
+}
+
 // 4. Stage 3: Proverb Logic (reusing construction composable)
 const proverbItems = computed(() => props.quizData.stage3 ? [props.quizData.stage3] : [])
 
 const {
   questionText: proverbQuestion,
+  correctSentence: proverbCorrectSentence,
   selectedChars: proverbSelected,
   availableChars: proverbAvailable,
   isErrorShake: proverbError,
   isFailed: proverbFailed,
+  isChecked: proverbIsChecked,
   selectChar: proverbSelectLogic,
   unselectChar: proverbUnselectLogic,
-  checkAnswer: proverbCheck,
+  checkAnswer: proverbCheckLogic,
+  nextTask: proverbNext,
   resetStage: resetProverb,
   initTask: initProverbTask,
 } = useQuizConstruction({
@@ -118,6 +165,11 @@ const {
   onWrong: () => handleAnswerResult(false),
   onComplete: () => finishQuiz(),
 })
+
+function proverbCheck() {
+  proverbCheckLogic()
+  speak(proverbCorrectSentence.value)
+}
 
 async function animateChipMove(
   item: QuizCharItem,
@@ -244,6 +296,14 @@ watch(currentStage, (newStage) => {
 
         <VSpacer />
 
+        <!-- Mute Toggle -->
+        <VBtn icon variant="text" size="small" color="var(--fg-tertiary-color)" @click="toggleMute">
+          <Icon :name="isMuted ? 'mdi:volume-off' : 'mdi:volume-high'" size="24" />
+          <VTooltip activator="parent" location="top">
+            {{ isMuted ? 'Включить звук' : 'Выключить звук' }}
+          </VTooltip>
+        </VBtn>
+
         <VBtn icon variant="text" size="small" color="var(--fg-tertiary-color)" @click="toggleFullscreen">
           <Icon :name="isFullscreen ? 'mdi:fullscreen-exit' : 'mdi:fullscreen'" size="24" />
           <VTooltip activator="parent" location="top">
@@ -267,26 +327,51 @@ watch(currentStage, (newStage) => {
       </div>
 
       <!-- INTRO -->
-      <div v-if="currentStage === QUIZ_STAGES.INTRO" class="stage-card intro">
-        <!-- History Component -->
-        <QuizHistory :history="quizHistory" />
+      <div
+        v-if="currentStage === QUIZ_STAGES.INTRO"
+        class="stage-card intro"
+        :class="{ 'is-perfect': hasPerfectScore }"
+      >
+        <template v-if="isHistoryLoading">
+          <div class="loader-container">
+            <PageLoader />
+            <p>Загрузка истории...</p>
+          </div>
+        </template>
 
-        <Icon name="mdi:school-outline" size="64" class="mb-4 intro-icon" />
-        <h2>Проверка знаний</h2>
-        <p>Закрепите материал дня с помощью теста из трех этапов:</p>
-        <ul class="intro-list">
-          <li><strong>1. Словарь:</strong> Перевод слов.</li>
-          <li><strong>2. Грамматика:</strong> Составление предложений.</li>
-          <li><strong>3. Мудрость:</strong> Сборка пословицы дня.</li>
-        </ul>
-        <VBtn
-          size="large"
-          color="var(--fg-accent-color)"
-          class="start-btn"
-          @click="handleStart"
-        >
-          {{ quizHistory.length > 0 ? 'Попробовать снова' : 'Начать тест' }}
-        </VBtn>
+        <template v-else>
+          <div v-if="hasPerfectScore" class="completion-status">
+            <div class="completion-icon">
+              <Icon name="mdi:check-decagram" size="48" />
+            </div>
+            <div class="completion-text">
+              <h3>Материал успешно усвоен!</h3>
+              <p>Вы прошли тест без единой ошибки.</p>
+            </div>
+          </div>
+
+          <Icon v-else name="mdi:school-outline" size="64" class="mb-4 intro-icon" />
+
+          <h2>{{ hasPerfectScore ? 'Повторение - мать учения' : 'Проверка знаний' }}</h2>
+          <p>Закрепите материал дня с помощью теста из трех этапов:</p>
+          <ul class="intro-list">
+            <li><strong>1. Словарь:</strong> Перевод слов.</li>
+            <li><strong>2. Грамматика:</strong> Составление предложений.</li>
+            <li><strong>3. Мудрость:</strong> Сборка пословицы дня.</li>
+          </ul>
+          <VBtn
+            size="large"
+            color="var(--fg-accent-color)"
+            class="start-btn"
+            variant="tonal"
+            rounded
+            @click="handleStart"
+          >
+            {{ quizHistory.length > 0 ? 'Пройти заново' : 'Начать тест' }}
+          </VBtn>
+
+          <QuizHistory :history="quizHistory" />
+        </template>
       </div>
 
       <!-- STAGE 1: VOCABULARY -->
@@ -343,34 +428,59 @@ watch(currentStage, (newStage) => {
           </div>
         </div>
 
-        <!-- POOL AREA -->
-        <div class="pool-area">
-          <div
-            v-for="item in constrAvailable"
-            :key="item.id"
-            class="pool-item-wrapper"
-          >
-            <div
-              v-if="!item.isUsed"
-              class="char-chip"
-              :data-id="item.id"
-              @click="handleConstrSelect(item)"
-            >
-              {{ item.char }}
+        <!-- POOL AREA OR CORRECT ANSWER -->
+        <div class="pool-area-wrapper">
+          <Transition name="fade" mode="out-in">
+            <div v-if="!constrIsChecked" key="pool" class="pool-area">
+              <div
+                v-for="item in constrAvailable"
+                :key="item.id"
+                class="pool-item-wrapper"
+              >
+                <div
+                  v-if="!item.isUsed"
+                  class="char-chip"
+                  :data-id="item.id"
+                  @click="handleConstrSelect(item)"
+                >
+                  {{ item.char }}
+                </div>
+                <div v-else class="char-chip placeholder" />
+              </div>
             </div>
-            <div v-else class="char-chip placeholder" />
-          </div>
+
+            <div v-else key="result" class="correct-answer-display">
+              <div class="correct-label">
+                Правильный ответ:
+              </div>
+              <div class="correct-text" @click="speak(constrCorrectSentence)">
+                {{ constrCorrectSentence }}
+                <Icon name="mdi:volume-high" class="ml-2 voice-icon" />
+              </div>
+            </div>
+          </Transition>
         </div>
 
         <VBtn
+          v-if="!constrIsChecked"
           class="mt-6"
           block
           variant="tonal"
           color="var(--fg-accent-color)"
-          :disabled="constrSelected.length === 0 || constrFailed"
+          :disabled="constrSelected.length === 0"
           @click="constrCheck"
         >
           Проверить
+        </VBtn>
+        <VBtn
+          v-else
+          class="mt-6"
+          block
+          variant="tonal"
+          color="var(--fg-accent-color)"
+          @click="constrNext"
+        >
+          Далее
         </VBtn>
       </div>
 
@@ -399,32 +509,57 @@ watch(currentStage, (newStage) => {
           </div>
         </div>
 
-        <!-- POOL AREA -->
-        <div class="pool-area">
-          <div
-            v-for="item in proverbAvailable"
-            :key="item.id"
-            class="pool-item-wrapper"
-          >
-            <div
-              v-if="!item.isUsed"
-              class="char-chip"
-              :data-id="item.id"
-              @click="handleProverbSelect(item)"
-            >
-              {{ item.char }}
+        <!-- POOL AREA OR CORRECT ANSWER -->
+        <div class="pool-area-wrapper">
+          <Transition name="fade" mode="out-in">
+            <div v-if="!proverbIsChecked" key="pool" class="pool-area">
+              <div
+                v-for="item in proverbAvailable"
+                :key="item.id"
+                class="pool-item-wrapper"
+              >
+                <div
+                  v-if="!item.isUsed"
+                  class="char-chip"
+                  :data-id="item.id"
+                  @click="handleProverbSelect(item)"
+                >
+                  {{ item.char }}
+                </div>
+                <div v-else class="char-chip placeholder" />
+              </div>
             </div>
-            <div v-else class="char-chip placeholder" />
-          </div>
+
+            <div v-else key="result" class="correct-answer-display">
+              <div class="correct-label">
+                Правильный ответ:
+              </div>
+              <div class="correct-text" @click="speak(proverbCorrectSentence)">
+                {{ proverbCorrectSentence }}
+                <Icon name="mdi:volume-high" class="ml-2 voice-icon" />
+              </div>
+            </div>
+          </Transition>
         </div>
 
         <VBtn
+          v-if="!proverbIsChecked"
           class="mt-6"
           block
           variant="tonal"
           color="var(--fg-accent-color)"
-          :disabled="proverbSelected.length === 0 || proverbFailed"
+          :disabled="proverbSelected.length === 0"
           @click="proverbCheck"
+        >
+          Проверить
+        </VBtn>
+        <VBtn
+          v-else
+          class="mt-6"
+          block
+          variant="tonal"
+          color="var(--fg-accent-color)"
+          @click="proverbNext"
         >
           Завершить
         </VBtn>
@@ -521,9 +656,29 @@ watch(currentStage, (newStage) => {
   align-items: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   margin: 24px 0;
+  transition: border-color 0.3s ease;
 
   &.intro {
     text-align: center;
+    min-height: 400px;
+    justify-content: center;
+
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      height: 100%;
+      width: 100%;
+      color: var(--fg-tertiary-color);
+    }
+
+    &.is-perfect {
+      border: 2px solid var(--fg-success-color);
+      background: linear-gradient(to bottom right, var(--bg-secondary-color), rgba(var(--fg-success-color-rgb), 0.05));
+    }
+
     .intro-icon {
       color: var(--fg-accent-color);
     }
@@ -568,6 +723,78 @@ watch(currentStage, (newStage) => {
       }
     }
   }
+
+  .start-btn {
+    text-transform: none;
+    text-decoration: none;
+    letter-spacing: 1px;
+    color: var(--fg-action-color);
+    width: auto;
+    margin: 0 auto;
+    padding: 0 32px;
+
+    .hw-word {
+      margin-left: 8px;
+    }
+
+    @include mobile {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+.completion-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: rgba(var(--fg-success-color-rgb), 0.1);
+  border: 1px solid var(--fg-success-color);
+  padding: 16px 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  text-align: left;
+  animation: slideDown 0.5s ease-out;
+
+  .completion-icon {
+    color: var(--fg-success-color);
+    animation: pulse 2s infinite;
+  }
+
+  .completion-text {
+    h3 {
+      color: var(--fg-success-color);
+      margin: 0 0 4px 0;
+      font-size: 1.1rem;
+    }
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--fg-secondary-color);
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .feedback-btn {
@@ -580,7 +807,7 @@ watch(currentStage, (newStage) => {
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
 
   .question-prefix {
     font-size: 1rem;
@@ -588,10 +815,11 @@ watch(currentStage, (newStage) => {
   }
 
   .question-word {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 600;
+    line-height: 3rem;
     color: var(--fg-primary-color);
-    font-family: var(--font-family-cn);
+    font-family: var(--font-family-cn) 'Sofia Sans';
   }
 }
 
@@ -607,10 +835,13 @@ watch(currentStage, (newStage) => {
   border: 2px solid transparent;
   padding: 16px;
   border-radius: 12px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
   color: var(--fg-primary-color);
   cursor: pointer;
   transition: all 0.2s;
+  font-family: var(--font-family-cn) 'Sofia Sans';
 
   &:hover:not(.disabled) {
     background-color: var(--bg-hover-color);
@@ -680,6 +911,13 @@ watch(currentStage, (newStage) => {
   }
 }
 
+.pool-area-wrapper {
+  min-height: 120px; // Prevent layout jump
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .pool-area {
   display: flex;
   flex-wrap: wrap;
@@ -690,6 +928,37 @@ watch(currentStage, (newStage) => {
 .pool-item-wrapper {
   width: 48px;
   height: 48px;
+}
+
+.correct-answer-display {
+  text-align: center;
+  animation: fade-in 0.5s ease;
+
+  .correct-label {
+    font-size: 0.9rem;
+    color: var(--fg-secondary-color);
+    margin-bottom: 8px;
+  }
+
+  .correct-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--fg-success-color);
+    font-family: var(--font-family-cn);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .voice-icon {
+      opacity: 0.7;
+      font-size: 1.2rem;
+    }
+
+    &:hover .voice-icon {
+      opacity: 1;
+    }
+  }
 }
 
 .char-chip {
@@ -704,7 +973,6 @@ watch(currentStage, (newStage) => {
   user-select: none;
   transition: transform 0.1s;
 
-  // Фиксированный размер для стабильности и корректной работы placeholder
   width: 48px;
   height: 48px;
   display: flex;
@@ -746,6 +1014,16 @@ watch(currentStage, (newStage) => {
   100% {
     transform: translateX(0);
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 @include mobile {

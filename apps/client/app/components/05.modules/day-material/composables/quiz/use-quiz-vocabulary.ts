@@ -78,7 +78,7 @@ export function useQuizVocabulary({ data, onComplete, onCorrect, onWrong }: UseQ
 
     setTimeout(() => {
       next()
-    }, 800)
+    }, 1000)
   }
 
   function next() {

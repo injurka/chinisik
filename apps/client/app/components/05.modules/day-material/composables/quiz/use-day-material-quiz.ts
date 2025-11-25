@@ -119,6 +119,10 @@ export function useDayMaterialQuiz(quizData: Ref<DayMaterialQuiz | undefined>) {
     return Math.min(percent, 100)
   })
 
+  const hasPerfectScore = computed(() => {
+    return quizHistory.value.some(attempt => attempt.mistakes === 0)
+  })
+
   // --- Actions ---
   function startQuiz() {
     score.value = 0
@@ -180,6 +184,8 @@ export function useDayMaterialQuiz(quizData: Ref<DayMaterialQuiz | undefined>) {
     quizHistory,
     currentStageTitle,
     progress,
+    isHistoryLoading,
+    hasPerfectScore,
     startQuiz,
     setStage,
     finishQuiz,

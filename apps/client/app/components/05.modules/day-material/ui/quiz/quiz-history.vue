@@ -106,7 +106,7 @@ function getStatusIcon(mistakes: number) {
   background-color: var(--bg-secondary-color);
   border: 1px solid var(--border-secondary-color);
   border-radius: 12px;
-  margin-bottom: 24px;
+  margin-top: 24px;
   overflow: hidden;
   transition: border-color 0.2s;
 

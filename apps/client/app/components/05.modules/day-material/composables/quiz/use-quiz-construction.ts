@@ -27,6 +27,8 @@ export function useQuizConstruction({ items, onComplete, onCorrect, onWrong }: U
 
   const isErrorShake = ref(false)
   const isFailed = ref(false)
+  // Новое состояние: проверен ли ответ
+  const isChecked = ref(false)
 
   const currentTask = computed(() => items.value?.[currentIndex.value])
 
@@ -34,6 +36,12 @@ export function useQuizConstruction({ items, onComplete, onCorrect, onWrong }: U
     if (!currentTask.value)
       return ''
     return currentTask.value.sentenceRu || currentTask.value.proverbRu || ''
+  })
+
+  const correctSentence = computed(() => {
+    if (!currentTask.value)
+      return ''
+    return currentTask.value.correctOrder.join('')
   })
 
   function initTask() {
@@ -50,10 +58,11 @@ export function useQuizConstruction({ items, onComplete, onCorrect, onWrong }: U
     selectedChars.value = []
     isErrorShake.value = false
     isFailed.value = false
+    isChecked.value = false
   }
 
   function selectChar(item: QuizCharItem) {
-    if (isFailed.value || item.isUsed)
+    if (isFailed.value || item.isUsed || isChecked.value)
       return
 
     item.isUsed = true
@@ -62,7 +71,7 @@ export function useQuizConstruction({ items, onComplete, onCorrect, onWrong }: U
   }
 
   function unselectChar(item: QuizCharItem) {
-    if (isFailed.value)
+    if (isChecked.value)
       return
 
     const index = selectedChars.value.findIndex(c => c.id === item.id)
@@ -79,15 +88,16 @@ export function useQuizConstruction({ items, onComplete, onCorrect, onWrong }: U
   }
 
   function checkAnswer() {
-    if (!currentTask.value || isFailed.value)
+    if (!currentTask.value || isChecked.value)
       return
+
+    isChecked.value = true
 
     const userString = selectedChars.value.map(i => i.char).join('')
     const correctString = currentTask.value.correctOrder.join('')
 
     if (userString === correctString) {
       onCorrect()
-      next()
     }
     else {
       onWrong()
@@ -105,12 +115,9 @@ export function useQuizConstruction({ items, onComplete, onCorrect, onWrong }: U
   function triggerFail() {
     isFailed.value = true
     triggerShake()
-    setTimeout(() => {
-      next()
-    }, 1000)
   }
 
-  function next() {
+  function nextTask() {
     if (currentIndex.value < items.value.length - 1) {
       currentIndex.value++
       initTask()
@@ -135,14 +142,17 @@ export function useQuizConstruction({ items, onComplete, onCorrect, onWrong }: U
     currentIndex,
     currentTask,
     questionText,
+    correctSentence,
     selectedChars,
     availableChars,
     isErrorShake,
     isFailed,
+    isChecked,
     initTask,
     selectChar,
     unselectChar,
     checkAnswer,
+    nextTask,
     resetStage,
   }
 }
