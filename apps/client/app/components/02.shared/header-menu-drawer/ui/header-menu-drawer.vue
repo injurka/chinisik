@@ -28,6 +28,7 @@ const navGroups: NavGroup[] = [
     title: 'Навигация',
     items: [
       { name: 'Главная', icon: 'mdi:home-outline', routeName: RouteNames.Home, routePath: RoutePaths.Home() },
+      { name: 'Материалы дня', icon: 'mdi:calendar-today', routeName: RouteNames.DayMaterial, routePath: RoutePaths.DayMaterial.Index() },
     ],
   },
   {
@@ -302,4 +303,4 @@ function navigateTo(path: string) {
     }
   }
 }
-</style>```
+</style>

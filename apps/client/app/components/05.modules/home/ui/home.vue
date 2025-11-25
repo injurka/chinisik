@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import FeaturesDay from './features-day.vue'
+import { DayMaterial } from '~/components/05.modules/day-material'
 import FeaturesSection from './features-section.vue'
 </script>
 
 <template>
   <div class="home-sections">
     <FeaturesSection />
-    <FeaturesDay />
+    <DayMaterial />
   </div>
 </template>
 

@@ -40,10 +40,28 @@ $fg-colors: (
   fg-action: variables.$fg-action-color,
 );
 
+// FG STATUS (Added to map)
+$fg-status-colors: (
+  fg-success: variables.$fg-success-color,
+  fg-error: variables.$fg-error-color,
+  fg-warning: variables.$fg-warning-color,
+  fg-info: variables.$fg-info-color,
+);
+
+// BORDER STATUS (Added to map matching Dark theme structure)
+$border-status-colors: (
+  border-success: variables.$border-success-color,
+  border-error: variables.$border-error-color,
+  border-warning: variables.$border-warning-color,
+  border-info: variables.$border-info-color,
+);
+
 $colors: functions.map-collect(
   $bg-colors,
   $border-colors,
   $fg-colors,
+  $fg-status-colors,
+  $border-status-colors,
   shared.$border-status-colors,
   shared.$fg-tone-colors
 );

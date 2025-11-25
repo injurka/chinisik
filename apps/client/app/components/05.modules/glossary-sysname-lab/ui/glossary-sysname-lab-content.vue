@@ -11,10 +11,6 @@ const contentEl = ref<HTMLElement>()
 function handleStartTest() {
   isTestActive.value = true
 }
-
-onMounted(() => {
-  // console.log('>', contentEl.value?.offsetWidth)
-})
 </script>
 
 <template>

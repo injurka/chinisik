@@ -37,10 +37,42 @@ const ProverbSchema = z.object({
   sound: z.string().nullable(),
 })
 
+// --- Quiz Schemas ---
+
+const QuizStage1QuestionSchema = z.object({
+  question: z.string(), // Может быть на русском или китайском
+  questionLang: z.enum(['ru', 'cn']),
+  correctAnswer: z.string(),
+})
+
+const QuizStage1Schema = z.object({
+  questions: z.array(QuizStage1QuestionSchema),
+  options: z.array(z.string()), // Общий пул вариантов ответов
+})
+
+const QuizStage2ItemSchema = z.object({
+  sentenceRu: z.string(),
+  correctOrder: z.array(z.string()), // Правильный порядок иероглифов
+  characters: z.array(z.string()), // Смешанные иероглифы + дистракторы
+})
+
+const QuizStage3Schema = z.object({
+  proverbRu: z.string(),
+  correctOrder: z.array(z.string()),
+  characters: z.array(z.string()),
+})
+
+const QuizSchema = z.object({
+  stage1: QuizStage1Schema,
+  stage2: z.array(QuizStage2ItemSchema),
+  stage3: QuizStage3Schema,
+})
+
 export const DayMaterialContentSchema = z.object({
   vocabulary: VocabularySchema,
   grammar: GrammarSchema,
   proverb: ProverbSchema,
+  quiz: QuizSchema.optional().nullable(),
 })
 
 export const DayMaterialSchema = z.object({
@@ -49,4 +81,20 @@ export const DayMaterialSchema = z.object({
   content: DayMaterialContentSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
+})
+
+// --- History / Results Schemas ---
+
+export const DayMaterialQuizResultPayloadSchema = z.object({
+  score: z.number().int().min(0),
+  mistakes: z.number().int().min(0),
+  totalQuestions: z.number().int().min(1),
+})
+
+export const DayMaterialQuizAttemptSchema = z.object({
+  id: z.number().int(),
+  score: z.number().int(),
+  mistakes: z.number().int(),
+  totalQuestions: z.number().int(),
+  createdAt: z.string(), // ISO date string
 })

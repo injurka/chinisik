@@ -5,7 +5,7 @@ import { StyleSwitcher } from '~/components/02.shared/style-switcher'
 import { HieroglyphWord } from '~/components/03.domain/hieroglyph-word'
 import { VOCABULARY_STYLE_VARIANT } from '~/shared/constant'
 import { useNextDayCountdown } from '../composables'
-import FeaturesDayQuiz from './features-day-quiz.vue'
+import DayMaterialQuiz from './quiz/quiz-material.vue'
 
 // API Fetching
 const { api } = useApi()
@@ -22,6 +22,13 @@ const dayFeatureMenu = ref(false)
 const activeTab = ref('info')
 const localVariant = useCookie<HieroglyphWordVariant | 'global'>(VOCABULARY_STYLE_VARIANT, { default: () => 5 })
 const displayVariant = computed(() => (localVariant.value === 'global' ? undefined : localVariant.value))
+
+// State to block tabs
+const isQuizRunning = ref(false)
+
+function handleQuizRunning(isRunning: boolean) {
+  isQuizRunning.value = isRunning
+}
 </script>
 
 <template>
@@ -44,7 +51,10 @@ const displayVariant = computed(() => (localVariant.value === 'global' ? undefin
         mandatory
         color="var(--fg-accent-color)"
       >
-        <v-btn value="info">
+        <v-btn
+          value="info"
+          :disabled="isQuizRunning"
+        >
           Информация
         </v-btn>
         <v-btn value="quiz">
@@ -75,7 +85,7 @@ const displayVariant = computed(() => (localVariant.value === 'global' ? undefin
               <v-menu v-model="dayFeatureMenu" :close-on-content-click="false" location="bottom end">
                 <template #activator="{ props: menuProps }">
                   <v-btn icon variant="text" density="compact" v-bind="menuProps">
-                    <Icon name="mdi-tune" />
+                    <Icon name="mdi:tune" />
                   </v-btn>
                 </template>
                 <StyleSwitcher v-model="localVariant" />
@@ -144,7 +154,10 @@ const displayVariant = computed(() => (localVariant.value === 'global' ? undefin
         </div>
       </VWindowItem>
       <VWindowItem value="quiz">
-        <FeaturesDayQuiz />
+        <DayMaterialQuiz
+          :quiz-data="dayFeatures.quiz"
+          @quiz-running="handleQuizRunning"
+        />
       </VWindowItem>
     </VWindow>
   </section>

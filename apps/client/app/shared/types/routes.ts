@@ -10,6 +10,7 @@ export enum RouteNames {
   Books = 'books',
   BookDetails = 'books-id',
   BookReader = 'books-id-read',
+  DayMaterial = 'day-material',
 
   About = 'about',
 
@@ -48,6 +49,9 @@ export const RoutePaths = {
     Index: () => '/books',
     Details: (id: string) => `/books/${id}`,
     Read: (id: string) => `/books/${id}/read`,
+  },
+  DayMaterial: {
+    Index: () => '/day-material',
   },
 
   About: () => '/about',

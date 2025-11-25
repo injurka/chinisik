@@ -11,7 +11,6 @@ export function useNextDayCountdown() {
 
   function updateTimer() {
     const now = new Date()
-    // Получаем текущее время в таймзоне 'Europe/Moscow'
     const moscowTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Moscow' }))
 
     const tomorrowMoscow = new Date(moscowTime)

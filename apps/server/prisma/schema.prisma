@@ -28,6 +28,7 @@ model User {
   refreshTokens           RefreshToken[]
   LinguisticAnalysisBase  LinguisticAnalysisBase[]
   LinguisticAnalysisError LinguisticAnalysisError[]
+  dayMaterialResults      DayMaterialResult[]
 
   @@map(name: "user")
 }
@@ -188,7 +189,7 @@ model PinyinInitial {
 model PinyinFinalsTone {
   id       Int    @id @default(autoincrement())
   name     String
-  toneType Int // Assuming ToneType is mapped to Int in Prisma
+  toneType Int 
   finalId  Int
 
   final          PinyinFinal            @relation(fields: [finalId], references: [id])
@@ -221,6 +222,29 @@ model DayMaterial {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  results DayMaterialResult[]
+
+  @@map("day_material")
+}
+
+model DayMaterialResult {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  dayMaterialId  Int
+  
+  score          Int      // Количество правильных ответов
+  mistakes       Int      // Количество ошибок
+  totalQuestions Int      // Общее количество вопросов
+  
+  createdAt      DateTime @default(now())
+
+  User        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  DayMaterial DayMaterial @relation(fields: [dayMaterialId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([dayMaterialId])
+  @@map("day_material_result")
 }
 
 //* ==== Books ======================================================== *//
@@ -238,7 +262,7 @@ model Book {
   uniqueWords       Int
 
   content  BookContent[]
-  chapters BookChapter[] // Relation to chapters
+  chapters BookChapter[] 
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

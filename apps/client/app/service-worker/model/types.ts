@@ -56,7 +56,7 @@ const CACHE_CONFIG = {
   limits: {
     fonts: 30,
     icons: 100, // Reduced from 500 to be more reasonable
-    images: 100, // NEW
+    images: 100,
     audio: 50,
     hashedAssets: 200,
     vendorAssets: 100,

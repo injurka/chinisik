@@ -11,9 +11,14 @@ import { LlmService } from './llm'
 export class DayMaterialService {
   private llmService = new LlmService()
 
-  public async getTodayMaterial() {
+  private getStartOfToday(): Date {
     const today = new Date()
     today.setUTCHours(0, 0, 0, 0)
+    return today
+  }
+
+  public async getTodayMaterial() {
+    const today = this.getStartOfToday()
 
     const material = await prisma.dayMaterial.findUnique({
       where: { date: today },
@@ -60,7 +65,7 @@ export class DayMaterialService {
     logger.info(`Generating material for date: ${date.toISOString().split('T')[0]}`)
 
     const recentMaterials = await prisma.dayMaterial.findMany({
-      take: 30, // Получаем историю за последние 30 дней для контекста
+      take: 30,
       orderBy: {
         date: 'desc',
       },
@@ -74,16 +79,12 @@ export class DayMaterialService {
     const usedProverbs = recentMaterials.map(m => (m.content as any)?.proverb?.glyph).filter(Boolean)
 
     logger.info(`Used themes context: [${usedThemes.join(', ')}]`)
-    logger.info(`Used grammar context: [${usedGrammars.join(', ')}]`)
-    logger.info(`Used proverb context: [${usedProverbs.join(', ')}]`)
 
     try {
-      // 1. Генерируем новую тему с учетом контекста
       const themeResponse = await this.llmService.raw({ ...getThemePrompt(usedThemes), responseType: 'json_object' })
       const { theme } = JSON.parse(themeResponse) as { theme: string }
       logger.info(`Generated new theme: ${theme}`)
 
-      // 2. Параллельно генерируем остальной контент, передавая новую тему и контекст
       const [vocabulary, grammar, proverb] = await Promise.all([
         this.llmService.raw({ ...getVocabularyPrompt(theme), responseType: 'json_object' }),
         this.llmService.raw({ ...getGrammarPrompt(theme, usedGrammars), responseType: 'json_object' }),
@@ -112,5 +113,63 @@ export class DayMaterialService {
       logger.error('Error generating or saving day material', error)
       throw new HTTPException(500, { message: 'Failed to generate daily material.' })
     }
+  }
+
+  // --- History Methods ---
+
+  public async getQuizHistory(userId: number) {
+    const today = this.getStartOfToday()
+    const material = await prisma.dayMaterial.findUnique({ where: { date: today } })
+
+    if (!material) {
+      return []
+    }
+
+    // Note: Requires 'DayMaterialResult' table in schema.prisma
+    // model DayMaterialResult {
+    //   id Int @id @default(autoincrement())
+    //   userId Int
+    //   dayMaterialId Int
+    //   score Int
+    //   mistakes Int
+    //   totalQuestions Int
+    //   createdAt DateTime @default(now())
+    //   ... relations
+    // }
+
+    // @ts-expect-error - Assumes table exists
+    const history = await prisma.dayMaterialResult.findMany({
+      where: {
+        userId,
+        dayMaterialId: material.id,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+
+    return history
+  }
+
+  public async saveQuizResult(userId: number, payload: { score: number, mistakes: number, totalQuestions: number }) {
+    const today = this.getStartOfToday()
+    const material = await prisma.dayMaterial.findUnique({ where: { date: today } })
+
+    if (!material) {
+      throw new HTTPException(404, { message: 'Material for today not found' })
+    }
+
+    // @ts-expect-error - Assumes table exists
+    const result = await prisma.dayMaterialResult.create({
+      data: {
+        userId,
+        dayMaterialId: material.id,
+        score: payload.score,
+        mistakes: payload.mistakes,
+        totalQuestions: payload.totalQuestions,
+      },
+    })
+
+    return result
   }
 }

@@ -15,6 +15,8 @@ $bg-action-hover-color: #5fa481;
 // BG STATUS
 $bg-success-color: #d4e6d6;
 $bg-error-color: #f3d9e0;
+$bg-warning-color: #fff8c5; // Added
+$bg-info-color: #ddf4ff;    // Added
 
 // FG
 $fg-primary-color: #29242a;
@@ -24,9 +26,21 @@ $fg-muted-color: #29242a66;
 $fg-accent-color: #4b8266;
 $fg-action-color: #4b8266;
 
+// FG STATUS
+$fg-success-color: #1a7f37;
+$fg-error-color: #cf222e;
+$fg-warning-color: #9a6700;
+$fg-info-color: #0969da;
+
 // Border
 $border-primary-color: #dcdcdc;
 $border-secondary-color: #e4e4e4;
 $border-accent-color: #5fa481;
 $border-disabled-color: #e4e4e4;
 $border-button-secondary-color: #cce0d8;
+
+// BORDER STATUS
+$border-success-color: #1a7f37;
+$border-error-color: #cf222e;
+$border-warning-color: #9a6700;
+$border-info-color: #0969da;
