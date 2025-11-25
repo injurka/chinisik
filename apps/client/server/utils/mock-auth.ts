@@ -1,7 +1,7 @@
 export const MOCK_USER = {
   id: 1,
   email: 'dev@dev.dev',
-  password: '12345678', 
+  password: '12345678',
   name: 'Иван Чайнизик',
   avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan',
   githubId: 'mock-github-id',

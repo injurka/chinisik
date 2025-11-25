@@ -1,6 +1,6 @@
 services:
   client:
-    image: chinisik-client:${V_CLIENT:-latest}
+    image: injurka/chinisik-client:${V_CLIENT:-latest}
     container_name: chinisik-client
     env_file:
       - ../apps/client/.env
@@ -9,7 +9,7 @@ services:
     restart: always
 
   server:
-    image: chinisik-server:${V_SERVER:-latest}
+    image: injurka/chinisik-server:${V_SERVER:-latest}
     container_name: chinisik-server
     ports:
       - "8080:8080"

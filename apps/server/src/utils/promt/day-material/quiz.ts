@@ -64,4 +64,3 @@ export function getQuizPrompt(
 
   return { system, user: '' }
 }
-a
