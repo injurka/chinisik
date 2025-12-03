@@ -35,7 +35,9 @@
     "prisma:generate:watch": "prisma generate --watch",
     "prisma:seed": "prisma db seed",
     "prisma:studio": "prisma studio",
-    "prisma:reset": "prisma migrate reset"
+    "prisma:reset": "prisma migrate reset --skip-seed",
+    "prisma:dump": "bun run prisma/dump.ts",
+    "prisma:restore": "bun run prisma/restore.ts"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -56,10 +58,12 @@
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
     "@types/bun": "latest",
+    "@types/prompts": "^2.4.9",
     "bun": "^1.3.2",
     "eslint": "^9.39.1",
     "eslint-plugin-format": "^1.0.2",
     "jiti": "^2.6.1",
+    "prompts": "^2.4.2",
     "tsup": "^8.5.1"
   },
   "prisma": {

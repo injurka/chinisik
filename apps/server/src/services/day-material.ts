@@ -4,6 +4,7 @@ import { prisma } from '~/prisma'
 import { logger } from '~/server'
 import { getGrammarPrompt } from '~/utils/promt/day-material/grammar'
 import { getProverbPrompt } from '~/utils/promt/day-material/proverb'
+import { getQuizPrompt } from '~/utils/promt/day-material/quiz'
 import { getThemePrompt } from '~/utils/promt/day-material/theme'
 import { getVocabularyPrompt } from '~/utils/promt/day-material/vocabulary'
 import { LlmService } from './llm'
@@ -81,20 +82,45 @@ export class DayMaterialService {
     logger.info(`Used themes context: [${usedThemes.join(', ')}]`)
 
     try {
-      const themeResponse = await this.llmService.raw({ ...getThemePrompt(usedThemes), responseType: 'json_object' })
+      // 1. Generate Theme
+      const themeResponse = await this.llmService.raw({
+        ...getThemePrompt(usedThemes),
+        responseType: 'json_object',
+        model: 'gemini-2.5-flash',
+      })
       const { theme } = JSON.parse(themeResponse) as { theme: string }
       logger.info(`Generated new theme: ${theme}`)
 
-      const [vocabulary, grammar, proverb] = await Promise.all([
+      // 2. Generate Core Content (Vocabulary, Grammar, Proverb) in parallel
+      const [vocabularyRaw, grammarRaw, proverbRaw] = await Promise.all([
         this.llmService.raw({ ...getVocabularyPrompt(theme), responseType: 'json_object' }),
         this.llmService.raw({ ...getGrammarPrompt(theme, usedGrammars), responseType: 'json_object' }),
         this.llmService.raw({ ...getProverbPrompt(theme, usedProverbs), responseType: 'json_object' }),
       ])
 
+      const vocabulary = JSON.parse(vocabularyRaw)
+      const grammar = JSON.parse(grammarRaw)
+      const proverb = JSON.parse(proverbRaw)
+
+      // 3. Generate Quiz based on the generated content
+      logger.info('Generating quiz based on new material...')
+      const quizRaw = await this.llmService.raw({
+        ...getQuizPrompt(
+          theme,
+          vocabulary.items, // Pass the array of items
+          grammar.rule, // Pass the rule string
+          proverb.glyph, // Pass the proverb char
+          proverb.translation, // Pass proverb translation
+        ),
+        responseType: 'json_object',
+      })
+      const quiz = JSON.parse(quizRaw)
+
       const content = {
-        vocabulary: JSON.parse(vocabulary),
-        grammar: JSON.parse(grammar),
-        proverb: JSON.parse(proverb),
+        vocabulary,
+        grammar,
+        proverb,
+        quiz,
       }
 
       const validatedContent = DayMaterialContentSchema.parse(content)
@@ -125,19 +151,6 @@ export class DayMaterialService {
       return []
     }
 
-    // Note: Requires 'DayMaterialResult' table in schema.prisma
-    // model DayMaterialResult {
-    //   id Int @id @default(autoincrement())
-    //   userId Int
-    //   dayMaterialId Int
-    //   score Int
-    //   mistakes Int
-    //   totalQuestions Int
-    //   createdAt DateTime @default(now())
-    //   ... relations
-    // }
-
-    // @ts-expect-error - Assumes table exists
     const history = await prisma.dayMaterialResult.findMany({
       where: {
         userId,
@@ -159,7 +172,6 @@ export class DayMaterialService {
       throw new HTTPException(404, { message: 'Material for today not found' })
     }
 
-    // @ts-expect-error - Assumes table exists
     const result = await prisma.dayMaterialResult.create({
       data: {
         userId,

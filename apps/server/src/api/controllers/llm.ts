@@ -1,3 +1,4 @@
+import type { RawPayload } from '~/models'
 import path from 'node:path'
 import { createRoute, z } from '@hono/zod-openapi'
 import { HTTPException } from 'hono/http-exception'
@@ -405,7 +406,7 @@ class LlmController extends AController {
     this.router.openapi(
       route,
       async (c) => {
-        const body = c.req.valid('json')
+        const body = c.req.valid('json') as RawPayload
         const data = await this.service.raw(body)
 
         return c.json(z.any().parse(data), 200)

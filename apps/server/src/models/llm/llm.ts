@@ -1,3 +1,4 @@
+import type OpenAI from 'openai'
 import type { ToneType } from '../shared'
 import type { AiModel, AiTtsModel } from '~/utils/ai/request'
 
@@ -26,9 +27,10 @@ interface TextToSpeechPayload {
 }
 
 interface RawPayload {
-  user?: any
-  system?: any
+  user?: string | OpenAI.Chat.Completions.ChatCompletionContentPart[]
+  system?: string | OpenAI.Chat.Completions.ChatCompletionContentPartText[]
   responseType: 'text' | 'json_object'
+  model?: AiModel
 }
 
 interface ImageToTextTranslatePayload {

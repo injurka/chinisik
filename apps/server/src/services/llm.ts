@@ -437,10 +437,10 @@ class LlmService {
   }
 
   async raw(params: RawPayload) {
-    const { system = '', user = '' } = params
+    const { system = '', user = '', model = 'gemini-2.5-flash-lite' } = params
     const response = await createAiChatRequest(
       { system, user },
-      { model: 'gemini-2.5-flash-lite', response_format: { type: params.responseType } },
+      { model, response_format: { type: params.responseType } },
     )
     const rawData = response.choices[0].message.content?.trim()
 

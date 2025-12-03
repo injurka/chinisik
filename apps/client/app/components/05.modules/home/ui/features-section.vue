@@ -49,6 +49,11 @@ const features = [
   gap: 1.5rem;
   max-width: 1000px;
   margin: 0 auto;
+
+  @include mobile() {
+    padding: 0 4px;
+    gap: 8px;
+  }
 }
 
 .feature-card {

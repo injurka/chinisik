@@ -18,10 +18,10 @@ export function getQuizPrompt(
     - Generate 5 questions based on the provided vocabulary items: ${vocabContext}.
     - For each question, randomly decide if the question is in Russian (answer in Chinese) or Chinese (answer in Russian).
     - **IMPORTANT:** The 'question' field must contain ONLY the target word or character itself.
-    - **OPTIONS POOL:** Generate a single flat array 'options' containing approximately 15 strings. 
+    - **OPTIONS POOL:** Generate a single flat array 'options' containing approximately 12-15 strings.
       - Half of these strings must be **Russian words** (translations of vocabulary + related distractors).
       - Half of these strings must be **Chinese words** (glyphs from vocabulary + related distractors).
-      - Ensure ALL correct answers for the 5 questions are included in this pool.
+      - Ensure ALL correct answers for the 5 questions are definitively included in this 'options' pool.
 
     **Stage 2: Sentence Construction (Grammar)**
     - Create 5 sentences using the grammar rule: "${grammarRule}".
