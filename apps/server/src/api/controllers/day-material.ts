@@ -87,7 +87,7 @@ class DayMaterialController extends AController {
             user = { id: decoded.userId } as any
           }
         }
-        catch (e) {
+        catch {
           // ignore invalid token
         }
       }

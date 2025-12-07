@@ -79,7 +79,7 @@ export class DayMaterialService {
         select: {
           dayMaterialId: true,
         },
-        distinct: ['dayMaterialId'], 
+        distinct: ['dayMaterialId'],
       })
       completedIds = new Set(results.map(r => r.dayMaterialId))
     }
