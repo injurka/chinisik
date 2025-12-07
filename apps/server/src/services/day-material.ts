@@ -1,3 +1,4 @@
+import type { User } from '~/models'
 import { HTTPException } from 'hono/http-exception'
 import { DayMaterialContentSchema } from '~/models'
 import { prisma } from '~/prisma'
@@ -30,7 +31,69 @@ export class DayMaterialService {
       return this.generateAndSaveMaterialForDate(today)
     }
 
-    return material.content
+    return {
+      ...material.content as any,
+      id: material.id,
+      date: material.date,
+    }
+  }
+
+  public async getMaterialById(id: number) {
+    const material = await prisma.dayMaterial.findUnique({
+      where: { id },
+    })
+
+    if (!material) {
+      throw new HTTPException(404, { message: 'Material not found' })
+    }
+
+    return {
+      ...material.content as any,
+      id: material.id,
+      date: material.date,
+    }
+  }
+
+  public async getMaterialList(user?: User) {
+    const materials = await prisma.dayMaterial.findMany({
+      orderBy: {
+        date: 'desc',
+      },
+      take: 30,
+      select: {
+        id: true,
+        date: true,
+        content: true,
+      },
+    })
+
+    let completedIds = new Set<number>()
+    if (user) {
+      const results = await prisma.dayMaterialResult.findMany({
+        where: {
+          userId: user.id,
+          dayMaterialId: {
+            in: materials.map(m => m.id),
+          },
+        },
+        select: {
+          dayMaterialId: true,
+        },
+        distinct: ['dayMaterialId'], 
+      })
+      completedIds = new Set(results.map(r => r.dayMaterialId))
+    }
+
+    return materials.map((m) => {
+      const content = m.content as any
+      return {
+        id: m.id,
+        date: m.date.toISOString(),
+        theme: content?.vocabulary?.theme || 'Без темы',
+        grammarTitle: content?.grammar?.title || 'Грамматика',
+        isCompleted: completedIds.has(m.id),
+      }
+    })
   }
 
   public async getLatestMaterialDate(): Promise<Date | null> {
@@ -125,7 +188,7 @@ export class DayMaterialService {
 
       const validatedContent = DayMaterialContentSchema.parse(content)
 
-      await prisma.dayMaterial.create({
+      const material = await prisma.dayMaterial.create({
         data: {
           date,
           content: validatedContent,
@@ -133,7 +196,11 @@ export class DayMaterialService {
       })
 
       logger.success(`Successfully generated and saved material for ${date.toISOString().split('T')[0]}`)
-      return validatedContent
+      return {
+        ...validatedContent,
+        id: material.id,
+        date: material.date,
+      }
     }
     catch (error) {
       logger.error('Error generating or saving day material', error)

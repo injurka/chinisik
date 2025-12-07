@@ -40,20 +40,20 @@ const ProverbSchema = z.object({
 // --- Quiz Schemas ---
 
 const QuizStage1QuestionSchema = z.object({
-  question: z.string(), // Может быть на русском или китайском
+  question: z.string(),
   questionLang: z.enum(['ru', 'cn']),
   correctAnswer: z.string(),
 })
 
 const QuizStage1Schema = z.object({
   questions: z.array(QuizStage1QuestionSchema),
-  options: z.array(z.string()), // Общий пул вариантов ответов
+  options: z.array(z.string()),
 })
 
 const QuizStage2ItemSchema = z.object({
   sentenceRu: z.string(),
-  correctOrder: z.array(z.string()), // Правильный порядок иероглифов
-  characters: z.array(z.string()), // Смешанные иероглифы + дистракторы
+  correctOrder: z.array(z.string()),
+  characters: z.array(z.string()),
 })
 
 const QuizStage3Schema = z.object({
@@ -96,5 +96,14 @@ export const DayMaterialQuizAttemptSchema = z.object({
   score: z.number().int(),
   mistakes: z.number().int(),
   totalQuestions: z.number().int(),
-  createdAt: z.string(), // ISO date string
+  createdAt: z.string(),
+})
+
+// === NEW: Schema for the list of past materials ===
+export const DayMaterialListItemSchema = z.object({
+  id: z.number().int(),
+  date: z.string(),
+  theme: z.string(),
+  grammarTitle: z.string(),
+  isCompleted: z.boolean().default(false),
 })

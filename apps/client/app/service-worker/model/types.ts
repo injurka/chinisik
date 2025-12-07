@@ -79,6 +79,13 @@ interface ApiCacheRule {
 // Populated API rules
 const API_CACHE_RULES: ApiCacheRule[] = [
   {
+    path: '/api/v1/day-material',
+    cacheName: CACHE_CONFIG.names.apiDynamic,
+    strategy: 'NetworkFirst',
+    maxAgeSeconds: 60 * 60 * 24, // 1 день (храним на случай оффлайна)
+    maxEntries: 10,
+  },
+  {
     path: '/api/v1/keys',
     cacheName: CACHE_CONFIG.names.apiStatic,
     strategy: 'CacheFirst',
