@@ -55,7 +55,14 @@ export class DayMaterialService {
   }
 
   public async getMaterialList(user?: User) {
+    const today = this.getStartOfToday()
+
     const materials = await prisma.dayMaterial.findMany({
+      where: {
+        date: {
+          lt: today,
+        },
+      },
       orderBy: {
         date: 'desc',
       },

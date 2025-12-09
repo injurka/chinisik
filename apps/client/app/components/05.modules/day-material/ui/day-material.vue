@@ -528,7 +528,6 @@ function handleQuizRunning(isRunning: boolean) {
   flex-direction: column;
   gap: 8px;
   overflow-y: auto;
-  padding-right: 4px;
 
   &.special-list {
     margin-bottom: 16px;

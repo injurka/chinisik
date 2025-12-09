@@ -65,6 +65,7 @@ function getTone(index: number) {
 .pinyin {
   display: inline-flex;
   justify-content: center;
+  flex-wrap: wrap;
 
   &-part {
     &.tone {

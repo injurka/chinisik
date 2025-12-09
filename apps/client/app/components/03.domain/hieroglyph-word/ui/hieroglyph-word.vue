@@ -383,10 +383,6 @@ onUnmounted(() => {
     padding: 4px 12px;
     font-size: 1rem;
     white-space: normal;
-
-    :deep(.pinyin) {
-      flex-wrap: wrap;
-    }
   }
 
   .hw-glyph {
@@ -464,6 +460,8 @@ onUnmounted(() => {
   font-family: 'Sofia Sans';
   font-weight: 500;
   display: flex;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .hw-glyph {
   letter-spacing: 2px;
