@@ -5,13 +5,27 @@ export function getGrammarPrompt(theme: string, usedGrammars: string[]) {
     GENERATE CONTENT FOR THE "GRAMMAR" SECTION.
 
     Your task is to:
-    1.  Choose a grammar rule relevant to the theme "${theme}". It should be a common and useful construction.
-    2.  Provide a clear and concise 'title' for the rule.
-    3.  Formulate the 'rule' itself in Russian, making it easy to understand.
-    4.  Create an array of 1 to 3 simple and clear 'example' sentences that demonstrate the rule. Each example must be related to the theme "${theme}". For each, provide 'glyph', 'pinyin' (with numbers for tones), and 'translation'.
-    5.  Write a short 'description' that explains why this rule is useful and encourages the learner.
+    1. Choose a grammar rule relevant to "${theme}". It should be useful for HSK 3-4.
+    2. 'rule': Explain the grammar in Russian simply and clearly.
+    3. 'examples': Provide 2-3 sentences.
+       - 'pinyin': Must use TONE MARKS (diacritics).
 
-    IMPORTANT: Do not choose a grammar rule with a title from this list of recently used titles: [${usedGrammars.join(', ')}].
+    IMPORTANT: Do not use these recently used titles: [${usedGrammars.join(', ')}].
+
+    EXAMPLE OUTPUT FORMAT:
+    {
+      "title": "Konstrukciya 把 (bǎ)",
+      "rule": "Subject + 把 + Object + Verb + Result. Used to indicate how an action affects an object.",
+      "examples": [
+        {
+          "glyph": "我把书放在桌子上。",
+          "pinyin": "wǒ bǎ shū fàng zài zhuōzi shàng.",
+          "translation": "Я положил книгу на стол.",
+          "sound": null
+        }
+      ],
+      "description": "Use this to describe moving objects."
+    }
 
     RESPONSE JSON SCHEMA:
     {

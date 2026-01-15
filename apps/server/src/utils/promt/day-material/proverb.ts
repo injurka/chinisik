@@ -5,13 +5,19 @@ export function getProverbPrompt(theme: string, usedProverbs: string[]) {
     GENERATE CONTENT FOR THE "PROVERB" SECTION.
 
     Your task is to:
-    1.  Select a Chinese proverb (成语, chéngyǔ) that is thematically related to "${theme}" or offers a relevant life lesson.
-    2.  Provide the 'glyph' (the proverb in characters).
-    3.  Provide the 'pinyin' (with numbers for tones).
-    4.  Provide a literal 'translation' into Russian.
-    5.  Write an engaging 'description' that explains the meaning, cultural context, and how it can be applied in life or language learning.
+    1. Select a Chinese proverb (chengyu) related to "${theme}".
+    2. 'pinyin': Must use TONE MARKS.
 
-    IMPORTANT: Do not select a proverb from this list of recently used ones: [${usedProverbs.join(', ')}].
+    IMPORTANT: Do not use these proverbs: [${usedProverbs.join(', ')}].
+
+    EXAMPLE OUTPUT FORMAT:
+    {
+      "glyph": "画蛇添足",
+      "pinyin": "huà shé tiān zú",
+      "translation": "Нарисовать змее ноги (сделать лишнее)",
+      "description": "This idiom means ruining something by doing unnecessary extra work.",
+      "sound": null
+    }
 
     RESPONSE JSON SCHEMA:
     {
