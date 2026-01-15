@@ -10,6 +10,7 @@ const LLMs = [
   {
     title: 'AI HUB MIX',
     items: [
+      'gemini-3-pro-preview',
       'gemini-2.5-flash-lite',
       'gemini-2.5-flash',
       'gpt-5-mini',

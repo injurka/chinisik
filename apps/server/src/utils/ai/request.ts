@@ -3,6 +3,7 @@ import { DEFAULT_LLM_MODEL } from '../constant'
 
 // Chat Models
 const AI_HUBMIX_MODELS_CHAT = [
+  'gemini-3-pro-preview',
   'gemini-2.5-flash-lite',
   'gemini-2.5-flash',
   'gpt-5-mini',
@@ -120,16 +121,16 @@ export async function createAiChatRequest(
     stream: false,
     web_search_options: mergedOptions.model.includes('search')
       ? {
-          user_location: {
-            approximate: {
-              city: '北京',
-              country: '中国',
-              region: '北京',
-              timezone: 'Asia/Shanghai',
-            },
-            type: 'approximate',
+        user_location: {
+          approximate: {
+            city: '北京',
+            country: '中国',
+            region: '北京',
+            timezone: 'Asia/Shanghai',
           },
-        }
+          type: 'approximate',
+        },
+      }
       : undefined,
   })
 }

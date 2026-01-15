@@ -156,16 +156,16 @@ export class DayMaterialService {
       const themeResponse = await this.llmService.raw({
         ...getThemePrompt(usedThemes),
         responseType: 'json_object',
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-pro-preview',
       })
       const { theme } = JSON.parse(themeResponse) as { theme: string }
       logger.info(`Generated new theme: ${theme}`)
 
       // 2. Generate Core Content (Vocabulary, Grammar, Proverb) in parallel
       const [vocabularyRaw, grammarRaw, proverbRaw] = await Promise.all([
-        this.llmService.raw({ ...getVocabularyPrompt(theme), responseType: 'json_object' }),
-        this.llmService.raw({ ...getGrammarPrompt(theme, usedGrammars), responseType: 'json_object' }),
-        this.llmService.raw({ ...getProverbPrompt(theme, usedProverbs), responseType: 'json_object' }),
+        this.llmService.raw({ ...getVocabularyPrompt(theme), model: 'gemini-3-pro-preview', responseType: 'json_object' }),
+        this.llmService.raw({ ...getGrammarPrompt(theme, usedGrammars), model: 'gemini-3-pro-preview', responseType: 'json_object' }),
+        this.llmService.raw({ ...getProverbPrompt(theme, usedProverbs), model: 'gemini-3-pro-preview', responseType: 'json_object' }),
       ])
 
       const vocabulary = JSON.parse(vocabularyRaw)
@@ -183,6 +183,7 @@ export class DayMaterialService {
           proverb.translation, // Pass proverb translation
         ),
         responseType: 'json_object',
+        model: 'gemini-3-pro-preview',
       })
       const quiz = JSON.parse(quizRaw)
 
@@ -203,6 +204,7 @@ export class DayMaterialService {
       })
 
       logger.success(`Successfully generated and saved material for ${date.toISOString().split('T')[0]}`)
+
       return {
         ...validatedContent,
         id: material.id,

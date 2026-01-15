@@ -18,7 +18,7 @@ const selectedModel = ref('gemini-2.5-flash-lite')
 // 'template' = JSON, 'canvas' = Markdown
 const analysisMode = ref<'template' | 'canvas'>('template')
 
-const llmModels = ['gemini-2.5-flash-lite', 'gemini-2.5-flash']
+const llmModels = ['gemini-2.5-flash-lite', 'gemini-2.5-flash', 'gemini-3-pro-preview']
 const { api } = useApi()
 
 const isLoading = ref(false)
