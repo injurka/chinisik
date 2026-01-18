@@ -6,6 +6,11 @@ const { data } = await useAsyncData('thematic-dictionary-catalog', async () => {
   return thematicDictionaryDataMock.catalog
 })
 
+useSeoMeta({
+  title: 'Тематический словарь китайского языка',
+  description: 'Учите китайские слова по темам: Путешествия, Еда, Семья, Работа и многое другое. Структурированные подборки лексики для быстрого пополнения словарного запаса.',
+})
+
 definePageMeta({
   layout: 'base-with-effects',
   pageTransition: false,

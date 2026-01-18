@@ -38,6 +38,12 @@ watch(
   },
 )
 
+useSeoMeta({
+  title: 'Словарь HSK 1-9 и Тренажер слов',
+  ogTitle: 'HSK Словарь и Карточки',
+  description: 'Списки слов для всех уровней HSK (старый и новый стандарт 3.0). Учите слова с помощью интерактивных карточек, смотрите примеры употребления и переводы.',
+})
+
 definePageMeta({
   layout: 'base-with-effects',
   pageTransition: false,

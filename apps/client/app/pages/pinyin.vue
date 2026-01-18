@@ -21,6 +21,13 @@ await useAsyncData(
   { dedupe: 'defer' },
 )
 
+useSeoMeta({
+  title: 'Интерактивная таблица Пиньинь с озвучкой',
+  ogTitle: 'Таблица Пиньинь (Pinyin) с аудио',
+  description: 'Справочник по китайской фонетике. Таблица инициалей и финалей с тонами. Нажмите на слог, чтобы прослушать правильное произношение.',
+  keywords: 'пиньинь, китайская фонетика, pinyin, инициали, финали, тоны китайского языка',
+})
+
 definePageMeta({
   layout: 'base-with-effects',
   pageTransition: {

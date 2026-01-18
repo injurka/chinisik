@@ -10,6 +10,15 @@ const { data: book, pending, error } = await useAsyncData<BookDetails>(
   `book-details-${bookId.value}`,
   () => api.books.v1.details({ id: bookId.value }),
 )
+
+useSeoMeta({
+  title: () => book.value ? `Читать: ${book.value.title} (${book.value.author})` : 'Книга на китайском',
+  ogTitle: () => book.value ? `Книга: ${book.value.title}` : 'Чтение на китайском',
+  description: () => book.value
+    ? `Читайте "${book.value.title}" на китайском языке. Сложность: ${book.value.difficultyGeneral}. ${book.value.summary.slice(0, 150)}...`
+    : 'Интерактивное чтение книг на китайском языке с переводом слов.',
+  ogImage: () => book.value?.coverUrl,
+})
 </script>
 
 <template>

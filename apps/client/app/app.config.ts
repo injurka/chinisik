@@ -1,5 +1,5 @@
 export default defineAppConfig({
-  titleTemplate: '%s',
+  titleTemplate: '%s', 
   name: 'chinisik',
   link: [
     { rel: 'apple-touch-icon', sizes: '180x180', href: '/icons/apple-touch-icon.png' },
@@ -13,6 +13,7 @@ export default defineAppConfig({
     { name: 'msapplication-config', content: '/icons/browserconfig.xml' },
     { name: 'viewport', content: 'viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no' },
     { name: 'title', content: 'chinisik' },
+    { name: 'keywords', content: 'китайский язык, учить китайский, иероглифы, пиньинь, HSK, китайский словарь, грамматика китайского' },
     { hid: 'description', name: 'description', content: 'chinisik' },
     { property: 'og:title', content: 'Чайнизик' },
     { property: 'og:description', content: 'Место для возносения до уровня ТанСана! Познай мир иероглифов чтобы уверено сказать - нихао ни женгуо рен ма!' },
