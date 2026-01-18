@@ -15,8 +15,6 @@ cleanupOutdatedCaches()
 
 precacheAndRoute(self.__WB_MANIFEST || [])
 
-// --- PWA & Core Assets Caching ---
-
 // WEB APP MANIFEST
 registerRoute(
   ({ request, sameOrigin }) => sameOrigin && request.destination === 'manifest',
@@ -79,7 +77,6 @@ registerRoute(
   ),
 )
 
-// --- Static JS/CSS Assets Caching ---
 const hashedAssetsStrategy = CacheStrategyFactory.createCacheFirst(
   CACHE_CONFIG.names.hashedAssets,
   {
@@ -127,8 +124,6 @@ registerRoute(
   regularAssetsStrategy,
 )
 
-// --- API Caching ---
-
 API_CACHE_RULES.forEach((rule) => {
   let strategy
 
@@ -162,8 +157,6 @@ API_CACHE_RULES.forEach((rule) => {
   )
 })
 
-// --- Navigation Fallback ---
-
 // This ensures that all navigations fall back to the main app shell,
 // allowing the client-side router to handle the page.
 registerRoute(new NavigationRoute(
@@ -178,8 +171,6 @@ registerRoute(new NavigationRoute(
     ],
   },
 ))
-
-// --- Message Handling ---
 
 self.addEventListener('message', async (event) => {
   const { type, payload } = event.data as ServiceWorkerMessage
@@ -209,8 +200,6 @@ self.addEventListener('message', async (event) => {
     })
   }
 })
-
-// --- Dev Logging ---
 
 if (import.meta.env.DEV) {
   console.log('🔧 Service Worker in development mode')

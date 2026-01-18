@@ -1,8 +1,13 @@
 <script lang="ts" setup>
+import { addCollection } from '@iconify/vue'
+import iconsBundle from '~/assets/icons-bundle.json'
+
 const app = useAppConfig()
 const { $pwa } = useNuxtApp()
 const { theme, getHeadThemeColor } = useChangeTheme()
 const fontFamilyCookie = useCookie(FONT_FAMILY_CN, { default: () => 'base', sameSite: 'lax' })
+
+addCollection(iconsBundle)
 
 useHead({
   ...app,

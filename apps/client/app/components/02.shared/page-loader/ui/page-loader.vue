@@ -4,7 +4,7 @@
 
 <template>
   <div class="loader">
-    <Icon name="line-md:loading-loop" />
+    <Icon name="mdi:loading" class="spin" />
   </div>
 </template>
 
@@ -17,5 +17,18 @@
   flex-grow: 1;
   font-size: 4rem;
   color: var(--fg-accent-color);
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

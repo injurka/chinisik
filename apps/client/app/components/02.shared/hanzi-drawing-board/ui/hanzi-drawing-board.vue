@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 
-// --- Props ---
 const props = defineProps<{
   targetCharacter?: string
 }>()
 
 const { isMobile } = useDevice()
 
-// --- Refs ---
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const ctxRef = ref<CanvasRenderingContext2D | null>(null)
 const containerRef = ref<HTMLDivElement | null>(null)
 
-// --- State ---
 const isDrawing = ref(false)
 const hasDrawing = ref(false)
 const lastPos = reactive({ x: 0, y: 0 })
@@ -22,10 +19,8 @@ const lastLineWidth = ref(5)
 const showTargetOverlay = ref(false)
 const canvasSize = reactive({ width: 400, height: 400 })
 
-// --- State for Undo ---
 const strokesHistory = ref<ImageData[]>([])
 
-// --- Constants ---
 const BASE_LINE_WIDTH = isMobile ? 10 : 15
 const MAX_LINE_WIDTH = isMobile ? 15 : 25
 const MIN_LINE_WIDTH = 2
@@ -35,7 +30,6 @@ const GRID_LINE_WIDTH = 0.5
 const DEFAULT_TARGET_COLOR = 'rgba(150, 150, 150, 0.3)'
 const DEFAULT_TARGET_FONT_FAMILY = 'MapleMono-CN'
 
-// --- Computed ---
 const computedStyles = computed(() => {
   if (typeof window !== 'undefined' && containerRef.value)
     return getComputedStyle(containerRef.value)
@@ -48,7 +42,6 @@ const targetCharacterStyle = computed(() => ({
   fontFamily: computedStyles.value?.getPropertyValue('--font-family-cn').trim() || DEFAULT_TARGET_FONT_FAMILY,
 }))
 
-// --- Canvas Setup ---
 function setupCanvas() {
   const ctx = ctxRef.value
   if (!ctx)
@@ -60,7 +53,6 @@ function setupCanvas() {
   ctx.lineWidth = lastLineWidth.value
 }
 
-// --- Grid Drawing ---
 function drawGridOnContext(ctx: CanvasRenderingContext2D, w: number, h: number) {
   ctx.save()
   ctx.strokeStyle = GRID_COLOR
@@ -83,7 +75,6 @@ function drawGridOnContext(ctx: CanvasRenderingContext2D, w: number, h: number) 
   ctx.restore()
 }
 
-// --- Coordinate Helper ---
 function getEventCoordinates(event: MouseEvent | TouchEvent): { x: number, y: number } | null {
   if (!canvasRef.value)
     return null
@@ -107,7 +98,6 @@ function getEventCoordinates(event: MouseEvent | TouchEvent): { x: number, y: nu
   return { x: clientX - rect.left, y: clientY - rect.top }
 }
 
-// --- Drawing Logic ---
 function saveState() {
   if (!ctxRef.value || !canvasRef.value)
     return
@@ -121,7 +111,7 @@ function startDrawing(event: MouseEvent | TouchEvent) {
   if (!coords || !ctxRef.value)
     return
 
-  saveState() // Сохраняем состояние перед началом нового штриха
+  saveState()
 
   isDrawing.value = true
   hasDrawing.value = true
@@ -174,7 +164,6 @@ function stopDrawing() {
   ctxRef.value.beginPath()
 }
 
-// --- Canvas Actions ---
 function clearCanvas() {
   const ctx = ctxRef.value
   const canvas = canvasRef.value
@@ -199,24 +188,20 @@ function undoLastStroke() {
     if (!ctx || !canvas)
       return
 
-    // Очищаем холст и рисуем сетку
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     drawGridOnContext(ctx, canvas.width, canvas.height)
 
-    // Восстанавливаем предыдущее состояние
     const lastState = strokesHistory.value.pop()
     if (lastState) {
       ctx.putImageData(lastState, 0, 0)
     }
 
-    // Если история пуста, значит рисунка нет
     if (strokesHistory.value.length === 1) {
       hasDrawing.value = false
     }
   }
 }
 
-// --- Get Data ---
 function isCanvasEmpty(): boolean {
   return !hasDrawing.value
 }
@@ -244,7 +229,6 @@ function getImageDataURL(): string | null {
 
   for (let y = 0; y < canvas.height; y++) {
     for (let x = 0; x < canvas.width; x++) {
-      // Ищем непрозрачные пиксели (альфа-канал > 0)
       const alphaIndex = (y * canvas.width + x) * 4 + 3
       if (data[alphaIndex]! > 0) {
         minX = Math.min(minX, x)
@@ -309,7 +293,6 @@ function hideTargetCharacter() {
   showTargetOverlay.value = false
 }
 
-// --- Lifecycle Hooks ---
 onMounted(() => {
   if (!canvasRef.value || !containerRef.value)
     return

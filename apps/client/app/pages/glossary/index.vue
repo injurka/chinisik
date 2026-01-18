@@ -15,17 +15,17 @@ function handleOpenTopic(topicId: string) {
 function getIconForCategory(title: string): string {
   const lowerTitle = title.toLowerCase()
   if (lowerTitle.includes('фонетика'))
-    return 'material-symbols:volume-up-outline-rounded'
+    return 'mdi:volume-high'
   if (lowerTitle.includes('иероглифика'))
-    return 'material-symbols:edit-outline-rounded'
+    return 'mdi:pencil-outline'
   if (lowerTitle.includes('грамматика'))
-    return 'material-symbols:menu-book-outline-rounded'
+    return 'mdi:book-open-outline'
   if (lowerTitle.includes('лексика'))
-    return 'material-symbols:label-outline-rounded'
+    return 'mdi:tag-outline'
   if (lowerTitle.includes('стратег') || lowerTitle.includes('ресурс') || lowerTitle.includes('культур'))
-    return 'material-symbols:model-training-outline-rounded'
+    return 'mdi:brain'
 
-  return 'material-symbols:stacks-outline'
+  return 'mdi:layers-outline'
 }
 
 definePageMeta({

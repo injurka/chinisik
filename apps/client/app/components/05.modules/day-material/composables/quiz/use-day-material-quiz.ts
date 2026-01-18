@@ -20,11 +20,9 @@ export interface QuizAttempt {
 }
 
 export function useDayMaterialQuiz(quizData: Ref<DayMaterialQuiz | undefined>) {
-  // --- Dependencies ---
   const { api } = useApi()
   const store = useStore(['auth'])
 
-  // --- Global State ---
   const currentStage = ref<QuizStage>(QUIZ_STAGES.INTRO)
   const score = ref(0)
   const mistakes = ref(0)
@@ -32,7 +30,6 @@ export function useDayMaterialQuiz(quizData: Ref<DayMaterialQuiz | undefined>) {
   const completedQuestions = ref(0)
   const isHistoryLoading = ref(false)
 
-  // --- API Logic ---
   async function loadHistory() {
     if (!store.auth.isAuthenticated) {
       quizHistory.value = []
@@ -88,7 +85,6 @@ export function useDayMaterialQuiz(quizData: Ref<DayMaterialQuiz | undefined>) {
     }
   }
 
-  // --- Computed ---
   const currentStageTitle = computed(() => {
     switch (currentStage.value) {
       case QUIZ_STAGES.STAGE_1: return 'Этап 1: Словарный запас'
@@ -123,7 +119,6 @@ export function useDayMaterialQuiz(quizData: Ref<DayMaterialQuiz | undefined>) {
     return quizHistory.value.some(attempt => attempt.mistakes === 0)
   })
 
-  // --- Actions ---
   function startQuiz() {
     score.value = 0
     mistakes.value = 0

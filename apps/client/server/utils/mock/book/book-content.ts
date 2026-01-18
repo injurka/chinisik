@@ -5,7 +5,6 @@ export type BookContent = BookPage[]
 
 export const mockBookContent: Record<string, BookContent> = {
   'le-petit-prince': [
-    // --- СТРАНИЦА 1 ---
     {
       pageNumber: 1,
       chapterTitle: '1',

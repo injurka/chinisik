@@ -54,7 +54,7 @@ export const baseCfg: NuxtConfig = {
 
   icon: {
     serverBundle: {
-      collections: ['mdi', 'material-symbols', 'line-md', 'game-icons'],
+      collections: ['mdi'],
     },
     customCollections: [{
       prefix: 're',
@@ -65,10 +65,8 @@ export const baseCfg: NuxtConfig = {
   vuetify: {
     moduleOptions: {
       /* other module options */
-      // styles: { configFile: '/settings.scss' },
     },
     vuetifyOptions: {
-      /* vuetify options */
       icons: {
         defaultSet: 'mdi',
       },

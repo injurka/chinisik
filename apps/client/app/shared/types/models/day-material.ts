@@ -2,7 +2,6 @@ export interface DayMaterialVocabularyItem {
   glyph: string
   pinyin: string
   translation: string
-  sound: string | null
 }
 
 export interface DayMaterialVocabulary {
@@ -15,7 +14,6 @@ export interface DayMaterialGrammarExample {
   glyph: string
   pinyin: string
   translation: string
-  sound: string | null
 }
 
 export interface DayMaterialGrammar {
@@ -30,10 +28,7 @@ export interface DayMaterialProverb {
   pinyin: string
   translation: string
   description: string
-  sound: string | null
 }
-
-// --- Quiz Types ---
 
 export interface QuizStage1Question {
   question: string

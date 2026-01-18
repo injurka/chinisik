@@ -52,7 +52,7 @@ export function voiceTheText(text: string, onStart: () => void, onEnd: () => voi
     utterance.onend = onEnd
     utterance.onerror = (event) => {
       console.error('Ошибка синтеза речи: ', event.error)
-      onEnd() // Убедимся, что состояние сбрасывается даже при ошибке
+      onEnd()
     }
 
     window.speechSynthesis.speak(utterance)

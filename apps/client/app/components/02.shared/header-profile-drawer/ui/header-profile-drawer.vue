@@ -9,9 +9,9 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { name: 'Мой профиль', icon: 'material-symbols:frame-person-rounded', routeName: RouteNames.Keys, routePath: RoutePaths.Keys.Tab('list') },
-  { name: 'Лексические разборы', icon: 'material-symbols:manage-search', routeName: RouteNames.LinguisticAnalysisHistory, routePath: RoutePaths.LinguisticAnalysis.History() },
-  { name: 'Настройки', icon: 'material-symbols:settings-outline', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin() },
+  { name: 'Мой профиль', icon: 'mdi:account-box-outline', routeName: RouteNames.Keys, routePath: RoutePaths.Keys.Tab('list') },
+  { name: 'Лексические разборы', icon: 'mdi:text-box-search-outline', routeName: RouteNames.LinguisticAnalysisHistory, routePath: RoutePaths.LinguisticAnalysis.History() },
+  { name: 'Настройки', icon: 'mdi:cog-outline', routeName: RouteNames.Pinyin, routePath: RoutePaths.Pinyin() },
 ]
 
 const store = useStore(['auth'])

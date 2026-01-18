@@ -4,7 +4,6 @@ const VocabularyItemSchema = z.object({
   glyph: z.string(),
   pinyin: z.string(),
   translation: z.string(),
-  sound: z.string().nullable(),
 })
 
 const VocabularySchema = z.object({
@@ -18,7 +17,6 @@ const GrammarExampleSchema = z.array(
     glyph: z.string(),
     pinyin: z.string(),
     translation: z.string(),
-    sound: z.string().nullable(),
   }),
 )
 
@@ -34,10 +32,7 @@ const ProverbSchema = z.object({
   pinyin: z.string(),
   translation: z.string(),
   description: z.string(),
-  sound: z.string().nullable(),
 })
-
-// --- Quiz Schemas ---
 
 const QuizStage1QuestionSchema = z.object({
   question: z.string(),
@@ -83,8 +78,6 @@ export const DayMaterialSchema = z.object({
   updatedAt: z.string(),
 })
 
-// --- History / Results Schemas ---
-
 export const DayMaterialQuizResultPayloadSchema = z.object({
   score: z.number().int().min(0),
   mistakes: z.number().int().min(0),
@@ -99,7 +92,6 @@ export const DayMaterialQuizAttemptSchema = z.object({
   createdAt: z.string(),
 })
 
-// === NEW: Schema for the list of past materials ===
 export const DayMaterialListItemSchema = z.object({
   id: z.number().int(),
   date: z.string(),

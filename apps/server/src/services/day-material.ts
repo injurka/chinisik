@@ -217,8 +217,6 @@ export class DayMaterialService {
     }
   }
 
-  // --- History Methods ---
-
   public async getQuizHistory(userId: number) {
     const today = this.getStartOfToday()
     const material = await prisma.dayMaterial.findUnique({ where: { date: today } })

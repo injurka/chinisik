@@ -16,10 +16,8 @@ interface Props {
   glyph: string
 }
 
-// --- Props ---
 const props = defineProps<Props>()
 
-// --- Store and State ---
 const store = useHieroglyphWordStore()
 const { mobile } = useDisplay()
 
@@ -29,7 +27,6 @@ const snackbarText = ref<string>('')
 const isSpeaking = ref<boolean>(false)
 const isLexicalAnalysisModalOpen = ref(false)
 
-// --- Computed properties ---
 const variant = computed(() => (props.variant ?? store.variant) as HieroglyphWordVariant)
 
 const isSpaceless = computed(() => {
@@ -111,7 +108,6 @@ const extraClasses = computed(() => {
   return classes
 })
 
-// --- Methods ---
 function handleSpeak() {
   if (isSpeaking.value) {
     cancelSpeech(() => {
@@ -151,7 +147,6 @@ function openLexicalAnalysis() {
   isMenuOpen.value = false
 }
 
-// --- Lifecycle Hooks ---
 onMounted(() => initSpeechSynthesis())
 
 onUnmounted(() => {

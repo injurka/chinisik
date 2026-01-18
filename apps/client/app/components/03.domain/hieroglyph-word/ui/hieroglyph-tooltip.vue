@@ -14,9 +14,6 @@ const emit = defineEmits<{
       size="small"
       @click.stop="emit('copy')"
     >
-      <VTooltip activator="parent" location="top">
-        Копировать
-      </VTooltip>
       <Icon size="18" name="mdi:content-copy" />
     </VBtn>
     <VBtn
@@ -25,9 +22,6 @@ const emit = defineEmits<{
       size="small"
       @click.stop="emit('speak')"
     >
-      <VTooltip activator="parent" location="top">
-        Озвучить
-      </VTooltip>
       <Icon size="18" name="mdi:volume-high" />
     </VBtn>
     <VBtn
@@ -36,9 +30,6 @@ const emit = defineEmits<{
       size="small"
       @click.stop="emit('analyze')"
     >
-      <VTooltip activator="parent" location="top">
-        Лексический анализ
-      </VTooltip>
       <Icon size="18" name="mdi:text-box-search-outline" />
     </VBtn>
   </div>

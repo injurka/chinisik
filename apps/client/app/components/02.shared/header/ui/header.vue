@@ -47,6 +47,7 @@ onMounted(() => {
 
 <template>
   <div ref="sentinelEl" class="sentinel" />
+
   <header
     ref="headerEl"
     class="header"
@@ -58,8 +59,8 @@ onMounted(() => {
 
     <div class="header-content">
       <div class="header-nav">
-        <div v-ripple class="logo" @click="navigateTo(RoutePaths.Home())">
-          <Icon class="logo-icon" name="game-icons:sea-dragon" size="24" />
+        <div class="logo" @click="navigateTo(RoutePaths.Home())">
+          ✧
         </div>
         <VBtn
           icon="mdi-menu"
@@ -160,18 +161,15 @@ onMounted(() => {
 
   &-nav {
     .logo {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 8px;
-      padding: 8px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
 
-      &:hover {
-        background-color: var(--bg-tertiary-color);
-      }
+      height: 32px;
+      width: 32px;
+      margin: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
 
       &-title {
         margin-left: 8px;

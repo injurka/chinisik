@@ -86,10 +86,10 @@ const previewProps = computed(() => ({
             mandatory
           >
             <v-btn value="light" class="group-item">
-              <Icon size="20" name="line-md:sunny-outline-twotone" />
+              <Icon size="20" name="mdi:weather-sunny" />
             </v-btn>
             <v-btn value="dark" class="group-item">
-              <Icon size="20" name="line-md:moon-alt-loop" />
+              <Icon size="20" name="mdi:weather-night" />
             </v-btn>
             <v-btn value="system" class="group-item">
               <Icon size="20" name="mdi:theme-light-dark" />

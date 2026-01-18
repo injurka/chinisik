@@ -12,17 +12,17 @@ interface TabsOption {
 const tabsLeftOptions = [
   {
     key: 'topic',
-    icon: 'material-symbols:slab-serif-outline',
+    icon: 'mdi:text-box-outline',
     hint: 'Полное содержимое статьи',
   },
   {
     key: 'brief',
-    icon: 'material-symbols:stack-hexagon-outline',
+    icon: 'mdi:layers-outline',
     hint: 'Обобщенние статьи',
   },
   {
     key: 'lab',
-    icon: 'material-symbols:lab-research-outline',
+    icon: 'mdi:flask-outline',
     hint: 'Создание тестов относительно материала',
   },
 ] satisfies TabsOption[]
