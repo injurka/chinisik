@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { HieroglyphWordVariant, IHieroglyphWordVariousProps } from '~/components/03.domain/hieroglyph-word'
 import type { FontCnVariant } from '~/shared/composables/change-font-cn'
 import type { ThemesVariant } from '~/shared/composables/change-theme'
 import { DialogWithClose } from '~/components/02.shared/dialog-with-close'
@@ -10,15 +9,17 @@ const store = useStore(['hieroglyphWord', 'pinyinText'])
 const { setFontCnFamily, fontCn } = useChangeFontCn()
 const { setTheme, theme } = useChangeTheme()
 
-// Controllers
+const { settings: hSettings } = storeToRefs(store.hieroglyphWord)
+
 const controlledTheme = computed({
   get: () => theme.preference,
   set: (value: ThemesVariant) => setTheme(value),
 })
 
-const controlledHieroglyphVariant = computed({
-  get: () => store.hieroglyphWord.variant,
-  set: (value: HieroglyphWordVariant) => store.hieroglyphWord.setVariant(value),
+// eslint-disable-next-line unused-imports/no-unused-vars
+const controlledFontCnFamily = computed({
+  get: () => fontCn.value,
+  set: (value: FontCnVariant) => setFontCnFamily(value),
 })
 
 const controlledColorPinyin = computed({
@@ -26,278 +27,312 @@ const controlledColorPinyin = computed({
   set: (value: boolean) => store.pinyinText.setIsColored(value),
 })
 
-const controlledFontCnFamily = computed({
-  get: () => fontCn.value,
-  set: (value: FontCnVariant) => setFontCnFamily(value),
-})
+const layoutOptions = [
+  { value: 'inline', label: 'В строке', icon: 'mdi-format-align-justify' },
+  { value: 'vertical', label: 'Столбик', icon: 'mdi-view-column' },
+  { value: 'card', label: 'Карточка', icon: 'mdi-card-text-outline' },
+]
 
-// Preview
-const showPreview = ref<boolean>(false)
-let timeoutId: (ReturnType<typeof setTimeout>) | null = null
-
-function showPreviewHandler() {
-  showPreview.value = true
-  if (timeoutId)
-    clearTimeout(timeoutId)
+function updateHSetting(key: keyof typeof hSettings.value, value: any) {
+  store.hieroglyphWord.updateSettings({ [key]: value })
 }
 
-function hidePreviewHandler() {
-  timeoutId = setTimeout(() => {
-    showPreview.value = false
-  }, 500)
-}
-
-const previewProps = computed(() => ({
+const previewProps = {
   glyph: '你好',
-  pinyin: {
-    pinyin: 'ni hao',
-    tone: [{
-      index: 1,
-      type: 3,
-    }, {
-      index: 4,
-      type: 3,
-    }],
-  },
+  pinyin: 'ni3 hao3',
   translate: 'Привет',
-} as IHieroglyphWordVariousProps))
+}
 </script>
 
 <template>
   <DialogWithClose
     v-model="isDialog"
     class="dialog-settings"
-    :max-width="360"
+    :max-width="400"
   >
     <div class="dialog-settings-wrapper">
-      <span class="title">Общие настройки</span>
+      <span class="title">Настройки отображения</span>
 
       <div class="group-list">
         <div class="group">
           <div class="group-subtitle">
-            Цветовое оформление
+            Тема оформления
           </div>
           <v-btn-toggle
             v-model="controlledTheme"
-            variant="text"
-            class="group-items"
-            color="var(--fg-action-color)"
-            density="comfortable"
+            variant="outlined"
+            class="full-width-toggle"
+            color="var(--fg-accent-color)"
+            density="compact"
             mandatory
+            divided
           >
-            <v-btn value="light" class="group-item">
-              <Icon size="20" name="mdi:weather-sunny" />
+            <v-btn value="light" class="flex-grow-1">
+              <v-icon>mdi-weather-sunny</v-icon>
             </v-btn>
-            <v-btn value="dark" class="group-item">
-              <Icon size="20" name="mdi:weather-night" />
+            <v-btn value="dark" class="flex-grow-1">
+              <v-icon>mdi-weather-night</v-icon>
             </v-btn>
-            <v-btn value="system" class="group-item">
-              <Icon size="20" name="mdi:theme-light-dark" />
+            <v-btn value="system" class="flex-grow-1">
+              <v-icon>mdi-theme-light-dark</v-icon>
             </v-btn>
           </v-btn-toggle>
         </div>
 
-        <div class="group" @mouseenter="showPreviewHandler" @mouseleave="hidePreviewHandler">
+        <div class="group">
           <div class="group-subtitle">
-            Стиль отображения иероглифа
+            Вид иероглифов
           </div>
           <v-btn-toggle
-            v-model="controlledHieroglyphVariant"
-            density="comfortable"
-            variant="text"
-            class="group-items"
-            color="var(--fg-action-color)"
+            :model-value="hSettings.layout"
+            variant="outlined"
+            class="full-width-toggle"
+            color="var(--fg-accent-color)"
+            density="compact"
             mandatory
+            divided
+            @update:model-value="(v: any) => updateHSetting('layout', v)"
           >
-            <v-btn class="group-item">
-              1
-            </v-btn>
-            <v-btn class="group-item">
-              2
-            </v-btn>
-            <v-btn class="group-item">
-              3
-            </v-btn>
-            <v-btn class="group-item">
-              4
-            </v-btn>
-            <v-btn class="group-item">
-              5
+            <v-btn
+              v-for="opt in layoutOptions"
+              :key="opt.value"
+              :value="opt.value"
+              class="flex-grow-1"
+            >
+              <v-icon start>
+                {{ opt.icon }}
+              </v-icon>
+              <span v-if="!$vuetify.display.mobile">{{ opt.label }}</span>
             </v-btn>
           </v-btn-toggle>
+
+          <div
+            v-if="hSettings.layout !== 'card'"
+            class="layout-options mt-2"
+          >
+            <div
+              class="option-check"
+              :class="{ active: hSettings.showPinyin }"
+              @click="updateHSetting('showPinyin', !hSettings.showPinyin)"
+            >
+              <v-checkbox
+                :model-value="hSettings.showPinyin"
+                density="compact"
+                hide-details
+                color="var(--fg-accent-color)"
+                readonly
+                class="ma-0 pa-0 pointer-events-none"
+              />
+              <span>Пиньинь</span>
+            </div>
+
+            <div
+              class="option-check"
+              :class="{ active: hSettings.showTranslation }"
+              @click="updateHSetting('showTranslation', !hSettings.showTranslation)"
+            >
+              <v-checkbox
+                :model-value="hSettings.showTranslation"
+                density="compact"
+                hide-details
+                color="var(--fg-accent-color)"
+                readonly
+                class="ma-0 pa-0 pointer-events-none"
+              />
+              <span>Перевод</span>
+            </div>
+          </div>
         </div>
 
-        <div class="group" @mouseenter="showPreviewHandler" @mouseleave="hidePreviewHandler">
+        <div class="group">
           <div class="group-subtitle">
-            Стиль отображения тона
+            Тона пиньиня
           </div>
-          <v-btn-toggle
-            v-model="controlledColorPinyin"
-            density="comfortable"
-            variant="text"
-            mandatory
-            class="group-items"
-            color="var(--fg-action-color)"
+          <div
+            class="switch-row"
+            :class="{ active: controlledColorPinyin }"
+            @click="controlledColorPinyin = !controlledColorPinyin"
           >
-            <v-btn :value="true" class="group-item colorfull">
-              цветной
-            </v-btn>
-            <v-btn :value="false" class="group-item">
-              обычный
-            </v-btn>
-          </v-btn-toggle>
+            <span>Цветные тона</span>
+            <v-switch
+              v-model="controlledColorPinyin"
+              color="var(--fg-accent-color)"
+              hide-details
+              density="compact"
+              inset
+              class="ma-0 pa-0 pointer-events-none"
+            />
+          </div>
         </div>
 
-        <div class="group" @mouseenter="showPreviewHandler" @mouseleave="hidePreviewHandler">
-          <div class="group-subtitle">
-            Стиль написание иероглифа
+        <div class="preview-box">
+          <div class="group-subtitle mb-2 text-center">
+            Предпросмотр
           </div>
-          <v-btn-toggle
-            v-model="controlledFontCnFamily"
-            density="comfortable"
-            variant="text"
-            mandatory
-            class="group-items"
-            color="var(--fg-action-color)"
-          >
-            <v-btn :value="FontCnVariant.Brushed" class="group-item cn-draw">
-              прописные
-            </v-btn>
-            <v-btn :value="FontCnVariant.Base" class="group-item">
-              печатные
-            </v-btn>
-          </v-btn-toggle>
+          <div class="preview-content">
+            <HieroglyphWord v-bind="previewProps" />
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="preview" :class="{ 'show-preview': showPreview }">
-      <HieroglyphWord
-        :glyph="previewProps.glyph"
-        :pinyin="previewProps.pinyin"
-        :translate="previewProps.translate"
-      />
-      <div class="preview-bg" />
     </div>
   </DialogWithClose>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .dialog-settings {
-  .preview {
-    position: absolute;
-    right: -270px;
-    top: calc(50% - 110px);
-    width: 250px;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 24px;
-    padding: 16px;
-    background-color: var(--bg-tertiary-color);
-    box-shadow: 0 0 5px var(--bg-overlay-primary-color);
-    border: 1px solid var(--border-primary-color);
-    border-radius: 24px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease;
-
-    @include mobile() {
-      display: none;
-    }
-    &.show-preview {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   .title {
-    font-size: 1.3rem;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 16px;
     border-bottom: 1px solid var(--border-secondary-color);
-    width: 90%;
+    width: 100%;
     text-align: center;
-    padding-bottom: 4px;
+    padding-bottom: 8px;
     color: var(--fg-primary-color);
   }
 
-  .group {
-    width: 100%;
+  &-wrapper {
+    background-color: var(--bg-secondary-color);
+    padding: 24px;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 16px;
+    width: 100%;
+  }
 
-    &-items {
-      width: 100%;
-      background-color: var(--bg-tertiary-color);
-    }
-    &-item {
-      flex-grow: 1;
-      flex-wrap: wrap;
-      font-size: 0.9rem;
-      letter-spacing: 0;
-      font-weight: 400;
-      text-decoration: none;
-      color: var(--fg-primary-color);
-      text-transform: none;
+  .group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
 
-      .v-btn {
-        min-width: 40px;
-      }
-      &.colorfull {
-        background: linear-gradient(
-          to right,
-          var(--fg-tone-0-color) 0%,
-          var(--fg-tone-1-color) 20%,
-          var(--fg-tone-2-color) 40%,
-          var(--fg-tone-3-color) 60%,
-          var(--fg-tone-4-color) 80%,
-          var(--fg-tone-4-color) 100%
-        );
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      &.cn-draw {
-        font-family: 'Noto Serif SC';
-      }
-    }
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
 
     &-subtitle {
+      font-size: 0.9rem;
       color: var(--fg-secondary-color);
-      font-size: 1rem;
-      margin: 2px;
-
-      @include mobile() {
-        font-size: 0.9rem;
-      }
-    }
-    &-list {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 16px;
-      margin-top: 4px;
+      font-weight: 500;
     }
   }
 
-  &-wrapper {
+  .full-width-toggle {
+    width: 100%;
+    display: flex;
+    background-color: var(--bg-primary-color);
+    border-color: var(--border-secondary-color);
+    height: 40px;
+
+    .v-btn {
+      height: 100% !important;
+      color: var(--fg-secondary-color);
+      text-decoration: none;
+      text-transform: none;
+
+      &--active {
+        color: var(--fg-accent-color) !important;
+      }
+    }
+  }
+
+  .layout-options {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .option-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background-color: var(--bg-tertiary-color);
+    border: 1px solid var(--border-secondary-color);
+    border-radius: 8px;
+    flex-grow: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+
+    .v-checkbox {
+      height: 27px;
+    }
+
+    &:hover {
+      background-color: var(--bg-hover-color);
+      border-color: var(--border-accent-color);
+    }
+
+    &.active {
+      border-color: var(--border-accent-color);
+      background-color: rgba(var(--bg-accent-color-rgb), 0.05);
+
+      span {
+        color: var(--fg-accent-color);
+        font-weight: 500;
+      }
+    }
+
+    span {
+      font-size: 0.9rem;
+      color: var(--fg-primary-color);
+    }
+
+    :deep(.v-selection-control) {
+      min-height: auto;
+    }
+  }
+
+  .switch-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-tertiary-color);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-secondary-color);
+    font-size: 0.9rem;
+    color: var(--fg-primary-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+
+    &:hover {
+      background-color: var(--bg-hover-color);
+      border-color: var(--border-accent-color);
+    }
+
+    &.active {
+      border-color: var(--border-accent-color);
+      background-color: rgba(var(--bg-accent-color-rgb), 0.05);
+
+      span {
+        color: var(--fg-accent-color);
+        font-weight: 500;
+      }
+    }
+  }
+
+  .pointer-events-none {
+    pointer-events: none;
+  }
+
+  .preview-box {
+    margin-top: 8px;
+    background-color: var(--bg-primary-color);
+    border: 1px dashed var(--border-secondary-color);
+    border-radius: 8px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 500px;
-    min-height: 200px;
-    background-color: var(--bg-secondary-color);
-    box-shadow: 0 0 5px var(--bg-overlay-primary-color);
-    border: 1px solid var(--border-primary-color);
-    border-radius: 24px;
-    width: 100%;
-    padding: 16px;
+    min-height: 100px;
+    justify-content: center;
   }
 }
 </style>

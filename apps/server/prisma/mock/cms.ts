@@ -73,7 +73,11 @@ export function mockCms() {
                     type: 3,
                   }],
                 },
-                variant: 2,
+                "settings": {
+                  "layout": "inline",
+                  "showPinyin": true,
+                  "showTranslation": true
+                }
               },
             },
             {
@@ -111,7 +115,11 @@ export function mockCms() {
                   type: 3,
                 }],
               },
-              variant: 2,
+              "settings": {
+                "layout": "inline",
+                "showPinyin": true,
+                "showTranslation": true
+              },
               translate: 'Словарь канси',
             },
           }, {

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { HieroglyphWordVariant } from '~/components/03.domain/hieroglyph-word'
+import type { HieroglyphSettings } from '~/components/03.domain/hieroglyph-word/types'
 import { StyleSwitcher } from '~/components/02.shared/style-switcher'
 
-type StyleVariant = HieroglyphWordVariant | 'global'
+type StyleVariant = Partial<HieroglyphSettings> | 'global'
 
 const model = defineModel<StyleVariant>({ required: true })
 </script>
@@ -15,14 +15,10 @@ const model = defineModel<StyleVariant>({ required: true })
 
 <style lang="scss" scoped>
 .hsk-words-control {
-  background-color: var(--bg-primary-color);
-  padding: 8px;
-  box-shadow: 0 0 5px var(--bg-overlay-primary-color);
-  border: 1px solid var(--border-primary-color);
+  margin-top: 8px;
   border-radius: 16px;
-
-  :deep(.style-switcher) {
-    margin: 0;
-  }
+  background-color: transparent;
+  border: 1px solid var(--border-secondary-color);
+  overflow: hidden;
 }
 </style>

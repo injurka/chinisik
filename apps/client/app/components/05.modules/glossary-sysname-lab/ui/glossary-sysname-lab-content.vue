@@ -59,19 +59,6 @@ function handleStartTest() {
   z-index: 1;
 }
 
-:deep() {
-  .hw-word {
-    &.variant-4 {
-      padding-left: 0px !important;
-      border: none;
-      border-left: 3px dashed var(--border-accent-color);
-      border-right: 3px dashed var(--border-accent-color);
-      border-radius: 0;
-      width: 100%;
-    }
-  }
-}
-
 .lab {
   width: 100%;
   margin-top: 32px;

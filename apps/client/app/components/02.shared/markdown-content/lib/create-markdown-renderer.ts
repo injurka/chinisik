@@ -71,7 +71,7 @@ export function createMarkdownRenderer(params: CreateMarkdownRendererParams) {
     })
     .use(MarkdownItAttrs)
     .use(MarkdownItCollapsible)
-    .use(MarkdownItContainer)
+    .use(MarkdownItContainer as any)
 
   return md
 }

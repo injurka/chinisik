@@ -6,7 +6,11 @@ import type {
   IRequestWrapperState,
   ITryRequest,
 } from '../../types'
-import { computed, useApi } from '#imports'
+import { computed, useApi, useNuxtApp } from '#imports'
+import { useAuthStore } from '~/shared/store'
+
+// Глобальный промис для очереди рефреша
+let refreshPromise: Promise<any> | null = null
 
 const useRequestWrapperStore = defineStore('request', {
   state: (): IRequestWrapperState => ({
@@ -31,23 +35,33 @@ const useRequestWrapperStore = defineStore('request', {
         fn,
         onSuccess,
         onError,
+        skipAuthRefresh = false,
       } = payload
+
+      const nuxtApp = useNuxtApp()
 
       this._setLoading(key, 'PENDING')
       this._setError(key, null)
 
-      const { result, error } = await this.tryRequest(fn)
+      const { result, error } = await this.tryRequest(fn, { skipAuthRefresh })
 
       try {
-        await (result && !error
-          ? onSuccess?.({
+        if (result && !error) {
+          if (onSuccess) {
+            await nuxtApp.runWithContext(() => onSuccess({
               data: result as Awaited<T>,
               state: this.$state,
-            })
-          : onError?.({
+            }))
+          }
+        }
+        else {
+          if (onError) {
+            await nuxtApp.runWithContext(() => onError({
               error: error as IApiError,
               state: this.$state,
             }))
+          }
+        }
       }
       finally {
         this._setLoading(key, result ? 'FULFILLED' : 'REJECTED')
@@ -60,9 +74,16 @@ const useRequestWrapperStore = defineStore('request', {
         status: result ? 'FULFILLED' : 'REJECTED',
       }
     },
-    async tryRequest<T>(fn: IRequestWrapperPayload<T>['fn'], skipRefresh = false): Promise<ITryRequest<T>> {
-      const { api, refresh } = useApi()
-      let error: IApiError | null = null
+
+    async tryRequest<T>(
+      fn: IRequestWrapperPayload<T>['fn'],
+      options: { isRetry?: boolean, skipAuthRefresh?: boolean } = {},
+    ): Promise<ITryRequest<T>> {
+      const { isRetry = false, skipAuthRefresh = false } = options
+
+      const { api } = useApi()
+      const authStore = useAuthStore()
+      const nuxtApp = useNuxtApp()
 
       try {
         const result = (await fn({ state: this.$state, api }) ?? null)
@@ -72,45 +93,69 @@ const useRequestWrapperStore = defineStore('request', {
         }
       }
       catch (e: any) {
-        if (e.status === 401 && !skipRefresh) {
+        const status = e?.response?.status || e?.statusCode || 500
+        const errorSkip = e?.request?.skipAuthRefresh || e?.response?._data?.skipAuthRefresh
+
+        // Пытаемся сделать рефреш только если:
+        // 1. Ошибка 401
+        // 2. Это не повторный запрос (isRetry)
+        // 3. Рефреш явно не запрещен (skipAuthRefresh)
+        if (status === 401 && !isRetry && !skipAuthRefresh && !errorSkip) {
           try {
-            await refresh?.()
-            return this.tryRequest(fn, true)
+            if (!refreshPromise) {
+              // Запускаем рефреш в контексте Nuxt
+              refreshPromise = nuxtApp.runWithContext(() => authStore.refresh())
+            }
+            await refreshPromise
           }
           catch (refreshError) {
-            error = this.adapterError(refreshError)
+            // Если рефреш не прошел - возвращаем ошибку рефреша
+            return {
+              error: this.adapterError(refreshError),
+              result: null,
+            }
           }
-        }
-        else {
-          error = this.adapterError(e)
-        }
-      }
+          finally {
+            if (refreshPromise) {
+              refreshPromise.finally(() => {
+                refreshPromise = null
+              })
+            }
+          }
 
-      return {
-        error,
-        result: null,
+          // Повторяем исходный запрос
+          return nuxtApp.runWithContext(() => this.tryRequest(fn, { isRetry: true, skipAuthRefresh }))
+        }
+
+        return {
+          error: this.adapterError(e),
+          result: null,
+        }
       }
     },
 
     adapterError(e: any): IApiError | null {
-      if (!e?.response) {
+      if (!e)
         return null
-      }
 
-      const status = e.response.status
-      const data = e.response._data || e
+      const status = e.response?.status || e.statusCode || 500
+      const data = e.response?._data || e
+      const message = (data?.message) || e.message || 'Произошла ошибка'
 
       const error: IApiError = {
         status,
-        message: (data?.message) || 'Произошла ошибка',
+        message,
       }
 
-      if (!(import.meta.server && import.meta.env.NODE_ENV === 'production')) {
+      const isExpectedAuthError = status === 401 || status === 403
+
+      if (!isExpectedAuthError && !(import.meta.server && import.meta.env.NODE_ENV === 'production')) {
         console.error('[REQUEST ERROR] - ', e)
       }
 
       return error
     },
+
     getStatus(key: string): ApiStatus {
       return this._status.get(key) || 'NONE'
     },

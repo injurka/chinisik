@@ -1,10 +1,10 @@
-import type { HieroglyphWordVariant } from './props'
+export * from './props'
 
 interface IHieroglyphWordState {
-  variant: HieroglyphWordVariant
+  // variant удален, теперь настройки внутри props/store
+  // пустой интерфейс или можно удалить этот файл, если он не используется
 }
 
-export * from './props'
 export type {
   IHieroglyphWordState,
 }

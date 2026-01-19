@@ -152,7 +152,7 @@ onMounted(() => {
         />
         <v-checkbox
           v-model="terms"
-          color="primary"
+          color="var(--fg-accent-color)"
           class="legal"
           required
         >

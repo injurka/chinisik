@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import type { JsonToDomChildren, JsonToDomTags } from '~/components/03.domain/json-to-dom'
+import { MarkdownContent } from '~/components/02.shared/markdown-content'
 import { HieroglyphWord } from '~/components/03.domain/hieroglyph-word'
 import { JsonToDom } from '~/components/03.domain/json-to-dom'
 import { PinyinText } from '~/components/03.domain/pinyin-text'
 
-defineProps<{ node: JsonToDomChildren }>()
+interface Props {
+  node: JsonToDomChildren
+}
+
+defineProps<Props>()
 
 const components: Record<string, Component> = {
   HieroglyphWord,
   PinyinText,
+  MarkdownContent,
 }
 
 function getIsComponent(tag: JsonToDomTags): Component | string {

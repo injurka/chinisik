@@ -170,6 +170,7 @@ onMounted(() => {
       margin: 8px;
       cursor: pointer;
       font-size: 1.2rem;
+      padding-top: 2px;
 
       &-title {
         margin-left: 8px;

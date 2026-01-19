@@ -1,35 +1,37 @@
+import { useAuthStore } from '~/shared/store'
+
 export default defineNuxtPlugin(async (_) => {
-  const store = useStore(['auth'])
-  const { tokenPair } = storeToRefs(store.auth)
+  const authStore = useAuthStore()
 
   const apiInterceptops = [{
     onRequest: ({ options }: any) => {
+      // 1. Проверяем skipAuth (передаем это в запросах, где токен не нужен)
       if (options.skipAuth) {
         return
       }
 
-      if (tokenPair.value?.access) {
-        const accessToken = `Bearer ${tokenPair.value?.access}`
+      // 2. Берем токен из реактивного геттера стора
+      const token = authStore.token
+
+      if (token) {
+        const bearer = `Bearer ${token}`
         const headers = options.headers ||= {} as Headers
 
         if (Array.isArray(headers)) {
-          headers.push(['Authorization', accessToken])
-          headers.push(['x-authorizaition', accessToken])
+          headers.push(['Authorization', bearer])
         }
         else if (headers instanceof Headers) {
-          headers.set('Authorization', accessToken)
-          headers.set('x-authorizaition', accessToken)
+          headers.set('Authorization', bearer)
         }
         else {
-          (headers as { Authorization: string }).Authorization = accessToken
+          (headers as { Authorization: string }).Authorization = bearer
         }
       }
     },
 
+    // Остальные хуки можно оставить пустыми или использовать для глобальной обработки
     onRequestError: () => { },
-
     onResponse: () => { },
-
     onResponseError: () => { },
   } satisfies FetchOption<unknown>]
 

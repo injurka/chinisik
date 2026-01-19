@@ -30,7 +30,6 @@ interface CreateApiParams {
   interceptops: FetchOption<any>[]
   verbose: boolean
   baseUrl: string
-  refresh: (() => Promise<void>) | null
 }
 
 function createApi(params: Partial<CreateApiParams>) {

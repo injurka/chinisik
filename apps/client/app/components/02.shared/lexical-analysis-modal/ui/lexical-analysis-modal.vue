@@ -276,10 +276,6 @@ watch(isDialog, (newVal) => {
   margin: 0 auto;
   padding: 0 32px;
 
-  .hw-word {
-    margin-left: 8px;
-  }
-
   @include mobile {
     font-size: 0.75rem;
   }

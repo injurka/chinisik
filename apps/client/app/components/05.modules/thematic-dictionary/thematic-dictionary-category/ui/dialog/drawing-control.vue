@@ -208,7 +208,11 @@ onMounted(initializePracticeCycle)
 
         <div v-if="showFullInfo && currentItem" class="full-info">
           <HieroglyphWord
-            :variant="5"
+            :settings="{
+              layout: 'inline',
+              showPinyin: false,
+              showTranslation: false,
+            }"
             :glyph="currentItem.glyph"
             :translate="currentItem.translate"
             :pinyin="currentItem.pinyin"

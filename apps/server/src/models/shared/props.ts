@@ -7,7 +7,11 @@ interface HieroglyphWordProps {
       type: number
     }[]
   }
-  variant: number
+  settings: {
+    layout: string
+    showPinyin: boolean
+    showTranslation: boolean
+  }
   translate?: string
 }
 

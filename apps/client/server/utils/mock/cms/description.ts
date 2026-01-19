@@ -71,7 +71,11 @@ export const mockCms = {
                   type: 3,
                 }],
               },
-              variant: 2,
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           {
@@ -109,7 +113,11 @@ export const mockCms = {
                 type: 3,
               }],
             },
-            variant: 2,
+            settings: {
+              layout: 'inline',
+              showPinyin: true,
+              showTranslation: true,
+            },
             translate: 'Словарь канси',
           },
         }, {
@@ -321,7 +329,11 @@ export const mockCms = {
             props: {
               glyph: '汉语水平考试',
               pinyin: '',
-              variant: 2,
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
               translate: 'HSK',
             },
           },

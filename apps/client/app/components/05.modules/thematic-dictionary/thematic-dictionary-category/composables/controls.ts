@@ -1,25 +1,24 @@
+import type { HieroglyphSettings } from '~/components/03.domain/hieroglyph-word'
+
 const THEMATIC_DICTIONARY_CATEGORY_CONTROL_KEY = 'thematic_dictionary_category_control'
 
-interface ThematicDictionaryCategoryControlValues {
-  isFixedStyle: boolean
-}
+type ThematicDictionaryCategoryControlValues = Partial<HieroglyphSettings> | 'global'
 
 function useThematicDictionaryCategoryControls() {
-  const controlValues = useCookie<ThematicDictionaryCategoryControlValues>(THEMATIC_DICTIONARY_CATEGORY_CONTROL_KEY)
-  const controlMenu = ref(false)
-  const controls = ref<ThematicDictionaryCategoryControlValues>(controlValues.value ?? { isFixedStyle: true })
+  const controlValues = useCookie<ThematicDictionaryCategoryControlValues>(THEMATIC_DICTIONARY_CATEGORY_CONTROL_KEY, {
+    default: () => 'global',
+  })
 
-  const toggleControl = (key: keyof ThematicDictionaryCategoryControlValues) => {
-    const rawValues = { ...controlValues.value }
-    rawValues[key] = !rawValues[key]
-    controlValues.value = rawValues
-    controls.value = rawValues
-  }
+  const controlMenu = ref(false)
+  const controls = ref<ThematicDictionaryCategoryControlValues>(controlValues.value)
+
+  watch(controls, (newValue) => {
+    controlValues.value = newValue
+  }, { deep: true })
 
   return {
     controlMenu,
     controls,
-    toggleControl,
   }
 }
 

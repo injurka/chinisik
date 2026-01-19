@@ -43,6 +43,7 @@ function createInstance(params: CreateInstanceParams) {
       // retryStatusCodes: [401],
       // retryDelay: 100,
       retry: 0,
+      credentials: 'include',
       ...options,
       // @ts-expect-error idk
       onRequest: (...params) => applyInterceptors(interceptops, options, 'onRequest', ...params),

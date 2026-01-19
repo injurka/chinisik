@@ -122,7 +122,11 @@ function handleExit() {
         <Transition name="fade-in">
           <div v-if="isFeedbackVisible" class="feedback-section">
             <HieroglyphWord
-              :variant="5"
+              :settings="{
+                layout: 'inline',
+                showPinyin: false,
+                showTranslation: false,
+              }"
               :glyph="currentQuestion.text"
               :pinyin="currentQuestion.pinyin"
               :translate="currentQuestion.translation"

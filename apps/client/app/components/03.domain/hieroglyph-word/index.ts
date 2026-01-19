@@ -2,7 +2,6 @@
 
 // Import
 import { useHieroglyphWordStore } from './store'
-// import { HieroglyphWord } from './ui'
 import HieroglyphWord from './ui/hieroglyph-word.vue'
 
 // Export

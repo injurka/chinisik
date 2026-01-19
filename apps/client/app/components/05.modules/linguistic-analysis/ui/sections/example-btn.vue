@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { HieroglyphWord } from '~/components/03.domain/hieroglyph-word'
-
 defineProps<{ isHidden: boolean }>()
 
 const isExample = defineModel<boolean>({ default: false })
@@ -14,13 +12,7 @@ const isExample = defineModel<boolean>({ default: false })
     variant="tonal"
     @click="isExample = !isExample"
   >
-    <span> {{ isExample ? 'Скрыть' : 'Показать' }} пример для </span>
-    <HieroglyphWord
-      :variant="0"
-      glyph="打电话"
-      translate="Привет"
-      pinyin="ni hao"
-    />
+    <span> {{ isExample ? 'Скрыть' : 'Показать' }} пример для 打电话</span>
   </v-btn>
 </template>
 
@@ -33,10 +25,6 @@ const isExample = defineModel<boolean>({ default: false })
   width: auto;
   margin: 0 auto;
   padding: 0 32px;
-
-  .hw-word {
-    margin-left: 8px;
-  }
 
   @include mobile {
     font-size: 0.75rem;

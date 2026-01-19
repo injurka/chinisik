@@ -9,6 +9,10 @@ import { AuthService, OAuthService } from '~/services'
 
 const TAG = 'auth'
 
+const RefreshRequestBodySchema = z.object({
+  refreshToken: z.string(),
+})
+
 class AuthController extends AController {
   private service = new AuthService()
   private oauthService = new OAuthService()
@@ -55,7 +59,6 @@ class AuthController extends AController {
       route,
       async (c) => {
         const user = c.get('user')
-
         return c.json(UserSchema.parse(user), 200)
       },
     )
@@ -93,16 +96,13 @@ class AuthController extends AController {
         const body = c.req.valid('json')
         const data = await this.service.signUp(body)
 
-        // Устанавливаем cookie для refresh token с правильными параметрами
-        setCookie(c, 'refreshToken', data.refreshToken, {
-          httpOnly: true,
-          secure: import.meta.env.NODE_ENV === 'production',
-          path: '/',
-          sameSite: 'Lax',
-          maxAge: 30 * 24 * 60 * 60, // 30 дней
-        })
+        const response = {
+          token: data.token,
+          refreshToken: data.refreshToken,
+          user: data.user,
+        }
 
-        return c.json(AuthUserSchema.parse(data), 200)
+        return c.json(AuthUserSchema.parse(response), 200)
       },
     )
   }
@@ -139,7 +139,13 @@ class AuthController extends AController {
         const body = c.req.valid('json')
         const data = await this.service.signIn(body)
 
-        return c.json(AuthUserSchema.parse(data), 200)
+        const response = {
+          token: data.token,
+          refreshToken: data.refreshToken,
+          user: data.user,
+        }
+
+        return c.json(AuthUserSchema.parse(response), 200)
       },
     )
   }
@@ -153,9 +159,7 @@ class AuthController extends AController {
         body: {
           content: {
             'application/json': {
-              schema: z.object({
-                refreshToken: z.string(),
-              }),
+              schema: RefreshRequestBodySchema,
             },
           },
         },
@@ -169,6 +173,9 @@ class AuthController extends AController {
           },
           description: 'New token pair',
         },
+        401: {
+          description: 'Unauthorized',
+        },
       },
     })
 
@@ -177,16 +184,19 @@ class AuthController extends AController {
       async (c) => {
         const { refreshToken } = c.req.valid('json')
 
+        if (!refreshToken) {
+          throw new HTTPException(401, { message: 'Refresh token is missing' })
+        }
+
         try {
           const tokens = await this.service.refreshToken(refreshToken)
+
           const payload = {
             token: tokens.accessToken,
             refreshToken: tokens.refreshToken,
           }
 
-          const responseData = RefreshAuthSchema.parse(payload)
-
-          return c.json(responseData, 200)
+          return c.json(RefreshAuthSchema.parse(payload), 200)
         }
         catch {
           throw new HTTPException(401, { message: 'Invalid refresh token' })
@@ -200,7 +210,6 @@ class AuthController extends AController {
       method: 'post',
       path: `${this.path}/logout`,
       tags: [TAG],
-      security: [{ bearerAuth: [] }],
       responses: {
         200: {
           description: 'Successfully logged out',
@@ -208,20 +217,11 @@ class AuthController extends AController {
       },
     })
 
-    this.router.use(route.path, jwtGuard)
     this.router.openapi(
       route,
       async (c) => {
-        const user = c.get('user')
-
-        await this.service.logout(user.id)
-
-        // Очищаем cookie при выходе
-        setCookie(c, 'refreshToken', '', {
-          expires: new Date(0),
-          path: '/',
-        })
-
+        // Здесь можно добавить логику инвалидации токена в БД, если нужно
+        // Но куки чистить серверу больше не нужно, это делает клиент
         return c.text('Successfully logged out', 200)
       },
     )
@@ -254,17 +254,13 @@ class AuthController extends AController {
       route,
       async (c) => {
         const { email } = c.req.valid('json')
-
         await this.service.createVerificationCode(email)
-
         return c.text('Verification code sent', 200)
       },
     )
   }
 
-  // OAuth
-  // -> GitHub
-
+  // OAuth (Github/Google)
   private oauthGithub = () => {
     const route = createRoute({
       method: 'get',
@@ -273,12 +269,7 @@ class AuthController extends AController {
       responses: {
         302: {
           description: 'Redirect to GitHub OAuth',
-          headers: {
-            Location: {
-              schema: { type: 'string' },
-              description: 'GitHub OAuth URL',
-            },
-          },
+          headers: { Location: { schema: { type: 'string' } } },
         },
       },
     })
@@ -288,7 +279,6 @@ class AuthController extends AController {
       async (c) => {
         const state = Bun.randomUUIDv7()
         const url = new URL('https://github.com/login/oauth/authorize')
-
         url.searchParams.set('client_id', import.meta.env.GITHUB_CLIENT_ID!)
         url.searchParams.set('redirect_uri', import.meta.env.GITHUB_CALLBACK!)
         url.searchParams.set('state', state)
@@ -298,9 +288,8 @@ class AuthController extends AController {
           httpOnly: true,
           path: '/',
           sameSite: 'Lax',
-          maxAge: 10 * 60, // 10 минут
+          maxAge: 10 * 60,
         })
-
         return c.redirect(url.toString())
       },
     )
@@ -312,17 +301,12 @@ class AuthController extends AController {
       path: `${this.path}/github/callback`,
       tags: [TAG],
       request: {
-        query: z.object({
-          code: z.string(),
-          state: z.string(),
-        }),
+        query: z.object({ code: z.string(), state: z.string() }),
       },
       responses: {
         302: {
           description: 'OAuth callback handler',
-          headers: z.object({
-            Location: z.string().describe('Frontend redirect URL'),
-          }),
+          headers: z.object({ Location: z.string() }),
         },
       },
     })
@@ -335,14 +319,15 @@ class AuthController extends AController {
           throw new HTTPException(401, { message: 'Invalid state' })
         }
         const { token, refreshToken } = await this.oauthService.github(code, state)
+
         setCookie(c, 'oauth_state', '', { expires: new Date(0), path: '/' })
 
+        // Передаем оба токена в URL
         return c.redirect(`${import.meta.env.FRONTEND_URL}/auth/callback?token=${token}&refreshToken=${refreshToken}`)
       },
     )
   }
 
-  // -> Google
   private oauthGoogle = () => {
     const route = createRoute({
       method: 'get',
@@ -351,12 +336,7 @@ class AuthController extends AController {
       responses: {
         302: {
           description: 'Redirect to Google OAuth',
-          headers: {
-            Location: {
-              schema: { type: 'string' },
-              description: 'Google OAuth URL',
-            },
-          },
+          headers: { Location: { schema: { type: 'string' } } },
         },
       },
     })
@@ -366,22 +346,20 @@ class AuthController extends AController {
       async (c) => {
         const state = Bun.randomUUIDv7()
         const url = new URL('https://accounts.google.com/o/oauth2/v2/auth')
-
         url.searchParams.set('client_id', import.meta.env.GOOGLE_CLIENT_ID!)
         url.searchParams.set('redirect_uri', import.meta.env.GOOGLE_CALLBACK!)
         url.searchParams.set('response_type', 'code')
         url.searchParams.set('state', state)
         url.searchParams.set('scope', 'openid email profile')
         url.searchParams.set('access_type', 'offline')
-        url.searchParams.set('prompt', 'consent') // Добавлено для получения refresh token каждый раз
+        url.searchParams.set('prompt', 'consent')
 
         setCookie(c, 'oauth_state', state, {
           httpOnly: true,
           path: '/',
           sameSite: 'Lax',
-          maxAge: 10 * 60, // 10 минут
+          maxAge: 10 * 60,
         })
-
         return c.redirect(url.toString())
       },
     )
@@ -393,17 +371,12 @@ class AuthController extends AController {
       path: `${this.path}/google/callback`,
       tags: [TAG],
       request: {
-        query: z.object({
-          code: z.string(),
-          state: z.string(),
-        }),
+        query: z.object({ code: z.string(), state: z.string() }),
       },
       responses: {
         302: {
           description: 'OAuth callback handler',
-          headers: z.object({
-            Location: z.string().describe('Frontend redirect URL'),
-          }),
+          headers: z.object({ Location: z.string() }),
         },
       },
     })
@@ -416,6 +389,7 @@ class AuthController extends AController {
           throw new HTTPException(401, { message: 'Invalid state' })
         }
         const { token, refreshToken } = await this.oauthService.google(code, state)
+
         setCookie(c, 'oauth_state', '', { expires: new Date(0), path: '/' })
 
         return c.redirect(`${import.meta.env.FRONTEND_URL}/auth/callback?token=${token}&refreshToken=${refreshToken}`)

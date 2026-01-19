@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { IHieroglyphWordVariousProps } from '~/components/03.domain/hieroglyph-word'
 import type { JsonToDomChildren } from '~/components/03.domain/json-to-dom'
+import { StyleSwitcher } from '~/components/02.shared/style-switcher'
 import { JsonToDom } from '~/components/03.domain/json-to-dom'
 import { ThematicDictionaryBreadcrumbs } from '~/components/03.domain/thematic-dictionary/thematic-dictionary-breadcrumbs'
-import Control from '~/components/05.modules/thematic-dictionary/thematic-dictionary-category/ui/control.vue'
 import { useThematicDictionaryCategoryControls } from '../composables'
 import DrawingControl from './dialog/drawing-control.vue'
 
@@ -16,34 +16,45 @@ interface Props {
 const props = defineProps<Props>()
 const isShowFullText = ref<boolean>(false)
 const isDialogDrawing = ref<boolean>(false)
-const { controlMenu, controls, toggleControl } = useThematicDictionaryCategoryControls()
+const { controlMenu, controls } = useThematicDictionaryCategoryControls()
 
 const maxLines = 5
 
 const content = computed<JsonToDomChildren>(() => {
-  const content = toRaw(props.category.content)
-  const isFixedStyle = controls.value.isFixedStyle
+  const contentData = toRaw(props.category.content)
 
-  if (Array.isArray(content.children)) {
-    content.children = content.children.map((item) => {
-      if (item.props && Object.hasOwn(item.props, 'variant'))
-        item.props.variant = isFixedStyle ? 5 : null
+  const settingsToPass = controls.value === 'global' ? undefined : controls.value
+
+  const clonedContent = JSON.parse(JSON.stringify(contentData))
+
+  if (Array.isArray(clonedContent.children)) {
+    clonedContent.children = clonedContent.children.map((item: any) => {
+      if (item.tag === 'HieroglyphWord') {
+        if (!item.props)
+          item.props = {}
+        delete item.props.variant
+        item.props.settings = settingsToPass
+      }
       return item
     })
   }
 
-  return content
+  return clonedContent
 })
+
 const drawContent = computed<IHieroglyphWordVariousProps[]>(() => {
   const data = toRaw(props.category.content.children) as JsonToDomChildren[]
 
-  return data.map(m => m.props) as unknown as IHieroglyphWordVariousProps[]
+  return data
+    .filter(node => node.tag === 'HieroglyphWord' && node.props)
+    .map(node => node.props) as unknown as IHieroglyphWordVariousProps[]
 })
+
 const isLongText = computed<boolean>(() => {
   const lines = props.category.description?.split('\n')
-
   return (lines?.length ?? 0) > maxLines
 })
+
 const breadcrumbs = computed(() => {
   const crumbs = [{ title: 'Секции', to: RoutePaths.ThematicDictionary.Sections() }]
 
@@ -105,10 +116,7 @@ const breadcrumbs = computed(() => {
               </VBtn>
             </template>
 
-            <Control
-              v-model="controls"
-              @toggle-control="toggleControl"
-            />
+            <StyleSwitcher v-model="controls" />
           </VMenu>
 
           <VBtn

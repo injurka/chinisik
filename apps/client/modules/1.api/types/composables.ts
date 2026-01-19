@@ -8,7 +8,7 @@ export type UseRequest = <T>(payload: IRequestWrapperPayload<T>) => Promise<IReq
 // Типизация для useRequestStatus
 export type UseRequestStatus = (keys: string[], status?: ApiStatus) => boolean
 
-// Типизация для useRequestError - проверка упал ли запрос с ошибкой
+// Типизация для useRequestError
 export type UseRequestError = (key: string) => IApiError | null
 export type UseRequestErrors = (key: string[]) => IApiError | null
 
@@ -17,5 +17,4 @@ export type UseApiInitParams = Partial<CreateApiParams>
 export type UseApi = () => {
   init: (params: UseApiInitParams) => Promise<void>
   api: IApi
-  refresh: (() => Promise<void>) | null
 }

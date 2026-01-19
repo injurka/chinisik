@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { HieroglyphWordVariant } from '~/components/03.domain/hieroglyph-word'
+import type { HieroglyphSettings } from '~/components/03.domain/hieroglyph-word/types'
 import PageLoader from '~/components/02.shared/page-loader/ui/page-loader.vue'
 import { HieroglyphWord } from '~/components/03.domain/hieroglyph-word'
 import HskWordsControl from '~/components/05.modules/hsk/words/ui/hsk-words-control.vue'
@@ -22,7 +22,7 @@ const {
   error,
 } = await useHskWords()
 
-const listVariant = useCookie<HieroglyphWordVariant | 'global'>(HSK_WORDS_STYLE_VARIANT, { default: () => 5 })
+const listVariant = useCookie<Partial<HieroglyphSettings> | 'global'>(HSK_WORDS_STYLE_VARIANT, { default: () => 'global' })
 const controlMenu = ref(false)
 
 const wordsListContainer = ref<HTMLElement | null>(null)
@@ -57,7 +57,7 @@ watch(page, () => {
       <v-text-field
         v-model="searchKeyword"
         label="Поиск"
-        placeholder="Введите иероглиф, пиньин или перевод..."
+        placeholder="Введите иероглиф, пиньинь или перевод..."
         class="controls-keyword"
         clearable
         outlined
@@ -103,7 +103,7 @@ watch(page, () => {
       <HieroglyphWord
         v-for="item in data.data"
         :key="item.id"
-        :variant="listVariant === 'global' ? undefined : listVariant"
+        :settings="listVariant === 'global' ? undefined : listVariant"
         :glyph="item.glyph"
         :translate="item.translation.ru"
         :pinyin="item.pinyin"
@@ -174,26 +174,9 @@ watch(page, () => {
 
     @include mobile {
       font-size: 0.9rem;
-
-      &:deep(.hw-word) {
-        .hw-glyph {
-          font-size: 1.5rem;
-          line-height: 32px;
-          min-width: 32px;
-          min-height: 32px;
-          user-select: text;
-        }
-        .hw-pinyin {
-          font-size: 0.9rem;
-        }
-        .hw-translate {
-          font-size: 0.9rem;
-        }
-      }
     }
   }
 
-  // Стили для pop-up
   .speech-popup {
     position: absolute;
     z-index: 10;

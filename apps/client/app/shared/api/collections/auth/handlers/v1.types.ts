@@ -7,6 +7,10 @@ interface ISignInUserP {
   email: string
 }
 
+interface IRefreshTokenP {
+  refreshToken: string
+}
+
 // Response //
 
 interface IAuthTokenPair {
@@ -18,13 +22,9 @@ interface IAuthUserR extends IAuthTokenPair {
   user: User
 }
 
-interface IRefreshAuthP {
-  refreshToken: string
-}
-
 export type {
   IAuthTokenPair,
   IAuthUserR,
-  IRefreshAuthP,
+  IRefreshTokenP,
   ISignInUserP,
 }

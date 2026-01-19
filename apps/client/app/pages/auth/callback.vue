@@ -6,9 +6,8 @@ const store = useStore(['auth'])
 
 async function authorizationCallback() {
   const token = route.query.token as string
-  const refreshToken = route.query.refreshToken as string
 
-  if (!token || !refreshToken) {
+  if (!token) {
     navigateTo({
       path: RoutePaths.Auth.SignIn(),
       query: {

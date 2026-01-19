@@ -39,7 +39,14 @@ class Server {
         },
       )
       this.server.use(prettyJSON())
-      this.server.use(cors())
+      this.server.use(cors({
+        origin: ['https://chinisik.ru', 'http://localhost:5173'],
+        allowHeaders: ['Content-Type', 'Authorization'],
+        allowMethods: ['POST', 'GET', 'OPTIONS', 'DELETE', 'PUT', 'PATCH'],
+        exposeHeaders: ['Content-Length'],
+        maxAge: 600,
+        credentials: true,
+      }))
       this.server.use(prometheusMiddleware)
       this.server.onError((err, c) => c.json({ message: err.message }, 500))
 

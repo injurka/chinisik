@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HieroglyphWordVariant } from '~/components/03.domain/hieroglyph-word'
+import type { HieroglyphSettings } from '~/components/03.domain/hieroglyph-word'
 import type { IDayMaterialListItem } from '~/shared/api/collections/day-material/handlers/v1.types'
 import { DialogWithClose } from '~/components/02.shared/dialog-with-close'
 import { PageLoader } from '~/components/02.shared/page-loader'
@@ -14,7 +14,8 @@ enum RequestKeys {
 }
 
 const { api } = useApi()
-const localVariant = useCookie<HieroglyphWordVariant | 'global'>(VOCABULARY_STYLE_VARIANT, { default: () => 5 })
+const localVariant = useCookie<Partial<HieroglyphSettings> | 'global'>(VOCABULARY_STYLE_VARIANT, { default: () => 'global' })
+const displayVariant = computed(() => (localVariant.value === 'global' ? undefined : localVariant.value))
 const { hours, minutes, seconds } = useNextDayCountdown()
 
 const currentMaterialId = ref<number | null>(null)
@@ -51,7 +52,6 @@ async function fetchHistory() {
   })
 }
 
-const displayVariant = computed(() => (localVariant.value === 'global' ? undefined : localVariant.value))
 const isTodayView = computed(() => !currentMaterialId.value)
 
 function openHistory() {
@@ -165,7 +165,7 @@ function handleQuizRunning(isRunning: boolean) {
                 :glyph="item.glyph"
                 :pinyin="item.pinyin"
                 :translate="item.translation"
-                :variant="displayVariant"
+                :settings="displayVariant"
               />
             </div>
             <p class="feature-description">
@@ -191,7 +191,7 @@ function handleQuizRunning(isRunning: boolean) {
                 :glyph="example.glyph"
                 :pinyin="example.pinyin"
                 :translate="example.translation"
-                :variant="example.glyph.length > 5 ? 4 : 5"
+                :settings="{ layout: 'vertical' }"
               />
             </div>
             <p class="feature-description">
@@ -211,7 +211,11 @@ function handleQuizRunning(isRunning: boolean) {
                 :glyph="dayFeatures.proverb.glyph"
                 :pinyin="dayFeatures.proverb.pinyin"
                 :translate="dayFeatures.proverb.translation"
-                :variant="4"
+                :settings="{
+                  layout: 'vertical',
+                  showPinyin: true,
+                  showTranslation: true,
+                }"
               />
             </div>
             <p class="feature-description">
@@ -439,34 +443,20 @@ function handleQuizRunning(isRunning: boolean) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: 16px;
 
   :deep() {
     .hw-word {
-      .hw-pinyin-translate {
-        width: 100%;
-      }
-
-      &.variant-5 {
-        .hw-translate {
-          border-top: 2px dashed var(--border-primary-color);
-        }
-      }
-
-      &.variant-4 {
-        border: 0;
-        width: 100%;
-        border: none;
-        flex-grow: 1;
-
-        .hw-pinyin-translate {
-          width: 100%;
-        }
-        .hw-glyph {
-          border-radius: 8px;
-          border: 1px solid var(--border-accent-color);
-        }
-      }
+      background: transparent;
+      width: 100%;
+      border: none;
+    }
+    .hw-pinyin {
+      border: none;
+    }
+    .hw-glyph {
+      border: 1px solid var(--border-accent-color);
+      border-radius: 8px;
     }
   }
 }
@@ -488,20 +478,18 @@ function handleQuizRunning(isRunning: boolean) {
   align-items: center;
   gap: 0.5rem;
 
-  :deep(.hw-word) {
-    margin: 0;
-    border: none;
-
-    .variant-4 {
-      border: 0;
-    }
-
-    .hw-pinyin-translate {
+  :deep() {
+    .hw-word {
+      background: transparent;
       width: 100%;
+      border: none;
+    }
+    .hw-pinyin {
+      border: none;
     }
     .hw-glyph {
-      border-radius: 8px;
       border: 1px solid var(--border-accent-color);
+      border-radius: 8px;
     }
   }
 }

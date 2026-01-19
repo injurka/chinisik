@@ -15,6 +15,8 @@ async function bootstrap() {
 
   Scheduler.getInstance()
 
+  logger.info(`Scheduler for daily material generation is ${import.meta.env.SCHEDULER_ENABLED === 'true' ? 'ENABLED' : 'DISABLED'}.`)
+
   return {
     port: import.meta.env.PORT || 8080,
     fetch: app.fetch,

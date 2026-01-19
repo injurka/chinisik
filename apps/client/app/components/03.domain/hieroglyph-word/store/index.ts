@@ -1,19 +1,26 @@
-import type {
-  HieroglyphWordVariant,
-  IHieroglyphWordState,
-} from '~/components/03.domain/hieroglyph-word/types'
+import type { HieroglyphSettings } from '../types/props'
 
 export const useHieroglyphWordStore = defineStore('hieroglyphWord', {
-  state: (): IHieroglyphWordState => ({
-    variant: Number(useCookie(HIEROGLYPH_WORD_VARIANT).value || '0') as HieroglyphWordVariant,
-  }),
+  state: () => {
+    const defaultSettings: HieroglyphSettings = {
+      layout: 'card',
+      showPinyin: true,
+      showTranslation: true,
+    }
+
+    const cookieValue = useCookie<HieroglyphSettings>(HIEROGLYPH_WORD_VARIANT).value
+
+    return {
+      settings: { ...defaultSettings, ...cookieValue },
+    }
+  },
 
   actions: {
-    setVariant(value: HieroglyphWordVariant) {
-      useCookie(HIEROGLYPH_WORD_VARIANT, { sameSite: true }).value = `${value}`
-      this.variant = value
+    updateSettings(partialSettings: Partial<HieroglyphSettings>) {
+      this.settings = { ...this.settings, ...partialSettings }
+
+      // Сохраняем в куки
+      useCookie(HIEROGLYPH_WORD_VARIANT, { sameSite: true }).value = JSON.stringify(this.settings)
     },
   },
 })
-
-//* --- Utils ----------------------------------------------- *//

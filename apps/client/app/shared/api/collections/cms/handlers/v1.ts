@@ -8,6 +8,12 @@ function method(instance: Instance) {
         method: 'GET',
       })
     },
+    update(payload: DTO.IUpdateDescriptionP) {
+      return instance<DTO.IDescriptionR>(`/v1/cms/description/${payload.sysname}`, {
+        method: 'PUT',
+        body: payload.data,
+      })
+    },
   }
 }
 

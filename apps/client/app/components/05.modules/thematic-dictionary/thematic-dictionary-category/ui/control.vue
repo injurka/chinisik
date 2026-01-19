@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { HieroglyphWordVariant } from '~/components/03.domain/hieroglyph-word'
-
 type Controls = Record<any, unknown>
 
 const emits = defineEmits<{ toggleControl: [keyof Controls] }>()
@@ -13,9 +11,9 @@ const controls: { key: keyof Controls, label: string }[] = [{
   label: 'Фиксированный стиль отображения',
 }]
 
-const controlledHieroglyphVariant = computed({
-  get: () => store.hieroglyphWord.variant,
-  set: (value: HieroglyphWordVariant) => store.hieroglyphWord.setVariant(value),
+const globalLayout = computed({
+  get: () => store.hieroglyphWord.settings.layout,
+  set: val => store.hieroglyphWord.updateSettings({ layout: val }),
 })
 </script>
 
@@ -32,8 +30,9 @@ const controlledHieroglyphVariant = computed({
       </span>
       <Icon class="controls-selected" name="re:checked" size="20" />
     </div>
+
     <v-btn-toggle
-      v-model="controlledHieroglyphVariant"
+      v-model="globalLayout"
       density="compact"
       variant="text"
       class="controls-item-grouped"
@@ -41,20 +40,14 @@ const controlledHieroglyphVariant = computed({
       :disabled="!!control.isFixedStyle"
       mandatory
     >
-      <v-btn class="group-item">
-        1
+      <v-btn value="inline" class="group-item" title="Inline">
+        <v-icon>mdi-format-align-justify</v-icon>
       </v-btn>
-      <v-btn class="group-item">
-        2
+      <v-btn value="vertical" class="group-item" title="Vertical">
+        <v-icon>mdi-view-column</v-icon>
       </v-btn>
-      <v-btn class="group-item">
-        3
-      </v-btn>
-      <v-btn class="group-item">
-        4
-      </v-btn>
-      <v-btn class="group-item">
-        5
+      <v-btn value="card" class="group-item" title="Card">
+        <v-icon>mdi-card-text-outline</v-icon>
       </v-btn>
     </v-btn-toggle>
   </div>

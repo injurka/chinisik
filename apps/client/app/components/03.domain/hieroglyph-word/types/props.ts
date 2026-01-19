@@ -1,15 +1,18 @@
 import type { PinyinTextProps } from '~/components/03.domain/pinyin-text'
 
-type HieroglyphWordVariant = 0 | 1 | 2 | 3 | 4 | 5
+export type HieroglyphLayout = 'inline' | 'vertical' | 'card'
 
-interface IHieroglyphWordVariousProps {
-  variant?: HieroglyphWordVariant
-  pinyin?: PinyinTextProps
-  translate?: string
-  glyph: string
+export interface HieroglyphSettings {
+  layout: HieroglyphLayout
+  showPinyin: boolean
+  showTranslation: boolean
 }
 
-export type {
-  HieroglyphWordVariant,
-  IHieroglyphWordVariousProps,
+export interface IHieroglyphWordVariousProps {
+  settings?: Partial<HieroglyphSettings>
+
+  // Данные
+  pinyin?: PinyinTextProps | string
+  translate?: string
+  glyph: string
 }

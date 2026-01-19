@@ -10,6 +10,7 @@ export default withNuxt(
       '**/.vitestcache/**',
       '**/e2e-**/**',
       '**/personal/content/**',
+      '**/icons-bundle.json',
     ],
   }),
 )

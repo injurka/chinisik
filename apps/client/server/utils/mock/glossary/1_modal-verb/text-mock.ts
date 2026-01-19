@@ -8,7 +8,11 @@ export const textMock = {
           glyph: '想',
           pinyin: 'xiǎng',
           translate: 'хотеть, собираться',
-          variant: 5,
+          settings: {
+            layout: 'card',
+            showPinyin: true,
+            showTranslation: true,
+          },
         },
       },
     ],
@@ -31,7 +35,11 @@ export const textMock = {
               glyph: '了',
               pinyin: 'le',
               translate: 'понимать',
-              variant: 0,
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           {
@@ -41,7 +49,11 @@ export const textMock = {
               glyph: '着',
               pinyin: 'zhe',
               translate: 'носить',
-              variant: 0,
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           {
@@ -51,7 +63,11 @@ export const textMock = {
               glyph: '过',
               pinyin: 'guò',
               translate: 'проходить',
-              variant: 0,
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           {
@@ -71,6 +87,11 @@ export const textMock = {
               glyph: '你想不想看电影',
               pinyin: 'nǐ xiǎng bù xiǎng kàn diànyǐng',
               translate: 'Не хочешь посмотреть фильм?',
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           { tag: 'br' },
@@ -81,6 +102,11 @@ export const textMock = {
               glyph: '这儿可不可以抽烟',
               pinyin: 'zhèér kěbùkěyǐ chōuyān',
               translate: 'Можно ли здесь курить?',
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
         ],
@@ -92,7 +118,11 @@ export const textMock = {
           glyph: '想',
           pinyin: 'xiǎng',
           translate: 'хотеть, собираться',
-          variant: 5,
+          settings: {
+            layout: 'card',
+            showPinyin: true,
+            showTranslation: true,
+          },
         },
       },
       {
@@ -106,6 +136,11 @@ export const textMock = {
               glyph: '我想喝咖啡',
               pinyin: 'wǒ xiǎng hē kāfēi',
               translate: 'Я хочу выпить кофе.',
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           { tag: 'br' },
@@ -120,6 +155,11 @@ export const textMock = {
                   glyph: '我想去北京旅游',
                   pinyin: 'wǒ xiǎng qù běijīng lǚyóu',
                   translate: 'Я хочу (собираюсь) поехать путешествовать в Пекин',
+                  settings: {
+                    layout: 'inline',
+                    showPinyin: true,
+                    showTranslation: true,
+                  },
                 },
               },
               {
@@ -129,6 +169,11 @@ export const textMock = {
                   glyph: '不想',
                   pinyin: 'bù xiǎng',
                   translate: 'Не хочу',
+                  settings: {
+                    layout: 'inline',
+                    showPinyin: true,
+                    showTranslation: true,
+                  },
                 },
               },
             ],
@@ -153,6 +198,11 @@ export const textMock = {
               glyph: '我想回家',
               pinyin: 'wǒ xiǎng huíjiā',
               translate: 'Я хочу вернуться домой.',
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           {
@@ -161,6 +211,11 @@ export const textMock = {
               glyph: '想',
               pinyin: 'xiǎng',
               translate: 'модальный глагол, после него стоит глагол.',
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           {
@@ -172,6 +227,11 @@ export const textMock = {
               glyph: '我想家',
               pinyin: 'wǒ xiǎng jiā',
               translate: 'Я скучаю по дому.',
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
           {
@@ -180,6 +240,11 @@ export const textMock = {
               glyph: '想',
               pinyin: 'xiǎng',
               translate: 'глагол «скучать», после него стоит существительное.',
+              settings: {
+                layout: 'inline',
+                showPinyin: true,
+                showTranslation: true,
+              },
             },
           },
         ],

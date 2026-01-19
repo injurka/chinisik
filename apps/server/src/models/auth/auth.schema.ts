@@ -54,11 +54,6 @@ const RefreshAuthSchema = z.object({
       example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
       description: 'JWT token for authenticated requests',
     }),
-  refreshToken: z.string()
-    .openapi({
-      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
-      description: 'JWT refresh token',
-    }),
 }).openapi('AuthResponse')
 
 export {

@@ -144,7 +144,11 @@ function resetExamples() {
                   <HieroglyphWord
                     v-for="word in item.hieroglyphs"
                     :key="word.glyph"
-                    :variant="5"
+                    :settings="{
+                      layout: 'inline',
+                      showPinyin: false,
+                      showTranslation: false,
+                    }"
                     :translate="word.translate"
                     :glyph="word.glyph"
                     :pinyin="{
@@ -299,14 +303,6 @@ function resetExamples() {
           display: flex;
           @include mobile {
             flex-direction: column;
-          }
-
-          .hw-word {
-            width: 50%;
-
-            @include mobile {
-              width: 100%;
-            }
           }
         }
       }

@@ -78,7 +78,11 @@ function handleNextAnswer() {
           <div>
             <HieroglyphWord
               :="correctAnswer.meta.hieroglyph"
-              :variant="$vuetify.display.mobile ? 4 : 5"
+              :settings="{
+                layout: 'inline',
+                showPinyin: false,
+                showTranslation: false,
+              }"
             />
             <div class="answer-description-hint">
               {{ correctAnswer.meta.description }}
@@ -144,20 +148,6 @@ function handleNextAnswer() {
 </template>
 
 <style scoped lang="scss">
-// Переопределенние стилей для лучшего отображения
-:deep() {
-  .hw-word {
-    &.variant-4 {
-      padding-left: 0px !important;
-      border: none;
-      border-left: 3px dashed var(--border-accent-color);
-      border-right: 3px dashed var(--border-accent-color);
-      border-radius: 0;
-      width: 100%;
-    }
-  }
-}
-
 .lab-test {
   width: 100%;
   display: flex;

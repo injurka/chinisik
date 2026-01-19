@@ -7,6 +7,10 @@ export class Scheduler {
   private isJobRunning = false
 
   private constructor() {
+    if (import.meta.env.SCHEDULER_ENABLED !== 'true') {
+      logger.info('Scheduler is disabled by environment variable (SCHEDULER_ENABLED).')
+      return
+    }
     this.start()
   }
 

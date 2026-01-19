@@ -1,5 +1,6 @@
 import { createRoute, z } from '@hono/zod-openapi'
 import AController from '~/api/interfaces/controller.abstract'
+import { jwtGuard } from '~/middleware'
 
 import { CmsDescriptionSchema } from '~/models/cms/cms.schema'
 import { CmsService } from '~/services'
@@ -13,6 +14,7 @@ class CmsController extends AController {
     super('/cms')
 
     this.getContent()
+    this.updateContent()
   }
 
   private getContent = () => {
@@ -53,6 +55,49 @@ class CmsController extends AController {
         const validatedData = CmsDescriptionSchema.parse(data)
 
         return c.json(validatedData, 200)
+      },
+    )
+  }
+
+  private updateContent = () => {
+    const route = createRoute({
+      method: 'put',
+      path: `${this.path}/description/{sysname}`,
+      tags: [TAG],
+      security: [{ bearerAuth: [] }],
+      request: {
+        params: z.object({
+          sysname: z.string(),
+        }),
+        body: {
+          content: {
+            'application/json': {
+              schema: CmsDescriptionSchema,
+            },
+          },
+        },
+      },
+      responses: {
+        200: {
+          content: {
+            'application/json': {
+              schema: CmsDescriptionSchema,
+            },
+          },
+          description: 'Content updated successfully',
+        },
+      },
+    })
+
+    this.router.use(route.path, jwtGuard)
+    this.router.openapi(
+      route,
+      async (c) => {
+        const { sysname } = c.req.valid('param')
+        const body = c.req.valid('json')
+
+        const data = await this.service.updateContent(sysname, body)
+        return c.json(CmsDescriptionSchema.parse(data), 200)
       },
     )
   }

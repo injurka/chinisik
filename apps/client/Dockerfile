@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y ca-certificates
 RUN npm install bun -g
 RUN bun install --ignore-scripts
 
+RUN npm rebuild sharp
+
 RUN npm run prepare
 RUN npm run typecheck
 RUN npm run lint

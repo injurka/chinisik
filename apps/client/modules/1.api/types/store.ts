@@ -10,11 +10,13 @@ interface IRequestWrapperState {
 }
 
 interface IRequestReturn<T> { data: T | null, error?: IApiError | null, status: ApiStatus }
+
 interface IRequestWrapperPayload<T> {
   key: string
   fn: (payload: ICallback) => Promise<T>
   onSuccess?: (payload: SuccessCallback<T>) => Promise<void> | void | unknown
   onError?: (payload: ErrorCallback) => Promise<void> | void | unknown
+  skipAuthRefresh?: boolean
 }
 
 interface IApiError {

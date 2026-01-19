@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { PageLoader } from '~/components/02.shared/page-loader'
+import { useGlossaryEditorStore } from '~/components/05.modules/glossary/store/editor.store'
 import BaseLayout from './base-with-effects.vue'
 
 export type TabVariant = 'topic' | 'brief' | 'lab'
@@ -30,6 +31,7 @@ const tabsLeftOptions = [
 const route = useRoute()
 const currentTab = ref<TabVariant>('topic')
 const isLoadingContent = ref<boolean>(false)
+const editorStore = useGlossaryEditorStore()
 
 function handleChangeTab(value: TabVariant) {
   currentTab.value = value
@@ -60,7 +62,7 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
                 class="option-item"
                 :class="[{ isActive: currentTab === tab.key }]"
                 :name="tab.icon"
-                size="32"
+                size="28"
                 @click="handleChangeTab(tab.key)"
               />
             </template>
@@ -71,7 +73,14 @@ if (hash && tabsLeftOptions.some(tab => tab.key === hash)) {
           Модальные глаголы
         </h1>
 
-        <div class="option right" />
+        <div class="option right">
+          <VBtn
+            :color="editorStore.isEditing ? 'var(--fg-accent-color)' : 'var(--fg-secondary-color)'"
+            :variant="editorStore.isEditing ? 'tonal' : 'text'"
+            icon="mdi-pencil"
+            @click="editorStore.toggleEditMode()"
+          />
+        </div>
       </div>
 
       <slot />
